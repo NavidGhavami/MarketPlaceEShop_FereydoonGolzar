@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlace.Application", "MarketPlace.Application\MarketPlace.Application.csproj", "{568E4470-58EC-4852-906E-6511FE2B16A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketPlace.DataLayer", "MarketPlace.DataLayer\MarketPlace.DataLayer.csproj", "{5C61CAC1-3C2A-40FF-AC40-B87118229417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHost", "ServiceHost\ServiceHost.csproj", "{0B0B1E2D-1A87-49EA-9E43-BABD84917F6C}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{568E4470-58EC-4852-906E-6511FE2B16A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{568E4470-58EC-4852-906E-6511FE2B16A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{568E4470-58EC-4852-906E-6511FE2B16A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{568E4470-58EC-4852-906E-6511FE2B16A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C61CAC1-3C2A-40FF-AC40-B87118229417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C61CAC1-3C2A-40FF-AC40-B87118229417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C61CAC1-3C2A-40FF-AC40-B87118229417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C61CAC1-3C2A-40FF-AC40-B87118229417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B0B1E2D-1A87-49EA-9E43-BABD84917F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B0B1E2D-1A87-49EA-9E43-BABD84917F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B0B1E2D-1A87-49EA-9E43-BABD84917F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B0B1E2D-1A87-49EA-9E43-BABD84917F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
