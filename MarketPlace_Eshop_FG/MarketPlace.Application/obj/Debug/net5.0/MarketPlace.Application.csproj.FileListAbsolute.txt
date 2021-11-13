@@ -1,0 +1,15 @@
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\bin\Debug\net5.0\MarketPlace.Application.deps.json
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\bin\Debug\net5.0\MarketPlace.Application.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\bin\Debug\net5.0\ref\MarketPlace.Application.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\bin\Debug\net5.0\MarketPlace.Application.pdb
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\bin\Debug\net5.0\MarketPlace.DataLayer.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\bin\Debug\net5.0\MarketPlace.DataLayer.pdb
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.csproj.AssemblyReference.cache
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.GeneratedMSBuildEditorConfig.editorconfig
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.AssemblyInfoInputs.cache
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.AssemblyInfo.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.csproj.CoreCompileInputs.cache
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.csproj.CopyComplete
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\ref\MarketPlace.Application.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\MarketPlace.Application\obj\Debug\net5.0\MarketPlace.Application.pdb

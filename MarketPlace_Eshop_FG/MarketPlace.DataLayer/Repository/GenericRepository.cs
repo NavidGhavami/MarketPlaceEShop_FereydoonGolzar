@@ -80,6 +80,11 @@ namespace MarketPlace.DataLayer.Repository
             }
         }
 
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
+
 
         //Dispose
         public async ValueTask DisposeAsync()

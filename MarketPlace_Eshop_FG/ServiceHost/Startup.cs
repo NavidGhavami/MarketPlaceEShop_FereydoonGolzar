@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MarketPlace.Application.Services.Implementations;
+using MarketPlace.DataLayer.Repository;
+using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.DataLayer.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ServiceHost
 {
@@ -24,6 +24,20 @@ namespace ServiceHost
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUserService, UserService>();
+
+
+            #region ConfigDatabase
+
+            var connectionString = Configuration.GetConnectionString("MarketPlaceConnection");
+
+            services.AddDbContext<DatabaseContext>(option =>
+                option.UseSqlServer(connectionString));
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
