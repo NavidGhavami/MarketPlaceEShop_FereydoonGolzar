@@ -41,6 +41,19 @@ namespace ServiceHost.ViewComponents
     #endregion
 
     #region SiteFooter
+    public class LoginRegisterModalViewComponent : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View("LoginRegisterModal");
+        }
+    }
+
+
+    #endregion
+
+
+    #region SiteFooter
     public class SiteFooterViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()

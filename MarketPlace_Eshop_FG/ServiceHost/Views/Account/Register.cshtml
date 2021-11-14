@@ -1,0 +1,99 @@
+﻿@model MarketPlace.DataLayer.DTOs.Account.RegisterUserDTO
+@{
+    ViewData["Title"] = "ورود و ثبت نام کاربر";
+}
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+
+<br />
+
+<div class="form-box">
+    <div class="form-tab">
+        
+        <div class="text-center nav-link nav nav-pills nav-fill nav-border-anim">
+            <span class="nav-link nav  nav-fill nav-border-anim" >
+                ثبت نام
+            </span>
+        </div>
+        <br />
+        <div @*class="tab-content" id="tab-content-5"*@>
+            <div @*class="tab-pane fade"*@ id="register" @*role="tabpanel" aria-labelledby="register-tab"*@>
+                <form method="post" asp-controller="Account" asp-action="Register">
+                    <div class="form-group">
+                        <label>نام  *</label>
+                        <input type="text" asp-for="FirstName" class="form-control" id="firstname" name="firstname">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label>نام خانوادگی *</label>
+                        <input type="text" asp-for="LastName" class="form-control" id="lastname" name="lastname">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label>ایمیل *</label>
+                        <input type="email" asp-for="Email" class="form-control" id="email" name="email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label>تلفن همراه *</label>
+                        <input type="text" asp-for="Mobile" class="form-control" id="mobile" name="mobile">
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label>رمز عبور *</label>
+                        <input type="password" asp-for="Password" class="form-control" id="password" name="password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div><!-- End .form-group -->
+
+                    <div class="form-group">
+                        <label>تکرار رمز عبور *</label>
+                        <input type="password" asp-for="ConfirmPassword" class="form-control" id="confirmpassword" name="confirmpassword">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div><!-- End .form-group -->
+
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-outline-primary-2">
+                            <span>ثبت نام</span>
+                            <i class="icon-long-arrow-left"></i>
+                        </button>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="register-policy">
+                            <label class="custom-control-label" for="register-policy">
+                                با
+                                <a href="#">قوانین و مقررات </a>موافقم *
+                            </label>
+                        </div><!-- End .custom-checkbox -->
+                    </div><!-- End .form-footer -->
+                </form>
+                <div class="form-choice">
+                    <p class="text-center">یا عضویت با</p>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a href="#" class="btn btn-login btn-g">
+                                <i class="icon-google"></i>
+                                حساب گوگل
+                            </a>
+                        </div><!-- End .col-6 -->
+                        <div class="col-sm-6">
+                            <a href="#" class="btn btn-login  btn-f">
+                                <i class="icon-facebook-f"></i>
+                                حساب فیسبوک
+                            </a>
+                        </div><!-- End .col-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .form-choice -->
+            </div><!-- .End .tab-pane -->
+        </div><!-- End .tab-content -->
+    </div><!-- End .form-tab -->
+</div>
+

@@ -1,181 +1,59 @@
-﻿
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
 
 
+<!-- Mirrored from filenter.ir/molla/index-13.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 06 Jun 2021 09:01:07 GMT -->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>فروشگاه آنلاین | @ViewData["Title"]</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <partial name="_HeaderReferences" />
 
-    <title>@ViewData["Title"] - فروشگاه فریدون گلزر</title>
-
-    <meta name="keywords" content="HTML5 Template" />
-    <meta name="description" content="وولـمارت - قالب چند منظوره و مارکت پلیس html">
-    <meta name="author" content="JafarAbbasi">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="~/Theme/assets/images/icons/favicon.png">
-
-    <!-- WebFont.js -->
-    <script>
-        WebFontConfig = {
-            google: { families: ['Poppins:400,500,600,700'] }
-        };
-        (function (d) {
-            var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = '~/Theme/assets/js/webfont.js';
-            wf.async = true;
-            s.parentNode.insertBefore(wf, s);
-        })(document);
-    </script>
-
-    <link rel="preload" href="~/Theme/assets/vendor/fontawesome-free/webfonts/fa-regular-400.woff2" as="font" type="font/woff2"
-          crossorigin="anonymous">
-    <link rel="preload" href="~/Theme/assets/vendor/fontawesome-free/webfonts/fa-solid-900.woff2" as="font" type="font/woff2"
-          crossorigin="anonymous">
-    <link rel="preload" href="~/Theme/assets/vendor/fontawesome-free/webfonts/fa-brands-400.woff2" as="font" type="font/woff2"
-          crossorigin="anonymous">
-    <link rel="preload" href="~/Theme/assets/fonts/wolmart87d5.ttf?png09e" as="font" type="font/ttf" crossorigin="anonymous">
-
-    <!-- Vendor CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Theme/assets/vendor/fontawesome-free/css/all.min.css">
-
-    <!-- Plugins CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Theme/assets/vendor/owl-carousel/owl.carousel.min.css">
-    <link rel="stylesheet" type="text/css" href="~/Theme/assets/vendor/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="~/Theme/assets/vendor/magnific-popup/magnific-popup.min.css">
-
-    <!-- Default CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Theme/assets/css/demo7.min.css">
+    @await RenderSectionAsync("styles", false)
 </head>
 
-<body class="home">
-    <!-- start of .page-wrapper -->
+<body>
     <div class="page-wrapper">
-        <h1 class="d-none">وولـمارت - قالب چند منظوره و مارکت پلیس html</h1>
-        <!-- Start of Header -->
+
         @await Component.InvokeAsync("SiteHeader")
-        <!-- End of Header -->
-        <!-- start of .main -->
-        @RenderBody()
-        <!-- end of .main -->
 
-        @await  Component.InvokeAsync("SiteFooter")
-        <!-- End of Footer -->
+        <main class="main">
+
+            @RenderBody()
+
+        </main>
+
+        <!-- End .main -->
+
+        @await Component.InvokeAsync("SiteFooter")
+
     </div>
-    <!-- end of .page-wrapper -->
-    <!-- Start of Sticky Footer -->
-    <div class="sticky-footer sticky-content fix-bottom">
-        <a href="demo7.html" class="sticky-link active">
-            <i class="w-icon-home"></i>
-            <p>خانه </p>
-        </a>
-        <a href="shop-banner-sidebar.html" class="sticky-link">
-            <i class="w-icon-category"></i>
-            <p>فروشگاه </p>
-        </a>
-        <a href="my-account.html" class="sticky-link">
-            <i class="w-icon-account"></i>
-            <p>حساب کاربری </p>
-        </a>
-        <div class="cart-dropdown dir-up">
-            <a href="cart.html" class="sticky-link">
-                <i class="w-icon-cart"></i>
-                <p>سبد خرید </p>
-            </a>
-            <div class="dropdown-box">
-                <div class="products">
-                    <div class="product product-cart">
-                        <div class="product-detail">
-                            <h3 class="product-name">
-                                <a href="product-default.html">یاس بافتنی بژ<br>کفش دونده تیک</a>
-                            </h3>
-                            <div class="price-box">
-                                <span class="product-quantity">1</span>
-                                <span class="product-price">250000 تومان</span>
-                            </div>
-                        </div>
-                        <figure class="product-media">
-                            <a href="product-default.html">
-                                <img src="~/Theme/assets/images/cart/product-1.jpg" alt="product" height="84" width="94" />
-                            </a>
-                        </figure>
-                        <button class="btn btn-link btn-close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+    <!-- End .page-wrapper -->
+    <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
-                    <div class="product product-cart">
-                        <div class="product-detail">
-                            <h3 class="product-name">
-                                <a href="product-default.html">پینا ابزار آبی<br>لباس جین جلو</a>
-                            </h3>
-                            <div class="price-box">
-                                <span class="product-quantity">1</span>
-                                <span class="product-price">320000 تومان</span>
-                            </div>
-                        </div>
-                        <figure class="product-media">
-                            <a href="product-default.html">
-                                <img src="~/Theme/assets/images/cart/product-2.jpg" alt="product" width="84" height="94" />
-                            </a>
-                        </figure>
-                        <button class="btn btn-link btn-close">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
+    <!-- Mobile Menu -->
 
-                <div class="cart-total">
-                    <label>مجموع کل: </label>
-                    <span class="price">570000 تومان</span>
-                </div>
 
-                <div class="cart-action">
-                    <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">نمایش سبد </a>
-                    <a href="checkout.html" class="btn btn-primary  btn-rounded">پرداخت </a>
-                </div>
-            </div>
-            <!-- End of Dropdown Box -->
-        </div>
+    @await Component.InvokeAsync("MobileMenu")
 
-        <div class="header-search hs-toggle dir-up">
-            <a href="#" class="search-toggle sticky-link">
-                <i class="w-icon-search"></i>
-                <p>جستجو </p>
-            </a>
-            <form action="#" class="input-wrapper">
-                <input type="text" class="form-control" name="search" autocomplete="off" placeholder="جستجو"
-                       required />
-                <button class="btn btn-search" type="submit">
-                    <i class="w-icon-search"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-    <!-- End of Sticky Footer -->
-    <!-- Start of Scroll Top -->
-    <a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="fas fa-chevron-up"></i></a>
-    <!-- End of Scroll Top -->
-    <!-- Start of Mobile Menu -->
-    @await  Component.InvokeAsync("MobileMenu")
-    <!-- End of Mobile Menu -->
 
-    <script src="~/Theme/assets/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Theme/assets/vendor/owl-carousel/owl.carousel.min.js"></script>
-    <script src="~/Theme/assets/vendor/parallax/parallax.min.js"></script>
-    <script src="~/Theme/assets/vendor/jquery.plugin/jquery.plugin.min.js"></script>
-    <script src="~/Theme/assets/vendor/jquery.countdown/jquery.countdown.min.js"></script>
-    <script src="~/Theme/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="~/Theme/assets/vendor/isotope/isotope.pkgd.min.js"></script>
-    <script src="~/Theme/assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <!-- Sign in / Register Modal -->
+    @await Component.InvokeAsync("LoginRegisterModal")
+<!-- End .modal -->
 
-    <!-- Main JS -->
-    <script src="~/Theme/assets/js/main.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
 
-    @await RenderSectionAsync("Scripts", required: false)
+
+<partial name="_FooterReferences" />
+    <partial name="_SiteMessages" />
+
 
 </body>
 
 
+<!-- Mirrored from filenter.ir/molla/index-13.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 06 Jun 2021 09:02:01 GMT -->
 </html>

@@ -1,179 +1,212 @@
-﻿
-<header class="header">
+﻿<header class="header header-10 header-intro-clearance">
     <div class="header-top">
         <div class="container">
             <div class="header-left">
-                <p class="welcome-msg">به سایت فروشگاه وول مارت خوش آمدید دکمه را بزنید تا حذف شوم:)!</p>
-            </div>
-            <div class="header-right">
-                <div class="dropdown">
-                    <a href="#currency">تومان </a>
-                    <div class="dropdown-box">
-                        <a href="#USD">تومان </a>
-                        <a href="#EUR">دلار </a>
-                    </div>
-                </div>
-                <!-- End of DropDown Menu -->
+                <a href="tel_3A.html#"><i class="icon-phone"></i>تلفن تماس : 02155667788</a>
+            </div><!-- End .header-left -->
 
-                <div class="dropdown">
-                    <a href="#language">
-                        <img src="~/Theme/assets/images/flags/eng.png" alt="ENG Flag" width="14"
-                             height="8" class="dropdown-image" /> تومان
-                    </a>
-                    <div class="dropdown-box">
-                        <a href="#ENG">
-                            <img src="~/Theme/assets/images/flags/eng.png" alt="ENG Flag" width="14" height="8"
-                                 class="dropdown-image" />
-                            فارسی
-                        </a>
-                        <a href="#FRA">
-                            <img src="~/Theme/assets/images/flags/fra.png" alt="FRA Flag" width="14" height="8"
-                                 class="dropdown-image" />
-                            انگلیسی
-                        </a>
-                    </div>
-                </div>
-                <!-- End of Dropdown Menu -->
-                <span class="divider d-lg-show"></span>
-                <a href="blog.html" class="d-lg-show">وبلاگ </a>
-                <a href="contact-us.html" class="d-lg-show">تماس با ما </a>
-                <a href="my-account.html" class="d-lg-show">حساب کاربری من </a>
-                <a href="~/Theme/assets/ajax/login.html" class="d-lg-show login sign-in">
-                    <i class="w-icon-account"></i>ورود
-                </a>
-                <span class="delimiter d-lg-show">/</span>
-                <a href="~/Theme/assets/ajax/login.html" class="ml-0 d-lg-show login register">ثبت نام </a>
-            </div>
-        </div>
-    </div>
-    <!-- End of Header Top -->
+            <div class="header-right">
+
+                <ul class="top-menu">
+                    <li>
+                        <a href="#">ناحیه کاربری</a>
+                        <ul>
+                            <li>
+                                <div class="header-dropdown">
+                                    <a href="#">ورود</a>
+                                    <div class="header-menu">
+                                        <ul>
+                                            <li><a href="#">ورود به سایت</a></li>
+                                        </ul>
+                                    </div><!-- End .header-menu -->
+                                </div><!-- End .header-dropdown -->
+                            </li>
+                            <li>
+                                <div class="header-dropdown">
+                                    <a href="#">ثبت نام</a>
+                                    <div class="header-menu">
+                                        <ul>
+                                            <li><a href="#">ثبت نام در سایت</a></li>
+                                        </ul>
+                                    </div><!-- End .header-menu -->
+                                </div><!-- End .header-dropdown -->
+                            </li>
+                            <li class="login">
+                                <a href="#signin-modal" data-toggle="modal">ورود / ثبت نام</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul><!-- End .top-menu -->
+            </div><!-- End .header-right -->
+        </div><!-- End .container -->
+    </div><!-- End .header-top -->
 
     <div class="header-middle">
         <div class="container">
-            <div class="header-left mr-md-4">
-                <a href="#" class="mobile-menu-toggle w-icon-hamburger">
+            <div class="header-left">
+                <button class="mobile-menu-toggler">
+                    <span class="sr-only">فهرست</span>
+                    <i class="icon-bars"></i>
+                </button>
+
+                <a href="index-1.html" class="logo">
+                    <img src="~/Theme/assets/images/demos/demo-13/logo.png" alt="Molla Logo" width="105" height="25">
                 </a>
-                <a href="demo7.html" class="logo ml-lg-0">
-                    <img src="~/Theme/assets/images/demos/demo7/header-logo.png" alt="logo" width="144" height="45" />
-                </a>
-                <form method="get" action="#" class="input-wrapper header-search hs-expanded hs-round d-none d-md-flex">
-                    <div class="select-box">
-                        <select id="category" name="category">
-                            <option value="">تمام دسته بندیها</option>
-                            <option value="4">مدلینگ </option>
-                            <option value="5">مبلمان </option>
-                            <option value="6">کفشها </option>
-                            <option value="7">اسپورتی </option>
-                            <option value="8">گیم/بازی </option>
-                            <option value="9">کامپیوترها </option>
-                            <option value="10">الکترونیکی </option>
-                            <option value="11">آشپرخانه </option>
-                            <option value="12">لباس </option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" name="search" id="search"
-                           placeholder="جستجو ..." required />
-                    <button class="btn btn-search" type="submit">
-                        <i class="w-icon-search"></i>
-                    </button>
-                </form>
+            </div><!-- End .header-left -->
+
+            <div class="header-center">
+                <div class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
+                    <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                    <form action="#" method="get">
+                        <div class="header-search-wrapper search-wrapper-wide">
+                            <div class="select-custom">
+                                <select id="cat" name="cat">
+                                    <option value="">همه دسته ها</option>
+                                    <option value="1">مد</option>
+                                    <option value="2">- زنانه</option>
+                                    <option value="3">- مردانه</option>
+                                    <option value="5">- مد کودکان</option>
+                                    <option value="6">الکترونیک</option>
+                                    <option value="7">- تلویزیون</option>
+                                    <option value="8">- دوربین ها</option>
+                                    <option value="9">- بازی ها</option>
+                                </select>
+                            </div><!-- End .select-custom -->
+                            <label for="q" class="sr-only">جستجو</label>
+                            <input type="search" class="form-control" name="q" id="q"
+                                   placeholder="جستجوی محصول ..." required>
+                            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+                </div><!-- End .header-search -->
             </div>
-            <div class="header-right ml-4">
-                <div class="header-call d-xs-show d-lg-flex align-items-center">
-                    <a href="tel:#" class="w-icon-call"></a>
-                    <div class="call-info d-lg-show">
-                        <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
-                            <a href="mailto:#" class="text-capitalize">چت زنده </a> یا :
-                        </h4>
-                        <a href="tel:#" class="phone-number font-weight-bolder ls-50">0(800)123-456</a>
-                    </div>
-                </div>
-                <a class="wishlist label-down link d-xs-show" href="wishlist.html">
-                    <i class="w-icon-heart"></i>
-                    <span class="wishlist-label d-lg-show">لیست علاقه مندیها </span>
-                </a>
-                <a class="compare label-down link d-xs-show" href="compare.html">
-                    <i class="w-icon-compare"></i>
-                    <span class="compare-label d-lg-show">مقایسه کردن </span>
-                </a>
-                <div class="dropdown cart-dropdown cart-offcanvas mr-0 mr-lg-2">
-                    <div class="cart-overlay"></div>
-                    <a href="#" class="cart-toggle label-down link">
-                        <i class="w-icon-cart">
-                            <span class="cart-count">2</span>
-                        </i>
-                        <span class="cart-label">سبد خرید </span>
+
+            <div class="header-right">
+                <div class="header-dropdown-link">
+                    <div class="dropdown compare-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" data-display="static"
+                           title="مقایسه کردن محصولات" aria-label="Compare Products">
+                            <i class="icon-random"></i>
+                            <span class="compare-txt">مقایسه</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="compare-products">
+                                <li class="compare-product">
+                                    <a href="#" class="btn-remove" title="حذف محصول">
+                                        <i class="icon-close"></i>
+                                    </a>
+                                    <h4 class="compare-product-title">
+                                        <a href="product.html">
+                                            گوشی سامسونگ مدل
+                                            S9
+                                        </a>
+                                    </h4>
+                                </li>
+                                <li class="compare-product">
+                                    <a href="#" class="btn-remove" title="حذف محصول">
+                                        <i class="icon-close"></i>
+                                    </a>
+                                    <h4 class="compare-product-title">
+                                        <a href="product.html">
+                                            گوشی سامسونگ مدل
+                                            S8
+                                        </a>
+                                    </h4>
+                                </li>
+                            </ul>
+
+                            <div class="compare-actions">
+                                <a href="#" class="action-link">حذف همه</a>
+                                <a href="compare.html" class="btn btn-outline-primary-2">
+                                    <span>مقایسه</span><i class="icon-long-arrow-left"></i>
+                                </a>
+                            </div>
+                        </div><!-- End .dropdown-menu -->
+                    </div><!-- End .compare-dropdown -->
+
+                    <a href="wishlist.html" class="wishlist-link">
+                        <i class="icon-heart-o"></i>
+                        <span class="wishlist-count">3</span>
+                        <span class="wishlist-txt">مورد علاقه</span>
                     </a>
-                    <div class="dropdown-box">
-                        <div class="cart-header">
-                            <span>سبد خرید فروشگاه  </span>
-                            <a href="#" class="btn-close">بستن <i class="w-icon-long-arrow-left"></i></a>
-                        </div>
 
-                        <div class="products">
-                            <div class="product product-cart">
-                                <div class="product-detail">
-                                    <a href="product-default.html" class="product-name">لوازم آرایشی <br>با کیف چرم </a>
-                                    <div class="price-box">
-                                        <span class="product-quantity">1</span>
-                                        <span class="product-price">250000 تومان</span>
-                                    </div>
-                                </div>
-                                <figure class="product-media">
-                                    <a href="product-default.html">
-                                        <img src="~/Theme/assets/images/cart/product-1.jpg" alt="product" height="84"
-                                             width="94" />
+                    <div class="dropdown cart-dropdown">
+                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <i class="icon-shopping-cart"></i>
+                            <span class="cart-count">2</span>
+                            <span class="cart-txt">سبد خرید</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div class="dropdown-cart-products">
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <h4 class="product-title">
+                                            <a href="product.html">کتونی ورزشی مخصوص دویدن رنگ بژ</a>
+                                        </h4>
+
+                                        <span class="cart-product-info">
+                                            <span class="cart-product-qty">1</span>
+                                            84,000 تومان
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
+
+                                    <figure class="product-image-container">
+                                        <a href="product.html" class="product-image">
+                                            <img src="~/Theme/assets/images/products/cart/product-1.jpg" alt="محصول">
+                                        </a>
+                                    </figure>
+                                    <a href="#" class="btn-remove" title="حذف محصول">
+                                        <i class="icon-close"></i>
                                     </a>
-                                </figure>
-                                <button class="btn btn-link btn-close">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
+                                </div><!-- End .product -->
 
-                            <div class="product product-cart">
-                                <div class="product-detail">
-                                    <a href="product-default.html" class="product-name">زود پز <br>استیل برقی </a>
-                                    <div class="price-box">
-                                        <span class="product-quantity">1</span>
-                                        <span class="product-price">320000 تومان</span>
-                                    </div>
-                                </div>
-                                <figure class="product-media">
-                                    <a href="product-default.html">
-                                        <img src="~/Theme/assets/images/cart/product-2.jpg" alt="product" width="84"
-                                             height="94" />
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <h4 class="product-title">
+                                            <a href="product.html">لباس زنانه آبی</a>
+                                        </h4>
+
+                                        <span class="cart-product-info">
+                                            <span class="cart-product-qty">1</span>
+                                            76,000 تومان
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
+
+                                    <figure class="product-image-container">
+                                        <a href="product.html" class="product-image">
+                                            <img src="~/Theme/assets/images/products/cart/product-2.jpg" alt="محصول">
+                                        </a>
+                                    </figure>
+                                    <a href="#" class="btn-remove" title="حذف محصول">
+                                        <i class="icon-close"></i>
                                     </a>
-                                </figure>
-                                <button class="btn btn-link btn-close">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
+                                </div><!-- End .product -->
+                            </div><!-- End .cart-product -->
 
-                        <div class="cart-total">
-                            <label>مجموع کل: </label>
-                            <span class="price">570000 تومان</span>
-                        </div>
+                            <div class="dropdown-cart-total">
+                                <span>مجموع</span>
 
-                        <div class="cart-action">
-                            <a href="cart.html" class="btn btn-dark btn-outline btn-rounded">نمایش سبد </a>
-                            <a href="checkout.html" class="btn btn-primary  btn-rounded">پرداخت </a>
-                        </div>
-                    </div>
-                    <!-- End of Dropdown Box -->
+                                <span class="cart-total-price">160,000 تومان</span>
+                            </div><!-- End .dropdown-cart-total -->
+
+                            <div class="dropdown-cart-action">
+                                <a href="cart.html" class="btn btn-primary">مشاهده سبد خرید</a>
+                                <a href="checkout.html" class="btn btn-outline-primary-2">
+                                    <span>پرداخت</span><i class="icon-long-arrow-left"></i>
+                                </a>
+                            </div><!-- End .dropdown-cart-total -->
+                        </div><!-- End .dropdown-menu -->
+                    </div><!-- End .cart-dropdown -->
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- End of Header Middle -->
+        </div><!-- End .container -->
+    </div><!-- End .header-middle -->
 
-    <div class="header-bottom sticky-content fix-top sticky-header has-dropdown">
-        <div class="container">
-            <div class="inner-wrap">
-                <div class="header-left">
-                    @await Component.InvokeAsync("GetMenuCategories")
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+@await Component.InvokeAsync("GetMenuCategories")
+
+<!-- End .header-bottom -->
+</header><!-- End .header -->

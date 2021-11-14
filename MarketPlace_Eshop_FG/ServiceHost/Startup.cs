@@ -1,3 +1,6 @@
+using System;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +10,7 @@ using MarketPlace.Application.Services.Implementations;
 using MarketPlace.DataLayer.Repository;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace ServiceHost
@@ -23,12 +27,16 @@ namespace ServiceHost
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Config Services
+
             services.AddControllersWithViews();
 
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
 
+            #endregion
 
             #region ConfigDatabase
 
@@ -37,6 +45,34 @@ namespace ServiceHost
             services.AddDbContext<DatabaseContext>(option =>
                 option.UseSqlServer(connectionString));
 
+            #endregion
+
+            #region Authentication
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+                }).AddCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+            });
+
+
+
+
+
+            #endregion
+
+            #region Html Encoder
+
+            services.AddSingleton<HtmlEncoder>(
+                HtmlEncoder.Create(
+                    allowedRanges: new[] { UnicodeRanges.BasicLatin, UnicodeRanges.Arabic }));
             #endregion
         }
 
@@ -57,6 +93,8 @@ namespace ServiceHost
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
