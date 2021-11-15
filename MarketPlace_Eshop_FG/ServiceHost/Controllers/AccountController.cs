@@ -108,7 +108,7 @@ namespace ServiceHost.Controllers
                             new Claim(ClaimTypes.MobilePhone, user.Mobile),
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                             new Claim(ClaimTypes.Email, user.Email),
-                            new Claim(ClaimTypes.Name, user.FirstName),
+                            new Claim(ClaimTypes.Name, user.FirstName +" "+ user.LastName),
 
 
 
@@ -131,6 +131,46 @@ namespace ServiceHost.Controllers
             }
 
             return View();
+        }
+
+        #endregion
+
+        #region Forget Password
+
+        [HttpGet("forgot-password")]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost("forgot-password"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDTO forgot)
+        {
+            if (!await _captchaValidator.IsCaptchaPassedAsync(forgot.Captcha))
+            {
+                TempData[ErrorMessage] = "کد کپچای شما تایید نشد";
+                return View(forgot);
+            }
+
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.RecoverUserPassword(forgot);
+
+                switch (result)
+                {
+                    case ForgotPasswordresult.NotFound:
+                        TempData[ErrorMessage] = "کاربر مورد نظر یافت نشد";
+                        ModelState.AddModelError("Mobile", "کاربر مورد نظر یافت نشد ");
+                        break;
+                    case ForgotPasswordresult.Success:
+                        TempData[SuccessMessage] = " رمز عبور جدید برای شما ارسال شد";
+                        TempData[InfoMessage] = "لطفا پس از ورود به حساب کاربری، رمز عبور خود را تغییر دهید";
+                        return RedirectToAction("Login");
+
+                }
+            }
+
+            return View(forgot);
         }
 
         #endregion

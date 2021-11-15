@@ -160,3 +160,4 @@ E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Debug\net5.0\GoogleReCaptcha.V3.dll
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\_CaptchaInput.cshtml.g.cs
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\_CaptchaScripts.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Account\ForgotPassword.cshtml.g.cs
