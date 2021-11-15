@@ -1,4 +1,5 @@
-﻿@model MarketPlace.DataLayer.DTOs.Account.RegisterUserDTO
+﻿@using MarketPlace.DataLayer.DTOs.Site
+@model MarketPlace.DataLayer.DTOs.Account.RegisterUserDTO
 @{
     ViewData["Title"] = "ورود و ثبت نام کاربر";
 }
@@ -6,6 +7,7 @@
 @section Scripts
 {
     <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts"/>
 }
 
 
@@ -23,8 +25,9 @@
         <div @*class="tab-content" id="tab-content-5"*@>
             <div @*class="tab-pane fade"*@ id="register" @*role="tabpanel" aria-labelledby="register-tab"*@>
                 <form method="post" asp-controller="Account" asp-action="Register">
+                    <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
                     <div class="form-group">
-                        <label>نام  *</label>
+                        <label>نام *</label>
                         <input type="text" asp-for="FirstName" class="form-control" id="firstname" name="firstname">
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div><!-- End .form-group -->

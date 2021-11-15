@@ -1,6 +1,8 @@
 using System;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using GoogleReCaptcha.V3;
+using GoogleReCaptcha.V3.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +37,7 @@ namespace ServiceHost
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
             #endregion
 

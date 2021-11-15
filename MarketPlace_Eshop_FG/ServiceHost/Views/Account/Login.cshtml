@@ -1,6 +1,13 @@
-﻿
+﻿@using MarketPlace.DataLayer.DTOs.Site
+@model MarketPlace.DataLayer.DTOs.Account.LoginUserDTO
 @{
-    ViewData["Title"] = "ورود و ثبت نام کاربر";
+    ViewData["Title"] = "ورود به حساب کاربری";
+}
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts"/>
 }
 
 <br />
@@ -8,25 +15,26 @@
 <div class="form-box">
     <div class="form-tab">
         <div class="text-center nav-link nav nav-pills nav-fill nav-border-anim">
-            <span class="nav-link nav  nav-fill nav-border-anim" >
-                ورود
+            <span class="nav-link nav  nav-fill nav-border-anim">
+                ورود به حساب کاربری
             </span>
         </div>
         <br />
         <div class="tab-content" id="tab-content-5">
             <div class="tab-pane fade show active" id="signin" role="tabpanel"
                  aria-labelledby="signin-tab">
-                <form asp-controller="Account" asp-action="Login">
+                <form method="post" asp-controller="Account" asp-action="Login">
+                    <partial name="_CaptchaInput" model="@(new CaptchaViewModel())"/>
                     <div class="form-group">
-                        <label for="singin-email">آدرس ایمیل *</label>
-                        <input type="text" class="form-control" id="singin-email"
-                               name="singin-email" required>
+                        <label>تلفن همراه *</label>
+                        <input asp-for="Mobile" type="text" class="form-control" id="singin-mobile" name="mobile">
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div><!-- End .form-group -->
 
                     <div class="form-group">
-                        <label for="singin-password">رمز عبور *</label>
-                        <input type="password" class="form-control" id="singin-password"
-                               name="singin-password" required>
+                        <label>رمز عبور *</label>
+                        <input asp-for="Password" type="password" class="form-control" id="singin-password" name="password">
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div><!-- End .form-group -->
 
                     <div class="form-footer">
@@ -40,7 +48,7 @@
                                    id="signin-remember">
                             <label class="custom-control-label" for="signin-remember">
                                 مرا به خاطر
-                                بسپار
+                                بسپار !
                             </label>
                         </div><!-- End .custom-checkbox -->
 

@@ -76,6 +76,34 @@ namespace MarketPlace.Application.Services.Implementations
             return await _userRepository.GetQuery().AsQueryable().AnyAsync(x => x.Mobile == mobile);
         }
 
+        public async Task<LoginUserDTO.LoginUserResult> GetUserForLogin(LoginUserDTO login)
+        {
+            var user = await _userRepository.GetQuery().AsQueryable()
+                .SingleOrDefaultAsync(x => x.Mobile == login.Mobile);
+
+            if (user == null)
+            {
+                return LoginUserDTO.LoginUserResult.NotFound;
+            }
+
+            if (!user.IsMobileActive)
+            {
+                return LoginUserDTO.LoginUserResult.NotActivated;
+            }
+
+            if (user.Password != _passwordHasher.EncodePasswordMd5(login.Password))
+            {
+                return LoginUserDTO.LoginUserResult.NotFound;
+            }
+
+            return LoginUserDTO.LoginUserResult.Success;
+        }
+
+        public async Task<User> GetUserByMobile(string mobile)
+        {
+            return await _userRepository.GetQuery().AsQueryable().SingleOrDefaultAsync(x => x.Mobile == mobile);
+        }
+
         #endregion
 
         #region Dispose

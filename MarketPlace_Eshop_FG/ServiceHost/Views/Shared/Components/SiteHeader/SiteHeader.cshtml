@@ -2,41 +2,10 @@
     <div class="header-top">
         <div class="container">
             <div class="header-left">
-                <a href="tel_3A.html#"><i class="icon-phone"></i>تلفن تماس : 02155667788</a>
+                <a href="#"><i class="header-dropdown icon-star"></i>به سایت فروشگاهی آنلاین فریدون گلزر خوش آمدید</a>
             </div><!-- End .header-left -->
 
             <div class="header-right">
-
-                <ul class="top-menu">
-                    <li>
-                        <a href="#">ناحیه کاربری</a>
-                        <ul>
-                            <li>
-                                <div class="header-dropdown">
-                                    <a href="#">ورود</a>
-                                    <div class="header-menu">
-                                        <ul>
-                                            <li><a href="#">ورود به سایت</a></li>
-                                        </ul>
-                                    </div><!-- End .header-menu -->
-                                </div><!-- End .header-dropdown -->
-                            </li>
-                            <li>
-                                <div class="header-dropdown">
-                                    <a href="#">ثبت نام</a>
-                                    <div class="header-menu">
-                                        <ul>
-                                            <li><a href="#">ثبت نام در سایت</a></li>
-                                        </ul>
-                                    </div><!-- End .header-menu -->
-                                </div><!-- End .header-dropdown -->
-                            </li>
-                            <li class="login">
-                                <a href="#signin-modal" data-toggle="modal">ورود / ثبت نام</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul><!-- End .top-menu -->
             </div><!-- End .header-right -->
         </div><!-- End .container -->
     </div><!-- End .header-top -->
@@ -84,46 +53,62 @@
             <div class="header-right">
                 <div class="header-dropdown-link">
                     <div class="dropdown compare-dropdown">
-                        <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" data-display="static"
-                           title="مقایسه کردن محصولات" aria-label="Compare Products">
-                            <i class="icon-random"></i>
-                            <span class="compare-txt">مقایسه</span>
-                        </a>
+                      @if (!User.Identity.IsAuthenticated)
+                      {
+                          <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                             aria-haspopup="true" aria-expanded="false" data-display="static"
+                             title="ورود و ثبت نام کاربر" aria-label="Compare Products">
+                              <i class="icon-user"></i>
+                              <span class="compare-txt">ورود | ثبت نام</span>
+                          </a>
 
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <ul class="compare-products">
-                                <li class="compare-product">
-                                    <a href="#" class="btn-remove" title="حذف محصول">
-                                        <i class="icon-close"></i>
-                                    </a>
-                                    <h4 class="compare-product-title">
-                                        <a href="product.html">
-                                            گوشی سامسونگ مدل
-                                            S9
-                                        </a>
-                                    </h4>
-                                </li>
-                                <li class="compare-product">
-                                    <a href="#" class="btn-remove" title="حذف محصول">
-                                        <i class="icon-close"></i>
-                                    </a>
-                                    <h4 class="compare-product-title">
-                                        <a href="product.html">
-                                            گوشی سامسونگ مدل
-                                            S8
-                                        </a>
-                                    </h4>
-                                </li>
-                            </ul>
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <ul class="compare-products">
+                                  <li class="compare-product">
+                                      <h4 class="compare-product-title">
+                                          <a asp-controller="Account" asp-action="Login">
+                                              <i class=" icon-check">    ورود   </i>
+                                          </a>
+                                      </h4>
+                                  </li>
+                                  <li class="compare-product">
+                                      <h4 class="compare-product-title">
+                                          <a asp-controller="Account" asp-action="Register">
+                                              <i class=" icon-check">    ثبت نام   </i>
+                                          </a>
+                                      </h4>
+                                  </li>
+                              </ul>
+                          </div><!-- End .dropdown-menu -->
+                      }
+                      else
+                      {
+                          <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                             aria-haspopup="true" aria-expanded="false" data-display="static"
+                             title="ورود و ثبت نام کاربر" aria-label="Compare Products">
+                              <i class="icon-user"></i>
+                              <span class="compare-txt">پنل کاربری</span>
+                          </a>
 
-                            <div class="compare-actions">
-                                <a href="#" class="action-link">حذف همه</a>
-                                <a href="compare.html" class="btn btn-outline-primary-2">
-                                    <span>مقایسه</span><i class="icon-long-arrow-left"></i>
-                                </a>
-                            </div>
-                        </div><!-- End .dropdown-menu -->
+                          <div class="dropdown-menu dropdown-menu-right">
+                              <ul class="compare-products">
+                                  <li class="compare-product">
+                                      <h4 class="compare-product-title">
+                                          <a asp-controller="Account" asp-action="Login">
+                                              پنل کاربری (@User.Identity.Name عزیز، خوش آمدید)
+                                          </a>
+                                      </h4>
+                                  </li>
+                                  <li class="compare-product">
+                                      <h4 class="compare-product-title">
+                                          <a asp-controller="Account" asp-action="Logout">
+                                              خروج
+                                          </a>
+                                      </h4>
+                                  </li>
+                              </ul>
+                          </div><!-- End .dropdown-menu -->
+                      }
                     </div><!-- End .compare-dropdown -->
 
                     <a href="wishlist.html" class="wishlist-link">
