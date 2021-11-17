@@ -1,4 +1,7 @@
-﻿
+﻿@using MarketPlace.DataLayer.Entities.Site
+
+@{ var siteSetting = ViewBag.siteSetting as SiteSetting; }
+
 
 <footer class="footer footer-2">
     <div class="footer-middle border-0">
@@ -9,16 +12,14 @@
                         <img src="~/Theme/assets/images/demos/demo-13/logo-footer.png" class="footer-logo"
                              alt="Footer Logo" width="105" height="25">
                         <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی
-                            نامفهوم. لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم لورم ایپسوم متن ساختگی با
-                            تولید سادگی نامفهوم.
+                           @siteSetting.FooterText
                         </p>
 
                         <div class="widget-about-info">
                             <div class="row">
                                 <div class="col-sm-6 col-md-4">
                                     <span class="widget-about-title">سوالی دارید؟ 7روز هفته/24ساعته</span>
-                                    <a href="tel:123456789">02155667788</a>
+                                    <a href="tel:123456789">@siteSetting.Mobile</a>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
                         </div><!-- End .widget-about-info -->
@@ -72,7 +73,7 @@
 
     <div class="footer-bottom">
         <div class="container">
-            <p class="footer-copyright">کپی رایت © 2019 تمامی حقوق محفوظ است.</p>
+            <p class="footer-copyright">@siteSetting.CopyRight</p>
             <!-- End .footer-copyright -->
 
             <div class="social-icons social-icons-color">

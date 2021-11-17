@@ -25,6 +25,18 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
+      "KavenegarDotNetCore/1.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "9.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/Kavenegar.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Kavenegar.Core.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -2053,7 +2065,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "MarketPlace.DataLayer": "1.0.0"
+          "KavenegarDotNEtCore": "1.0.3",
+          "MarketPlace.DataLayer": "1.0.0",
+          "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
           "bin/placeholder/MarketPlace.Application.dll": {}
@@ -2105,6 +2119,24 @@
         "lib/netstandard2.0/Humanizer.dll",
         "lib/netstandard2.0/Humanizer.xml",
         "logo.png"
+      ]
+    },
+    "KavenegarDotNetCore/1.0.3": {
+      "sha512": "y8FdW8QOM1gRr3iQgcQPU6pm0BM1VY3YM+FnbIIPKiFWTBYyHXAi/FPxkHQJXrjt2YLt6xLkwUFHGE2jIeZgaA==",
+      "type": "package",
+      "path": "kavenegardotnetcore/1.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "3264702.png",
+        "kavenegardotnetcore.1.0.3.nupkg.sha512",
+        "kavenegardotnetcore.nuspec",
+        "lib/netstandard1.2/Kavenegar.Core.dll",
+        "lib/netstandard1.3/Kavenegar.Core.dll",
+        "lib/netstandard1.4/Kavenegar.Core.dll",
+        "lib/netstandard1.5/Kavenegar.Core.dll",
+        "lib/netstandard1.6/Kavenegar.Core.dll",
+        "lib/netstandard2.0/Kavenegar.Core.dll"
       ]
     },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {

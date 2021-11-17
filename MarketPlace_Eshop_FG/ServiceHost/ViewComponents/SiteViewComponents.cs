@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using MarketPlace.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceHost.ViewComponents
@@ -7,12 +8,21 @@ namespace ServiceHost.ViewComponents
     #region SiteHeader
     public class SiteHeaderViewComponent : ViewComponent
     {
+        private readonly ISiteService _siteService;
+
+        public SiteHeaderViewComponent(ISiteService siteService)
+        {
+            _siteService = siteService;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
+
+            ViewBag.siteSetting = await _siteService.GetDefaultSiteSetting();
             return View("SiteHeader");
         }
     }
-
+    #endregion
 
     #region Get Menu Categories
     public class GetMenuCategoriesViewComponent : ViewComponent
@@ -38,9 +48,7 @@ namespace ServiceHost.ViewComponents
 
     #endregion
 
-    #endregion
-
-    #region SiteFooter
+    #region LoginRegisterModal
     public class LoginRegisterModalViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
@@ -52,12 +60,19 @@ namespace ServiceHost.ViewComponents
 
     #endregion
 
-
     #region SiteFooter
     public class SiteFooterViewComponent : ViewComponent
     {
+        private readonly ISiteService _siteService;
+
+        public SiteFooterViewComponent(ISiteService siteService)
+        {
+            _siteService = siteService;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            ViewBag.siteSetting = await _siteService.GetDefaultSiteSetting();
             return View("SiteFooter");
         }
     }

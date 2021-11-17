@@ -54,13 +54,52 @@ namespace ServiceHost.Controllers
                         ModelState.AddModelError("Mobile", "تلفن همراه وارد شده تکراری می باشد ");
                         break;
                     case RegisterUserResult.Success:
-                        TempData[SuccessMessage] = "عملیات ثبت نام با موفقیت انجام شد";
-                        TempData[InfoMessage] = "کد تایید برای شما ارسال شد";
-                        return RedirectToAction("Login");
+                        TempData[InfoMessage] = $"کد تایید جهت فعالسازی حساب کاربری به شماره همراه {register.Mobile} ارسال شد";
+                        return RedirectToAction("ActivateMobile", "Account", new { mobile = register.Mobile });
 
                 }
             }
             return View(register);
+        }
+
+        #endregion
+
+        #region Activate Mobile Number
+
+        [HttpGet("activate-mobile/{mobile}")]
+        public IActionResult ActivateMobile(string mobile)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return Redirect("/");
+            }
+
+            var activateMobile = new ActivateMobileDTO { Mobile = mobile };
+            return View(activateMobile);
+        }
+
+        [HttpPost("activate-mobile/{mobile}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> ActivateMobile(ActivateMobileDTO activate)
+        {
+            if (!await _captchaValidator.IsCaptchaPassedAsync(activate.Captcha))
+            {
+                TempData[ErrorMessage] = "کد کپچای شما تایید نشد";
+                return View(activate);
+            }
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.ActivateMobile(activate);
+
+                if (result)
+                {
+                    TempData[SuccessMessage] = "حساب کاربری شما با موفقیت فعال شد";
+                    return RedirectToAction("Login");
+                }
+
+                TempData[ErrorMessage] = "کاربری با مشخصات وارد شده یافت نشد";
+
+            }
+            return View(activate);
         }
 
         #endregion

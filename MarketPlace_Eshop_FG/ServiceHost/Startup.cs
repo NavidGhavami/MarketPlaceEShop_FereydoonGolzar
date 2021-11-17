@@ -36,6 +36,8 @@ namespace ServiceHost
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISiteService, SiteService>();
+            services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 

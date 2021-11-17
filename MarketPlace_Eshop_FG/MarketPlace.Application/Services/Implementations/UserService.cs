@@ -16,10 +16,12 @@ namespace MarketPlace.Application.Services.Implementations
 
         private readonly IGenericRepository<User> _userRepository;
         private readonly IPasswordHasher _passwordHasher;
-        public UserService(IGenericRepository<User> userRepository, IPasswordHasher passwordHasher)
+        private readonly ISmsService _smsService;
+        public UserService(IGenericRepository<User> userRepository, IPasswordHasher passwordHasher, ISmsService smsService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _smsService = smsService;
         }
 
         #endregion
@@ -32,7 +34,7 @@ namespace MarketPlace.Application.Services.Implementations
 
             try
             {
-                if (!await  IsUserExistsByMobileNumber(register.Mobile))
+                if (!await IsUserExistsByMobileNumber(register.Mobile))
                 {
                     var user = new User
                     {
@@ -41,7 +43,7 @@ namespace MarketPlace.Application.Services.Implementations
                         Mobile = register.Mobile,
                         Email = register.Email,
                         Password = _passwordHasher.EncodePasswordMd5(register.Password),
-                        MobileActiveCode = new Random().Next(10000,999999).ToString(),
+                        MobileActiveCode = new Random().Next(100000, 999999).ToString(),
                         EmailActiveCode = Guid.NewGuid().ToString("N")
 
                     };
@@ -49,7 +51,7 @@ namespace MarketPlace.Application.Services.Implementations
                     await _userRepository.AddEntity(user);
                     await _userRepository.SaveChanges();
 
-                    //todo: send activation mobile code to user
+                    await _smsService.SendVerificationSms(register.Mobile, user.MobileActiveCode);
 
                     return RegisterUserResult.Success;
                 }
@@ -124,6 +126,26 @@ namespace MarketPlace.Application.Services.Implementations
             return ForgotPasswordresult.Success;
         }
 
+        public async Task<bool> ActivateMobile(ActivateMobileDTO activate)
+        {
+            var user = await _userRepository.GetQuery().AsQueryable()
+                .SingleOrDefaultAsync(x => x.Mobile == activate.Mobile);
+
+            if (user != null)
+            {
+                if (user.MobileActiveCode == activate.MobileActivationCode)
+                {
+                    user.IsMobileActive = true;
+                    user.MobileActiveCode = new Random().Next(100000, 999999).ToString();
+                    await _userRepository.SaveChanges();
+                    
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Dispose
@@ -133,9 +155,9 @@ namespace MarketPlace.Application.Services.Implementations
             await _userRepository.DisposeAsync();
         }
 
-      
+
 
         #endregion
-        
+
     }
 }

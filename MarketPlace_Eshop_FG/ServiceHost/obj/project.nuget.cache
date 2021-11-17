@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "/hKGLLku4LNA95pxfIWg9o3IXt3hokqGxwcJVzgm8kuRAQC82ZFSiTP0/Ztfw83Hmpn9HLq2GEYoKup77dbfXA==",
+  "dgSpecHash": "K9uTmWYyaTZ/vZiC9akn5K0qsOSDe27AhClwV+yCtnO/RXxEzekUZJvBKjpGeEATOYwMPImXgVetLNIzM4rvrg==",
   "success": true,
   "projectFilePath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\googlerecaptcha.v3\\1.3.1\\googlerecaptcha.v3.1.3.1.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\DELL\\.nuget\\packages\\kavenegardotnetcore\\1.0.3\\kavenegardotnetcore.1.0.3.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\5.0.0\\microsoft.aspnetcore.razor.language.5.0.0.nupkg.sha512",
