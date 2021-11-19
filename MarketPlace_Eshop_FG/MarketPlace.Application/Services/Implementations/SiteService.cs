@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
@@ -14,10 +15,14 @@ namespace MarketPlace.Application.Services.Implementations
         #region Constructor
 
         private readonly IGenericRepository<SiteSetting> _siteSettingRepository;
+        private readonly IGenericRepository<Slider> _sliderRepository;
+        private readonly IGenericRepository<SiteBanner> _siteBanner;
 
-        public SiteService(IGenericRepository<SiteSetting> siteSettingRepository)
+        public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository, IGenericRepository<SiteBanner> siteBanner)
         {
             _siteSettingRepository = siteSettingRepository;
+            _sliderRepository = sliderRepository;
+            _siteBanner = siteBanner;
         }
 
         #endregion
@@ -31,13 +36,49 @@ namespace MarketPlace.Application.Services.Implementations
                 .SingleOrDefaultAsync(x => x.IsDefault && !x.IsDelete);
         }
 
+
+
+        #endregion
+
+        #region Slider
+
+        public async Task<List<Slider>> GetAllActiveSlider()
+        {
+            return await _sliderRepository.GetQuery().AsQueryable()
+                .Where(x => x.IsActive && !x.IsDelete).ToListAsync();
+        }
+
+        #endregion
+
+        #region Site Banners
+
+        public async Task<List<SiteBanner>> GetSiteBannersByLocations(List<SiteBanner.BannersLocations> locations)
+        {
+            return await _siteBanner
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => locations.Contains(x.BannersLocation))
+                .ToListAsync();
+        }
+
         #endregion
 
         #region Dispose
 
         public async ValueTask DisposeAsync()
         {
-            await _siteSettingRepository.DisposeAsync();
+            if (_siteSettingRepository != null)
+            {
+                await _siteSettingRepository.DisposeAsync();
+            }
+            if (_sliderRepository != null)
+            {
+                await _sliderRepository.DisposeAsync();
+            }
+            if (_sliderRepository != null)
+            {
+                await _siteBanner.DisposeAsync();
+            }
         }
 
 

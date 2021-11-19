@@ -1,0 +1,16 @@
+﻿
+
+.SliderIMG {
+    width: 2080px !important;
+    height: 100%;
+    position: absolute;
+}
+
+.SliderContent {
+    padding-top: 70px;
+    padding-bottom: 80px;
+    position: relative;
+}
+.SlideHeight {
+    height: 412px;
+}

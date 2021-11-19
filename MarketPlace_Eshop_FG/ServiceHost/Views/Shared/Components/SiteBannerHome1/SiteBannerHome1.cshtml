@@ -1,0 +1,38 @@
+﻿@using MarketPlace.DataLayer.Entities.Site
+@using MarketPlace.Application.EntitiesExtensions
+
+@{
+    var banners = ViewBag.banners as List<SiteBanner>;
+}
+
+@if (banners != null && banners.Any(x => x.BannersLocation == SiteBanner.BannersLocations.Home1))
+{
+    <div class="container">
+        <div class="row">
+           @foreach (var item in banners.Where(x => x.BannersLocation == SiteBanner.BannersLocations.Home1))
+           {
+               <div class="@item.ColSize">
+                   <div class="banner banner-overlay">
+                       <a href="@item.Url">
+                           <img src="@item.GetBannerMainImageAddress()" alt="@item.MainText" title="@item.MainText">
+                       </a>
+
+                       <div class="banner-content">
+                           <h4 class="banner-subtitle text-white"><a href="@item.Url">@item.Header</a></h4>
+                           <!-- End .banner-subtitle -->
+                           <h3 class="banner-title text-white">
+                               <a href="@item.Url">
+                                   <span>
+                                       @item.MainText
+                                   </span>
+                               </a>
+                           </h3><!-- End .banner-title -->
+                           <a href="@item.Url" class="banner-link">@item.BtnText <i class="icon-long-arrow-left"></i></a>
+                       </div><!-- End .banner-content -->
+                   </div><!-- End .banner -->
+               </div><!-- End .col-lg-3 -->
+           }
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+}
+

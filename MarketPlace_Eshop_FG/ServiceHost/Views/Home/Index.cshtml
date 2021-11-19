@@ -1,90 +1,11 @@
-﻿@{
+﻿@using MarketPlace.DataLayer.Entities.Site
+@{
     ViewData["Title"] = "صفحه اصلی";
+    var banners = ViewBag.banners as List<SiteBanner>;
 }
 
 
-<div class="intro-slider-container">
-    <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl" data-owl-options='{
-                        "nav": false,
-                        "rtl": true,
-                            "responsive": {
-                            "992": {
-                                "nav": true
-                            }
-                        }
-                    }'>
-        <div class="intro-slide"
-             style="background-image: url(~/Theme/assets/images/demos/demo-13/slider/slide-1.png);">
-            <div class="container intro-content">
-                <div class="row">
-                    <div class="col-auto offset-lg-3 intro-col">
-                        <h3 class="intro-subtitle">محصولات پیشنهادی</h3><!-- End .h3 intro-subtitle -->
-                        <h1 class="intro-title">
-                            جدیدترین پیشنهادات <br>محصولات مک بوک
-                            <span>
-                                <sup class="font-weight-light">از</sup>
-                                <span class="text-primary">999,000<sup>تومان</sup></span>
-                            </span>
-                        </h1><!-- End .intro-title -->
-
-                        <a href="category.html" class="btn btn-outline-primary-2">
-                            <span>خرید</span>
-                            <i class="icon-long-arrow-left"></i>
-                        </a>
-                    </div><!-- End .col-auto offset-lg-3 -->
-                </div><!-- End .row -->
-            </div><!-- End .container intro-content -->
-        </div><!-- End .intro-slide -->
-
-        <div class="intro-slide"
-             style="background-image: url(~/Theme/assets/images/demos/demo-13/slider/slide-2.jpg);">
-            <div class="container intro-content">
-                <div class="row">
-                    <div class="col-auto offset-lg-3 intro-col">
-                        <h3 class="intro-subtitle">مسافرت و خارج از خانه</h3><!-- End .h3 intro-subtitle -->
-                        <h1 class="intro-title">
-                            جدیدترین پیشنهادات <br>لوازم خارج از منزل
-                            <span>
-                                <sup class="font-weight-light line-through">89,000</sup>
-                                <span class="text-primary">29,000<sup>تومان</sup></span>
-                            </span>
-                        </h1><!-- End .intro-title -->
-
-                        <a href="category.html" class="btn btn-outline-primary-2">
-                            <span>خرید</span>
-                            <i class="icon-long-arrow-left"></i>
-                        </a>
-                    </div><!-- End .col-auto offset-lg-3 -->
-                </div><!-- End .row -->
-            </div><!-- End .container intro-content -->
-        </div><!-- End .intro-slide -->
-
-        <div class="intro-slide"
-             style="background-image: url(~/Theme/assets/images/demos/demo-13/slider/slide-3.jpg);">
-            <div class="container intro-content">
-                <div class="row">
-                    <div class="col-auto offset-lg-3 intro-col">
-                        <h3 class="intro-subtitle">محصولات مد و زیبایی</h3><!-- End .h3 intro-subtitle -->
-                        <h1 class="intro-title">
-                            جدیدترین محصولات <br>انواع ژاکت
-                            <span>
-                                <sup class="font-weight-light line-through">240,000</sup>
-                                <span class="text-primary">180,000<sup>تومان</sup></span>
-                            </span>
-                        </h1><!-- End .intro-title -->
-
-                        <a href="category.html" class="btn btn-outline-primary-2">
-                            <span>خرید</span>
-                            <i class="icon-long-arrow-left"></i>
-                        </a>
-                    </div><!-- End .col-auto offset-lg-3 -->
-                </div><!-- End .row -->
-            </div><!-- End .container intro-content -->
-        </div><!-- End .intro-slide -->
-    </div><!-- End .owl-carousel owl-simple -->
-
-    <span class="slider-loader"></span><!-- End .slider-loader -->
-</div><!-- End .intro-slider-container -->
+@await Component.InvokeAsync("HomeSlider")
 
 <div class="mb-4"></div><!-- End .mb-2 -->
 
@@ -253,77 +174,7 @@
 
 <div class="mb-2"></div><!-- End .mb-2 -->
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-6 col-lg-3">
-            <div class="banner banner-overlay">
-                <a href="#">
-                    <img src="~/Theme/assets/images/demos/demo-13/banners/banner-1.jpg" alt="بنر">
-                </a>
-
-                <div class="banner-content">
-                    <h4 class="banner-subtitle text-white"><a href="#">تخفیف هفتگی</a></h4>
-                    <!-- End .banner-subtitle -->
-                    <h3 class="banner-title text-white">
-                        <a href="#">
-                            روشنایی <br>و لوازم جانبی <br><span>
-                                25%
-                                تخفیف
-                            </span>
-                        </a>
-                    </h3><!-- End .banner-title -->
-                    <a href="#" class="banner-link">خرید <i class="icon-long-arrow-left"></i></a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-lg-3 -->
-
-        <div class="col-sm-6 col-lg-3 order-lg-last">
-            <div class="banner banner-overlay">
-                <a href="#">
-                    <img src="~/Theme/assets/images/demos/demo-13/banners/banner-3.jpg" alt="بنر">
-                </a>
-
-                <div class="banner-content">
-                    <h4 class="banner-subtitle text-white"><a href="#">تخفیف ویژه</a></h4>
-                    <!-- End .banner-subtitle -->
-                    <h3 class="banner-title text-white">
-                        <a href="#">
-                            پیشنهاد <br>مخصوص <br><span>
-                                15%
-                                تخفیف
-                            </span>
-                        </a>
-                    </h3><!-- End .banner-title -->
-                    <a href="#" class="banner-link">خرید <i class="icon-long-arrow-left"></i></a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-lg-3 -->
-
-        <div class="col-lg-6">
-            <div class="banner banner-overlay">
-                <a href="#">
-                    <img src="~/Theme/assets/images/demos/demo-13/banners/banner-2.jpg" alt="بنر">
-                </a>
-
-                <div class="banner-content">
-                    <h4 class="banner-subtitle text-white d-none d-sm-block">
-                        <a href="#">
-                            پیشنهاد های
-                            جذاب
-                        </a>
-                    </h4><!-- End .banner-subtitle -->
-                    <h3 class="banner-title text-white">
-                        <a href="#">
-                            لباس های ویژه در <br>کالکشن بهار 1399
-                            <br><span>از 12,000 تومان</span>
-                        </a>
-                    </h3><!-- End .banner-title -->
-                    <a href="#" class="banner-link">مشاهده <i class="icon-long-arrow-left"></i></a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-lg-6 -->
-    </div><!-- End .row -->
-</div><!-- End .container -->
+@await Component.InvokeAsync("SiteBannerHome1")
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
@@ -2158,68 +2009,9 @@
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
-<div class="container categories pt-6">
-    <h2 class="title-lg text-center mb-4">فروش ویژه کالاها</h2><!-- End .title-lg text-center -->
 
-    <div class="row">
-        <div class="col-6 col-lg-4">
-            <div class="banner banner-display banner-link-anim">
-                <a href="#">
-                    <img src="~/Theme/assets/images/banners/home/banner-1.jpg" alt="بنر">
-                </a>
+@await Component.InvokeAsync("SiteBannerHome2")
 
-                <div class="banner-content banner-content-center">
-                    <h3 class="banner-title text-white text-center"><a href="#">بیرون از منزل</a></h3>
-                    <!-- End .banner-title -->
-                    <a href="#" class="btn btn-outline-white banner-link">خرید<i class="icon-long-arrow-left"></i></a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-sm-6 col-lg-3 -->
-        <div class="col-6 col-lg-4 order-lg-last">
-            <div class="banner banner-display banner-link-anim">
-                <a href="#">
-                    <img src="~/Theme/assets/images/banners/home/banner-4.jpg" alt="بنر">
-
-                </a>
-
-                <div class="banner-content banner-content-center">
-                    <h3 class="banner-title text-white text-center"><a href="#">روشنایی</a></h3>
-                    <!-- End .banner-title -->
-                    <a href="#" class="btn btn-outline-white banner-link">خرید<i class="icon-long-arrow-left"></i></a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-sm-6 col-lg-3 -->
-        <div class="col-sm-12 col-lg-4 banners-sm">
-            <div class="row">
-                <div class="banner banner-display banner-link-anim col-lg-12 col-6">
-                    <a href="#">
-                        <img src="~/Theme/assets/images/banners/home/banner-2.jpg" alt="بنر">
-
-                    </a>
-
-                    <div class="banner-content banner-content-center">
-                        <h3 class="banner-title text-white text-center"><a href="#">مبلمان و طراحی</a></h3>
-                        <!-- End .banner-title -->
-                        <a href="#" class="btn btn-outline-white banner-link">خرید<i class="icon-long-arrow-left"></i></a>
-                    </div><!-- End .banner-content -->
-                </div><!-- End .banner -->
-
-                <div class="banner banner-display banner-link-anim col-lg-12 col-6">
-                    <a href="#">
-                        <img src="~/Theme/assets/images/banners/home/banner-3.jpg" alt="بنر">
-
-                    </a>
-
-                    <div class="banner-content banner-content-center">
-                        <h3 class="banner-title text-white text-center"><a href="#">آشپزخانه و ظروف</a></h3>
-                        <!-- End .banner-title -->
-                        <a href="#" class="btn btn-outline-white banner-link">خرید<i class="icon-long-arrow-left"></i></a>
-                    </div><!-- End .banner-content -->
-                </div><!-- End .banner -->
-            </div>
-        </div><!-- End .col-sm-6 col-lg-3 -->
-    </div><!-- End .row -->
-</div>
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
@@ -3165,54 +2957,7 @@
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="banner banner-overlay banner-overlay-light">
-                <a href="#">
-                    <img src="~/Theme/assets/images/demos/demo-13/banners/banner-4.jpg" alt="بنر">
-                </a>
-
-                <div class="banner-content">
-                    <h4 class="banner-subtitle d-none d-sm-block"><a href="#">فروش بهاره نزدیک است</a></h4>
-                    <!-- End .banner-subtitle -->
-                    <h3 class="banner-title">
-                        <a href="#">
-                            تفیف ویژه <br>ساعت های هوشمند <br><span class="text-primary">15% تخفیف</span>
-                        </a>
-                    </h3><!-- End .banner-title -->
-                    <a href="#" class="banner-link banner-link-dark">
-                        مشاهده <i class="icon-long-arrow-left"></i>
-                    </a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-lg-6 -->
-
-        <div class="col-lg-6">
-            <div class="banner banner-overlay">
-                <a href="#">
-                    <img src="~/Theme/assets/images/demos/demo-13/banners/banner-5.png" alt="بنر">
-                </a>
-
-                <div class="banner-content">
-                    <h4 class="banner-subtitle text-white  d-none d-sm-block">
-                        <a href="#">
-                            پیشنهادهای فوق
-                            العاده
-                        </a>
-                    </h4><!-- End .banner-subtitle -->
-                    <h3 class="banner-title text-white">
-                        <a href="#">
-                            هدفون های <br>جی بی ال
-                            <br><span>از 59,000 تومان</span>
-                        </a>
-                    </h3><!-- End .banner-title -->
-                    <a href="#" class="banner-link">مشاهده <i class="icon-long-arrow-left"></i></a>
-                </div><!-- End .banner-content -->
-            </div><!-- End .banner -->
-        </div><!-- End .col-lg-6 -->
-    </div><!-- End .row -->
-</div><!-- End .container -->
+@await Component.InvokeAsync("SiteBannerHome3")
 
 <div class="mb-1"></div><!-- End .mb-1 -->
 
