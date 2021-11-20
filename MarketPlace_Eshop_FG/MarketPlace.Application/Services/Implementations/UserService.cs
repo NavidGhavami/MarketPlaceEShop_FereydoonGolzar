@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Repository;
@@ -115,11 +116,11 @@ namespace MarketPlace.Application.Services.Implementations
                 return ForgotPasswordresult.NotFound;
             }
 
-            var newPassword = new Random().Next(100000, 999999).ToString();
+            var newPassword = PasswordGenerator.CreateRandomPassword();
             user.Password = _passwordHasher.EncodePasswordMd5(newPassword);
             _userRepository.EditEntity(user);
 
-            //todo send new password to user with mobile
+            await _smsService.SendRecoverPasswordSms(user.Mobile, newPassword);
 
             await _userRepository.SaveChanges();
 
@@ -138,12 +139,33 @@ namespace MarketPlace.Application.Services.Implementations
                     user.IsMobileActive = true;
                     user.MobileActiveCode = new Random().Next(100000, 999999).ToString();
                     await _userRepository.SaveChanges();
-                    
+
                     return true;
                 }
             }
 
             return false;
+        }
+
+        public async Task<bool> ChangeUserPassword(ChangePasswordDTO changePassword, long currentUserId)
+        {
+            var user = await _userRepository.GetEntityById(currentUserId);
+
+            if (user != null)
+            {
+                var newPassword = _passwordHasher.EncodePasswordMd5(changePassword.NewPassword);
+
+                if (newPassword != user.Password)
+                {
+                    user.Password = newPassword;
+                    _userRepository.EditEntity(user);
+
+                    await _userRepository.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
+
         }
 
         #endregion
