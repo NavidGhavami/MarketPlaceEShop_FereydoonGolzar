@@ -1,24 +1,29 @@
 ﻿
 
-    <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active show" asp-area="User" asp-controller="Home" asp-action="Index" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">داشبورد</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">سفارشات</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">دانلود ها</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">آدرس</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="ChangePassword" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                تغییر کلمه عبور
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-controller="Account" asp-action="Logout">خروج از حساب کاربری</a>
-        </li>
-    </ul>
+<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active show" asp-area="User" asp-controller="Home" asp-action="Index" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">داشبورد</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-orders-link" data-toggle="tab" href="#tab-orders" role="tab" aria-controls="tab-orders" aria-selected="false">سفارشات</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">دانلود ها</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">آدرس</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="EditProfile" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            ویرایش اطلاعات کاربری
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="ChangePassword" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            تغییر کلمه عبور
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Account" asp-action="Logout">خروج از حساب کاربری</a>
+    </li>
+</ul>

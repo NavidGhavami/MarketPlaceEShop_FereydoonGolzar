@@ -24,4 +24,8 @@
     <ProjectReference Include="..\MarketPlace.DataLayer\MarketPlace.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Content\Images\UserAvatar\Origin\" />
+  </ItemGroup>
+
 </Project>

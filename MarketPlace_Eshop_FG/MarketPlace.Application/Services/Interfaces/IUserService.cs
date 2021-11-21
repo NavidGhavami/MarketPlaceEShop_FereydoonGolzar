@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.Entities.Account;
+using Microsoft.AspNetCore.Http;
 
 namespace MarketPlace.Application.Services.Interfaces
 {
@@ -16,6 +17,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<ForgotPasswordresult> RecoverUserPassword(ForgotPasswordDTO forgot);
         Task<bool> ActivateMobile(ActivateMobileDTO activate);
         Task<bool> ChangeUserPassword(ChangePasswordDTO changePassword, long currentUserId);
+        Task<EditUserProfileDTO> GetProfileForEdit(long userId);
+        Task<EditUserProfileResult> EditUserProfile(EditUserProfileDTO profile, long userId, IFormFile avatarImage);
 
         #endregion
     }
