@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using MarketPlace.DataLayer.Entities.Account;
+using MarketPlace.DataLayer.Entities.Contact;
 using MarketPlace.DataLayer.Entities.Site;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,14 +27,26 @@ namespace MarketPlace.DataLayer.Context
 
         #endregion
 
+        #region Contact
+
+        //add Ticket
+
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketMessage> TicketMessages { get; set; }
+
+        #endregion
+
         #region OnModelCreating
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(s=>s.GetForeignKeys()))
             {
-                relationship.DeleteBehavior = DeleteBehavior.Cascade;
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+
+          
 
             base.OnModelCreating(modelBuilder);
         }

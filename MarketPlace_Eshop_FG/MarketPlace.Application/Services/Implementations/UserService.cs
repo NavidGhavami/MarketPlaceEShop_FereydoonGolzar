@@ -231,7 +231,10 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async ValueTask DisposeAsync()
         {
-            await _userRepository.DisposeAsync();
+            if (_userRepository != null)
+            {
+                await _userRepository.DisposeAsync();
+            }
         }
 
 

@@ -1,0 +1,12 @@
+﻿@model MarketPlace.DataLayer.DTOs.Contact.AnswerTicketDTO
+
+<form method="post" asp-area="User" asp-controller="Ticket" asp-action="AnswerTicket">
+    <input type="hidden" asp-for="Id" />
+    <textarea asp-for="Text" ckeditor="1"></textarea>
+    <br />
+    <button type="submit" class="btn btn-round btn-success float-right">
+        <span>ارسال پاسخ</span>
+        <i class="icon-long-arrow-left"></i>
+    </button>
+    <br />
+</form>

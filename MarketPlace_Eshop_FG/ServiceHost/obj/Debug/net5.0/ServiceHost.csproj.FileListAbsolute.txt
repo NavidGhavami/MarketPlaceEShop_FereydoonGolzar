@@ -180,3 +180,8 @@ E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Debug\net5.0\SixLabors.Core.dll
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Debug\net5.0\SixLabors.ImageSharp.dll
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Debug\net5.0\System.IO.Pipelines.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\User\Views\Ticket\AddTicket.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\User\Views\Ticket\Index.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\_NoItemFound.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\User\Views\Ticket\TicketDetail.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\User\Views\Shared\_AnswerTicketPartial.cshtml.g.cs

@@ -11,9 +11,20 @@
     padding-bottom: 80px;
     position: relative;
 }
+
 .SlideHeight {
     height: 412px;
 }
+
 .ChangePasswordLeftPadding {
     padding-left: 575px;
+}
+
+.MessageText {
+    font-size: 13px;
+    padding-top: 15px;
+}
+
+.ck-content {
+    height: 300px;
 }

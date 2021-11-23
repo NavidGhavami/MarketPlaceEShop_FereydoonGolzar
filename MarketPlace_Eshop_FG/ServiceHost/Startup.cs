@@ -38,6 +38,7 @@ namespace ServiceHost
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISiteService, SiteService>();
             services.AddScoped<ISmsService, SmsService>();
+            services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 

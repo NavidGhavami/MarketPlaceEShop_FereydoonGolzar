@@ -88,6 +88,87 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.Ticket", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReadByAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReadByOwner")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TicketPriority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TicketSection")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TicketState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.TicketMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("SenderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TicketId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SenderId");
+
+                    b.HasIndex("TicketId");
+
+                    b.ToTable("TicketMessages");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Site.SiteBanner", b =>
                 {
                     b.Property<long>("Id")
@@ -241,6 +322,48 @@ namespace MarketPlace.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sliders");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.Ticket", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "Owner")
+                        .WithMany("Tickets")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.TicketMessage", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "Sender")
+                        .WithMany("TicketMessages")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MarketPlace.DataLayer.Entities.Contact.Ticket", "Ticket")
+                        .WithMany("TicketMessages")
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
+
+                    b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.User", b =>
+                {
+                    b.Navigation("TicketMessages");
+
+                    b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.Ticket", b =>
+                {
+                    b.Navigation("TicketMessages");
                 });
 #pragma warning restore 612, 618
         }

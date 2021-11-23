@@ -1,0 +1,98 @@
+﻿@using MarketPlace.DataLayer.Entities.Contact
+@model MarketPlace.DataLayer.DTOs.Contact.AddTicketDTO
+@{
+    ViewData["Title"] = "ثبت تیکت جدید";
+}
+
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            <form method="post" asp-area="User" asp-controller="Ticket" asp-action="AddTicket">
+
+                                <div class="form-group">
+                                    <label>عنوان تیکت</label>
+                                    <input type="text" asp-for="Title" class="form-control">
+                                    <span class="text-danger" asp-validation-for="Title"></span>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label>بخش مورد نظر</label>
+                                    <select class="form-control" asp-for="TicketSection" asp-items="@Html.GetEnumSelectList<TicketSection>()">
+                                        <option value="0">بخش مورد نظر را انتخاب نمایید...</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="TicketSection"></span>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label>اولویت تیکت</label>
+                                    <select class="form-control" asp-for="TicketPriority" asp-items="@Html.GetEnumSelectList<TicketPriority>()">
+                                        <option value="0">اولویت تیکت را انتخاب نمایید...</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="TicketPriority"></span>
+                                </div>
+                                <br />
+
+                                <div class="form-group">
+                                    <label>متن پیام</label>
+                                    <br />
+                                    <br />
+                                    <textarea class="form-control" asp-for="Text" rows="10" ckeditor="1"></textarea>
+                                    <span class="text-danger" asp-validation-for="Text"></span>
+                                </div>
+                                <br />
+
+                                <button type="submit" class="btn btn-round btn-success float-right">
+                                    <span>ثبت تیکت</span>
+                                    <i class="icon-long-arrow-left"></i>
+                                </button>
+                            </form>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+

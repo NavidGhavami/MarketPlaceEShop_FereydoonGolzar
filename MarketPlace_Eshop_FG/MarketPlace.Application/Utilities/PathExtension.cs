@@ -11,6 +11,14 @@ namespace MarketPlace.Application.Utilities
 
         #endregion
 
+        #region Uploader
+
+        public static string UploaderImage = "/Theme/assets/images/upload/";
+        public static string UploaderImageServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Theme/assets/images/upload/");
+
+
+        #endregion
+
         #region User Avatar
 
         public static string UserAvatarOrigin = "/Content/Images/UserAvatar/Origin/";

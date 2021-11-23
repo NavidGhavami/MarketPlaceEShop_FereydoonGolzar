@@ -15072,10 +15072,10 @@ small.form-text {
 
 .table th,
 .table td {
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 70px;
+/*  padding-right: 0;
   padding-top: 1.4rem;
-  padding-bottom: 1.4rem;
+  padding-bottom: 1.4rem;*/
 }
 
 .table td {
@@ -21642,8 +21642,8 @@ button:focus {
 /*--------------------- 5.14.Wishlist -------------------- */
 /* Wishlist */
 .table td {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  /*padding-top: 3rem;
+  padding-bottom: 3rem;*/
 }
 
 .table .price-col {

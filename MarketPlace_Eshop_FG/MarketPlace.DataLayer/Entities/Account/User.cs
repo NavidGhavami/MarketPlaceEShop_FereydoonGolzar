@@ -1,5 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Common;
+using MarketPlace.DataLayer.Entities.Contact;
 
 namespace MarketPlace.DataLayer.Entities.Account
 {
@@ -62,7 +65,8 @@ namespace MarketPlace.DataLayer.Entities.Account
 
         #region Relations
 
-
+        public ICollection<Ticket> Tickets  { get; set; }
+        public ICollection<TicketMessage> TicketMessages { get; set; }
 
         #endregion
     }
