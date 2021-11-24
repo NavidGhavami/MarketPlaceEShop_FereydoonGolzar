@@ -65,7 +65,8 @@ namespace MarketPlace.DataLayer.Entities.Account
 
         #region Relations
 
-        public ICollection<Ticket> Tickets  { get; set; }
+        public ICollection<ContactUs> ContactUs { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
         public ICollection<TicketMessage> TicketMessages { get; set; }
 
         #endregion

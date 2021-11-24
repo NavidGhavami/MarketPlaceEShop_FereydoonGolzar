@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
-using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Contact;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.Entities.Contact;
@@ -14,20 +13,45 @@ namespace MarketPlace.Application.Services.Implementations
     {
         #region Constructor
 
+        private readonly IGenericRepository<ContactUs> _contactUsRepository;
+
         private readonly IGenericRepository<Ticket> _ticketRepository;
         private readonly IGenericRepository<TicketMessage> _ticketMessageRepository;
 
-        public ContactService(IGenericRepository<Ticket> ticketRepository, IGenericRepository<TicketMessage> ticketMessageRepository)
+        public ContactService(IGenericRepository<Ticket> ticketRepository, IGenericRepository<TicketMessage> ticketMessageRepository, IGenericRepository<ContactUs> contactUsRepository)
         {
             _ticketRepository = ticketRepository;
             _ticketMessageRepository = ticketMessageRepository;
+            _contactUsRepository = contactUsRepository;
         }
 
         #endregion
 
 
 
+        #region ContactUs
+
+        public async Task CreateContactUs(CreateContactUsDTO contact, string userIp, long? userId)
+        {
+            var newContact = new ContactUs
+            {
+                UserId = (userId != null && userId.Value != 0) ? userId.Value : (long?) null,
+                UserIp = userIp,
+                Email = contact.Email,
+                Mobile = contact.Mobile,
+                Fullname = contact.Fullname,
+                MessageText = contact.MessageText,
+                MessageSubject = contact.MessageSubject,
+            };
+
+            await _contactUsRepository.AddEntity(newContact);
+            await _contactUsRepository.SaveChanges();
+        }
+
+        #endregion
+
         #region Ticket
+
 
         public async Task<AddTicketResult> AddUserTicket(AddTicketDTO ticket, long userId)
         {
@@ -141,12 +165,12 @@ namespace MarketPlace.Application.Services.Implementations
         {
             var ticket = await _ticketRepository.GetQuery().AsQueryable()
                 .Include(x => x.Owner)
-                .OrderByDescending(x=>x.CreateDate)
+                .OrderByDescending(x => x.CreateDate)
                 .SingleOrDefaultAsync(x => x.Id == ticketId);
 
             var ticketMessage = await _ticketMessageRepository.GetQuery().AsQueryable()
                 .Where(x => x.TicketId == ticketId && !x.IsDelete)
-                .OrderByDescending(x=>x.CreateDate)
+                .OrderByDescending(x => x.CreateDate)
                 .ToListAsync();
 
             if (ticket == null || ticket.OwnerId != userId)
@@ -178,7 +202,7 @@ namespace MarketPlace.Application.Services.Implementations
             var ticketMessage = new TicketMessage
             {
                 TicketId = ticket.Id,
-                SenderId =  userId,
+                SenderId = userId,
                 Text = answer.Text
             };
 
@@ -199,6 +223,11 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async ValueTask DisposeAsync()
         {
+            if (_contactUsRepository != null)
+            {
+                await _contactUsRepository.DisposeAsync();
+            }
+
             if (_ticketRepository != null)
             {
                 await _ticketRepository.DisposeAsync();

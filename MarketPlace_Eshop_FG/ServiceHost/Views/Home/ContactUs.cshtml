@@ -1,0 +1,93 @@
+﻿@using MarketPlace.DataLayer.Entities.Site
+@using MarketPlace.DataLayer.DTOs.Site
+@model MarketPlace.DataLayer.DTOs.Contact.CreateContactUsDTO
+@{
+    ViewData["Title"] = "تماس با ما";
+}
+
+@{ var siteSetting = ViewBag.siteSetting as SiteSetting; }
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+    <partial name="_CaptchaScripts" />
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page">@ViewData["Title"]</li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="breadcrumb-item active"><a href="#">@User.Identity.Name</a></li>
+            }
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="col-12 d-flex mb-5">
+        <div class="bg-white w-100">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.0762034011345!2d51.33938432078328!3d35.69974233666176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQxJzU5LjEiTiA1McKwMjAnMTMuOSJF!5e0!3m2!1sfa!2s!4v1585894944267!5m2!1sfa!2s" style="border:0" allowfullscreen="" width="100%" height="450px" frameborder="0"></iframe>
+        </div>
+    </div>
+    <div class="container">
+        @await Component.InvokeAsync("ContactUsAddress")
+        <hr class="mt-3 mb-5 mt-md-1">
+        <div class="touch-container row justify-content-center">
+            <div class="col-md-9 col-lg-7">
+                <div class="text-center">
+                    <h2 class="title mb-1 text-center">تماس با ما</h2><!-- End .title mb-2 -->
+                    <p class="lead text-primary text-center mb-5">
+                        از طریق فرم زیر میتوانید با ما ارتباط برقرار کنید
+                    </p><!-- End .lead text-primary -->
+
+                    <form method="post" asp-controller="Home" asp-action="ContactUs" class="contact-form mb-2">
+                        <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label class="sr-only">نام و نام خانوادگی</label>
+                                <input asp-for="Fullname" type="text" class="form-control" placeholder="نام خود را وارد کنید *">
+                                <span asp-validation-for="Fullname" class="text-danger"></span>
+                            </div><!-- End .col-sm-4 -->
+
+                            <div class="col-sm-4">
+                                <label class="sr-only">ایمیل</label>
+                                <input asp-for="Email" type="email" class="form-control" placeholder="ایمیل خود را وارد کنید *">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div><!-- End .col-sm-4 -->
+
+                            <div class="col-sm-4">
+                                <label class="sr-only">شماره موبایل</label>
+                                <input asp-for="Mobile" type="text" class="form-control" placeholder="شماره موبایل خود را وارد کنید">
+                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                            </div><!-- End .col-sm-4 -->
+                        </div><!-- End .row -->
+
+                        <label class="sr-only">موضوع پیام</label>
+                        <input asp-for="MessageSubject" type="text" class="form-control" placeholder="موضوع پیام شما">
+                        <span asp-validation-for="MessageSubject" class="text-danger"></span>
+
+                        <label class="sr-only">متن پیام</label>
+                        <textarea asp-for="MessageText" class="form-control" placeholder="متن پیام شما *" ckeditor="1"></textarea>
+                        <span asp-validation-for="MessageText" class="text-danger"></span>
+                        <br />
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-minwidth-sm">
+                                <span>تایید و ارسال پیام</span>
+                                <i class="icon-long-arrow-left"></i>
+                            </button>
+                        </div><!-- End .text-center -->
+                    </form><!-- End .contact-form -->
+                </div><!-- End .col-md-9 col-lg-7 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</div>

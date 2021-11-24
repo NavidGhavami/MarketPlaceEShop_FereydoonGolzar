@@ -3,6 +3,7 @@ using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Contact;
 using MarketPlace.DataLayer.Entities.Site;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace MarketPlace.DataLayer.Context
 {
@@ -29,8 +30,10 @@ namespace MarketPlace.DataLayer.Context
 
         #region Contact
 
-        //add Ticket
+        
+        public DbSet<ContactUs> ContactUs { get; set; }
 
+        //add Ticket
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketMessage> TicketMessages { get; set; }
 

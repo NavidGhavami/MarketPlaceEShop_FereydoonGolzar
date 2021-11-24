@@ -82,6 +82,26 @@ namespace ServiceHost.ViewComponents
 
     #endregion
 
+    #region ContactUs Address
+    public class ContactUsAddressViewComponent : ViewComponent
+    {
+        private readonly ISiteService _siteService;
+
+        public ContactUsAddressViewComponent(ISiteService siteService)
+        {
+            _siteService = siteService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            ViewBag.siteSetting = await _siteService.GetDefaultSiteSetting();
+            return View("ContactUsAddress");
+        }
+    }
+
+
+    #endregion
+
     #region Slider
 
     public class HomeSliderViewComponent : ViewComponent

@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.Contact;
 
 namespace MarketPlace.Application.Services.Interfaces
 {
-    public interface IContactService
+    public interface IContactService : IAsyncDisposable
     {
 
 
         #region Ticket
+
+        Task CreateContactUs(CreateContactUsDTO contact, string userIp, long? userId);
 
         Task<AddTicketResult> AddUserTicket(AddTicketDTO ticket, long userId);
         Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter);
