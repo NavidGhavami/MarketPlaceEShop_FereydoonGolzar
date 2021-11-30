@@ -1,0 +1,174 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="Navid Ghavami" />
+    <title>مدیریت سایت | @ViewData["Title"]</title>
+    <!--favicon-->
+
+    <partial name="_AdminHeaderReferences" />
+    @await RenderSectionAsync("styles", false)
+
+</head>
+
+<body class="bg-theme bg-theme1">
+
+    <!-- Start wrapper-->
+    <div id="wrapper">
+
+        <div class="loader-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+
+        <!--Start sidebar-wrapper-->
+        <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+            <div class="brand-logo">
+                <a asp-area="Administration" asp-controller="Home" asp-action="Index">
+                    <img src="~/Admin/assets/images/logo-icon.png" class="logo-icon" alt="مدیریت سایت">
+                    <h5 class="logo-text">مدیریت سایت</h5>
+                </a>
+            </div>
+            <div class="user-details">
+                <div class="media align-items-center user-pointer collapsed" data-toggle="collapse" data-target="#user-dropdown">
+                    <div class="avatar"><img class="mr-3 side-user-img" src="~/Admin/assets/images/avatars/avatar-13.png" alt="user avatar"></div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="media-body">
+                            <h6 class="side-user-name">@User.Identity.Name</h6>
+                        </div>
+                    }
+                </div>
+                <div id="user-dropdown" class="collapse">
+                    <ul class="user-setting-menu">
+                        <li><a href="javaScript:void();"><i class="icon-user"></i>  پروفایل من</a></li>
+                        <li><a href="javaScript:void();"><i class="icon-settings"></i> تنظیمات</a></li>
+                        <li><a href="javaScript:void();"><i class="icon-power"></i> خروج</a></li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="sidebar-menu do-nicescrol">
+                <li class="sidebar-header">منوی اصلی</li>
+                <li>
+                    <a asp-area="Administration" asp-controller="Home" asp-action="Index" class="waves-effect">
+                        <i class="zmdi zmdi-view-dashboard"></i> <span>داشبورد</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javaScript:void();" class="waves-effect">
+                        <i class="zmdi zmdi-account"></i>
+                        <span>مدیریت فروشندگان</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li>
+                            <a asp-area="Administration" asp-controller="Seller" asp-action="SellerRequest">
+                                <i class="zmdi zmdi-long-arrow-right"></i>درخواست های فروشندگی
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-header">برچسب ها</li>
+                <li><a href="javaScript:void();" class="waves-effect"><i class="zmdi zmdi-coffee text-danger"></i> <span>مهم</span></a></li>
+                <li><a href="javaScript:void();" class="waves-effect"><i class="zmdi zmdi-chart-donut text-success"></i> <span>هشدار</span></a></li>
+                <li><a href="javaScript:void();" class="waves-effect"><i class="zmdi zmdi-share text-info"></i> <span>اطلاعات</span></a></li>
+            </ul>
+
+        </div>
+        <!--End sidebar-wrapper-->
+        <!--Start topbar header-->
+        <header class="topbar-nav">
+            <nav class="navbar navbar-expand fixed-top">
+                <ul class="navbar-nav mr-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link toggle-menu" href="javascript:void();">
+                            <i class="icon-menu menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="search-bar">
+                            <input type="text" class="form-control" placeholder="جستجو کنید ...">
+                            <a href="javascript:void();"><i class="icon-magnifier"></i></a>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <!--End topbar header-->
+
+        <div class="clearfix"></div>
+
+        <div class="content-wrapper">
+            <div class="container-fluid">
+
+                <!--Start Dashboard Content-->
+
+                @RenderBody()
+
+                <!--End Dashboard Content-->
+
+            </div>
+            <!-- End container-fluid-->
+
+        </div><!--End content-wrapper-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+        <!--End Back To Top Button-->
+        <!--Start footer-->
+        <footer class="footer">
+            <div class="container">
+                <div class="text-center">
+                    کپی رایت ©  کلیه حقوق این سایت محفوظ می باشد
+                </div>
+            </div>
+        </footer>
+        <!--End footer-->
+        <!--start color switcher-->
+        <div class="right-sidebar">
+            <div class="switcher-icon">
+                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+            </div>
+            <div class="right-sidebar-content">
+
+                <p class="mb-0">بافت گاوسی</p>
+                <hr>
+
+                <ul class="switcher">
+                    <li id="theme1"></li>
+                    <li id="theme2"></li>
+                    <li id="theme3"></li>
+                    <li id="theme4"></li>
+                    <li id="theme5"></li>
+                    <li id="theme6"></li>
+                </ul>
+
+                <p class="mb-0">پس زمینه گرادیان</p>
+                <hr>
+
+                <ul class="switcher">
+                    <li id="theme7"></li>
+                    <li id="theme8"></li>
+                    <li id="theme9"></li>
+                    <li id="theme10"></li>
+                    <li id="theme11"></li>
+                    <li id="theme12"></li>
+                </ul>
+
+            </div>
+        </div>
+        <!--end color cwitcher-->
+
+    </div><!--End wrapper-->
+    <!-- Bootstrap core JavaScript-->
+    <partial name="_AdminFooterReferences" />
+    @await RenderSectionAsync("scripts", false)
+
+
+
+</body>
+
+
+</html>

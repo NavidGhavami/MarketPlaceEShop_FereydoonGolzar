@@ -1,0 +1,193 @@
+﻿@using MarketPlace.Application.Extensions
+@using MarketPlace.Application.Utilities
+@using MarketPlace.DataLayer.DTOs.Common
+@using MarketPlace.DataLayer.DTOs.Seller
+@using MarketPlace.DataLayer.Entities.Store
+@model MarketPlace.DataLayer.DTOs.Seller.FilterSellerDTO
+@{
+    ViewData["Title"] = "درخواست های فروشندگی";
+}
+
+@section scripts
+{
+    <partial name="_JqueryValidators"/>
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت فروشندگان</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-filter"></i> فیلتر ها</div>
+            <div class="card-body">
+
+                <form asp-area="Administration" asp-controller="Seller" asp-action="SellerRequest" method="get" id="filter-form">
+                    <input type="hidden" asp-for="PageId" />
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>نام فروشنده</label>
+                            <input class="form-control" asp-for="StoreName" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>کد ملّی فروشنده</label>
+                            <input class="form-control" asp-for="NationalId" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-3">
+                            <label>تلفن تماس</label>
+                            <input class="form-control" asp-for="Phone" />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label>موبایل</label>
+                            <input class="form-control" asp-for="Mobile" />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <div>
+                                <label>وضعیت</label>
+                            </div>
+                            @foreach (var item in Html.GetEnumSelectList<FilterSellerState>())
+                            {
+                                <div class=" radio icheck-material-white icheck-inline">
+                                    <label>
+                                        <input type="radio" style="width: 16px;height: 16px" value="@item.Value" name="@nameof(Model.FilterSellerState)"
+                                               @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.FilterSellerState) ? "checked" : "")>
+                                        <span class="text">@item.Text</span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">اعمال فیلتر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-table"></i> @ViewData["Title"]</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="default-datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @if (Model.Sellers != null && Model.Sellers.Any())
+                                {
+                                    <table id="default-datatable" class="table table-bordered dataTable" role="grid" aria-describedby="default-datatable_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc">شناسه</th>
+                                                <th class="sorting">نام فروشگاه</th>
+                                                <th class="sorting">کد ملّی فروشنده</th>
+                                                <th class="sorting">تلفن تماس</th>
+                                                <th class="sorting">وضعیت</th>
+                                                <th class="sorting">تاریخ درخواست</th>
+                                                <th class="sorting">دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var seller in Model.Sellers)
+                                            {
+                                                <tr id="ajax-url-item-@seller.Id" role="row" class="odd">
+                                                    <td class="sorting_1">@seller.Id</td>
+                                                    <td>@seller.StoreName</td>
+                                                    <td>@seller.NationalId</td>
+                                                    <td>@seller.Phone</td>
+                                                    <td>@seller.StoreAcceptanceState.GetEnumName()</td>
+                                                    <td>@seller.CreateDate.ToStringShamsiDate()</td>
+                                                    <td>
+                                                        @if (seller.StoreAcceptanceState != StoreAcceptanceState.Accepted)
+                                                        {
+                                                            <a class="btn btn-sm btn-success" ajax-url-button="@seller.Id"
+                                                               asp-area="Administration" asp-controller="Seller" asp-action="AcceptSellerRequest"
+                                                               asp-route-requestId="@seller.Id">
+                                                                تایید اطلاعات
+                                                            </a>
+                                                        }
+                                                        @if (seller.StoreAcceptanceState != StoreAcceptanceState.Rejected)
+                                                        {
+                                                            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#reject-seller-modal-@seller.Id">
+                                                                رد کردن اطلاعات
+                                                            </a>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning alert-dismissible mb-0" role="alert">
+                                        <div class="alert-icon">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="alert-message text-dark">
+                                            <span><strong>هشدار!</strong> هیچ اطلاعاتی یافت نشد</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                        <hr />
+                    </div>
+                </div>
+                <br />
+                <partial name="_AdminPaging" model="@Model.GetCurrentPaging()" />
+                <div class="col-sm-12 col-md-12">
+                    <div class="dataTables_info" id="default-datatable_info" role="status" aria-live="polite">نمایش تعداد 10 فروشگاه در هر صفحه از تعداد کل : @Model.Sellers.Count فروشگاه</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Sellers != null && Model.Sellers.Any())
+{
+    foreach (var item in Model.Sellers)
+    {
+        <div class="modal fade" id="reject-seller-modal-@item.Id">
+            <div class="modal-dialog">
+                <div class="modal-content animated zoomInUp">
+                    <div class="modal-header">
+                        <h5 class="modal-title">رد کردن اطلاعات فروشگاه: @item.StoreName</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            asp-area="Administration"
+                            asp-controller="Seller"
+                            asp-action="RejectSellerRequest"
+                            asp-antiforgery="true"
+                            data-ajax="true"
+                            data-method="post"
+                            data-ajax-success="OnSuccessRejectItem">
+
+                            <partial name="_RejectItem" model="@(new RejectItemDTO {Id = item.Id})"/>
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-times"></i> بستن</button>
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-check-square-o"></i> رد کردن اطلاعات</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+    }
+}

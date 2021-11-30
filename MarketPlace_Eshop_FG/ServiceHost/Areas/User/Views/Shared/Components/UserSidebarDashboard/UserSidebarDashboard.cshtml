@@ -5,6 +5,16 @@
         <a class="nav-link active show" asp-area="User" asp-controller="Home" asp-action="Index" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">داشبورد</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" asp-area="User" asp-controller="Seller" asp-action="RequestSellerPanel" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            درخواست پنل فروشندگی
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="User" asp-controller="Seller" asp-action="SellerRequests" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            لیست درخواست های فروشندگی
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="EditProfile" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             ویرایش اطلاعات من
         </a>
@@ -19,7 +29,7 @@
             ثبت تیکت جدید
         </a>
     </li>
-  
+
     <li class="nav-item">
         <a class="nav-link" asp-area="User" asp-controller="Account" asp-action="ChangePassword" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             تغییر کلمه عبور

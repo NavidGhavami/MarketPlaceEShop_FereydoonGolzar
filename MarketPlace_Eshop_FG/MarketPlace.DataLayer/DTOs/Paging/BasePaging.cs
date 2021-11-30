@@ -1,4 +1,6 @@
-﻿namespace MarketPlace.DataLayer.DTOs.Paging
+﻿using System.Runtime.CompilerServices;
+
+namespace MarketPlace.DataLayer.DTOs.Paging
 {
     public class BasePaging
     {
@@ -17,5 +19,10 @@
         public int TakeEntity { get; set; }
         public int SkipEntity { get; set; }
         public int HowManyShowPageAfterAndBefore { get; set; }
+
+        public BasePaging GetCurrentPaging()
+        {
+            return this;
+    }
     }
 }

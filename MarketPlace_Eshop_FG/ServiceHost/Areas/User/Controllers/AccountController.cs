@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Account;
-using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using ServiceHost.PresentationExtensions;

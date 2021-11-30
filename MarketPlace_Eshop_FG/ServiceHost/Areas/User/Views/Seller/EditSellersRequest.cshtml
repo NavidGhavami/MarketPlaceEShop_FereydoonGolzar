@@ -1,0 +1,124 @@
+﻿@model MarketPlace.DataLayer.DTOs.Seller.EditSellerRequestDTO
+@{
+    ViewData["Title"] = "ویرایش درخواست";
+}
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            <form method="post" asp-area="User" asp-controller="Seller" asp-action="EditSellersRequest" enctype="multipart/form-data">
+                                <input type="hidden" asp-for="Id" />
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>نام فروشگاه</label>
+                                        <input type="text" asp-for="StoreName" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="StoreName"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>کد ملّی فروشنده</label>
+                                        <input type="text" asp-for="NationalId" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="NationalId"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>تلفن تماس</label>
+                                        <input type="text" asp-for="Phone" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="Phone"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>موبایل</label>
+                                        <input type="text" asp-for="Mobile" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="Mobile"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>آدرس فروشگاه</label>
+                                        <textarea class="form-control" asp-for="Address" rows="1"></textarea>
+                                        <span class="text-danger float-right" asp-validation-for="Address"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>توضیحات ادمین سایت</label>
+                                        <textarea class="form-control text-danger" disabled="disabled" asp-for="AdminDescription" rows="2"></textarea>
+                                        <span class="text-danger float-right" asp-validation-for="AdminDescription"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="form-group">
+                                    <label>توضیحات فروشگاه</label>
+                                    <br />
+                                    <br />
+                                    <textarea class="form-control" asp-for="Description" ckeditor="1"></textarea>
+                                    <span class="text-danger float-right" asp-validation-for="Description"></span>
+                                </div>
+                                <br />
+                                <br />
+                                @*<div class="form-group col-md-8">
+                                            <label>لوگو فروشگاه</label>
+                                        </div>
+                                        <br />
+                                        <div class="form-group col-md-4">
+                                            <img style="width: 80px; height: 100px; border-radius: 50%"
+                                                 src="@(!string.IsNullOrEmpty(Model.Logo) ? PathExtension.UserAvatarThumb + Model.Logo
+                                                                      : PathExtension.DefaultAvatar )" alt="تصویر آواتار" />
+                                        </div>
+                                    <div class="form-group">
+                                        <input type="file" name="avatarImage" class="form-control">
+                                    </div>*@
+                                <br />
+                                <div class="btn-group btn-round group-round float-right m-1">
+                                    <button type="submit" class="btn  btn-warning waves-effect waves-light">ویرایش</button>
+                                    <a class="btn btn-primary  " asp-area="User" asp-controller="Seller" asp-action="SellerRequests">بازگشت</a>
+
+                                </div>
+                            </form>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+

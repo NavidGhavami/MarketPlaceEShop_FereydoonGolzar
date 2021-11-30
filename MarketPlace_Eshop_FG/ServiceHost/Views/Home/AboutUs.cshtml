@@ -5,7 +5,7 @@
 
 <div class="page-header text-center" style="background-image: url('~/Theme/assets/images/page-header-bg.jpg')">
     <div class="container">
-        <h1 class="page-title">درباره ما
+        <h1 class="page-title">@ViewData["Title"]
         </h1>
     </div><!-- End .container -->
 </div>
@@ -13,9 +13,8 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="container">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">خانه</a></li>
-            <li class="breadcrumb-item"><a href="#">صفحات</a></li>
-            <li class="breadcrumb-item active" aria-current="page">درباره ما</li>
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
         </ol>
     </div><!-- End .container -->
 </nav>

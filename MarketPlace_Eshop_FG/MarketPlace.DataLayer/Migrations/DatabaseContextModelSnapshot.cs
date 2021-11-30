@@ -379,6 +379,75 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("Sliders");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Store.Seller", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(650)
+                        .HasColumnType("nvarchar(650)");
+
+                    b.Property<string>("AdminDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Logo")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Mobile")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("NationalCardImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalId")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("StoreAcceptanceDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StoreAcceptanceState")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StoreName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Sellers");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.ContactUs", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
@@ -419,9 +488,22 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Store.Seller", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
+                        .WithMany("Sellers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.User", b =>
                 {
                     b.Navigation("ContactUs");
+
+                    b.Navigation("Sellers");
 
                     b.Navigation("TicketMessages");
 

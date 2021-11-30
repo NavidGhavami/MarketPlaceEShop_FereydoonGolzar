@@ -32,7 +32,6 @@ namespace ServiceHost.Controllers
 
         #endregion
 
-
         #region ContactUs
 
         [HttpGet("Contact-Us")]
@@ -53,8 +52,9 @@ namespace ServiceHost.Controllers
             {
                 var ip = HttpContext.GetUserIp();
 
-                await _contactService.CreateContactUs(contact,ip,User.GetUserId());
+                await _contactService.CreateContactUs(contact, ip, User.GetUserId());
                 TempData[SuccessMessage] = "پیام شما با موفقیت ارسال شد";
+                return RedirectToAction("Index", "Home");
             }
 
             return View(contact);
