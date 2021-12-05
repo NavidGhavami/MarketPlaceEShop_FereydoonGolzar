@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Seller;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceHost.PresentationExtensions;
 
@@ -28,11 +29,11 @@ namespace ServiceHost.Areas.User.Controllers
         }
 
         [HttpPost("request-seller-panel"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> RequestSellerPanel(RequestSellerDTO seller)
+        public async Task<IActionResult> RequestSellerPanel(RequestSellerDTO seller, IFormFile logo, IFormFile nationalCard)
         {
             if (ModelState.IsValid)
             {
-                var result = await _sellerService.AddNewSellerRequest(seller, User.GetUserId());
+                var result = await _sellerService.AddNewSellerRequest(seller, User.GetUserId(), logo, nationalCard);
 
                 switch (result)
                 {
@@ -61,10 +62,10 @@ namespace ServiceHost.Areas.User.Controllers
         [HttpGet("seller-requests")]
         public async Task<IActionResult> SellerRequests(FilterSellerDTO filter)
         {
-            var filterSeller = await _sellerService.FilterSellers(filter);
             filter.TakeEntity = 5;
             filter.UserId = User.GetUserId();
-
+            filter.FilterSellerState = FilterSellerState.All;
+            var filterSeller = await _sellerService.FilterSellers(filter);
 
             return View(filterSeller);
         }
@@ -79,6 +80,7 @@ namespace ServiceHost.Areas.User.Controllers
         {
             var requestSeller = await _sellerService.GetSellerRequestForEdit(id, User.GetUserId());
 
+
             if (requestSeller == null)
             {
                 return NotFound();
@@ -88,11 +90,11 @@ namespace ServiceHost.Areas.User.Controllers
         }
 
         [HttpPost("edit-seller-request/{id}"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditSellersRequest(EditSellerRequestDTO request)
+        public async Task<IActionResult> EditSellersRequest(EditSellerRequestDTO request, IFormFile logo, IFormFile nationalCard)
         {
             if (ModelState.IsValid)
             {
-                var result = await _sellerService.EditSellerRequest(request, User.GetUserId());
+                var result = await _sellerService.EditSellerRequest(request, User.GetUserId(), logo, nationalCard);
 
                 switch (result)
                 {

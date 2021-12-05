@@ -66,16 +66,10 @@
                                 </div>
                                 <br />
                                 <div class="row col-md-12">
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-12">
                                         <label>آدرس فروشگاه</label>
                                         <textarea class="form-control" asp-for="Address" rows="1"></textarea>
                                         <span class="text-danger float-right" asp-validation-for="Address"></span>
-                                    </div>
-                                    <br />
-                                    <div class="form-group col-md-6">
-                                        <label>توضیحات ادمین</label>
-                                        <textarea class="form-control" asp-for="AdminDescription" rows="2"></textarea>
-                                        <span class="text-danger float-right" asp-validation-for="AdminDescription"></span>
                                     </div>
                                     <br />
                                 </div>
@@ -88,17 +82,18 @@
                                 </div>
                                 <br />
                                 <br />
-                                @*<div class="form-group col-md-8">
-                                    <label>لوگو فروشگاه</label>
-                                </div>
-                                <br />
-                                <div class="form-group col-md-4">
-                                    <img style="width: 80px; height: 100px; border-radius: 50%"
-                                         src="@(!string.IsNullOrEmpty(Model.Logo) ? PathExtension.UserAvatarThumb + Model.Logo
-                                                              : PathExtension.DefaultAvatar )" alt="تصویر آواتار" />
-                                </div>*@
-                                <div class="form-group">
-                                    <input type="file" name="avatarImage" class="form-control">
+
+                                <div class="row col-md-12">
+                                    <div class="form-group">
+                                        <label>لوگو فروشگاه</label>
+                                        <input type="file" name="logo" class="form-control">
+                                    </div>
+                                    <br />
+                                    <div class="form-group">
+                                        <label>تصویر کارت ملّی فروشنده</label>
+                                        <input type="file" name="nationalcard" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="NationalCardImage"></span>
+                                    </div>
                                 </div>
                                 <br />
                                 <button type="submit" class="btn btn-round btn-success float-right">

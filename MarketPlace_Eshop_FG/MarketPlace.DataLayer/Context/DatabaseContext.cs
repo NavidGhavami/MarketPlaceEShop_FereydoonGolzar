@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Contact;
+using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Entities.Store;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace MarketPlace.DataLayer.Context
 {
@@ -43,6 +43,15 @@ namespace MarketPlace.DataLayer.Context
         #region Store
 
         public DbSet<Seller> Sellers { get; set; }
+
+        #endregion
+
+        #region Products
+
+        public DbSet<ProductSelectedCategory> ProductSelectedCategories { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductColor> ProductColors { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         #endregion
 

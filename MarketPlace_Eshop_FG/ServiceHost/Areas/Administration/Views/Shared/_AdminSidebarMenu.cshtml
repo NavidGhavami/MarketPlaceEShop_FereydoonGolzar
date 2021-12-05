@@ -1,0 +1,39 @@
+﻿
+<ul class="sidebar-menu do-nicescrol">
+    <li class="sidebar-header">منوی اصلی</li>
+    <li>
+        <a asp-area="Administration" asp-controller="Home" asp-action="Index" class="waves-effect">
+            <i class="zmdi zmdi-view-dashboard"></i> <span>داشبورد</span>
+        </a>
+    </li>
+    <li>
+        <a href="javaScript:void();" class="waves-effect">
+            <i class="zmdi zmdi-account"></i>
+            <span>مدیریت فروشندگان</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+            <li>
+                <a asp-area="Administration" asp-controller="Seller" asp-action="SellerRequest">
+                    <i class="zmdi zmdi-long-arrow-right"></i>درخواست های فروشندگی
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="javaScript:void();" class="waves-effect">
+            <i class="zmdi zmdi-shopping-basket"></i>
+            <span>مدیریت محصولات</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="sidebar-submenu">
+            <li>
+                <a asp-area="Administration" asp-controller="Product" asp-action="ProductsList">
+                    <i class="zmdi zmdi-long-arrow-right"></i>لیست محصولات فروشگاه
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-header">برچسب ها</li>
+    <li><a href="javaScript:void();" class="waves-effect"><i class="zmdi zmdi-coffee text-danger"></i> <span>مهم</span></a></li>
+    <li><a href="javaScript:void();" class="waves-effect"><i class="zmdi zmdi-chart-donut text-success"></i> <span>هشدار</span></a></li>
+    <li><a href="javaScript:void();" class="waves-effect"><i class="zmdi zmdi-share text-info"></i> <span>اطلاعات</span></a></li>
+</ul>

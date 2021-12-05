@@ -58,18 +58,21 @@ namespace ServiceHost.Areas.Administration.Controllers
         #endregion
 
         #region Reject Seller Request
+
         [HttpPost("seller/rejectSellerRequest"), ValidateAntiForgeryToken]
         public async Task<IActionResult> RejectSellerRequest(RejectItemDTO reject)
         {
-            var result = await _sellerService.RejectSellerRequest(reject);
-
-            if (result)
+            if (ModelState.IsValid)
             {
-                return JsonResponseStatus.SendStatus(
-                    JsonResponseStatusType.Success,
-                    "درخواست مورد نظر با موفقیت رد شد",
-                    reject
-                );
+                var result = await _sellerService.RejectSellerRequest(reject);
+
+                if (result)
+                {
+                    return JsonResponseStatus.SendStatus(
+                        JsonResponseStatusType.Success,
+                        "درخواست مورد نظر با موفقیت رد شد",
+                        reject);
+                }
             }
 
             return JsonResponseStatus.SendStatus(

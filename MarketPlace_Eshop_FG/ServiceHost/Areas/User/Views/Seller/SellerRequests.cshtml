@@ -39,7 +39,12 @@
 
                 <div class="col-md-8 col-lg-9">
                     <div class="tab-content">
-
+                        <form asp-area="User" asp-controller="Seller" asp-action="SellerRequests" id="filter-form" method="get">
+                            <input type="hidden" asp-for="PageId" />
+                            <input type="hidden" asp-for="Mobile" />
+                            <input type="hidden" asp-for="Phone" />
+                            <input type="hidden" asp-for="Address" />
+                        </form>
                         <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
                             @if (Model.Sellers != null && Model.Sellers.Any())
                             {
@@ -99,6 +104,7 @@
                                     <partial name="_NoItemFound" />
                                 }
                         </div><!-- .End .tab-pane -->
+                        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()"/>
                     </div>
                 </div><!-- End .col-lg-9 -->
             </div><!-- End .row -->

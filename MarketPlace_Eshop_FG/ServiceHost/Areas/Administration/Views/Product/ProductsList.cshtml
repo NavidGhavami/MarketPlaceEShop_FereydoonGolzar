@@ -1,0 +1,188 @@
+﻿@using MarketPlace.Application.Utilities
+@using MarketPlace.DataLayer.DTOs.Common
+@using MarketPlace.DataLayer.DTOs.Products
+@using MarketPlace.Application.Extensions
+@using MarketPlace.DataLayer.Entities.Products
+@model MarketPlace.DataLayer.DTOs.Products.FilterProductDTO
+
+@{
+    ViewData["Title"] = "لیست محصولات";
+}
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت محصولات</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-filter"></i> فیلتر ها</div>
+            <div class="card-body">
+
+                <form asp-area="Administration" asp-controller="Product" asp-action="ProductsList" method="get" id="filter-form">
+                    <input type="hidden" asp-for="PageId" />
+                    <div class="row">
+                        <div class="form-group col-lg-5">
+                            <label>نام محصول</label>
+                            <input class="form-control" asp-for="ProductTitle" />
+                        </div>
+                        <div class="form-group col-lg-7">
+                            <div>
+                                <label>وضعیت</label>
+                            </div>
+                            @foreach (var item in Html.GetEnumSelectList<FilterProductState>())
+                            {
+                                <div class=" radio icheck-material-white icheck-inline">
+                                    <label>
+                                        <input type="radio" style="width: 16px;height: 16px" value="@item.Value" name="@nameof(Model.ProductState)"
+                                               @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.ProductState) ? "checked" : "")>
+                                        <span class="text">@item.Text</span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">اعمال فیلتر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-table"></i> @ViewData["Title"]</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="default-datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @if (Model.Products != null && Model.Products.Any())
+                                {
+                                    <table id="default-datatable" class="table table-bordered dataTable" role="grid" aria-describedby="default-datatable_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc">شناسه</th>
+                                                <th class="sorting">تصویر</th>
+                                                <th class="sorting">نام محصول</th>
+                                                <th class="sorting">قیمت محصول</th>
+                                                <th class="sorting">نام فروشگاه</th>
+                                                <th class="sorting">وضعیت</th>
+                                                <th class="sorting">تاریخ ایجاد</th>
+                                                <th class="sorting">دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var product in Model.Products)
+                                            {
+                                            <tr id="ajax-url-item-@product.Id" role="row" class="odd">
+                                                <td>@product.Id</td>
+                                                <td class="sorting">
+                                                    <img style="width: 50px; height: 50px;"
+                                                         src="@(!string.IsNullOrEmpty(product.Image) ? PathExtension.ProductOrigin + product.Image : PathExtension.DefaultAvatar)" alt="@product.Title" />
+                                                </td>
+
+                                                <td>@product.Title</td>
+                                                <td>@product.Price.ToString("##,###") تومان</td>
+                                                <td>@product.Seller.StoreName</td>
+                                                <td>@product.ProductAcceptanceState.GetEnumName()</td>
+                                                <td>@product.CreateDate.ToStringShamsiDate()</td>
+                                                <td>
+                                                    @if (product.ProductAcceptanceState != ProductAcceptanceState.Accepted)
+                                                    {
+                                                        <a class="btn btn-sm btn-success" ajax-url-button="@product.Id"
+                                                           asp-area="Administration" asp-controller="Product" 
+                                                           asp-action="AcceptSellerProduct"
+                                                           asp-route-id="@product.Id">
+                                                            تایید اطلاعات
+                                                        </a>
+                                                    }
+                                                    @if (product.ProductAcceptanceState != ProductAcceptanceState.Rejected)
+                                                    {
+                                                        <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#reject-seller-modal-@product.Id">
+                                                            رد کردن اطلاعات
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning alert-dismissible mb-0" role="alert">
+                                        <div class="alert-icon">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="alert-message text-dark">
+                                            <span><strong>هشدار!</strong> هیچ اطلاعاتی یافت نشد</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                        <hr />
+                    </div>
+                </div>
+                <br />
+                <partial name="_AdminPaging" model="@Model.GetCurrentPaging()" />
+                <div class="col-sm-12 col-md-12">
+                    <div class="dataTables_info" id="default-datatable_info" role="status" aria-live="polite">نمایش تعداد 10 فروشگاه در هر صفحه از تعداد کل : @Model.Products.Count فروشگاه</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Products != null && Model.Products.Any())
+{
+    foreach (var item in Model.Products)
+    {
+        <div class="modal fade" id="reject-seller-modal-@item.Id">
+            <div class="modal-dialog">
+                <div class="modal-content animated zoomInUp">
+                    <div class="modal-header">
+                        <h5 class="modal-title">رد کردن اطلاعات محصول: @item.Title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form 
+                            asp-area="Administration"
+                              asp-controller="Product"
+                              asp-action="RejectSellerProduct"
+                              asp-antiforgery="true"
+                              data-ajax="true"
+                              data-method="post"
+                              data-ajax-success="OnSuccessRejectItem">
+
+                            <partial name="_RejectItem" model="@(new RejectItemDTO {Id = item.Id})" />
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info" data-dismiss="modal"><i class="fa fa-times"></i> بستن</button>
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-check-square-o"></i> رد کردن اطلاعات</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+}
+

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.DataLayer.Context;
@@ -31,6 +32,14 @@ namespace MarketPlace.DataLayer.Repository
             entity.CreateDate = DateTime.Now;
             entity.LastUpdateDate = entity.CreateDate;
             await _dbSet.AddAsync(entity);
+        }
+
+        public async Task AddRangeEntities(List<TEntity> entities)
+        {
+            foreach (var entity in entities)
+            {
+                await AddEntity(entity);
+            }
         }
 
         //Get Entity By Id

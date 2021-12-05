@@ -14,6 +14,10 @@ namespace MarketPlace.DataLayer.DTOs.Seller
         [MaxLength(50, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string NationalId { get; set; }
 
+        [Display(Name = "تصویر کارت ملّی فروشنده")]
+        [Required(ErrorMessage = "لطفا {0} را آپلود کنید")]
+        public string NationalCardImage { get; set; }
+
         [Display(Name = "تلفن ثابت فروشگاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(50, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]

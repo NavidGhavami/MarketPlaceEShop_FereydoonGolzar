@@ -15,6 +15,8 @@ namespace MarketPlace.DataLayer.DTOs.Seller
         public string Phone { get; set; }
         public string Mobile { get; set; }
         public string Address { get; set; }
+        public string Logo { get; set; }
+        public string NationalCardImage { get; set; }
         public FilterSellerState FilterSellerState { get; set; }
         public FilterSellerOrder OrderBy { get; set; }
         public List<Entities.Store.Seller> Sellers { get; set; }

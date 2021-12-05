@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using GoogleReCaptcha.V3;
@@ -13,6 +14,7 @@ using MarketPlace.DataLayer.Repository;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 
 namespace ServiceHost
@@ -41,9 +43,20 @@ namespace ServiceHost
             services.AddScoped<ISiteService, SiteService>();
             services.AddScoped<ISellerService, SellerService>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
+
+            #endregion
+
+            #region Data Protection
+
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory() + "\\wwwroot\\Auth\\"))
+                .SetApplicationName("MarketPlaceProject")
+                .SetDefaultKeyLifetime(TimeSpan.FromDays(30));
+            
 
             #endregion
 

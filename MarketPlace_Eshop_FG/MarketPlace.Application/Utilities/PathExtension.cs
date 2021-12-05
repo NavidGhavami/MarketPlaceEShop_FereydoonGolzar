@@ -29,6 +29,32 @@ namespace MarketPlace.Application.Utilities
 
         #endregion
 
+        #region Seller Logo and NationalCardImage
+
+        public static string SellerLogoOrigin = "/Content/Images/SellerLogo/Origin/";
+        public static string SellerLogoOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/SellerLogo/Origin/");
+
+        public static string SellerLogoThumb = "/Content/Images/SellerLogo/Thumb/";
+        public static string SellerLogoThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/SellerLogo/Thumb/");
+
+        public static string SellerNationalCardImageOrigin = "/Content/Images/SellerNationalCardImage/Origin/";
+        public static string SellerNationalCardImageOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/SellerNationalCardImage/Origin/");
+
+        public static string SellerNationalCardImageThumb = "/Content/Images/SellerNationalCardImage/Thumb/";
+        public static string SellerNationalCardImageThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/SellerNationalCardImage/Thumb/");
+
+        #endregion
+
+        #region Products
+
+        public static string ProductOrigin = "/Content/Images/Product/Origin/";
+        public static string ProductOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Product/Origin/");
+
+        public static string ProductThumb = "/Content/Images/Product/Thumb/";
+        public static string ProductThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Product/Thumb/");
+
+        #endregion
+
         #region Slider
 
         public static string SliderOrigin = "/Theme/assets/images/demos/demo-13/slider/";

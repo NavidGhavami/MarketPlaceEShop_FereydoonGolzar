@@ -1,12 +1,17 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.Seller;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Store;
 using MarketPlace.DataLayer.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Application.Services.Implementations
@@ -28,7 +33,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         #region Seller
 
-        public async Task<RequestSellerResult> AddNewSellerRequest(RequestSellerDTO seller, long userId)
+        public async Task<RequestSellerResult> AddNewSellerRequest(RequestSellerDTO seller, long userId, IFormFile logo, IFormFile nationalCard)
         {
             var user = await _userRepository.GetEntityById(userId);
 
@@ -47,16 +52,31 @@ namespace MarketPlace.Application.Services.Implementations
                 return RequestSellerResult.HasUnderProgressRequest;
             }
 
+            if (logo != null && logo.IsImage())
+            {
+                var logoName = Guid.NewGuid().ToString("N") + Path.GetExtension(logo.FileName);
+                logo.AddImageToServer(logoName, PathExtension.SellerLogoOriginServer, 80, 80, PathExtension.SellerLogoThumbServer, seller.Logo);
+                seller.Logo = logoName;
+            }
+
+            if (nationalCard != null && nationalCard.IsImage())
+            {
+                var nationalCardName = Guid.NewGuid().ToString("N") + Path.GetExtension(nationalCard.FileName);
+                nationalCard.AddImageToServer(nationalCardName, PathExtension.SellerNationalCardImageOriginServer, 120, 100, PathExtension.SellerNationalCardImageThumbServer, seller.NationalCardImage);
+                seller.NationalCardImage = nationalCardName;
+            }
+
             var newSeller = new Seller
             {
                 UserId = userId,
                 Phone = seller.Phone,
                 Mobile = user.Mobile,
+                Logo = seller.Logo,
+                NationalCardImage = seller.NationalCardImage,
                 Address = seller.Address,
                 StoreName = seller.StoreName,
                 NationalId = seller.NationalId,
                 Description = seller.Description,
-                AdminDescription = seller.AdminDescription,
                 StoreAcceptanceState = StoreAcceptanceState.UnderProgress,
             };
 
@@ -164,13 +184,27 @@ namespace MarketPlace.Application.Services.Implementations
             };
         }
 
-        public async Task<EditSellerRequestResult> EditSellerRequest(EditSellerRequestDTO request, long currentUserId)
+        public async Task<EditSellerRequestResult> EditSellerRequest(EditSellerRequestDTO request, long currentUserId, IFormFile logo, IFormFile nationalCard)
         {
             var seller = await _sellerRepository.GetEntityById(request.Id);
 
             if (seller == null || seller.UserId != currentUserId)
             {
                 return EditSellerRequestResult.NotFound;
+            }
+
+            if (logo != null && logo.IsImage())
+            {
+                var logoName = Guid.NewGuid().ToString("N") + Path.GetExtension(logo.FileName);
+                logo.AddImageToServer(logoName, PathExtension.SellerLogoOriginServer, 80, 80, PathExtension.SellerLogoThumbServer, seller.Logo);
+                request.Logo = logoName;
+            }
+
+            if (nationalCard != null && nationalCard.IsImage())
+            {
+                var nationalCardName = Guid.NewGuid().ToString("N") + Path.GetExtension(nationalCard.FileName);
+                nationalCard.AddImageToServer(nationalCardName, PathExtension.SellerNationalCardImageOriginServer, 120, 100, PathExtension.SellerNationalCardImageThumbServer, seller.NationalCardImage);
+                request.NationalCardImage = nationalCardName;
             }
 
             seller.StoreName = request.StoreName;
@@ -229,6 +263,15 @@ namespace MarketPlace.Application.Services.Implementations
             }
 
             return false;
+        }
+
+        public async Task<Seller> GetLastActiveSellerByUserId(long userId)
+        {
+            return await _sellerRepository
+                .GetQuery()
+                .AsQueryable()
+                .OrderByDescending(x => x.CreateDate)
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
 
         #endregion

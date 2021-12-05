@@ -1,0 +1,25 @@
+﻿
+
+<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active show" asp-area="Seller" asp-controller="Home" asp-action="Index" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">داشبورد</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="User" asp-controller="Ticket" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            تیکت های من
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="User" asp-controller="Ticket" asp-action="AddTicket" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            ثبت تیکت جدید
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-area="Seller" asp-controller="Product" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+            مدیریت محصولات
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Account" asp-action="Logout">خروج از حساب کاربری</a>
+    </li>
+</ul>
