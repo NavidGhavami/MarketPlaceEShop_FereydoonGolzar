@@ -16,6 +16,12 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<CreateProductResult> CreateProduct(CreateProductDTO product, long sellerId, IFormFile productImage);
         Task<bool> AcceptSellerProduct(long productId);
         Task<bool> RejectSellerProduct(RejectItemDTO reject);
+        Task<EditProductDTO> GetProductForEdit(long productId);
+        Task<EditProductResult> EditSellerProduct(EditProductDTO product, long userId, IFormFile productImage);
+        Task RemoveAllProductSelectedCategories(long productId);
+        Task RemoveAllProductColors(long productId);
+        Task AddProductSelectedCategories(long productId, List<long> selectedCategories);
+        Task AddProductColors(long productId, List<CreateProductColorDTO> colors);
 
         #endregion
 

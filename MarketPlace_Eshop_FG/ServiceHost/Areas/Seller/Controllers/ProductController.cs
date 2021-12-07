@@ -91,6 +91,52 @@ namespace ServiceHost.Areas.Seller.Controllers
 
         #endregion
 
+        #region Edit Products
+
+        [HttpGet("edit-product/{productId}")]
+        public async Task<IActionResult> EditProduct(long productId)
+        {
+            var product = await _productService.GetProductForEdit(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
+
+            return View(product);
+        }
+
+        [HttpPost("edit-product/{productId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProduct(EditProductDTO edit, long productId, IFormFile productImage)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _productService.EditSellerProduct(edit, User.GetUserId(), productImage);
+
+                switch (result)
+                {
+                    case EditProductResult.NotForUser:
+                        TempData[WarningMessage] = "در ویرایش اطلاعات خطایی رخ داده است";
+                        break;
+                    case EditProductResult.NotFound:
+                        TempData[ErrorMessage] = "اطلاعات وارد شده یافت نشد";
+                        break;
+                    case EditProductResult.Success:
+                        TempData[SuccessMessage] = $"ویرایش محصول {edit.Title} با موفقیت انجام شد";
+                        return RedirectToAction("Index");
+                    
+                }
+            }
+
+
+            ViewBag.Categories = await _productService.GetAllActiveProductCategories();
+            return View();
+        }
+
+        #endregion
+
 
     }
 }

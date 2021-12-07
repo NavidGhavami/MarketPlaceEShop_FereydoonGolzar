@@ -1,0 +1,259 @@
+﻿@using MarketPlace.DataLayer.Entities.Products
+@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.Products.EditProductDTO
+@{
+    ViewData["Title"] = "ویرایش : " + Model.Title;
+    var categories = ViewBag.Categories as List<ProductCategory>;
+}
+
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            <form method="post" asp-area="Seller" asp-controller="Product" asp-action="EditProduct" enctype="multipart/form-data" id="create_product_form">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="ProductImage" />
+
+                                @if (Model.ProductColors != null && Model.ProductColors.Any())
+                                {
+                                    var index = 0;
+
+                                    foreach (var color in Model.ProductColors)
+                                    {
+                                        <input type="hidden" value="@color.ColorName" name="ProductColors[@index].ColorName" color-name-hidden-input="@color.ColorName-@color.Price">
+                                        <input type="hidden" value="@color.Price" name="ProductColors[@index].Price" color-price-hidden-input="@color.ColorName-@color.Price">
+                                        index++;
+                                    }
+                                }
+
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>نام محصول</label>
+                                        <input type="text" asp-for="Title" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="Title"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>قیمت محصول</label>
+                                        <input type="text" asp-for="Price" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="Price"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>توضیحات کوتاه محصول</label>
+                                        <textarea class="form-control" rows="3" asp-for="ShortDescription"></textarea>
+                                        <span class="text-danger float-right" asp-validation-for="ShortDescription"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="row col-md-12">
+                                    @if (Model.ProductState == ProductAcceptanceState.Rejected)
+                                    {
+                                        <div class="form-group col-md-12">
+                                            <label>توضیحات تایید یا عدم تایید محصول</label>
+                                            <textarea class="form-control text-danger" rows="1" disabled="disabled"
+                                                      asp-for="ProductAcceptOrRejectDescription"></textarea>
+                                            <span class="text-danger float-right" asp-validation-for="ProductAcceptOrRejectDescription"></span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group col-md-12">
+                                            <label>توضیحات تایید یا عدم تایید محصول</label>
+                                            <textarea class="form-control text-success" rows="1" disabled="disabled"
+                                                      asp-for="ProductAcceptOrRejectDescription"></textarea>
+                                            <span class="text-danger float-right" asp-validation-for="ProductAcceptOrRejectDescription"></span>
+                                        </div>
+                                    }
+                                    <br />
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>توضیحات اصلی محصول</label>
+                                        <br />
+                                        <br />
+                                        <textarea class="form-control" ckeditor="1" asp-for="Description"></textarea>
+                                        <span class="text-danger float-right" asp-validation-for="Description"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-2">
+                                        <label>فعال / غیر فعال</label>
+                                        <input type="checkbox" style="width: 30px; height: 30px;" value="true"
+                                               name="@nameof(Model.IsActive)" @(Model.IsActive ? "checked" : "") class="float-right">
+                                        <span class="text-danger float-right" asp-validation-for="IsActive"></span>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <div class="form-group">
+                                            <img style="width: 100%; height: 100px; border-radius: 20%"
+                                                 src="@(!string.IsNullOrEmpty(Model.ProductImage) ? PathExtension.ProductThumb + Model.ProductImage
+                                                          : PathExtension.DefaultAvatar )" alt="@Model.Title" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-7">
+                                        <div class="form-group">
+                                            <label>تصویر محصول</label>
+                                            <input type="file" name="productImage" class="form-control" accept=".png, .jpeg, .jpg">
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <hr />
+
+                                @if (categories != null && categories.Any())
+                                {
+                                    @foreach (var category in categories.Where(x => x.ParentId == null))
+                                    {
+                                        var isParentCategorySelected = Model.SelectedCategories.Any(x => x == category.Id);
+                                        <ul>
+                                            <li>
+                                                <label style="padding-left: 5px;">@category.Title</label>
+                                                <input type="checkbox" style="margin-top: 7px; width: 15px; height: 15px;"
+                                                       value="@category.Id" main_category_checkbox="@category.Id"
+                                                       name="@nameof(Model.SelectedCategories)"
+                                                       @(isParentCategorySelected ? "checked" : "")
+                                                       class="float-right">
+                                                <br />
+                                                @if (categories.Any(x => x.ParentId == category.Id))
+                                                {
+                                                    <div id="sub_categories_@category.Id" style="display: @(isParentCategorySelected ?"block":"none")">
+                                                        @foreach (var subCategory in categories.Where(x => x.ParentId == category.Id))
+                                                        {
+                                                            var isSubCategorySelected = Model.SelectedCategories.Any(x => x == subCategory.Id);
+
+                                                            <label style="padding-left: 5px;">@subCategory.Title</label>
+                                                            <input type="checkbox" style="margin-top: 7px; margin-left: 5px; width: 15px; height: 15px;"
+                                                                   parent-category-id="@category.Id"
+                                                                   value="@subCategory.Id" main_category_checkbox="@subCategory.Id"
+                                                                   name="@nameof(Model.SelectedCategories)" class="float-right"
+                                                                   @(isSubCategorySelected ? "checked" : "")>
+
+
+                                                            <div id="sub_categories_@subCategory.Id" style="display: @(isSubCategorySelected ?"block":"none")">
+                                                                @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subCategory.Id))
+                                                                {
+                                                                    var isSecondSubCategorySelected = Model.SelectedCategories.Any(x => x == secondSubCategory.Id);
+
+                                                                    <label style="padding-left: 5px;">@secondSubCategory.Title</label>
+                                                                    <input type="checkbox" style="margin-top: 7px; margin-left: 5px; width: 15px; height: 15px;"
+                                                                           parent-category-id="@subCategory.Id"
+                                                                           value="@secondSubCategory.Id"
+                                                                           name="@nameof(Model.SelectedCategories)"
+                                                                           class="float-right"
+                                                                           @(isSecondSubCategorySelected ? "checked" : "")>
+                                                                    <br />
+                                                                }
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                    <br />
+                                                }
+                                            </li>
+                                        </ul>
+                                        <hr />
+                                    }
+                                }
+
+                                <div class="row col-md-12">
+
+                                    <div class="form-group col-md-5">
+                                        <label>رنگ محصول</label>
+                                        <input type="text" id="product_color_name_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label>قیمت مضاف رنگ محصول</label>
+                                        <input type="text" id="product_color_price_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <br />
+                                        <a id="add_color_button" class="btn btn-block btn-round btn-sm text-dark" title="افزودن رنگ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" color="green" width="30" height="25" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                            <i class="bi bi-plus-square-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <table class="table table-striped table-responsive-md text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">نام رنگ</th>
+                                            <th scope="col">قیمت</th>
+                                            <th scope="col">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="list_of_product_colors">
+                                        @if (Model.ProductColors != null && Model.ProductColors.Any())
+                                        {
+                                            foreach (var color in Model.ProductColors)
+                                            {
+                                                <tr color-table-item="@color.ColorName-@color.Price">
+                                                    <td>@color.ColorName</td>
+                                                    <td>@color.Price</td>
+                                                    <td>
+                                                        <a class="btn btn-lg text-danger" style="float: none;" title="حذف رنگ" onclick="removeProductColor('@color.ColorName-@color.Price')">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 25px;" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                            </svg>
+                                                            <i class="bi bi-trash-fill"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                                <br />
+                                <br />
+
+                                <button type="submit" class="btn btn-round btn-warning float-right">
+                                    <span>ویرایش محصول</span>
+                                    <i class="icon-long-arrow-left"></i>
+                                </button>
+                            </form>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
