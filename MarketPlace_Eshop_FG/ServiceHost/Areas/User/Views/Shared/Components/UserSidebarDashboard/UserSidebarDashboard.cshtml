@@ -1,4 +1,7 @@
 ﻿
+@{
+    var hasUserAnyActiveSellerPanel = (bool)ViewBag.hasUserAnyActiveSellerPanel;
+}
 
 <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
     <li class="nav-item">
@@ -24,6 +27,14 @@
             ثبت تیکت جدید
         </a>
     </li>
+    @if (hasUserAnyActiveSellerPanel)
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Seller" asp-controller="Home" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+                مشاهده پنل فروشندگی
+            </a>
+        </li>
+    }
     <li class="nav-item">
         <a class="nav-link" asp-area="User" asp-controller="Seller" asp-action="RequestSellerPanel" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             درخواست پنل فروشندگی
@@ -34,6 +45,7 @@
             لیست درخواست های فروشندگی
         </a>
     </li>
+
 
     <li class="nav-item">
         <a class="nav-link" asp-controller="Account" asp-action="Logout">خروج از حساب کاربری</a>

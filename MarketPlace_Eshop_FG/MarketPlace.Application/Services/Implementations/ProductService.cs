@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,14 +22,16 @@ namespace MarketPlace.Application.Services.Implementations
 
         private readonly IGenericRepository<Product> _productRepository;
         private readonly IGenericRepository<ProductColor> _productColorRepository;
+        private readonly IGenericRepository<ProductGallery> _productGalleryRepository;
         private readonly IGenericRepository<ProductCategory> _productCategoryRepository;
         private readonly IGenericRepository<ProductSelectedCategory> _productSelectedRepository;
 
         public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository,
-            IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository)
+            IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository, IGenericRepository<ProductGallery> productGalleryRepository)
         {
             _productRepository = productRepository;
             _productColorRepository = productColorRepository;
+            _productGalleryRepository = productGalleryRepository;
             _productCategoryRepository = productCategoryRepository;
             _productSelectedRepository = productSelectedRepository;
         }
@@ -325,12 +326,15 @@ namespace MarketPlace.Application.Services.Implementations
 
             foreach (var productColor in colors)
             {
-                productSelectedColors.Add(new ProductColor
+                if (productSelectedColors.All(x => x.ColorName != productColor.ColorName))
                 {
-                    ProductId = productId,
-                    ColorName = productColor.ColorName,
-                    Price = productColor.Price
-                });
+                    productSelectedColors.Add(new ProductColor
+                    {
+                        ProductId = productId,
+                        ColorName = productColor.ColorName,
+                        Price = productColor.Price
+                    });
+                }
             }
 
             await _productColorRepository.AddRangeEntities(productSelectedColors);
@@ -367,6 +371,130 @@ namespace MarketPlace.Application.Services.Implementations
                 .AsQueryable()
                 .Where(x => x.IsActive && !x.IsDelete)
                 .ToListAsync();
+        }
+
+
+
+        #endregion
+
+        #region Product Gallery
+
+        public async Task<List<ProductGallery>> GetAllProductGalleries(long productId)
+        {
+            return await _productGalleryRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => x.ProductId == productId)
+                .ToListAsync();
+        }
+
+        public async Task<List<ProductGallery>> GetAllProductGalleriesInSellerPanel(long productId, long sellerId)
+        {
+
+            return await _productGalleryRepository
+                .GetQuery()
+                .Include(x => x.Product)
+                .Where(x => x.ProductId == productId && x.Product.SellerId == sellerId)
+                .ToListAsync();
+        }
+
+        public async Task<Product> GetProductSellerOwnerBy(long productId, long userId)
+        {
+            return await _productRepository
+                .GetQuery()
+                .Include(x => x.Seller)
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == productId && x.Seller.UserId == userId);
+        }
+
+        public async Task<CreateOrEditProductGalleryResult> CreateProductGallery(CreateOrEditProductGalleryDTO gallery, long productId, long sellerId)
+        {
+            var product = await _productRepository.GetEntityById(productId);
+
+            if (product == null)
+            {
+                return CreateOrEditProductGalleryResult.ProductNotFound;
+            }
+
+            if (product.SellerId != sellerId)
+            {
+                return CreateOrEditProductGalleryResult.NotForUserProduct;
+            }
+
+            if (gallery.Image == null || !gallery.Image.IsImage())
+            {
+                return CreateOrEditProductGalleryResult.ImageIsNull;
+            }
+
+            var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(gallery.Image.FileName);
+            gallery.Image.AddImageToServer(imageName, PathExtension.ProductGalleryOriginServer, 100, 100, PathExtension.ProductGalleryThumbServer);
+
+            await _productGalleryRepository.AddEntity(new ProductGallery
+            {
+                ProductId = productId,
+                ImageName = imageName,
+                DisplayPriority = gallery.DisplayPriority
+            });
+
+            await _productGalleryRepository.SaveChanges();
+
+            return CreateOrEditProductGalleryResult.Success;
+        }
+
+        public async Task<CreateOrEditProductGalleryDTO> GetProductGalleryForEdit(long galleryId, long sellerId)
+        {
+            var gallery = await _productGalleryRepository
+                .GetQuery()
+                .Include(x => x.Product)
+                .SingleOrDefaultAsync(x => x.Id == galleryId && x.Product.SellerId == sellerId);
+
+            if (gallery == null)
+            {
+                return null;
+            }
+
+            return new CreateOrEditProductGalleryDTO
+            {
+                ImageName = gallery.ImageName,
+                DisplayPriority = gallery.DisplayPriority
+            };
+        }
+
+        public async Task<CreateOrEditProductGalleryResult> EditProductGallery(CreateOrEditProductGalleryDTO gallery, long galleryId, long sellerId)
+        {
+            var mainGallery = await _productGalleryRepository
+                .GetQuery()
+                .Include(x => x.Product)
+                .SingleOrDefaultAsync(x => x.Id == galleryId && x.Product.SellerId == sellerId);
+
+            if (mainGallery == null)
+            {
+                return CreateOrEditProductGalleryResult.ProductNotFound;
+            }
+
+            if (mainGallery.Product.SellerId != sellerId)
+            {
+                return CreateOrEditProductGalleryResult.NotForUserProduct;
+            }
+
+            if (gallery.Image.IsImage() || gallery.Image != null)
+            {
+
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(gallery.Image.FileName);
+                gallery.Image.AddImageToServer(imageName, PathExtension.ProductGalleryOriginServer, 100, 100,
+                        PathExtension.ProductGalleryThumbServer, mainGallery.ImageName);
+
+                mainGallery.ImageName = imageName;
+                
+            }
+
+            mainGallery.DisplayPriority = gallery.DisplayPriority;
+
+            _productGalleryRepository.EditEntity(mainGallery);
+            await _productGalleryRepository.SaveChanges();
+
+            return CreateOrEditProductGalleryResult.Success;
+
         }
 
         #endregion

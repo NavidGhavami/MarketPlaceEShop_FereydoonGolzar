@@ -11,16 +11,19 @@ namespace ServiceHost.ViewComponents
     public class SiteHeaderViewComponent : ViewComponent
     {
         private readonly ISiteService _siteService;
+        private readonly IProductService _productService;
 
-        public SiteHeaderViewComponent(ISiteService siteService)
+        public SiteHeaderViewComponent(ISiteService siteService, IProductService productService)
         {
             _siteService = siteService;
+            _productService = productService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
             ViewBag.siteSetting = await _siteService.GetDefaultSiteSetting();
+            ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
             return View("SiteHeader");
         }
     }

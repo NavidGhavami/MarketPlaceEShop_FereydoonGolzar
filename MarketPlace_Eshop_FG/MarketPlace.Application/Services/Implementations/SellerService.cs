@@ -55,14 +55,14 @@ namespace MarketPlace.Application.Services.Implementations
             if (logo != null && logo.IsImage())
             {
                 var logoName = Guid.NewGuid().ToString("N") + Path.GetExtension(logo.FileName);
-                logo.AddImageToServer(logoName, PathExtension.SellerLogoOriginServer, 80, 80, PathExtension.SellerLogoThumbServer, seller.Logo);
+                logo.AddImageToServer(logoName, PathExtension.SellerLogoOriginServer, 80, 80, PathExtension.SellerLogoThumbServer);
                 seller.Logo = logoName;
             }
 
             if (nationalCard != null && nationalCard.IsImage())
             {
                 var nationalCardName = Guid.NewGuid().ToString("N") + Path.GetExtension(nationalCard.FileName);
-                nationalCard.AddImageToServer(nationalCardName, PathExtension.SellerNationalCardImageOriginServer, 120, 100, PathExtension.SellerNationalCardImageThumbServer, seller.NationalCardImage);
+                nationalCard.AddImageToServer(nationalCardName, PathExtension.SellerNationalCardImageOriginServer, 120, 100, PathExtension.SellerNationalCardImageThumbServer);
                 seller.NationalCardImage = nationalCardName;
             }
 
@@ -272,6 +272,15 @@ namespace MarketPlace.Application.Services.Implementations
                 .AsQueryable()
                 .OrderByDescending(x => x.CreateDate)
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
+        }
+
+        public async Task<bool> HasUserAnyActiveSeller(long userId)
+        {
+            return await _sellerRepository
+                .GetQuery()
+                .AsQueryable()
+                .OrderByDescending(x => x.CreateDate)
+                .AnyAsync(x => x.UserId == userId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
 
         #endregion

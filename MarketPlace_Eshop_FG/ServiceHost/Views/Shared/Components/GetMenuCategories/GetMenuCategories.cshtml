@@ -1,4 +1,8 @@
-﻿<div class="header-bottom sticky-header">
+﻿@using MarketPlace.DataLayer.Entities.Products
+
+@{ var categories = ViewBag.ProductCategories as List<ProductCategory>; }
+
+<div class="header-bottom sticky-header">
     <div class="container">
         <div class="header-left">
             <div class="dropdown category-dropdown show is-on" data-visible="true">
@@ -11,324 +15,46 @@
                 <div class="dropdown-menu">
                     <nav class="side-nav">
                         <ul class="menu-vertical sf-arrows ">
-                            <li class="megamenu-container">
-                                <a class="sf-with-ul" href="#">لوازم الکترونیکی</a>
+                            @if (categories != null && categories.Any())
+                            {
+                        @foreach (var category in categories.Where(x=>x.ParentId == null))
+                        {
+                        <li class="megamenu-container">
+                            <a class="sf-with-ul" href="#">@category.Title</a>
 
-                                <div class="megamenu">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-8">
-                                            <div class="menu-col">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="menu-title">کامپیوتر و لپ تاپ</div>
-                                                        <!-- End .menu-title -->
+                            <div class="megamenu">
+                                <div class="row no-gutters">
+                                    <div class="col-md-12">
+                                        <div class="menu-col">
+                                            <div class="row">
+                                                @if (categories.Any(x => x.ParentId == category.Id))
+                                                {
+                                                    @foreach (var subCategory in categories.Where(x=>x.ParentId == category.Id))
+                                                    {
+                                                        <div class="col-md-3">
+                                                            <div class="menu-title">@subCategory.Title</div>
+                                                            <!-- End .menu-title -->
+                                                            @if (categories.Any(x => x.ParentId == subCategory.Id))
+                                                            {
                                                         <ul>
-                                                            <li><a href="#">دسکتاپ</a></li>
-                                                            <li><a href="#">مانیتور</a></li>
-                                                            <li><a href="#">لپ تاپ</a></li>
-                                                            <li><a href="#">آی پد و تب لت</a></li>
-                                                            <li><a href="#">هارد و فضای ذخیره سازی</a></li>
-                                                            <li><a href="#">پرینتر و دستگاه کپی</a></li>
-                                                            <li><a href="#">لوازم جانبی</a></li>
+                                                            @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subCategory.Id))
+                                                            {
+                                                        <li><a href="#">@secondSubCategory.Title</a></li>}
                                                         </ul>
+                                                            }
+                                                        </div><!-- End .col-md-6 -->
+                                                    }
+                                                }
+                                            </div><!-- End .row -->
+                                        </div><!-- End .menu-col -->
+                                    </div><!-- End .col-md-8 -->
+                                </div><!-- End .row -->
+                            </div><!-- End .megamenu -->
+                        </li>
 
-                                                        <div class="menu-title">تلویزیون و ویدیو پلیر</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li><a href="#">تلویزیون ها</a></li>
-                                                            <li><a href="#">لوازم صوتی</a></li>
-                                                            <li><a href="#">پرژکتور</a></li>
-                                                            <li><a href="#">دستگاه های پخش ویدیو</a></li>
-                                                        </ul>
-                                                    </div><!-- End .col-md-6 -->
+                        }
 
-                                                    <div class="col-md-6">
-                                                        <div class="menu-title">موبایل</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li><a href="#">تلفن هوشمند</a></li>
-                                                            <li><a href="#">هدفون و هندزفری</a></li>
-                                                            <li><a href="#">قاب و کاور</a></li>
-                                                            <li><a href="#">شارژر </a></li>
-                                                        </ul>
-
-                                                        <div class="menu-title">دوربین دیجیتال</div>
-                                                    </div><!-- End .col-md-6 -->
-                                                </div><!-- End .row -->
-                                            </div><!-- End .menu-col -->
-                                        </div><!-- End .col-md-8 -->
-
-                                        <div class="col-md-4">
-                                            <div class="banner banner-overlay">
-                                                <a href="category.html" class="banner banner-menu">
-                                                    <img src="~/Theme/assets/images/demos/demo-13/menu/banner-1.jpg"
-                                                         alt="بنر">
-                                                </a>
-                                            </div><!-- End .banner banner-overlay -->
-                                        </div><!-- End .col-md-4 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .megamenu -->
-                            </li>
-                            <li class="megamenu-container">
-                                <a class="sf-with-ul" href="#">مبلمان</a>
-
-                                <div class="megamenu">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-8">
-                                            <div class="menu-col">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="menu-title">اتاق خواب</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li><a href="#">تخت خواب</a></li>
-                                                            <li><a href="#">چراغ خواب</a></li>
-                                                            <li><a href="#">میز</a></li>
-                                                        </ul>
-
-                                                        <div class="menu-title">اتاق نشیمن</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li><a href="#">میز قهوه</a></li>
-                                                            <li><a href="#">صندلی</a></li>
-                                                            <li><a href="#">میز</a></li>
-                                                        </ul>
-                                                    </div><!-- End .col-md-6 -->
-
-                                                    <div class="col-md-6">
-                                                        <div class="menu-title">دفتر</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li><a href="#">صندلی</a></li>
-                                                            <li><a href="#">میز</a></li>
-                                                        </ul>
-
-                                                        <div class="menu-title">آشپزخانه</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li><a href="#">میز نهارخوری</a></li>
-                                                            <li>
-                                                                <a href="#">کابینت</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div><!-- End .col-md-6 -->
-                                                </div><!-- End .row -->
-                                            </div><!-- End .menu-col -->
-                                        </div><!-- End .col-md-8 -->
-
-                                        <div class="col-md-4">
-                                            <div class="banner banner-overlay">
-                                                <a href="category.html" class="banner banner-menu">
-                                                    <img src="~/Theme/assets/images/demos/demo-13/menu/banner-2.jpg"
-                                                         alt="بنر">
-                                                </a>
-                                            </div><!-- End .banner banner-overlay -->
-                                        </div><!-- End .col-md-4 -->
-                                    </div><!-- End .row -->
-                                </div><!-- End .megamenu -->
-                            </li>
-                            <li class="megamenu-container">
-                                <a class="sf-with-ul" href="#">آشپزی</a>
-
-                                <div class="megamenu">
-                                    <div class="menu-col">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="menu-title">لوازم پخت و پز</div>
-                                                <!-- End .menu-title -->
-                                                <ul>
-                                                    <li><a href="#">قابلمه</a></li>
-                                                    <li><a href="#">لوازم الکترونیکی</a></li>
-                                                    <li><a href="#">پاقو</a></li>
-                                                </ul>
-                                            </div><!-- End .col-md-4 -->
-
-                                            <div class="col-md-4">
-                                                <div class="menu-title">ظروف</div>
-                                                <!-- End .menu-title -->
-                                                <ul>
-                                                    <li><a href="#">بشقاب</a></li>
-                                                    <li><a href="#">فنجان</a></li>
-                                                    <li><a href="#">قوه خوری</a></li>
-                                                    <li><a href="#">سینی</a></li>
-                                                    <li><a href="#">نمکو فلفل پاش</a></li>
-                                                </ul>
-                                            </div><!-- End .col-md-4 -->
-
-                                            <div class="col-md-4">
-                                                <div class="menu-title">لوازم الترونیکی</div>
-                                                <!-- End .menu-title -->
-                                                <ul>
-                                                    <li><a href="#">ماکروویو</a></li>
-                                                    <li><a href="#">قهوه ساز</a></li>
-                                                    <li><a href="#">میکسر</a></li>
-                                                    <li><a href="#">آرام پز</a></li>
-                                                    <li><a href="#">تستر</a></li>
-                                                    <li><a href="#">مخلوط کن</a></li>
-                                                </ul>
-                                            </div><!-- End .col-md-4 -->
-                                        </div><!-- End .row -->
-
-                                        <div class="row menu-banners">
-                                            <div class="col-md-4">
-                                                <div class="banner">
-                                                    <a href="#">
-                                                        <img src="~/Theme/assets/images/demos/demo-13/menu/1.jpg"
-                                                             alt="image">
-                                                    </a>
-                                                </div><!-- End .banner -->
-                                            </div><!-- End .col-md-4 -->
-
-                                            <div class="col-md-4">
-                                                <div class="banner">
-                                                    <a href="#">
-                                                        <img src="~/Theme/assets/images/demos/demo-13/menu/2.jpg"
-                                                             alt="image">
-                                                    </a>
-                                                </div><!-- End .banner -->
-                                            </div><!-- End .col-md-4 -->
-
-                                            <div class="col-md-4">
-                                                <div class="banner">
-                                                    <a href="#">
-                                                        <img src="~/Theme/assets/images/demos/demo-13/menu/3.jpg"
-                                                             alt="image">
-                                                    </a>
-                                                </div><!-- End .banner -->
-                                            </div><!-- End .col-md-4 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .menu-col -->
-                                </div><!-- End .megamenu -->
-                            </li>
-                            <li class="megamenu-container">
-                                <a class="sf-with-ul" href="#">لباس</a>
-
-                                <div class="megamenu">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-8">
-                                            <div class="menu-col">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="menu-title">زنانه</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <strong>
-                                                                        محصولات
-                                                                        جدید
-                                                                    </strong>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <strong>
-                                                                        بیشترین
-                                                                        فروش
-                                                                    </strong>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#"><strong>ویژه</strong></a>
-                                                            </li>
-                                                            <li><a href="#">لباس</a></li>
-                                                            <li><a href="#">کفش</a></li>
-                                                            <li><a href="#">کیف</a></li>
-                                                            <li><a href="#">لوازم جانبی</a></li>
-                                                        </ul>
-                                                    </div><!-- End .col-md-6 -->
-
-                                                    <div class="col-md-6">
-                                                        <div class="menu-title">مردانه</div>
-                                                        <!-- End .menu-title -->
-                                                        <ul>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <strong>
-                                                                        محصولات
-                                                                        جدید
-                                                                    </strong>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">
-                                                                    <strong>
-                                                                        بیشترین
-                                                                        فروش
-                                                                    </strong>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#"><strong>ویژه</strong></a>
-                                                            </li>
-                                                            <li><a href="#">لباس</a></li>
-                                                            <li><a href="#">کفش</a></li>
-                                                            <li><a href="#">کیف</a></li>
-                                                            <li><a href="#">لوازم جانبی</a></li>
-                                                        </ul>
-                                                    </div><!-- End .col-md-6 -->
-                                                </div><!-- End .row -->
-                                            </div><!-- End .menu-col -->
-                                        </div><!-- End .col-md-8 -->
-
-                                        <div class="col-md-4">
-                                            <div class="banner banner-overlay">
-                                                <a href="category.html" class="banner banner-menu">
-                                                    <img src="~/Theme/assets/images/demos/demo-13/menu/banner-3.jpg"
-                                                         alt="بنر">
-                                                </a>
-                                            </div><!-- End .banner banner-overlay -->
-                                        </div><!-- End .col-md-4 -->
-                                    </div><!-- End .row -->
-
-                                    <div class="menu-col menu-brands">
-                                        <div class="row">
-                                            <div class="col-lg-2">
-                                                <a href="#" class="brand">
-                                                    <img src="~/Theme/assets/images/brands/1.png" alt="نام برند">
-                                                </a>
-                                            </div><!-- End .col-lg-2 -->
-
-                                            <div class="col-lg-2">
-                                                <a href="#" class="brand">
-                                                    <img src="~/Theme/assets/images/brands/2.png" alt="نام برند">
-                                                </a>
-                                            </div><!-- End .col-lg-2 -->
-
-                                            <div class="col-lg-2">
-                                                <a href="#" class="brand">
-                                                    <img src="~/Theme/assets/images/brands/3.png" alt="نام برند">
-                                                </a>
-                                            </div><!-- End .col-lg-2 -->
-
-                                            <div class="col-lg-2">
-                                                <a href="#" class="brand">
-                                                    <img src="~/Theme/assets/images/brands/4.png" alt="نام برند">
-                                                </a>
-                                            </div><!-- End .col-lg-2 -->
-
-                                            <div class="col-lg-2">
-                                                <a href="#" class="brand">
-                                                    <img src="~/Theme/assets/images/brands/5.png" alt="نام برند">
-                                                </a>
-                                            </div><!-- End .col-lg-2 -->
-
-                                            <div class="col-lg-2">
-                                                <a href="#" class="brand">
-                                                    <img src="~/Theme/assets/images/brands/6.png" alt="نام برند">
-                                                </a>
-                                            </div><!-- End .col-lg-2 -->
-                                        </div><!-- End .row -->
-                                    </div><!-- End .menu-brands -->
-                                </div><!-- End .megamenu -->
-                            </li>
-                            <li><a href="#">لوازم خانگی</a></li>
-                            <li><a href="#">زیبایی و سلامت</a></li>
-                            <li><a href="#">کفش و پوتین</a></li>
-                            <li><a href="#">مسافرت</a></li>
-                            <li><a href="#">تلفن هوشمند</a></li>
-                            <li><a href="#">تلویزیون و لوازم صوتی</a></li>
-                            <li><a href="#">هدیه</a></li>
+                            }
                         </ul><!-- End .menu-vertical -->
                     </nav><!-- End .side-nav -->
                 </div><!-- End .dropdown-menu -->
@@ -368,7 +94,7 @@
                     <li class="megamenu-container">
                         <a asp-controller="Home" asp-action="ContactUs" class="">تماس با ما</a>
                     </li>
-                   
+
 
                 </ul><!-- End .menu -->
             </nav><!-- End .main-nav -->

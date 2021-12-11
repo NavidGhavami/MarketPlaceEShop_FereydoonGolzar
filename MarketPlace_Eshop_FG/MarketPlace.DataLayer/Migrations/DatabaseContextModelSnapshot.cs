@@ -359,6 +359,39 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("ProductColors");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.ProductGallery", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayPriority")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductGalleries");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.ProductSelectedCategory", b =>
                 {
                     b.Property<long>("Id")
@@ -686,6 +719,17 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.ProductGallery", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany("ProductGalleries")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.ProductSelectedCategory", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.Products.ProductCategory", "ProductCategory")
@@ -735,6 +779,8 @@ namespace MarketPlace.DataLayer.Migrations
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.Product", b =>
                 {
                     b.Navigation("ProductColors");
+
+                    b.Navigation("ProductGalleries");
 
                     b.Navigation("ProductSelectedCategories");
                 });

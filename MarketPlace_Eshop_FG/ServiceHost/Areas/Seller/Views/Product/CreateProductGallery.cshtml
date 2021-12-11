@@ -1,0 +1,74 @@
+﻿@model MarketPlace.DataLayer.DTOs.Products.CreateOrEditProductGalleryDTO
+@{
+    ViewData["Title"] = "ثبت گالری جدید برای " + ViewBag.Product.Title;
+}
+
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل فروشندگی ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد پنل کاربری</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد پنل فروشندگی</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Product" asp-action="Index">مدیریت محصولات</a></li>
+            <li class="breadcrumb-item" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            <form method="post" asp-area="Seller" asp-controller="Product" asp-action="CreateProductGallery" enctype="multipart/form-data" id="create_product_form">
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>اولویت نمایش</label>
+                                        <input asp-for="DisplayPriority" class="form-control">
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>تصویر گالری</label>
+                                        <input type="file" asp-for="Image" class="form-control" accept=".png, .jpeg, .jpg">
+                                        <span class="text-danger float-right" asp-validation-for="Image"></span>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                                <button type="submit" class="btn btn-round btn-success float-right">
+                                    <span>افزودن گالری</span>
+                                    <i class="icon-long-arrow-left"></i>
+                                </button>
+                            </form>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>

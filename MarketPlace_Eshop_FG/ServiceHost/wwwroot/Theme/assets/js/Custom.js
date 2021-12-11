@@ -94,14 +94,19 @@ $('#add_color_button').on('click', function (e) {
 
         var index = currentColorsCount.length;
 
-        var colorNameNode = `<input type="hidden" value="${colorName}" name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
-        var colorPriceNode = `<input type="hidden" value="${colorPrice}" name="ProductColors[${index}].Price" color-price-hidden-input="${colorName}-${colorPrice}">`;
 
-        $('#create_product_form').append(colorNameNode);
-        $('#create_product_form').append(colorPriceNode);
+        var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
+
+        if (isExistsSelectedColor.lenght !== 0) {
+            debugger;
+            var colorNameNode = `<input type="hidden" value="${colorName}" name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
+            var colorPriceNode = `<input type="hidden" value="${colorPrice}" name="ProductColors[${index}].Price" color-price-hidden-input="${colorName}-${colorPrice}">`;
+
+            $('#create_product_form').append(colorNameNode);
+            $('#create_product_form').append(colorPriceNode);
 
 
-        var colorTableNode = `
+            var colorTableNode = `
           <tr color-table-item="${colorName}-${colorPrice}">
           <td>${colorName}</td> 
           <td>${colorPrice}</td>  
@@ -113,10 +118,16 @@ $('#add_color_button').on('click', function (e) {
           </a>
           </td>
           </tr>`;
-        $('#list_of_product_colors').append(colorTableNode);
+            $('#list_of_product_colors').append(colorTableNode);
 
-        $('#product_color_name_input').val("");
-        $('#product_color_price_input').val("");
+            $('#product_color_name_input').val('');
+            $('#product_color_price_input').val('');
+        } else {
+            ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
+            $('#product_color_name_input').val('').focus();
+            $('#product_color_price_input').val('');
+        }
+
     } else {
         ShowMessage('اخطار', 'لطفا نام رنگ و قیمت آن را به درستی وارد نمایید', 'warning');
     }
@@ -127,5 +138,17 @@ function removeProductColor(index) {
     $('[color-name-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
     $('[color-table-item="' + index + '"]').remove();
+    reOrderProductColorHiddenInputs();
 }
 
+function reOrderProductColorHiddenInputs() {
+    var hiddenColors = $('[color-name-hidden-input]');
+    $.each(hiddenColors, function (index, value) {
+        var hiddenColor = $(value);
+        var colorId = $(value).attr('color-name-hidden-input');
+        var hiddenPrice = $('[color-price-hidden-input="' + colorId + '"]');
+
+        $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName');
+        $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
+    });
+}
