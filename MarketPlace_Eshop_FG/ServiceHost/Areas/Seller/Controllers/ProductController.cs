@@ -45,7 +45,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
             filter.SellerId = seller.Id;
             filter.ProductState = FilterProductState.All;
-            filter = await _productService.FilterProducts(filter);
+            filter = await _productService.FilterProductsInAdmin(filter);
 
 
             return View(filter);

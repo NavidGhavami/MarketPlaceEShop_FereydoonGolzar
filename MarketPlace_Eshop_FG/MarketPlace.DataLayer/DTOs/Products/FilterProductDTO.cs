@@ -7,11 +7,28 @@ namespace MarketPlace.DataLayer.DTOs.Products
 {
     public class FilterProductDTO : BasePaging
     {
+        #region Constructor
+
+        public FilterProductDTO()
+        {
+            OrderBy = FilterProductOrderBy.CreateDateDescending;
+        }
+
+        #endregion
+
         #region Properties
+
         public string ProductTitle { get; set; }
+        public string Category { get; set; }
         public long? SellerId { get; set; }
+        public int FilterMinPrice { get; set; }
+        public int FilterMaxPrice { get; set; }
+        public int SelectedMinPrice { get; set; }
+        public int SelectedMaxPrice { get; set; }
         public List<Product> Products { get; set; }
         public FilterProductState ProductState { get; set; }
+        public FilterProductOrderBy OrderBy { get; set; }
+        public List<long> SelectedProductCategories { get; set; }
 
         #endregion
 
@@ -26,7 +43,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public FilterProductDTO SetPaging(BasePaging paging)
         {
             this.PageId = paging.PageId;
-            this.AllEntitesCount = paging.AllEntitesCount;
+            this.AllEntitiesCount = paging.AllEntitiesCount;
             this.StartPage = paging.StartPage;
             this.EndPage = paging.EndPage;
             this.HowManyShowPageAfterAndBefore = paging.HowManyShowPageAfterAndBefore;
@@ -65,6 +82,21 @@ namespace MarketPlace.DataLayer.DTOs.Products
     {
         CreateDateDescending,
         CreateDateAscending,
+    }
+
+    public enum FilterProductOrderBy
+    {
+        [Display(Name = "جدیدترین")]
+        CreateDateDescending,
+
+        [Display(Name = "تاریخ (صعودی)")]
+        CreateDateAscending,
+
+        [Display(Name = "گرانترین")]
+        PriceDescending,
+
+        [Display(Name = "ارزانترین")]
+        PriceAscending
 
     }
 }

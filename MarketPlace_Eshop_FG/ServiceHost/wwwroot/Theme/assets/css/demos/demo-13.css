@@ -781,14 +781,14 @@
 }
 
 .sidebar-shop .widget {
-  padding-bottom: 2.5rem;
+  /*padding-bottom: 2.5rem;*/
   margin-bottom: 3rem;
   padding-left: .8rem;
   padding-right: .8rem;
 }
 
 .sidebar-shop .widget-title {
-  margin-bottom: 1.7rem;
+  /*margin-bottom: 1.7rem;*/
 }
 
 .sidebar-shop .widget-banner-sidebar {

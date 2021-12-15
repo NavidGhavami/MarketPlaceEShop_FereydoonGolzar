@@ -13,6 +13,7 @@ using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -73,6 +74,22 @@ namespace MarketPlace.Application.Services.Implementations
                     break;
             }
 
+            switch (filter.OrderBy)
+            {
+                case FilterProductOrderBy.CreateDateDescending:
+                    query = query.OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductOrderBy.CreateDateAscending:
+                    query = query.OrderBy(x => x.CreateDate);
+                    break;
+                case FilterProductOrderBy.PriceDescending:
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case FilterProductOrderBy.PriceAscending:
+                    query = query.OrderBy(x => x.Price);
+                    break;
+            }
+
             #endregion
 
             #region Filter
@@ -85,6 +102,23 @@ namespace MarketPlace.Application.Services.Implementations
             if (filter.SellerId != null && filter.SellerId != 0)
             {
                 query = query.Where(x => x.SellerId == filter.SellerId.Value);
+            }
+
+            var expensiveProduct = await query.OrderByDescending(x => x.Price).FirstOrDefaultAsync();
+            filter.FilterMaxPrice = expensiveProduct.Price;
+
+            if (filter.SelectedMaxPrice == 0)
+            {
+                filter.SelectedMaxPrice = expensiveProduct.Price;
+            }
+
+
+            query = query.Where(x => x.Price >= filter.SelectedMinPrice && x.ProductAcceptanceState == ProductAcceptanceState.Accepted);
+            query = query.Where(x => x.Price <= filter.SelectedMaxPrice && x.ProductAcceptanceState == ProductAcceptanceState.Accepted);
+
+            if (!string.IsNullOrEmpty(filter.Category))
+            {
+                query = query.Where(x => x.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == filter.Category && x.ProductAcceptanceState == ProductAcceptanceState.Accepted));
             }
 
             #endregion
@@ -103,6 +137,75 @@ namespace MarketPlace.Application.Services.Implementations
 
             return filter.SetPaging(pager).SetProduct(allEntities);
 
+        }
+
+        public async Task<FilterProductDTO> FilterProductsInAdmin(FilterProductDTO filter)
+        {
+            var query = _productRepository
+                .GetQuery()
+                .Include(x => x.ProductSelectedCategories)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.Seller)
+                .AsQueryable();
+
+            #region State
+
+            switch (filter.ProductState)
+            {
+                case FilterProductState.All:
+                    query = query.Where(x => x.IsActive).OrderByDescending(x=>x.CreateDate);
+                    break;
+                case FilterProductState.Active:
+                    query = query.Where(x => x.IsActive && x.ProductAcceptanceState == ProductAcceptanceState.Accepted).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductState.NotActive:
+                    query = query.Where(x => !x.IsActive && x.ProductAcceptanceState == ProductAcceptanceState.Accepted).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductState.Accepted:
+                    query = query.Where(x => x.ProductAcceptanceState == ProductAcceptanceState.Accepted).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductState.Rejected:
+                    query = query.Where(x => x.ProductAcceptanceState == ProductAcceptanceState.Rejected).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductState.UnderProgress:
+                    query = query.Where(x => x.ProductAcceptanceState == ProductAcceptanceState.UnderProgress).OrderByDescending(x => x.CreateDate);
+                    break;
+            }
+
+            #endregion
+
+            #region Filter
+
+            if (!string.IsNullOrEmpty(filter.ProductTitle))
+            {
+                query = query.Where(x => EF.Functions.Like(x.Title, $"%{filter.ProductTitle}%")).OrderByDescending(x=>x.CreateDate);
+            }
+
+            if (filter.SellerId != null && filter.SellerId != 0)
+            {
+                query = query.Where(x => x.SellerId == filter.SellerId.Value).OrderByDescending(x=>x.CreateDate);
+            }
+
+            if (!string.IsNullOrEmpty(filter.Category))
+            {
+                query = query.Where(x => x.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == filter.Category)).OrderByDescending(x=>x.CreateDate);
+            }
+
+            #endregion
+
+            #region Paging
+
+            var productCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, productCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetProduct(allEntities);
         }
 
         public async Task<CreateProductResult> CreateProduct(CreateProductDTO product, long sellerId, IFormFile productImage)
@@ -340,6 +443,9 @@ namespace MarketPlace.Application.Services.Implementations
             await _productColorRepository.AddRangeEntities(productSelectedColors);
         }
 
+
+
+
         #endregion
 
         #endregion
@@ -372,7 +478,6 @@ namespace MarketPlace.Application.Services.Implementations
                 .Where(x => x.IsActive && !x.IsDelete)
                 .ToListAsync();
         }
-
 
 
         #endregion
@@ -485,7 +590,7 @@ namespace MarketPlace.Application.Services.Implementations
                         PathExtension.ProductGalleryThumbServer, mainGallery.ImageName);
 
                 mainGallery.ImageName = imageName;
-                
+
             }
 
             mainGallery.DisplayPriority = gallery.DisplayPriority;

@@ -34,11 +34,17 @@
                 <form asp-area="Administration" asp-controller="Product" asp-action="ProductsList" method="get" id="filter-form">
                     <input type="hidden" asp-for="PageId" />
                     <div class="row">
-                        <div class="form-group col-lg-5">
+                        <div class="form-group col-lg-6">
                             <label>نام محصول</label>
                             <input class="form-control" asp-for="ProductTitle" />
                         </div>
-                        <div class="form-group col-lg-7">
+                        <div class="form-group col-lg-6">
+                            <label>نام دسته محصول</label>
+                            <input class="form-control" asp-for="Category" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
                             <div>
                                 <label>وضعیت</label>
                             </div>
@@ -141,7 +147,7 @@
                 <br />
                 <partial name="_AdminPaging" model="@Model.GetCurrentPaging()" />
                 <div class="col-sm-12 col-md-12">
-                    <div class="dataTables_info" id="default-datatable_info" role="status" aria-live="polite">نمایش تعداد 10 فروشگاه در هر صفحه از تعداد کل : @Model.Products.Count فروشگاه</div>
+                    <div class="dataTables_info" id="default-datatable_info" role="status" aria-live="polite">نمایش تعداد 10 محصول در هر صفحه از تعداد کل : @Model.Products.Count محصول</div>
                 </div>
             </div>
         </div>

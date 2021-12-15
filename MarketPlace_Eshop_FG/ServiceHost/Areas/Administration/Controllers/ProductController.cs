@@ -27,7 +27,7 @@ namespace ServiceHost.Areas.Administration.Controllers
         public async Task<IActionResult> ProductsList(FilterProductDTO filter)
         {
 
-            var product = await _productService.FilterProducts(filter);
+            var product = await _productService.FilterProductsInAdmin(filter);
 
             return View(filter);
         }

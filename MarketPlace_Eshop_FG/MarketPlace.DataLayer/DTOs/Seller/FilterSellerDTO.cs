@@ -38,7 +38,7 @@ namespace MarketPlace.DataLayer.DTOs.Seller
         public FilterSellerDTO SetPaging(BasePaging paging)
         {
             this.PageId = paging.PageId;
-            this.AllEntitesCount = paging.AllEntitesCount;
+            this.AllEntitiesCount = paging.AllEntitiesCount;
             this.StartPage = paging.StartPage;
             this.EndPage = paging.EndPage;
             this.HowManyShowPageAfterAndBefore = paging.HowManyShowPageAfterAndBefore;

@@ -62,6 +62,8 @@ $(document).ready(function () {
             });
         });
     }
+
+    
 });
 
 function FillPageId(pageId) {
@@ -152,3 +154,9 @@ function reOrderProductColorHiddenInputs() {
         $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
     });
 }
+
+
+$('#OrderBy').on('change',
+    function () {
+        $('#filter-form').submit();
+    });

@@ -28,3 +28,22 @@
 .ck-content {
     height: 300px;
 }
+
+.sliderPrice-direction {
+    direction: ltr;
+}
+
+.categoryFilter-title {
+    font-size: 1.6rem;
+}
+
+
+
+.slider-labels {
+    margin-top: 10px;
+}
+
+.no-product {
+    font-size: 20px !important; 
+    display: block !important;
+}

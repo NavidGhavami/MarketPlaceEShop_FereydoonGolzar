@@ -77,7 +77,7 @@
                                                 <tr>
                                                     <td>@item.Id</td>
                                                     <td>
-                                                        <img style="width: 50px; height: 50px;"
+                                                        <img style="width: 70px; height: 50px;"
                                                              src="@(!string.IsNullOrEmpty(item.Image) ? PathExtension.ProductOrigin + item.Image : PathExtension.DefaultAvatar)" alt="@item.Title" />
                                                     </td>
                                                     <td>@item.Title</td>
@@ -101,10 +101,10 @@
                                                         <div class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">
 
                                                             <a asp-area="Seller" asp-controller="Product" asp-action="EditProduct" asp-route-productId="@item.Id"
-                                                               class="btn btn-outline-warning btn-sm">ویرایش محصول </a>
+                                                               class="btn btn-warning btn-sm">ویرایش محصول </a>
 
                                                             <a asp-area="Seller" asp-controller="Product" asp-action="GetProductGalleries" asp-route-productId="@item.Id"
-                                                               class="btn btn-outline-info btn-sm">گالری تصاویر</a>
+                                                               class="btn btn-info btn-sm">گالری تصاویر</a>
 
 
                                                         </div>

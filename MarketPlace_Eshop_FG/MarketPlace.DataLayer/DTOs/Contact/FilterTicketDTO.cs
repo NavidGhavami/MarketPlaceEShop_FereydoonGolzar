@@ -31,7 +31,7 @@ namespace MarketPlace.DataLayer.DTOs.Contact
         public FilterTicketDTO SetPaging(BasePaging paging)
         {
             this.PageId = paging.PageId;
-            this.AllEntitesCount = paging.AllEntitesCount;
+            this.AllEntitiesCount = paging.AllEntitiesCount;
             this.StartPage = paging.StartPage;
             this.EndPage = paging.EndPage;
             this.HowManyShowPageAfterAndBefore = paging.HowManyShowPageAfterAndBefore;

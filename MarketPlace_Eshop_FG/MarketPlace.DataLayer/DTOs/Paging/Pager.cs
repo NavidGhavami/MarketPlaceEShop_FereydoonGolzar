@@ -11,7 +11,7 @@ namespace MarketPlace.DataLayer.DTOs.Paging
             return new BasePaging
             {
                 PageId = pageId,
-                AllEntitesCount = allEntitiesCount,
+                AllEntitiesCount = allEntitiesCount,
                 TakeEntity = take,
                 SkipEntity = (pageId - 1) * take,
                 StartPage = pageId - howManyShowPageAfterAndBefore <= 0 ? 1 : pageId - howManyShowPageAfterAndBefore,
