@@ -13,7 +13,6 @@ using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -292,6 +291,7 @@ namespace MarketPlace.Application.Services.Implementations
         public async Task<EditProductDTO> GetProductForEdit(long productId)
         {
             var product = await _productRepository.GetEntityById(productId);
+
             var productColor = await _productColorRepository
                 .GetQuery()
                 .AsQueryable()
@@ -299,7 +299,8 @@ namespace MarketPlace.Application.Services.Implementations
                 .Select(x => new CreateProductColorDTO
                 {
                     Price = x.Price,
-                    ColorName = x.ColorName
+                    ColorName = x.ColorName,
+                    ColorCode = x.ColorCode,
                 })
                 .ToListAsync();
 
@@ -385,6 +386,40 @@ namespace MarketPlace.Application.Services.Implementations
 
             return EditProductResult.Success;
         }
+        public async Task<ProductDetailsDTO> GetProductDetailsBy(long productId)
+        {
+            var product = await _productRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Seller)
+                .ThenInclude(x => x.User)
+                .Include(x => x.ProductSelectedCategories)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.ProductColors)
+                .Include(x=>x.ProductGalleries)
+                .SingleOrDefaultAsync(x => x.Id == productId);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            return new ProductDetailsDTO
+            {
+
+                Title = product.Title,
+                Price = product.Price,
+                Image = product.Image,
+                SellerId = product.SellerId,
+                Description = product.Description,
+                ShortDescription = product.ShortDescription,
+                Seller = product.Seller,
+                ProductColors = product.ProductColors.ToList(),
+                ProductGalleries = product.ProductGalleries.ToList(),
+                ProductCategories = product.ProductSelectedCategories.Select(x => x.ProductCategory).ToList(),
+
+            };
+        }
 
         #region Remove and Add ProductCategories, ProductColors
 
@@ -435,6 +470,7 @@ namespace MarketPlace.Application.Services.Implementations
                     {
                         ProductId = productId,
                         ColorName = productColor.ColorName,
+                        ColorCode = productColor.ColorCode,
                         Price = productColor.Price
                     });
                 }
@@ -443,8 +479,7 @@ namespace MarketPlace.Application.Services.Implementations
             await _productColorRepository.AddRangeEntities(productSelectedColors);
         }
 
-
-
+        
 
         #endregion
 

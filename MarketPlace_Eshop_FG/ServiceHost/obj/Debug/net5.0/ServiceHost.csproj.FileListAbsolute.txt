@@ -213,3 +213,4 @@ E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Seller\Views\Product\CreateProductGallery.cshtml.g.cs
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Seller\Views\Product\EditProductGallery.cshtml.g.cs
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Product\FilterProducts.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Product\ProductDetails.cshtml.g.cs

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Products;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,22 @@ namespace ServiceHost.Controllers
             }
 
             return View(filter);
+        }
+
+        #endregion
+
+        #region Show Product Details
+
+        [HttpGet("products/{productId}/{title}")]
+        public async Task<IActionResult> ProductDetails(long productId , string title)
+        {
+            var product = await _productService.GetProductDetailsBy(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
         }
 
         #endregion

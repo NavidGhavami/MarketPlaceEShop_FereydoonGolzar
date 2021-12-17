@@ -63,7 +63,7 @@ $(document).ready(function () {
         });
     }
 
-    
+
 });
 
 function FillPageId(pageId) {
@@ -90,28 +90,34 @@ $('#add_color_button').on('click', function (e) {
     e.preventDefault();
     var colorName = $('#product_color_name_input').val();
     var colorPrice = $('#product_color_price_input').val();
+    var colorCode = $('#product_color_code_input').val();
 
-    if (colorName !== '' && colorPrice !== '') {
+    if (colorName !== '' && colorPrice !== '' && colorCode !== '') {
         var currentColorsCount = $('#list_of_product_colors tr');
-
+        debugger;
         var index = currentColorsCount.length;
 
 
         var isExistsSelectedColor = $('[color-name-hidden-input][value="' + colorName + '"]');
 
         if (isExistsSelectedColor.lenght !== 0) {
-            debugger;
+
             var colorNameNode = `<input type="hidden" value="${colorName}" name="ProductColors[${index}].ColorName" color-name-hidden-input="${colorName}-${colorPrice}">`;
             var colorPriceNode = `<input type="hidden" value="${colorPrice}" name="ProductColors[${index}].Price" color-price-hidden-input="${colorName}-${colorPrice}">`;
+            var colorCodeNode = `<input type="hidden" value="${colorCode}" name="ProductColors[${index}].ColorCode" color-code-hidden-input="${colorName}-${colorPrice}">`;
 
             $('#create_product_form').append(colorNameNode);
             $('#create_product_form').append(colorPriceNode);
+            $('#create_product_form').append(colorCodeNode);
 
 
             var colorTableNode = `
           <tr color-table-item="${colorName}-${colorPrice}">
           <td>${colorName}</td> 
           <td>${colorPrice}</td>  
+          <td>
+          <div style="border-radius: 50%; width:40px; height: 40px; background-color: ${colorCode}"></div>
+          </td>
           <td> <a class="btn btn-lg text-danger" style="float: none;" title="حذف رنگ" onclick="removeProductColor('${colorName}-${colorPrice}')">
           <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 25px;" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
           <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -122,12 +128,14 @@ $('#add_color_button').on('click', function (e) {
           </tr>`;
             $('#list_of_product_colors').append(colorTableNode);
 
-            $('#product_color_name_input').val('');
-            $('#product_color_price_input').val('');
+
         } else {
             ShowMessage('اخطار', 'رنگ وارد شده تکراری می باشد', 'warning');
-            $('#product_color_name_input').val('').focus();
+            $('#product_color_name_input').val('');
             $('#product_color_price_input').val('');
+            $('#product_color_code_input').val('');
+
+            $('#product_color_name_input').val('').focus();
         }
 
     } else {
@@ -139,6 +147,8 @@ $('#add_color_button').on('click', function (e) {
 function removeProductColor(index) {
     $('[color-name-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
+    $('[color-code-hidden-input="' + index + '"]').remove();
+
     $('[color-table-item="' + index + '"]').remove();
     reOrderProductColorHiddenInputs();
 }
@@ -149,9 +159,11 @@ function reOrderProductColorHiddenInputs() {
         var hiddenColor = $(value);
         var colorId = $(value).attr('color-name-hidden-input');
         var hiddenPrice = $('[color-price-hidden-input="' + colorId + '"]');
+        var hiddenCode = $('[color-code-hidden-input="' + colorId + '"]');
 
         $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName');
         $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
+        $(hiddenCode).attr('name', 'ProductColors[' + index + '].ColorCode');
     });
 }
 
@@ -160,3 +172,12 @@ $('#OrderBy').on('change',
     function () {
         $('#filter-form').submit();
     });
+
+function changeProductPriceBasedOnColor(priceOfColor, colorName) {
+
+    var basePrice = parseInt($('#ProductBasePrice').val());
+
+    var newPrice = (basePrice + priceOfColor).toLocaleString();
+
+    $('.product-price').html((newPrice) + ' ' + 'تومان' + ' ( ' + colorName + ' ) ');
+}

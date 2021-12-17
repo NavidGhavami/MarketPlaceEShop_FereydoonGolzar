@@ -53,6 +53,8 @@
                                     {
                                         <input type="hidden" value="@color.ColorName" name="ProductColors[@index].ColorName" color-name-hidden-input="@color.ColorName-@color.Price">
                                         <input type="hidden" value="@color.Price" name="ProductColors[@index].Price" color-price-hidden-input="@color.ColorName-@color.Price">
+                                        <input type="hidden" value="@color.ColorCode" name="ProductColors[@index].ColorCode" color-code-hidden-input="@color.ColorName-@color.Price">
+
                                         index++;
                                     }
                                 }
@@ -190,14 +192,19 @@
 
                                 <div class="row col-md-12">
 
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-4">
                                         <label>رنگ محصول</label>
                                         <input type="text" id="product_color_name_input" class="form-control">
                                     </div>
-                                    <div class="form-group col-md-5">
+                                    <div class="form-group col-md-4">
                                         <label>قیمت مضاف رنگ محصول</label>
                                         <input type="text" id="product_color_price_input" class="form-control">
                                     </div>
+                                    <div class="form-group col-md-2">
+                                        <label>کد رنگ محصول</label>
+                                        <input type="color" id="product_color_code_input" class="form-control">
+                                    </div>
+
                                     <div class="form-group col-md-2">
                                         <br />
                                         <a id="add_color_button" class="btn btn-block btn-round btn-sm text-dark" title="افزودن رنگ">
@@ -210,11 +217,12 @@
                                 </div>
 
                                 <br />
-                                <table class="table table-striped table-responsive-md text-center">
+                                <table class="table table-striped table-bordered table-responsive-md text-center">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">نام رنگ</th>
                                             <th scope="col">قیمت</th>
+                                            <th scope="col">کد رنگ</th>
                                             <th scope="col">عملیات</th>
                                         </tr>
                                     </thead>
@@ -226,6 +234,9 @@
                                                 <tr color-table-item="@color.ColorName-@color.Price">
                                                     <td>@color.ColorName</td>
                                                     <td>@color.Price</td>
+                                                    <td>
+                                                        <div style="border-radius: 50%; width:40px; height: 40px; background-color: @color.ColorCode"></div>
+                                                    </td>
                                                     <td>
                                                         <a class="btn btn-lg text-danger" style="float: none;" title="حذف رنگ" onclick="removeProductColor('@color.ColorName-@color.Price')">
                                                             <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 25px;" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
