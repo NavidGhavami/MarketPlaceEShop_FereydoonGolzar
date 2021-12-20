@@ -52,3 +52,23 @@
     width: 25px !important;
     height: 25px !important;
 }
+.product-filter-margin {
+    margin-bottom: 10px;
+}
+
+.product-title-lineHeight {
+    line-height: 1.6;
+}
+.product_price {
+    color: #3399ff;
+    display: flex;
+    align-items: center;
+    direction: rtl;
+    flex-flow: wrap;
+    font-weight: 400;
+    line-height: 1.25;
+    font-size: 1.4rem;
+    margin-bottom: 1.1rem;
+    justify-content: center;
+    text-align: center !important;
+}

@@ -144,6 +144,60 @@ $('#add_color_button').on('click', function (e) {
 
 });
 
+
+$('#add_feature_button').on('click', function (e) {
+
+    e.preventDefault();
+    var featureTitle = $('#product_feature_title_input').val();
+    var featureValue = $('#product_feature_value_input').val();
+
+    if (featureTitle !== '' && featureValue !== '') {
+
+        var currentFeaturesCount = $('#list_of_product_features tr');
+        var index = currentFeaturesCount.length;
+
+
+        var isExistsSelectedFeature = $('[feature-title-hidden-input][value="' + featureTitle + '"]');
+
+        if (isExistsSelectedFeature.lenght !== 0) {
+
+            var featureTitleNode = `<input type="hidden" value="${featureTitle}" name="ProductFeatures[${index}].featureTitle" feature-title-hidden-input="${featureTitle}-${featureValue}">`;
+            var featureValueNode = `<input type="hidden" value="${featureValue}" name="ProductFeatures[${index}].FeatureValue" feature-value-hidden-input="${featureTitle}-${featureValue}">`;
+
+            $('#create_product_form').append(featureTitleNode);
+            $('#create_product_form').append(featureValueNode);
+
+
+            var featureTableNode = `
+          <tr feature-table-item="${featureTitle}-${featureValue}">
+          <td>${featureTitle}</td>
+          <td>${featureValue}</td>
+          <td> <a class="btn btn-lg text-danger" style="float: none;" title="حذف ویژگی" onclick="removeProductFeature('${featureTitle}-${featureValue}')">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 25px;" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+          </svg>
+          <i class="bi bi-trash-fill"></i>
+          </a>
+          </td>
+          </tr>`;
+            $('#list_of_product_features').append(featureTableNode);
+            $('#product_feature_title_input').val('');
+            $('#product_feature_value_input').val('');
+
+        } else {
+            ShowMessage('اخطار', 'ویژگی وارد شده تکراری می باشد', 'warning');
+            $('#product_feature_title_input').val('');
+            $('#product_feature_value_input').val('');
+
+            $('#product_feature_title_input').val('').focus();
+        }
+
+    } else {
+        ShowMessage('اخطار', 'لطفا نام ویژگی و مقدار آن را به درستی وارد نمایید', 'warning');
+    }
+
+});
+
 function removeProductColor(index) {
     $('[color-name-hidden-input="' + index + '"]').remove();
     $('[color-price-hidden-input="' + index + '"]').remove();
@@ -153,9 +207,18 @@ function removeProductColor(index) {
     reOrderProductColorHiddenInputs();
 }
 
+function removeProductFeature(index) {
+    $('[feature-title-hidden-input="' + index + '"]').remove();
+    $('[feature-value-hidden-input="' + index + '"]').remove();
+
+    $('[feature-table-item="' + index + '"]').remove();
+    reOrderProductFeatureHiddenInputs();
+}
+
 function reOrderProductColorHiddenInputs() {
     var hiddenColors = $('[color-name-hidden-input]');
     $.each(hiddenColors, function (index, value) {
+
         var hiddenColor = $(value);
         var colorId = $(value).attr('color-name-hidden-input');
         var hiddenPrice = $('[color-price-hidden-input="' + colorId + '"]');
@@ -164,6 +227,19 @@ function reOrderProductColorHiddenInputs() {
         $(hiddenColor).attr('name', 'ProductColors[' + index + '].ColorName');
         $(hiddenPrice).attr('name', 'ProductColors[' + index + '].Price');
         $(hiddenCode).attr('name', 'ProductColors[' + index + '].ColorCode');
+    });
+}
+
+function reOrderProductFeatureHiddenInputs() {
+    var hiddenFeatures = $('[feature-title-hidden-input]');
+    $.each(hiddenFeatures, function (index, value) {
+
+        var hiddenFeature = $(value);
+        var featureId = $(value).attr('feature-title-hidden-input');
+        var hiddenFeatureValue = $('[feature-value-hidden-input="' + featureId + '"]');
+
+        $(hiddenFeature).attr('name', 'ProductFeatures[' + index + '].featureTitle');
+        $(hiddenFeatureValue).attr('name', 'ProductFeatures[' + index + '].FeatureValue');
     });
 }
 

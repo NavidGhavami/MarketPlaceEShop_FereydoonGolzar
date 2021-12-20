@@ -19,7 +19,6 @@ namespace ServiceHost.Controllers
 
         #endregion
 
-
         #region Filter Product
 
         [HttpGet("products")]

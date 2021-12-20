@@ -135,31 +135,31 @@
                                     }
                                 }
 
-                            <div class="row col-md-12">
+                                <div class="row col-md-12">
 
-                                <div class="form-group col-md-4">
-                                    <label>رنگ محصول</label>
-                                    <input type="text" id="product_color_name_input" class="form-control">
+                                    <div class="form-group col-md-4">
+                                        <label>رنگ محصول</label>
+                                        <input type="text" id="product_color_name_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>قیمت مضاف رنگ محصول</label>
+                                        <input type="text" id="product_color_price_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label>کد رنگ محصول</label>
+                                        <input type="color" id="product_color_code_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <br />
+                                        <a id="add_color_button" class="btn btn-block btn-round btn-sm text-dark" title="افزودن رنگ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" color="green" width="30" height="25" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                            <i class="bi bi-plus-square-fill"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>قیمت مضاف رنگ محصول</label>
-                                    <input type="text" id="product_color_price_input" class="form-control">
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label>کد رنگ محصول</label>
-                                    <input type="color" id="product_color_code_input" class="form-control">
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <br />
-                                    <a id="add_color_button" class="btn btn-block btn-round btn-sm text-dark" title="افزودن رنگ">
-                                        <svg xmlns="http://www.w3.org/2000/svg" color="green" width="30" height="25" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
-                                        </svg>
-                                        <i class="bi bi-plus-square-fill"></i>
-                                    </a>
-                                </div>
-                            </div>
-                                
+
                                 <br />
                                 <table class="table table-striped table-bordered table-responsive-md text-center">
                                     <thead class="thead-dark">
@@ -171,6 +171,41 @@
                                         </tr>
                                     </thead>
                                     <tbody id="list_of_product_colors">
+                                    </tbody>
+                                </table>
+
+                                <div class="row col-md-12">
+
+                                    <div class="form-group col-md-5">
+                                        <label>ویژگی محصول</label>
+                                        <input type="text" id="product_feature_name_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label>مقدار ویژگی محصول</label>
+                                        <input type="text" id="product_feature_value_input" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <br />
+                                        <a id="add_feature_button" class="btn btn-block btn-round btn-sm text-dark" title="افزودن ویژگی">
+                                            <svg xmlns="http://www.w3.org/2000/svg" color="green" width="30" height="25" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                            <i class="bi bi-plus-square-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <table class="table table-striped table-bordered table-responsive-md text-center">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">نام ویژگی</th>
+                                        <th scope="col">مقدار ویژگی</th>
+                                        <th scope="col">عملیات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="list_of_product_features">
                                     </tbody>
                                 </table>
 

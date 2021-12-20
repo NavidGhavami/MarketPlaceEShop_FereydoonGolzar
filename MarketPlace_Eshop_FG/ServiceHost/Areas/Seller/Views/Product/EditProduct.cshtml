@@ -59,6 +59,19 @@
                                     }
                                 }
 
+                                @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
+                                {
+                                    var index = 0;
+
+                                    foreach (var feature in Model.ProductFeatures)
+                                    {
+                                        <input type="hidden" value="@feature.FeatureTitle" name="ProductFeatures[@index].FeatureTitle" feature-title-hidden-input="@feature.FeatureTitle-@feature.FeatureValue">
+                                        <input type="hidden" value="@feature.FeatureValue" name="ProductFeatures[@index].FeatureValue" feature-value-hidden-input="@feature.FeatureTitle-@feature.FeatureValue">
+
+                                        index++;
+                                    }
+                                }
+
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-6">
                                         <label>نام محصول</label>
@@ -252,7 +265,67 @@
                                 </table>
 
                                 <br />
+
+                                <hr />
+
+                                <div class="row col-md-12">
+
+                                    <div class="form-group col-md-5">
+                                        <label>ویژگی محصول</label>
+                                        <input type="text" id="product_feature_title_input" class="form-control">
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <label>مقدار ویژگی محصول</label>
+                                        <input type="text" id="product_feature_value_input" class="form-control">
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <br />
+                                        <a id="add_feature_button" class="btn btn-block btn-round btn-sm text-dark" title="افزودن ویژگی">
+                                            <svg xmlns="http://www.w3.org/2000/svg" color="green" width="30" height="25" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                                                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                            <i class="bi bi-plus-square-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
                                 <br />
+                                <table class="table table-striped table-bordered table-responsive-md text-center">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">نام ویژگی</th>
+                                            <th scope="col">مقدار ویژگی</th>
+                                            <th scope="col">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="list_of_product_features">
+                                        @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
+                                            {
+                                                foreach (var feature in Model.ProductFeatures)
+                                                {
+                                                    <tr feature-table-item="@feature.FeatureTitle-@feature.FeatureValue">
+                                                        <td>@feature.FeatureTitle</td>
+                                                        <td>@feature.FeatureValue</td>
+                                                        <td>
+                                                            <a class="btn btn-lg text-danger" style="float: none;" title="حذف رنگ" onclick="removeProductFeature('@feature.FeatureTitle-@feature.FeatureValue')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; margin-right: 25px;" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                                </svg>
+                                                                <i class="bi bi-trash-fill"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                    </tbody>
+                                </table>
+
+
+                                <br />
+                                <br />
+
+
 
                                 <button type="submit" class="btn btn-round btn-warning float-right">
                                     <span>ویرایش محصول</span>

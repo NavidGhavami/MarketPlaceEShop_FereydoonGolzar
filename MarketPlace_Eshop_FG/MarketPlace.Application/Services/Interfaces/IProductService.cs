@@ -23,7 +23,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task RemoveAllProductColors(long productId);
         Task AddProductSelectedCategories(long productId, List<long> selectedCategories);
         Task AddProductColors(long productId, List<CreateProductColorDTO> colors);
-        Task<ProductDetailsDTO> GetProductDetailsBy(long productId);
+        Task<ProductDetailsDTO> GetProductDetailsBy(long productId); 
+        
 
         #endregion
 
@@ -42,6 +43,14 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<CreateOrEditProductGalleryResult> CreateProductGallery(CreateOrEditProductGalleryDTO gallery, long productId, long sellerId);
         Task<CreateOrEditProductGalleryDTO> GetProductGalleryForEdit(long galleryId, long sellerId);
         Task<CreateOrEditProductGalleryResult> EditProductGallery(CreateOrEditProductGalleryDTO gallery, long galleryId, long sellerId);
+
+        #endregion
+
+        #region Product Feature
+
+        Task RemoveAllProductFeatures(long productId);
+        Task AddProductFeatures(long productId, List<CreateProductFeatureDTO> features);
+
 
         #endregion
     }

@@ -29,6 +29,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public FilterProductState ProductState { get; set; }
         public FilterProductOrderBy OrderBy { get; set; }
         public List<long> SelectedProductCategories { get; set; }
+        public List<ProductCategory> ProductCategories { get; set; }
 
         #endregion
 
