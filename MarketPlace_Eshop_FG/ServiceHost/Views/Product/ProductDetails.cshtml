@@ -1,8 +1,27 @@
 ﻿@using MarketPlace.Application.Utilities
-@using System.Globalization
+@using MarketPlace.DataLayer.DTOs.ProductOrder
 @model MarketPlace.DataLayer.DTOs.Products.ProductDetailsDTO
 @{
     ViewData["Title"] = Model.Title;
+}
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+
+    @if (Model.ProductColors != null && Model.ProductColors.Any())
+    {
+        var firstColor = Model.ProductColors.FirstOrDefault();
+
+
+        <script>
+            $(document).ready(function() {
+                changeProductPriceBasedOnColor(@firstColor.Id, @firstColor.Price, '@firstColor.ColorName');
+            });
+        </script>
+
+
+    }
 }
 
 
@@ -19,6 +38,9 @@
 <hr />
 <div class="page-content">
     <div class="container">
+        <div class="row">
+            <partial name="_AddProductToCartPartial" model="@(new AddProductToOrderDTO{Count = 1, ProductId = Model.ProductId})" />
+        </div>
         <div class="product-details-top mb-2">
             <div class="row">
                 <div class="col-md-6">
@@ -66,7 +88,7 @@
                             @if (Model.ProductColors != null && Model.ProductColors.Any())
                             {
                                 var firstColor = Model.ProductColors.FirstOrDefault();
-                                <span>@((Model.Price + Convert.ToInt32(firstColor.Price) ).ToString("#,0 تومان")) ( @firstColor.ColorName )</span>
+                                <span>@((Model.Price + Convert.ToInt32(firstColor.Price)).ToString("#,0 تومان")) ( @firstColor.ColorName )</span>
                             }
                             else
                             {
@@ -80,48 +102,61 @@
                             </p>
                         </div><!-- End .product-content -->
                         <input type="hidden" name="product_price" value="@Model.Price" id="ProductBasePrice" />
-                        @if (Model.ProductColors != null && Model.ProductColors.Any())
-                        {
-                            <div class="details-filter-row details-row-size">
-                                <label>رنگ : </label>
 
-                                <div class="product-nav product-nav-dots">
+                        <div class="row col-md-12">
+                            @if (Model.ProductColors != null && Model.ProductColors.Any())
+                            {
+                                <div class="details-filter-row details-row-size col-md-6">
+                                    <label>رنگ : </label>
 
-                                    @foreach (var color in Model.ProductColors)
-                                    {
-                                        <a onclick="changeProductPriceBasedOnColor(@color.Price, '@color.ColorName')" class="productColor-dot"
-                                           title="@color.ColorName" style=" background: @color.ColorCode; border-color: gainsboro;">
-                                            <span class="sr-only">@color.ColorName</span>
-                                        </a>
-                                    }
+                                    <div class="product-nav product-nav-dots">
 
-                                </div><!-- End .product-nav -->
+                                        @foreach (var color in Model.ProductColors)
+                                        {
+                                            <a onclick="changeProductPriceBasedOnColor(@color.Id, @color.Price, '@color.ColorName')" class="productColor-dot"
+                                               title="@color.ColorName" style="background: @color.ColorCode; border-color: gainsboro;">
+                                                <span class="sr-only">@color.ColorName</span>
+                                            </a>
+                                        }
+
+                                    </div><!-- End .product-nav -->
+                                </div><!-- End .details-filter-row -->
+                            }
+
+                            <div class="details-filter-row details-row-size col-md-6">
+                                <label for="qty">تعداد : </label>
+                                <div class="product-details-quantity">
+                                    <input type="number" id="number_of_products_in_basket" class="form-control" value="1" min="1" max="100" step="1" data-decimals="0" required="" style="display: none;">
+                                </div><!-- End .product-details-quantity -->
                             </div><!-- End .details-filter-row -->
-                        }
+                        </div>
+                        <div class="product-details-action row col-md-12">
 
-                        <div class="details-filter-row details-row-size">
-                            <label for="size">سایز : </label>
-                            <div class="select-custom">
-                                <select name="size" id="size" class="form-control">
-                                    <option value="#" selected="selected">سایز را انتخاب کنید</option>
-                                    <option value="s">کوچک (Small)</option>
-                                    <option value="m">متوسط (Medium)</option>
-                                    <option value="l">بزرگ (Large)</option>
-                                    <option value="xl">خیلی بزرگ (XLarge)</option>
-                                </select>
-                            </div><!-- End .select-custom -->
-                        </div><!-- End .details-filter-row -->
+                            <div class="col-md-6">
+                                <a id="submitOrderForm" class="btn button-73 btn-success btn-round btn-block text-white">
+                                    <span class="cart-button-margin">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z"/>
+                                        </svg>
+                                    </span>
+                                    افزودن به سبد خرید
+                                    <i class="bi bi-bag-plus-fill"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="btn btn-danger button-72 btn-round btn-block text-white ">
+                                    <span class="cart-button-margin">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+                                        </svg>
+                                    </span>
+                                    افزودن به لیست علاقه مندی
+                                    <i class="bi bi-suit-heart-fill"></i>
 
-                        <div class="details-filter-row details-row-size">
-                            <label for="qty">تعداد : </label>
-                            <div class="product-details-quantity">
-                                <input type="number" id="qty" class="form-control" value="1" min="1" max="100" step="1" data-decimals="0" required="" style="display: none;">
-                            </div><!-- End .product-details-quantity -->
-                        </div><!-- End .details-filter-row -->
+                                </a>
 
-                        <div class="product-details-action">
-                            <a href="#" class="btn-product btn-cart" style="margin-left: 5px;"><span>افزودن به سبد خرید</span></a>
-                            <a href="#" class="btn-product btn-wishlist" title="لیست علاقه مندی">افزودن به لیست علاقه مندی</a>
+                            </div>
+
                         </div>
 
                         @if (Model.ProductCategories != null && Model.ProductCategories.Any())
@@ -209,14 +244,7 @@
                                 }
                                 else
                                 {
-                                    <div class="col-md-12 text-center alert alert-warning no-product">
-                                        <i class="bi bi-exclamation-triangle-fill text-dark"></i>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-                                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                        </svg>
-                                        <span>اطلاعاتی یافت نشد</span>
-
-                                    </div>
+                                    <partial name="_NoItemFound"/>
                                 }
                             </tbody>
                         </table>
@@ -266,27 +294,27 @@
                                     ایمیل شما منتشر نخواهد شد، فیلد های اجباری با علامت * مشخص شده اند.
                                 </p>
                             </div><!-- End .heading -->
-                            <form action="#">
-                                <label for="reply-message" class="sr-only">دیدگاه</label>
-                                <textarea name="reply-message" id="reply-message" cols="30" rows="4" ckeditor="1" class="form-control" required="" placeholder="دیدگاه شما *"></textarea>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="reply-name" class="sr-only">نام</label>
-                                        <input type="text" class="form-control" id="reply-name" name="reply-name" required="" placeholder="نام شما *">
-                                    </div><!-- End .col-md-6 -->
 
-                                    <div class="col-md-6">
-                                        <label for="reply-email" class="sr-only">ایمیل</label>
-                                        <input type="email" class="form-control" id="reply-email" name="reply-email" required="" placeholder="ایمیل شما *">
-                                    </div><!-- End .col-md-6 -->
-                                </div><!-- End .row -->
+                            <label for="reply-message" class="sr-only">دیدگاه</label>
+                            <textarea name="reply-message" id="reply-message" cols="30" rows="4" ckeditor="1" class="form-control" required="" placeholder="دیدگاه شما *"></textarea>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="reply-name" class="sr-only">نام</label>
+                                    <input type="text" class="form-control" id="reply-name" name="reply-name" required="" placeholder="نام شما *">
+                                </div><!-- End .col-md-6 -->
 
-                                <button type="submit" class="btn btn-outline-primary-2 float-right">
-                                    <span>ارسال دیدگاه</span>
-                                    <i class="icon-long-arrow-left"></i>
-                                </button>
-                            </form>
+                                <div class="col-md-6">
+                                    <label for="reply-email" class="sr-only">ایمیل</label>
+                                    <input type="email" class="form-control" id="reply-email" name="reply-email" required="" placeholder="ایمیل شما *">
+                                </div><!-- End .col-md-6 -->
+                            </div><!-- End .row -->
+
+                            <button type="submit" class="btn btn-outline-primary-2 float-right">
+                                <span>ارسال دیدگاه</span>
+                                <i class="icon-long-arrow-left"></i>
+                            </button>
+
                         </div>
                     </div><!-- End .container -->
                 </div><!-- End .reviews -->
@@ -371,7 +399,7 @@
                                         <div class="product_price">
                                             @related.Price.ToString("#,0 تومان")
                                         </div><!-- End .product-price -->
-                                        
+
                                         @if (related.ProductGalleries != null && related.ProductGalleries.Any())
                                         {
                                             <div class="product-nav product-nav-thumbs">
@@ -383,7 +411,7 @@
                                                 }
                                             </div>
                                         }
-                                        
+
                                     </div>
                                 </div>
                             </div>

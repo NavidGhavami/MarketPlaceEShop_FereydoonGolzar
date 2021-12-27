@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Common;
+using MarketPlace.DataLayer.Entities.ProductOrder;
 using MarketPlace.DataLayer.Entities.Store;
 
 namespace MarketPlace.DataLayer.Entities.Products
@@ -39,6 +39,9 @@ namespace MarketPlace.DataLayer.Entities.Products
         [Display(Name = "فعال / غیرفعال")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "تعداد بازدید")]
+        public int View { get; set; }
+
         [Display(Name = "وضعیت")]
         public ProductAcceptanceState ProductAcceptanceState { get; set; }
 
@@ -52,6 +55,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         public ICollection<ProductColor> ProductColors { get; set; }
         public ICollection<ProductGallery> ProductGalleries { get; set; }
         public ICollection<ProductFeature> ProductFeatures { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         #endregion
     }

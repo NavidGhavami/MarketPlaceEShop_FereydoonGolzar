@@ -15071,8 +15071,8 @@ small.form-text {
 
     .table th,
     .table td {
-        padding-left: 5rem;
-        /*  padding-right: 0;
+       /* padding-left: 5rem;
+         padding-right: 0;
   padding-top: 1.4rem;
   padding-bottom: 1.4rem;*/
     }

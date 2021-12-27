@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Common;
+using MarketPlace.DataLayer.Entities.ProductOrder;
 
 namespace MarketPlace.DataLayer.Entities.Products
 {
@@ -27,6 +29,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         #region Relations
 
         public Product Product { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
 
         #endregion
     }

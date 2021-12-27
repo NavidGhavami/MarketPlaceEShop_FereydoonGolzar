@@ -1,0 +1,83 @@
+﻿@using MarketPlace.Application.Utilities
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model MarketPlace.DataLayer.DTOs.ProductOrder.UserOpenOrderDTO
+
+@{
+    var totalPrice = Model.GetTotalPrice();
+
+}
+
+<div class="dropdown cart-dropdown">
+    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="false" data-display="static">
+        <i class="icon-shopping-cart"></i>
+        @if (Model.Details != null)
+        {
+            <span class="cart-count">@Model.Details.Count</span>
+        }
+        else
+        {
+            <span class="cart-count">0</span>
+        }
+        <span class="cart-txt">سبد خرید</span>
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-cart-products">
+
+            @if (Model.Details != null && Model.Details.Any())
+            {
+                @foreach (var detail in Model.Details)
+                {
+                    <div class="product">
+                        <div class="product-cart-details">
+                            <h4 class="product-title">
+                                <a class="product-title-lineHeight text-justify" asp-controller="Product" asp-action="ProductDetails"
+                                   asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">
+                                    @detail.ProductTitle
+                                </a>
+                            </h4>
+
+                            <span class="cart-product-info">
+                                <span class="cart-product-qty">تعداد : @detail.Count x</span>
+                                @detail.ProductPrice.ToString("#,0 تومان")
+                            </span>
+
+                            <span class="cart-product-info">
+                                <span class="cart-product-qty">
+                                    @detail.ColorName - (@Convert.ToInt32(detail.ProductColorPrice).ToString("#,0 تومان"))
+                                </span>
+
+                            </span>
+                        </div><!-- End .product-cart-details -->
+
+                        <figure class="product-image-container">
+                            <a asp-controller="Product" asp-action="ProductDetails"
+                               asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle" class="product-image">
+                                <img src="@(PathExtension.ProductThumb + detail.ProductImage)" alt="@detail.ProductTitle" title="@detail.ProductTitle">
+                            </a>
+                        </figure>
+                        <a href="#" class="btn-remove" title="حذف محصول">
+                            <i class="icon-close"></i>
+                        </a>
+                    </div><!-- End .product -->
+                }
+            }
+
+        </div>
+        <!-- End .cart-product -->
+
+        <div class="dropdown-cart-total">
+            <span>جمع کل</span>
+
+            <span class="cart-total-price">@totalPrice.ToString("#,0 تومان")</span>
+        </div><!-- End .dropdown-cart-total -->
+
+        <div class="dropdown-cart-action">
+            <a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder" asp-route-userId="@Model.UserId" class="btn btn-primary">مشاهده سبد خرید</a>
+            <a href="checkout.html" class="btn btn-outline-primary-2">
+                <span>پرداخت</span><i class="icon-long-arrow-left"></i>
+            </a>
+        </div><!-- End .dropdown-cart-total -->
+    </div><!-- End .dropdown-menu -->
+</div><!-- End .cart-dropdown -->

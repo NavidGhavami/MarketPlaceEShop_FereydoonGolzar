@@ -43,13 +43,14 @@
 
     <!-- Sign in / Register Modal -->
     @await Component.InvokeAsync("LoginRegisterModal")
-<!-- End .modal -->
-
-@await RenderSectionAsync("Scripts", required: false)
+    <!-- End .modal -->
 
 
-<partial name="_FooterReferences" />
+
+    <partial name="_FooterReferences" />
     <partial name="_SiteMessages" />
+
+    @await RenderSectionAsync("Scripts", required: false)
 
 
 </body>

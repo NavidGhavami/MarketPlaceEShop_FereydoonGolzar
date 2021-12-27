@@ -224,6 +224,87 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("TicketMessages");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TrackingCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.OrderDetail", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ProductColorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ProductColorPrice")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ProductPrice")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductColorId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.Product", b =>
                 {
                     b.Property<long>("Id")
@@ -273,6 +354,9 @@ namespace MarketPlace.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
+
+                    b.Property<int>("View")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -687,6 +771,41 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("Sellers");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Wallet.SellerWallet", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SellerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("SellerWallet");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.ContactUs", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
@@ -725,6 +844,32 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("Sender");
 
                     b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.OrderDetail", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.ProductOrder.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MarketPlace.DataLayer.Entities.Products.ProductColor", "ProductColor")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductColorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("MarketPlace.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductColor");
                 });
 
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.Product", b =>
@@ -811,6 +956,17 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Wallet.SellerWallet", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Store.Seller", "Seller")
+                        .WithMany("SellerWallets")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Seller");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.User", b =>
                 {
                     b.Navigation("ContactUs");
@@ -827,8 +983,15 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("TicketMessages");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.Product", b =>
                 {
+                    b.Navigation("OrderDetails");
+
                     b.Navigation("ProductColors");
 
                     b.Navigation("ProductFeatures");
@@ -841,6 +1004,16 @@ namespace MarketPlace.DataLayer.Migrations
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.ProductCategory", b =>
                 {
                     b.Navigation("ProductSelectedCategories");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Products.ProductColor", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Store.Seller", b =>
+                {
+                    b.Navigation("SellerWallets");
                 });
 #pragma warning restore 612, 618
         }

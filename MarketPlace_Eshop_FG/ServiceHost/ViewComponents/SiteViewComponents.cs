@@ -3,21 +3,29 @@ using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.Entities.Site;
 using Microsoft.AspNetCore.Mvc;
+using ServiceHost.PresentationExtensions;
 
 namespace ServiceHost.ViewComponents
 {
 
-    #region SiteHeader
+    #region Constructor
+
     public class SiteHeaderViewComponent : ViewComponent
     {
         private readonly ISiteService _siteService;
         private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
 
-        public SiteHeaderViewComponent(ISiteService siteService, IProductService productService)
+        public SiteHeaderViewComponent(ISiteService siteService, IProductService productService, IOrderService orderService)
         {
             _siteService = siteService;
             _productService = productService;
+            _orderService = orderService;
         }
+
+        #endregion
+        
+    #region SiteHeader
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
@@ -203,6 +211,25 @@ namespace ServiceHost.ViewComponents
 
     #endregion
 
+    #region User Order
+
+    public class UserOrderViewComponent : ViewComponent
+    {
+        private readonly IOrderService _orederService;
+
+        public UserOrderViewComponent(IOrderService orederService)
+        {
+            _orederService = orederService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var openOrder = await _orederService.GetUserOpenOrderDetail(User.GetUserId());
+            return View("UserOrder", openOrder);
+        }
+    }
+
+    #endregion
 
 
 

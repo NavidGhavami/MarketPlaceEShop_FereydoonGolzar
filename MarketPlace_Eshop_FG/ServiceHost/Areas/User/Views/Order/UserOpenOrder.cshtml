@@ -1,0 +1,147 @@
+﻿@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.ProductOrder.UserOpenOrderDTO
+@{
+    ViewData["Title"] = "سبد خرید";
+
+    var totalPrice = Model.GetTotalPrice();
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1 class="page-title">سبد خرید</h1>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">سبد خرید</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="cart">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @if (Model.Details != null && Model.Details.Any())
+                    {
+                        <table class="table table-cart table-responsive-sm table-bordered text-center">
+                            <thead class="thead-dark text-white">
+                                <tr>
+                                    <th>تصویر</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت (تومان)</th>
+                                    <th>رنگ (تومان)</th>
+                                    <th>تعداد</th>
+                                    <th>مجموع</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var detail in Model.Details)
+                                {
+                                    <tr>
+                                        <td class="product-col">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="#">
+                                                        <img src="@(PathExtension.ProductThumb + detail.ProductImage)" alt="@detail.ProductTitle" title="@detail.ProductTitle">
+                                                    </a>
+                                                </figure>
+
+                                            </div><!-- End .product -->
+                                        </td>
+
+                                        <td class="product-col">
+                                            <div class="product">
+
+                                                <h3 class="product-title">
+                                                    <a class="product-title-lineHeight text-justify" asp-controller="Product" asp-action="ProductDetails"
+                                                       asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">
+                                                        @detail.ProductTitle
+                                                    </a>
+                                                </h3><!-- End .product-title -->
+                                            </div><!-- End .product -->
+                                        </td>
+
+                                        <td class="price-col">@detail.ProductPrice.ToString("#,0")</td>
+                                        <td class="price-col">@detail.ColorName (@(Convert.ToInt32(detail.ProductColorPrice).ToString("#,0")))</td>
+                                        <td class="quantity-col">
+                                            <div class="cart-product-quantity">
+                                                <input type="number" id="number_of_products_in_basket" class="form-control" value="@detail.Count"
+                                                       min="1" max="100" step="1" data-decimals="0" required="" style="display: none;">
+                                            </div>
+                                        </td>
+                                        <td class="total-col">@(Convert.ToInt32(detail.Count * (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice))).ToString("#,0"))</td>
+                                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table><!-- End .table table-wishlist -->
+                    }
+                    else
+                    {
+                        <div class="col-md-12 text-center alert alert-warning no-product">
+                            <i class="bi bi-exclamation-triangle-fill text-dark"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                            <span>سبد خرید شما خالی است</span>
+
+                        </div>
+                    }
+
+                    <div class="cart-bottom">
+                        <div class="cart-discount">
+                            <form action="#">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" required="" placeholder="کد تخفیف">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-left"></i></button>
+                                    </div><!-- .End .input-group-append -->
+                                </div><!-- End .input-group -->
+                            </form>
+                        </div><!-- End .cart-discount -->
+
+                        <a href="#" class="btn btn-outline-dark-2"><span>به روز رسانی سبد خرید</span><i class="icon-refresh"></i></a>
+                    </div><!-- End .cart-bottom -->
+                </div><!-- End .col-lg-9 -->
+                <div class="col-lg-12">
+                    <div class="summary summary-cart">
+                        <h3 class="summary-title">جمع سبد خرید</h3><!-- End .summary-title -->
+
+                        <table class="table table-summary">
+                            <tbody>
+                                <tr class="summary-subtotal">
+                                    <td>جمع کل سبد خرید : </td>
+                                    <td class="text-left">@totalPrice.ToString("#,0 تومان")</td>
+                                </tr><!-- End .summary-subtotal -->
+
+                                <tr class="summary-subtotal">
+                                    <td>تخفیف : </td>
+                                    <td class="text-left">0 تومان</td>
+                                </tr><!-- End .summary-subtotal -->
+
+                                <tr class="summary-total">
+                                    <td>مبلغ قابل پرداخت :</td>
+                                    <td class="text-left">00000000000000</td>
+                                </tr><!-- End .summary-total -->
+                            </tbody>
+                        </table><!-- End .table table-summary -->
+
+                        <a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">
+                            رفتن به صفحه پرداخت
+                        </a>
+                    </div><!-- End .summary -->
+
+                </div><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .cart -->
+</div>

@@ -6,7 +6,9 @@ namespace MarketPlace.DataLayer.DTOs.Products
 {
     public class ProductDetailsDTO
     {
-        
+
+        public long ProductId { get; set; }
+
         public long SellerId { get; set; }
 
         [Display(Name = "نام محصول")]

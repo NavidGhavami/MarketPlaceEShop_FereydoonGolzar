@@ -44,6 +44,8 @@ namespace ServiceHost
             services.AddScoped<ISellerService, SellerService>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ISellerWalletService, SellerWalletService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
