@@ -10,5 +10,6 @@
         public int ProductColorPrice { get; set; }
         public string ColorName { get; set; }
         public string ProductImage { get; set; }
+        public int? DiscountPercentage { get; set; }
     }
 }

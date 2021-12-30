@@ -3,7 +3,7 @@
 @model MarketPlace.DataLayer.DTOs.ProductOrder.UserOpenOrderDTO
 
 @{
-    var totalPrice = Model.GetTotalPrice();
+    var totalPrice = Model.GetTotalPriceWithoutDiscount();
 
 }
 

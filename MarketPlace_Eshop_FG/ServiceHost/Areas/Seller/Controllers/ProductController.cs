@@ -139,6 +139,19 @@ namespace ServiceHost.Areas.Seller.Controllers
 
         #endregion
 
+        #region Get Product Json
+
+        [HttpGet("products-autocomplete")]
+        public async Task<IActionResult> GetSellerProductJson(string productName)
+        {
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+            var data = await _productService.FilterProductForSellerByProductName(seller.Id, productName);
+
+            return new JsonResult(data);
+        }
+
+        #endregion
+
         #endregion
 
         #region Product Gallery
@@ -264,7 +277,6 @@ namespace ServiceHost.Areas.Seller.Controllers
         #endregion
 
         #endregion
-
 
     }
 }

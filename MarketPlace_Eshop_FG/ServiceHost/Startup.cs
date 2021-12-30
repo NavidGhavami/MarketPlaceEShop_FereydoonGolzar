@@ -46,6 +46,7 @@ namespace ServiceHost
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISellerWalletService, SellerWalletService>();
+            services.AddScoped<IProductDiscountService, ProductDiscountService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
@@ -58,7 +59,7 @@ namespace ServiceHost
                 .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory() + "\\wwwroot\\Auth\\"))
                 .SetApplicationName("MarketPlaceProject")
                 .SetDefaultKeyLifetime(TimeSpan.FromDays(30));
-            
+
 
             #endregion
 

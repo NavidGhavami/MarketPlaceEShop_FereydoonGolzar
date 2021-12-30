@@ -469,6 +469,15 @@ namespace MarketPlace.Application.Services.Implementations
             };
         }
 
+        public async Task<List<Product>> FilterProductForSellerByProductName(long sellerId, string productName)
+        {
+            return await _productRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => x.SellerId == sellerId && EF.Functions.Like(x.Title, $"%{productName}%"))
+                .ToListAsync();
+        }
+
         #region Remove and Add ProductCategories, ProductColors, ProductFeatures
 
         public async Task RemoveAllProductSelectedCategories(long productId)

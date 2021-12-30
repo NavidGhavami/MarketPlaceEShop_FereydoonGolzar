@@ -1,0 +1,105 @@
+﻿@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.ProductDiscount.FilterProductDiscountDTO
+@{
+    ViewData["Title"] = "کدهای تخفیف";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل فروشندگی ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد پنل کاربری</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد پنل فروشندگی</a></li>
+            <li class="breadcrumb-item" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row col-md-12 col-lg-12">
+                <aside style="padding-right: 20px;" class="col-md-3 col-lg-2">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-9 col-lg-10">
+                    <div class="tab-content">
+                        <form asp-area="Seller" asp-controller="ProductDiscount" asp-action="FilterDiscounts" id="filter-form" method="get">
+                            <input type="hidden" asp-for="PageId" />
+                        </form>
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+
+
+                            <div>
+                                <h3 class="title mb-3">لیست کد های تخفیف</h3>
+                                <a asp-area="Seller" asp-controller="ProductDiscount" asp-action="CreateDiscount"
+                                   class="btn btn-round btn-outline-success btn-sm" style="margin-bottom: 10px;">ایجاد کد تخفیف جدید</a>
+                            </div>
+                            <br />
+
+                            @if (Model.ProductDiscounts != null && Model.ProductDiscounts.Any())
+                            {
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                    <table class="table table-bordered table-striped table-responsive-sm  text-center">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>نام محصول</th>
+                                                <th>درصد تخفیف</th>
+                                                <th>تعداد</th>
+                                                <th>تاریخ ایجاد</th>
+                                                <th>تاریخ انقضا</th>
+                                                <th>عملیات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.ProductDiscounts)
+                                            {
+                                            <tr>
+                                                <td>@item.Product.Title</td>
+                                                <td>@item.Percentage %</td>
+                                                <td>@item.DiscountNumber</td>
+                                                <td>@item.CreateDate.ToShamsi()</td>
+                                                <td>@item.ExpireDate.ToShamsi()</td>
+                                                <td>
+                                                    <div class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">
+                                                        <a asp-area="Seller" asp-controller="ProductDiscount" asp-action="EditDiscount" asp-route-discountId="@item.Id"
+                                                           class="btn btn-warning btn-sm">ویرایش تخفیف </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <partial name="_NoItemFound" />
+                            }
+                        </div><!-- .End .tab-pane -->
+                        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+

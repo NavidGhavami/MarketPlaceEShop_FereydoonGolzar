@@ -309,3 +309,27 @@ function wait_me() {
     }, 5000);
 
 }
+
+var options = {
+    url: function (phrase) {
+        return `/seller/products-autocomplete?productName=${phrase}`;
+    },
+    getValue: function (element) {
+        return element.title;
+    },
+    list: {
+        match: {
+            enabled: true
+        },
+        onSelectItemEvent: function () {
+            var value = $("#ProductName").getSelectedItemData().id;
+
+            $("#ProductId").val(value).trigger("change");
+        }
+    },
+    theme: "plate-dark",
+
+    
+};
+
+

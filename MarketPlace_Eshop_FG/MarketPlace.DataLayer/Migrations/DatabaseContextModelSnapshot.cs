@@ -224,6 +224,72 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("TicketMessages");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductDiscount.ProductDiscount", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DiscountNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductDiscounts");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductDiscount.ProductDiscountUse", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ProductDiscountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductDiscountId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductDiscountUses");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.Order", b =>
                 {
                     b.Property<long>("Id")
@@ -349,6 +415,9 @@ namespace MarketPlace.DataLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("SiteProfit")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -846,6 +915,36 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductDiscount.ProductDiscount", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Products.Product", "Product")
+                        .WithMany("ProductDiscounts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductDiscount.ProductDiscountUse", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.ProductDiscount.ProductDiscount", "ProductDiscount")
+                        .WithMany("ProductDiscountUse")
+                        .HasForeignKey("ProductDiscountId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ProductDiscount");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.OrderDetail", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.ProductOrder.Order", "Order")
@@ -983,6 +1082,11 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("TicketMessages");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductDiscount.ProductDiscount", b =>
+                {
+                    b.Navigation("ProductDiscountUse");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -993,6 +1097,8 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("OrderDetails");
 
                     b.Navigation("ProductColors");
+
+                    b.Navigation("ProductDiscounts");
 
                     b.Navigation("ProductFeatures");
 

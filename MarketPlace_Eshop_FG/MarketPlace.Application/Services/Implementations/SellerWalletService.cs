@@ -56,6 +56,12 @@ namespace MarketPlace.Application.Services.Implementations
 
         }
 
+        public async Task AddWallet(SellerWallet wallet)
+        {
+            await _sellerWalletRepository.AddEntity(wallet);
+            await _sellerWalletRepository.SaveChanges();
+        }
+
         #endregion
 
 
