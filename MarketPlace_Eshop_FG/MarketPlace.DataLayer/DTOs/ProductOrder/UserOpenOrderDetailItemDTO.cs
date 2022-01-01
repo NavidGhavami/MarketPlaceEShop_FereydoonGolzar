@@ -2,6 +2,7 @@
 {
     public class UserOpenOrderDetailItemDTO
     {
+        public long Id { get; set; }
         public long ProductId { get; set; }
         public string ProductTitle { get; set; }
         public int Count { get; set; }

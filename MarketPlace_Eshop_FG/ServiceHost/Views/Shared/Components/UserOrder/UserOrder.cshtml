@@ -57,27 +57,41 @@
                                 <img src="@(PathExtension.ProductThumb + detail.ProductImage)" alt="@detail.ProductTitle" title="@detail.ProductTitle">
                             </a>
                         </figure>
-                        <a href="#" class="btn-remove" title="حذف محصول">
+                        <a onclick="removeProductFromOrder(@detail.Id)" class="btn-remove" title="حذف محصول">
                             <i class="icon-close"></i>
                         </a>
                     </div><!-- End .product -->
                 }
             }
+            else
+            {
+                <div class="dropdown-cart-total">
+                    <span>سبد خرید شما خالی می باشد</span>
+                </div><!-- End .dropdown-cart-total -->
+                <div class="dropdown-cart-action">
+                    <a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder" asp-route-userId="@Model.UserId" 
+                       class="btn btn-primary btn-block">مشاهده سبد خرید</a>
+                </div><!-- End .dropdown-cart-total -->
+            }
 
         </div>
         <!-- End .cart-product -->
+        
+        @if (Model.Details != null && Model.Details.Any())
+        {
+            <div class="dropdown-cart-total">
+                <span>جمع کل</span>
 
-        <div class="dropdown-cart-total">
-            <span>جمع کل</span>
+                <span class="cart-total-price">@totalPrice.ToString("#,0 تومان")</span>
+            </div><!-- End .dropdown-cart-total -->
 
-            <span class="cart-total-price">@totalPrice.ToString("#,0 تومان")</span>
-        </div><!-- End .dropdown-cart-total -->
-
-        <div class="dropdown-cart-action">
-            <a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder" asp-route-userId="@Model.UserId" class="btn btn-primary">مشاهده سبد خرید</a>
-            <a href="checkout.html" class="btn btn-outline-primary-2">
-                <span>پرداخت</span><i class="icon-long-arrow-left"></i>
-            </a>
-        </div><!-- End .dropdown-cart-total -->
+            <div class="dropdown-cart-action">
+                <a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder" asp-route-userId="@Model.UserId" class="btn btn-primary">مشاهده سبد خرید</a>
+                <a href="checkout.html" class="btn btn-outline-primary-2">
+                    <span>پرداخت</span><i class="icon-long-arrow-left"></i>
+                </a>
+            </div><!-- End .dropdown-cart-total -->
+        }
+       
     </div><!-- End .dropdown-menu -->
 </div><!-- End .cart-dropdown -->

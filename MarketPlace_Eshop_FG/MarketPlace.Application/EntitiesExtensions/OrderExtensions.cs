@@ -5,16 +5,6 @@ namespace MarketPlace.Application.EntitiesExtensions
 {
     public static class OrderExtensions
     {
-        //public static int GetTotalPriceInCart(this UserOpenOrderDetailItemDTO detail)
-        //{
-        //    if (detail.DiscountPercentage != null)
-        //    {
-        //        return 
-        //    }
-
-
-
-        //}
 
         public static string GetTotalPriceWithDiscountForProduct(this UserOpenOrderDetailItemDTO detail)
         {
@@ -26,7 +16,7 @@ namespace MarketPlace.Application.EntitiesExtensions
                     .ToString("#,0");
             }
 
-            return (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice)).ToString("#,0");
+            return (detail.Count * (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice))).ToString("#,0");
 
 
         }

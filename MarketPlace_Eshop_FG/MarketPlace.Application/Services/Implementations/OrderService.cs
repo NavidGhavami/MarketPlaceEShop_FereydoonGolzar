@@ -52,7 +52,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .Include(x => x.OrderDetails)
                 .ThenInclude(x => x.ProductColor)
                 .ThenInclude(x => x.Product)
-                .ThenInclude(x=>x.ProductDiscounts)
+                .ThenInclude(x => x.ProductDiscounts)
                 .SingleOrDefaultAsync(x => x.UserId == userId && !x.IsPaid);
 
 
@@ -119,7 +119,7 @@ namespace MarketPlace.Application.Services.Implementations
             var openOrder = await GetUserLatestOpenOrder(userId);
 
             var similarOrder = openOrder.OrderDetails.SingleOrDefault(x =>
-                x.ProductId == order.ProductId && x.ProductColorId == order.ProductColorId);
+                x.ProductId == order.ProductId && x.ProductColorId == order.ProductColorId && !x.IsDelete);
 
             if (similarOrder == null)
             {
@@ -151,23 +151,62 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 UserId = userId,
                 Description = userOpenOrder.Description,
-                Details = userOpenOrder.OrderDetails.Select(x => new UserOpenOrderDetailItemDTO
-                {
-                    Count = x.Count,
-                    ColorName = x.ProductColor?.ColorName,
-                    ProductColorId = x.ProductColorId,
-                    ProductColorPrice = x.ProductColor != null ? Convert.ToInt32(x.ProductColor.Price) : 0,
-                    ProductId = x.ProductId,
-                    ProductPrice = x.Product.Price,
-                    ProductTitle = x.Product.Title,
-                    ProductImage = x.Product.Image,
-                    DiscountPercentage = x.Product.ProductDiscounts
-                        .OrderByDescending(p=>p.CreateDate)
-                        .FirstOrDefault(p=> p.ExpireDate> DateTime.Now)?.Percentage
+                Details = userOpenOrder.OrderDetails
+                    .Where(x => !x.IsDelete)
+                    .Select(x => new UserOpenOrderDetailItemDTO
+                    {
+                        Id = x.Id,
+                        Count = x.Count,
+                        ColorName = x.ProductColor?.ColorName,
+                        ProductColorId = x.ProductColorId,
+                        ProductColorPrice = x.ProductColor != null ? Convert.ToInt32(x.ProductColor.Price) : 0,
+                        ProductId = x.ProductId,
+                        ProductPrice = x.Product.Price,
+                        ProductTitle = x.Product.Title,
+                        ProductImage = x.Product.Image,
+                        DiscountPercentage = x.Product.ProductDiscounts
+                        .OrderByDescending(p => p.CreateDate)
+                        .FirstOrDefault(p => p.ExpireDate > DateTime.Now)?.Percentage
 
 
-                }).ToList()
+                    }).ToList()
             };
+        }
+
+        public async Task<bool> RemoveOrderDetail(long detailId, long userId)
+        {
+            var openOrder = await GetUserLatestOpenOrder(userId);
+            var orderDetail = openOrder.OrderDetails.SingleOrDefault(x => x.Id == detailId);
+
+            if (orderDetail == null)
+            {
+                return false;
+            }
+
+            _orderDetailRepository.DeleteEntity(orderDetail);
+            await _orderDetailRepository.SaveChanges();
+
+            return true;
+        }
+
+        public async Task ChangeOrderDetailCount(long detailId, long userId, int count)
+        {
+            var openOrder = await GetUserLatestOpenOrder(userId);
+            var detail = openOrder.OrderDetails.SingleOrDefault(x => x.Id == detailId);
+
+            if (detail != null)
+            {
+                if (count > 0)
+                {
+                    detail.Count = count;
+                }
+                else
+                {
+                    _orderDetailRepository.DeleteEntity(detail);
+                }
+
+                await _orderDetailRepository.SaveChanges();
+            }
         }
 
         #endregion

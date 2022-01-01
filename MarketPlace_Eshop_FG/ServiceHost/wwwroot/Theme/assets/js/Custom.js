@@ -298,7 +298,35 @@ $('#submitOrderForm').on('click', function () {
     open_waiting();
 });
 
+function removeProductFromOrder(detailId) {
+    $.get('/user/remove-order-item/' + detailId).then(result => {
+        location.reload();
 
+    });
+}
+
+function checkDetailCount() {
+    $('input[order-detail-count]').on('change', function (event) {
+        open_waiting();
+        var detailId = $(this).attr('order-detail-count');
+        $.get('/user/change-detail-count/' + detailId + '/' + event.target.value).then(result => {
+            $('#user-open-order-wrapper').html(result);  
+            setTimeout(function () {
+                close_waiting();
+                location.reload();
+            }, 500);
+            
+        });
+        
+    });
+    
+}
+
+function reloadPage() {
+    location.reload();
+}
+
+checkDetailCount();
 
 function wait_me() {
 
@@ -306,7 +334,7 @@ function wait_me() {
 
     setTimeout(function () {
         close_waiting();
-    }, 5000);
+    }, 3000);
 
 }
 

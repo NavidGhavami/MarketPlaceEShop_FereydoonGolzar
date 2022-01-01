@@ -63,6 +63,46 @@ namespace ServiceHost.Areas.User.Controllers
 
         #endregion
 
+        #region Open Order Partial
+
+        [HttpGet("change-detail-count/{detailId}/{count}")]
+        public async Task<IActionResult> ChangeDetailOrderCount(long detailId, int count)
+        {
+            
+            await _orderService.ChangeOrderDetailCount(detailId, User.GetUserId(), count);
+            var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
+            return PartialView(openOrder);
+        }
+
+        #endregion
+
+        #region Remove Product From Cart
+
+        [HttpGet("remove-order-item/{detailId}")]
+        public async Task<IActionResult> RemoveProductFromOrder(long detailId)
+        {
+            var result = await _orderService.RemoveOrderDetail(detailId, User.GetUserId());
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "محصول مورد نظر از سبد خرید شما حذف شد";
+                return JsonResponseStatus.SendStatus(
+                    JsonResponseStatusType.Success,
+                    "محصول مورد نظر از سبد خرید شما حذف شد",
+                    null);
+            }
+
+            TempData[ErrorMessage] = "محصول مورد نظر در سبد خرید شما یافت نشد";
+            return JsonResponseStatus.SendStatus(
+                JsonResponseStatusType.Danger,
+                "محصول مورد نظر در سبد خرید شما یافت نشد",
+                null);
+
+
+        }
+
+        #endregion
+
 
 
     }
