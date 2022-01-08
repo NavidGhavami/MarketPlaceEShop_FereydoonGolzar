@@ -238,3 +238,7 @@ E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Debug\net5.0\runtimes\win7-x86\native\libuv.dll
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\User\Views\Order\CallBackZarinPal.cshtml.g.cs
 E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Debug\net5.0\RestSharp.dll
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\Components\OffProducts\OffProducts.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\Components\MaximumProductsView\MaximumProductsView.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\Components\LatestArrivalProducts\LatestArrivalProducts.cshtml.g.cs
+E:\Programming\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Views\Shared\Components\ProductSlider\ProductSlider.cshtml.g.cs

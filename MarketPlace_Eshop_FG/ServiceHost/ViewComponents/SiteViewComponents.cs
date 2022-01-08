@@ -215,23 +215,84 @@ namespace ServiceHost.ViewComponents
 
     public class UserOrderViewComponent : ViewComponent
     {
-        private readonly IOrderService _orederService;
+        private readonly IOrderService _orderService;
 
-        public UserOrderViewComponent(IOrderService orederService)
+        public UserOrderViewComponent(IOrderService orderService)
         {
-            _orederService = orederService;
+            _orderService = orderService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var openOrder = await _orederService.GetUserOpenOrderDetail(User.GetUserId());
+            var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
             return View("UserOrder", openOrder);
         }
     }
 
     #endregion
 
+    #region Products with Discount
+
+    public class OffProductsViewComponent : ViewComponent
+    {
+        private readonly IProductService _productService;
+
+        public OffProductsViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            ViewData["OffProducts"] = await _productService.GetAllOffProducts(30);
+            return View("OffProducts");
+        }
+
+    }
 
 
+    #endregion
+
+    #region Maximum Products View
+
+    public class MaximumProductsViewViewComponent : ViewComponent
+    {
+        private readonly IProductService _productService;
+
+        public MaximumProductsViewViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            ViewData["MaximumView"] = await _productService.GetProductWithMaximumView(30);
+            return View("MaximumProductsView");
+        }
+
+    }
+
+    #endregion
+
+    #region Latest Arrivals Products
+
+    public class LatestArrivalProductsViewComponent : ViewComponent
+    {
+        private readonly IProductService _productService;
+
+        public LatestArrivalProductsViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            ViewData["LatestArrivalProducts"] = await _productService.GetLatestArrivalProducts(50);
+            return View("LatestArrivalProducts");
+        }
+
+    }
+
+    #endregion
 
 }

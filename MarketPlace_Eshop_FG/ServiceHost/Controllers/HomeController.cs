@@ -14,6 +14,7 @@ namespace ServiceHost.Controllers
         private readonly ISiteService _siteService;
         private readonly IContactService _contactService;
         private readonly ICaptchaValidator _captchaValidator;
+        private readonly IProductService _productService;
 
         public HomeController(IContactService contactService, ICaptchaValidator captchaValidator, ISiteService siteService)
         {
@@ -35,7 +36,7 @@ namespace ServiceHost.Controllers
         #region ContactUs
 
         [HttpGet("Contact-Us")]
-        public async Task<IActionResult> ContactUs()
+        public IActionResult ContactUs()
         {
             return View();
         }
@@ -65,7 +66,7 @@ namespace ServiceHost.Controllers
         #region About Us
 
         [HttpGet("About-Us")]
-        public async Task<IActionResult> AboutUs()
+        public IActionResult AboutUs()
         {
             return View();
         }

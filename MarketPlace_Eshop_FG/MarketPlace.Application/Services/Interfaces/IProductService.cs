@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Products;
+using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.Products;
 using Microsoft.AspNetCore.Http;
 
@@ -25,6 +26,9 @@ namespace MarketPlace.Application.Services.Interfaces
         Task AddProductColors(long productId, List<CreateProductColorDTO> colors);
         Task<ProductDetailsDTO> GetProductDetailsBy(long productId);
         Task<List<Product>> FilterProductForSellerByProductName(long sellerId, string productName);
+        Task<List<ProductDiscount>> GetAllOffProducts(int take);
+        Task<List<Product>> GetProductWithMaximumView(int take);
+        Task<List<Product>> GetLatestArrivalProducts(int take);
 
 
         #endregion
@@ -33,6 +37,8 @@ namespace MarketPlace.Application.Services.Interfaces
 
         Task<List<ProductCategory>> GetAllProductCategoriesBy(long? parentId);
         Task<List<ProductCategory>> GetAllActiveProductCategories();
+        Task<List<Product>> GetCategoryProductsByCategoryName(string categoryName, int take);
+        Task<ProductCategory> GetProductCategoryByUrlName(string categoryUrlName);
 
         #endregion
 

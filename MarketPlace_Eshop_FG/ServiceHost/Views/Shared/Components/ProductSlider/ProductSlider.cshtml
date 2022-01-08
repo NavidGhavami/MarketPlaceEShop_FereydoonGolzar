@@ -1,0 +1,143 @@
+﻿@using MarketPlace.Application.Utilities
+@model List<MarketPlace.DataLayer.Entities.Products.Product>
+
+
+@{
+
+}
+
+<div class="container electronics">
+    <div class="heading heading-flex heading-border mb-3">
+        <div class="heading-left">
+            <h2 class="title">@ViewBag.title</h2>
+        </div><!-- End .heading-left -->
+        <br />
+    </div><!-- End .heading -->
+
+    <div class="tab-content tab-content-carousel">
+        <div class="tab-pane p-0 fade show active" id="hot-all-tab" role="tabpanel"
+             aria-labelledby="hot-all-link">
+            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow"
+                 data-toggle="owl" data-owl-options='{
+                                    "nav": false,
+                                    "dots": true,
+                                    "margin": 20,
+                                    "loop": false,
+                                    "rtl": true,
+                            "responsive": {
+                                        "0": {
+                                            "items":2
+                                        },
+                                        "480": {
+                                            "items":2
+                                        },
+                                        "768": {
+                                            "items":3
+                                        },
+                                        "992": {
+                                            "items":4
+                                        },
+                                        "1280": {
+                                            "items":5,
+                                            "nav": true
+                                        }
+                                    }
+                                }'>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var product in Model)
+                    {
+                        <div class="product">
+                            <figure class="product-media">
+                                <a asp-area="" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
+                                    <img src="@(PathExtension.ProductOrigin + product.Image)" alt="@product.Title" title="@product.Title">
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="#"
+                                       class="btn-product-icon btn-wishlist btn-expandable">
+                                        <span>
+                                            افزودن به
+                                            لیست علاقه مندی
+                                        </span>
+                                    </a>
+                                </div>
+
+                                <div class="product-action">
+                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart"
+                                       title="افزودن به سبد خرید">
+                                        <span>
+                                            افزودن به
+                                            سبد خرید
+                                        </span>
+                                    </a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                @if (product.ProductSelectedCategories != null && product.ProductSelectedCategories.Any())
+                                {
+                                    @foreach (var category in product.ProductSelectedCategories.Where(x => x.ProductCategory.ParentId == null))
+                                    {
+                                        <div class="product-cat">
+                                            <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.ProductCategory.UrlName">
+                                                @category.ProductCategory.Title
+                                            </a>
+                                        </div><!-- End .product-cat -->
+                                    }
+                                }
+                                <h3 class="product-title text-justify product-title-lineHeight">
+                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
+                                        @product.Title
+                                    </a>
+                                </h3>
+                                <!-- End .product-title -->
+                                @if (product.ProductDiscounts != null && product.ProductDiscounts.Any())
+                                {
+                                    foreach (var discount in product.ProductDiscounts)
+                                    {
+                                        <div class="product-price">
+                                            <span class="new-price">@((product.Price - (product.Price * discount.Percentage) / (double)100).ToString("#,0 تومان"))</span>
+                                            <del>
+                                                <span class="old-price">@product.Price.ToString("#,0")</span>
+                                            </del>
+                                        </div><!-- End .product-price -->
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="product-price">
+                                        <span class="new-price text-primary">@product.Price.ToString("#,0 تومان")</span>
+                                    </div><!-- End .product-price -->
+                                }
+                                <div class="ratings-container">
+                                    @if (product.Seller != null)
+                                    {
+                                        <span class="ratings-text">@product.Seller.StoreName</span>
+                                    }
+                                </div><!-- End .rating-container -->
+
+                                <div class="ratings-container">
+                                    @if (product.ProductColors != null && product.ProductColors.Any())
+                                    {
+                                        <div class="product-nav product-nav-dots">
+
+                                            @foreach (var color in product.ProductColors)
+                                            {
+                                                <a class="" title="@color.ColorName" style="background: @color.ColorCode; border-color: gainsboro;">
+                                                    <span class="sr-only">@color.ColorName</span>
+                                                </a>
+                                            }
+
+                                        </div><!-- End .product-nav -->
+                                    }
+                                </div><!-- End .product-body -->
+
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+                    }
+                }
+            </div><!-- End .owl-carousel -->
+        </div><!-- .End .tab-pane -->
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->

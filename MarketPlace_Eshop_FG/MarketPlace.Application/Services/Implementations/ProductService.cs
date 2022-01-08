@@ -31,7 +31,7 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
 
         public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository,
-            IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository, 
+            IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository,
             IGenericRepository<ProductGallery> productGalleryRepository, IGenericRepository<ProductFeature> productFeatureRepository,
             IGenericRepository<ProductDiscount> productDiscountRepository, IGenericRepository<ProductDiscountUse> productDiscountUseRepository)
         {
@@ -59,7 +59,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .Include(x => x.ProductSelectedCategories)
                 .ThenInclude(x => x.ProductCategory)
                 .Include(x => x.ProductColors)
-                .Include(x=>x.ProductDiscounts)
+                .Include(x => x.ProductDiscounts)
                 .AsSplitQuery()
                 .AsQueryable();
 
@@ -145,7 +145,7 @@ namespace MarketPlace.Application.Services.Implementations
             }
 
 
-            
+
 
             #endregion
 
@@ -430,7 +430,7 @@ namespace MarketPlace.Application.Services.Implementations
             await RemoveAllProductFeatures(product.Id);
             //AddProduct Features
             await AddProductFeatures(product.Id, product.ProductFeatures);
-            
+
 
             return EditProductResult.Success;
         }
@@ -447,8 +447,8 @@ namespace MarketPlace.Application.Services.Implementations
                 .ThenInclude(x => x.ProductCategory)
                 .Include(x => x.ProductColors)
                 .Include(x => x.ProductGalleries)
-                .Include(x=>x.ProductFeatures)
-                .Include(x=>x.ProductDiscounts)
+                .Include(x => x.ProductFeatures)
+                .Include(x => x.ProductDiscounts)
                 .SingleOrDefaultAsync(x => x.Id == productId);
 
             if (product == null)
@@ -461,10 +461,10 @@ namespace MarketPlace.Application.Services.Implementations
             var relatedProducts = await _productRepository
                 .GetQuery()
                 .Include(x => x.ProductSelectedCategories)
-                .ThenInclude(x=>x.ProductCategory)
-                .Include(x=>x.ProductGalleries)
-                .Include(x=>x.Seller)
-                .ThenInclude(x=>x.User)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.ProductGalleries)
+                .Include(x => x.Seller)
+                .ThenInclude(x => x.User)
                 .Where(x => x.ProductSelectedCategories.Any(c => selectedCategoriesIds.Contains(c.ProductCategoryId)) && x.Id != productId && x.ProductAcceptanceState == ProductAcceptanceState.Accepted)
                 .ToListAsync();
 
@@ -477,7 +477,7 @@ namespace MarketPlace.Application.Services.Implementations
             product.View += 1;
             await _productRepository.SaveChanges();
 
-            var productDetail =  new ProductDetailsDTO
+            var productDetail = new ProductDetailsDTO
             {
                 ProductId = productId,
                 Title = product.Title,
@@ -510,6 +510,68 @@ namespace MarketPlace.Application.Services.Implementations
                 .AsQueryable()
                 .Where(x => x.SellerId == sellerId && EF.Functions.Like(x.Title, $"%{productName}%"))
                 .ToListAsync();
+        }
+
+        public async Task<List<ProductDiscount>> GetAllOffProducts(int take)
+        {
+            return await _productDiscountRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Product)
+                .Include(x => x.Product.Seller)
+                .Include(x => x.Product.ProductSelectedCategories)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.Product.ProductColors)
+                .Where(x => x.ExpireDate >= DateTime.Now && !x.IsDelete)
+                .OrderByDescending(x => x.ExpireDate)
+                .Skip(0)
+                .Take(take)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<List<Product>> GetProductWithMaximumView(int take)
+        {
+            var maximumView = await _productRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Seller)
+                .Include(x => x.ProductSelectedCategories)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.ProductColors)
+                .Include(x => x.ProductDiscounts)
+                .Where(x => x.IsActive
+                            && !x.IsDelete
+                            && x.ProductAcceptanceState == ProductAcceptanceState.Accepted)
+                .Skip(0)
+                .Take(take)
+                .Distinct()
+                .ToListAsync();
+
+            return maximumView.OrderByDescending(x => x.View).ToList();
+
+
+        }
+
+        public async Task<List<Product>> GetLatestArrivalProducts(int take)
+        {
+            var latestArrival = await _productRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Seller)
+                .Include(x => x.ProductSelectedCategories)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.ProductColors)
+                .Include(x => x.ProductDiscounts)
+                .Where(x=>x.IsActive
+                && !x.IsDelete
+                && x.ProductAcceptanceState == ProductAcceptanceState.Accepted)
+                .Skip(0)
+                .Take(take)
+                .Distinct()
+                .ToListAsync();
+
+            return latestArrival.OrderByDescending(x => x.CreateDate).ToList();
         }
 
         #region Remove and Add ProductCategories, ProductColors, ProductFeatures
@@ -602,6 +664,38 @@ namespace MarketPlace.Application.Services.Implementations
                 .ToListAsync();
         }
 
+        public async Task<List<Product>> GetCategoryProductsByCategoryName(string categoryName, int take)
+        {
+            var category = await _productCategoryRepository
+                .GetQuery().SingleOrDefaultAsync(x => x.UrlName == categoryName);
+
+            if (category == null)
+            {
+                return null;
+            }
+            return await _productSelectedRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Product)
+                .Where(x => x.ProductCategoryId == category.Id
+                            && x.Product.IsActive 
+                            && !x.IsDelete 
+                            && x.Product.ProductAcceptanceState == ProductAcceptanceState.Accepted)
+                .Select(x => x.Product)
+                .OrderByDescending(x => x.CreateDate)
+                .Skip(0)
+                .Take(take)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<ProductCategory> GetProductCategoryByUrlName(string categoryUrlName)
+        {
+            return await _productCategoryRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.UrlName == categoryUrlName);
+        }
 
         #endregion
 
@@ -780,7 +874,6 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 await _productSelectedRepository.DisposeAsync();
             }
-
             if (_productColorRepository != null)
             {
                 await _productColorRepository.DisposeAsync();
@@ -792,6 +885,14 @@ namespace MarketPlace.Application.Services.Implementations
             if (_productGalleryRepository != null)
             {
                 await _productGalleryRepository.DisposeAsync();
+            }
+            if (_productDiscountRepository != null)
+            {
+                await _productDiscountRepository.DisposeAsync();
+            }
+            if (_productDiscountUseRepository != null)
+            {
+                await _productDiscountUseRepository.DisposeAsync();
             }
         }
 
