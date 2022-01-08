@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
+using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using ServiceHost.Http;
 using ServiceHost.PresentationExtensions;
 
@@ -14,11 +18,19 @@ namespace ServiceHost.Areas.User.Controllers
 
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
+        private readonly IPaymentService _paymentService;
+        private readonly IConfiguration _configuration;
 
-        public OrderController(IOrderService orderService, IUserService userService)
+        private string MerchantId { get; }
+
+        public OrderController(IOrderService orderService, IUserService userService, IPaymentService paymentService, IConfiguration configuration)
         {
             _orderService = orderService;
             _userService = userService;
+            _paymentService = paymentService;
+            _configuration = configuration;
+
+            MerchantId = _configuration.GetSection("payment")["merchant"];
         }
 
         #endregion
@@ -63,12 +75,82 @@ namespace ServiceHost.Areas.User.Controllers
 
         #endregion
 
+        #region Pay Order
+
+        [HttpGet("pay-order")]
+        public async Task<IActionResult> PayUserOrderPrice()
+        {
+            var openOrderAmount = await _orderService.GetTotalOrderPriceForPayment(User.GetUserId());
+
+            var siteUrl = _configuration.GetSection("payment")["siteUrl"];
+            var callbackUrl = siteUrl + Url.RouteUrl("ZarinpalPaymentResult");
+            var redirectUrl = "";
+
+            var status = _paymentService.CreatePaymentRequest(
+                MerchantId,
+                openOrderAmount,
+                "خرید از فروشگاه اینترنتی ...",
+                callbackUrl,
+                ref redirectUrl
+            );
+
+            if (status == PaymentStatus.St100)
+            {
+                return Redirect(redirectUrl);
+            }
+
+
+
+            return RedirectToAction("UserOpenOrder","Order");
+        }
+
+        #endregion
+
+        #region call back Zarinpal
+
+        [AllowAnonymous]
+        [HttpGet("payment-result", Name = "ZarinpalPaymentResult")]
+        public async Task<IActionResult> CallBackZarinPal()
+        {
+            var authority = _paymentService.GetAuthorityCodeFromCallback(HttpContext);
+
+            if (authority == "")
+            {
+                TempData[WarningMessage] = "عملیات پرداخت با شکست مواجه شد";
+                return View();
+            }
+            var openOrderAmount = await _orderService.GetTotalOrderPriceForPayment(User.GetUserId());
+            long refId = 0;
+            var trackingCode = CodeGenerator.Generate("FG_");
+            var result = _paymentService.PaymentVerification(MerchantId, authority, openOrderAmount, ref refId);
+
+            if (result == PaymentStatus.St100)
+            {
+                TempData[SuccessMessage] = "پرداخت شما با موفقیت انجام شد";
+                ViewBag.TrackingCode = trackingCode;
+                ViewBag.RefId = refId;
+                ViewBag.OrderDate = DateTime.Now.ToShamsi();
+                await _orderService.PayOrderProductPriceToSeller(User.GetUserId(), refId, trackingCode);
+
+                return View();
+            }
+            else
+            {
+                TempData[WarningMessage] = "عملیات پرداخت با خطا مواجه شد";
+            }
+
+
+            return View();
+        }
+
+        #endregion
+
         #region Open Order Partial
 
         [HttpGet("change-detail-count/{detailId}/{count}")]
         public async Task<IActionResult> ChangeDetailOrderCount(long detailId, int count)
         {
-            
+
             await _orderService.ChangeOrderDetailCount(detailId, User.GetUserId(), count);
             var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
             return PartialView(openOrder);

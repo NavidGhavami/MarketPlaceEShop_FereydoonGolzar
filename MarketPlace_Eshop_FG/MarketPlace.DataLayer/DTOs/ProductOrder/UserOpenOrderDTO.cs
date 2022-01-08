@@ -12,24 +12,17 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
 
         public int GetTotalPriceWithoutDiscount()
         {
-            
-                return Details.Sum(x =>  (x.Count * (x.ProductPrice + x.ProductColorPrice)));
-            
+            return Details.Sum(x => (x.Count * (x.ProductPrice + x.ProductColorPrice)));
         }
-
         public int GetTotalDiscountPrice()
         {
-
             return Details.Sum(x => Convert.ToInt32((x.Count * x.DiscountPercentage * (x.ProductPrice + x.ProductColorPrice)) / 100));
-
         }
-
         public int GetTotalPriceWithDiscount()
         {
-
             return GetTotalPriceWithoutDiscount() - GetTotalDiscountPrice();
-
         }
+       
 
 
     }

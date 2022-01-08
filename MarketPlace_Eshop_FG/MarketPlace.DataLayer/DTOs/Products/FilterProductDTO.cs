@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using MarketPlace.DataLayer.DTOs.Paging;
+using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.Products;
 
 namespace MarketPlace.DataLayer.DTOs.Products
@@ -18,6 +21,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
 
         #region Properties
 
+        public long ProductId { get; set; }
         public string ProductTitle { get; set; }
         public string Category { get; set; }
         public long? SellerId { get; set; }
@@ -55,6 +59,8 @@ namespace MarketPlace.DataLayer.DTOs.Products
             return this;
         }
 
+        
+
         #endregion
     }
 
@@ -90,14 +96,20 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Display(Name = "جدیدترین")]
         CreateDateDescending,
 
-        [Display(Name = "تاریخ (صعودی)")]
-        CreateDateAscending,
-
         [Display(Name = "گرانترین")]
         PriceDescending,
 
         [Display(Name = "ارزانترین")]
-        PriceAscending
+        PriceAscending,
+
+        [Display(Name = "بیشترین بازدید")]
+        ViewDescending,
+
+        [Display(Name = "کمترین بازدید")]
+        ViewAscending,
+
+        [Display(Name = "تاریخ (صعودی)")]
+        CreateDateAscending,
 
     }
 }

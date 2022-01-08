@@ -50,6 +50,7 @@ namespace ServiceHost.Controllers
             {
                 return NotFound();
             }
+
             return View(product);
         }
 

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Content\Images\UserAvatar\Origin\" />
+    <Folder Include="wwwroot\lib\new-date-picker\" />
   </ItemGroup>
 
 </Project>

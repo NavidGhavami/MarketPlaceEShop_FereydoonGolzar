@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "نتیجه پرداخت";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1 class="page-title">@ViewData["Title"]</h1>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">پنل کاربری</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="cart" id="user-open-order-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            <p class="text-white">
+                                پرداخت شما با موفقیت انجام شد. با تشکر از خرید شما در سایت ما. باز هم به ما فروشگاه ما سر بزنید
+                            </p>
+                        </div>
+
+                        <br/>
+
+                        <table class="table table-cart table-responsive-sm table-bordered text-center">
+                            <thead class="thead-dark text-white">
+                                <tr>
+                                    <th>کد پیگیری </th>
+                                    <th>شناسه پرداخت</th>
+                                    <th>تاریخ تراکنش</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="price-col">@ViewBag.TrackingCode</td>
+                                    <td class="price-col">@ViewBag.RefId</td>
+                                    <td class="price-col">@ViewBag.OrderDate</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br />
+                        <hr />
+
+                        <div class="btn-group btn-round">
+                            <a class="btn btn-info  " asp-area="" asp-controller="Home" asp-action="Index">بازگشت به صفحه اصلی</a>
+                            <a class="btn btn-primary  " asp-area="User" asp-controller="Home" asp-action="Dashboard">بازگشت به پنل کاربری</a>
+                        </div>
+                    }
+                    @if (TempData["WarningMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            <p class="text-white">در عملیات پرداخت خطایی رخ داد. لطفا مجدداَ خرید خود را ثبت نمایید</p>
+                        </div>
+
+                        <div class="btn-group btn-round">
+                            <a class="btn btn-info  " asp-area="" asp-controller="Home" asp-action="Index">بازگشت به صفحه اصلی</a>
+                            <a class="btn btn-primary  " asp-area="User" asp-controller="Home" asp-action="Dashboard">بازگشت به پنل کاربری</a>
+                        </div>
+
+                    }
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .cart -->
+</div>
+

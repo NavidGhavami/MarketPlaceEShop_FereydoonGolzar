@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.ProductDiscount;
+using MarketPlace.DataLayer.Entities.ProductDiscount;
 
 namespace MarketPlace.Application.Services.Interfaces
 {
@@ -12,6 +13,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<CreateDiscountResult> CreateProductDiscount(CreateDiscountDTO discount, long sellerId);
         Task<EditDiscountDTO> GetDiscountForEdit(long discountId);
         Task<EditDiscountResult> EditProductDiscount(EditDiscountDTO discount, long sellerId);
+        
 
         #endregion
     }

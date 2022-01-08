@@ -2,7 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
+using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
@@ -17,12 +19,18 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IGenericRepository<OrderDetail> _orderDetailRepository;
         private readonly ISellerWalletService _sellerWalletService;
+        private readonly IGenericRepository<ProductDiscount> _productDiscountRepository;
+        private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
 
-        public OrderService(IGenericRepository<Order> orderRepository, IGenericRepository<OrderDetail> orderDetailRepository, ISellerWalletService sellerWalletService)
+        public OrderService(IGenericRepository<Order> orderRepository, IGenericRepository<OrderDetail> orderDetailRepository,
+            ISellerWalletService sellerWalletService, IGenericRepository<ProductDiscount> productDiscountRepository,
+            IGenericRepository<ProductDiscountUse> productDiscountUseRepository)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
             _sellerWalletService = sellerWalletService;
+            _productDiscountRepository = productDiscountRepository;
+            _productDiscountUseRepository = productDiscountUseRepository;
         }
 
         #endregion
@@ -63,20 +71,34 @@ namespace MarketPlace.Application.Services.Implementations
         {
             var userOpenOrder = await GetUserLatestOpenOrder(userId);
             var totalPrice = 0;
+            var discount = 0;
 
-            foreach (var detail in userOpenOrder.OrderDetails)
+            foreach (var detail in userOpenOrder.OrderDetails.Where(x => !x.IsDelete))
             {
                 var oneProductPrice = detail.ProductColor != null
                     ? detail.Product.Price + Convert.ToInt32(detail.ProductColor.Price)
                     : detail.Product.Price;
 
-                totalPrice += detail.Count * oneProductPrice;
+                var productDiscount = await _productDiscountRepository.GetQuery()
+                    .Include(x => x.ProductDiscountUse)
+                    .OrderByDescending(x => x.CreateDate)
+                    .FirstOrDefaultAsync(x =>
+                        x.ProductId == detail.ProductId && x.DiscountNumber - x.ProductDiscountUse.Count > 0);
+
+                if (productDiscount != null)
+                {
+                    discount = (int)Math.Ceiling((oneProductPrice * productDiscount.Percentage) / (decimal)100);
+                }
+
+
+                totalPrice += detail.Count * (oneProductPrice - discount);
+                discount = 0;
             }
 
             return totalPrice;
         }
 
-        public async Task PayOrderProductPriceToSeller(long userId)
+        public async Task PayOrderProductPriceToSeller(long userId, long refId, string trackingCode)
         {
             var openOrder = await GetUserLatestOpenOrder(userId);
 
@@ -85,30 +107,56 @@ namespace MarketPlace.Application.Services.Implementations
                 var productPrice = detail.Product.Price;
                 var productColorPrice = detail.ProductColor != null ? Convert.ToInt32(detail.ProductColor.Price) : 0;
                 var discount = 0;
-                var totalPrice = (detail.Count * (productPrice + productColorPrice)) - discount;
+                var totalPrice = (detail.Count * (productPrice + productColorPrice));
 
-                await _sellerWalletService.AddWallet(new SellerWallet
+                var productDiscount = await _productDiscountRepository.GetQuery()
+                    .Include(x => x.ProductDiscountUse)
+                    .OrderByDescending(x => x.CreateDate)
+                    .FirstOrDefaultAsync(x =>
+                        x.ProductId == detail.ProductId && x.DiscountNumber - x.ProductDiscountUse.Count > 0);
+
+                if (productDiscount != null)
+                {
+                    discount = (int)Math.Ceiling((totalPrice * productDiscount.Percentage) / (decimal)100);
+
+                    var newDiscountUse = new ProductDiscountUse
+                    {
+                        UserId = userId,
+                        ProductDiscountId = productDiscount.Id,
+                    };
+
+                    await _productDiscountUseRepository.AddEntity(newDiscountUse);
+                }
+
+                var totalPriceWithDiscount = totalPrice - discount;
+
+                var sellerWallet = new SellerWallet
                 {
                     SellerId = detail.Product.SellerId,
-                    Price = (int)Math.Ceiling(totalPrice * detail.Product.SiteProfit / (double)100),
+                    Price = (int)Math.Ceiling(totalPriceWithDiscount - (totalPriceWithDiscount * detail.Product.SiteProfit / (double)100)),
                     TransactionType = TransactionType.Deposit,
-                    Description = $"پرداخت مبلغ {totalPrice} جهت فروش {detail.Product.Price} به تعداد {detail.Count} عدد با سهم تعیین شده ی {100 - detail.Product.SiteProfit} درصد"
+                    Description = $"پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}، با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف {discount:#,0 تومان}، به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
+                                  $"درصد برای فروشنده و {detail.Product.SiteProfit} درصد برای فروشگاه"
+                };
 
-                });
+                await _sellerWalletService.AddWallet(sellerWallet);
 
-                detail.ProductPrice = totalPrice;
+                detail.ProductPrice = totalPriceWithDiscount;
                 detail.ProductColorPrice = productColorPrice;
 
                 _orderDetailRepository.EditEntity(detail);
             }
 
             openOrder.IsPaid = true;
-            // todo: set description and tracking Code in Order
+            openOrder.TrackingCode = trackingCode;
+            openOrder.PaymentDate = DateTime.Now;
             _orderRepository.EditEntity(openOrder);
 
 
             await _orderRepository.SaveChanges();
         }
+
+
 
         #endregion
 
@@ -226,6 +274,14 @@ namespace MarketPlace.Application.Services.Implementations
             if (_orderDetailRepository != null)
             {
                 await _orderDetailRepository.DisposeAsync();
+            }
+            if (_productDiscountRepository != null)
+            {
+                await _productDiscountRepository.DisposeAsync();
+            }
+            if (_productDiscountUseRepository != null)
+            {
+                await _productDiscountUseRepository.DisposeAsync();
             }
         }
 

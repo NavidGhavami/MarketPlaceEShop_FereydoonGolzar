@@ -33,11 +33,15 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Description { get; set; }
 
+        [Display(Name = "تعداد بازدید")]
+        public int View { get; set; }
+
         public Entities.Store.Seller Seller { get; set; }
         public List<ProductGallery> ProductGalleries { get; set; }
         public List<ProductColor> ProductColors { get; set; }
         public List<ProductCategory> ProductCategories { get; set; }
         public List<ProductFeature> ProductFeatures { get; set; }
         public List<Product> RelatedProducts { get; set; }
+        public Entities.ProductDiscount.ProductDiscount ProductDiscount { get; set; }
     }
 }

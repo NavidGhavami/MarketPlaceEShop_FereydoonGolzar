@@ -12183,6 +12183,11 @@ a {
         background-color: #a6c76c;
     }
 
+    .product-label.label-discount {
+        color: #fff;
+        background-color: #f12b2b;
+    }
+
     .product-label.label-top {
         color: #fff;
         background-color: #7dd2ea;
@@ -15071,7 +15076,7 @@ small.form-text {
 
     .table th,
     .table td {
-       /* padding-left: 5rem;
+        /* padding-left: 5rem;
          padding-right: 0;
   padding-top: 1.4rem;
   padding-bottom: 1.4rem;*/

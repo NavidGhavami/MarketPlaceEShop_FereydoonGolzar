@@ -46,9 +46,8 @@
 
 
                             <div>
-                                <h3 class="title mb-3">لیست تسویه تراکنش ها</h3>
+                                <h3 class="title mb-3">لیست تراکنش ها</h3>
                             </div>
-                            <br />
 
                             @if (Model.SellerWallets != null && Model.SellerWallets.Any())
                             {
@@ -58,10 +57,10 @@
                                     <table class="table table-bordered table-striped table-responsive-sm  text-center">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th>شناسه</th>
+                                                
                                                 <th>مبلغ</th>
-                                                <th>واریز / برداشت</th>
-                                                <th>تاریخ درخواست</th>
+                                                <th>تراکنش</th>
+                                                <th>تاریخ تراکنش</th>
                                                 <th>توضیحات</th>
                                             </tr>
                                         </thead>
@@ -69,10 +68,9 @@
                                             @foreach (var item in Model.SellerWallets)
                                             {
                                             <tr>
-                                                <td>@item.Id</td>
-                                                <td>@item.Price.ToString("#,0 تومان")</td>
+                                                <td>@item.Price.ToString("#,0")</td>
                                                 <td>@item.TransactionType.GetEnumName()</td>
-                                                <td>@item.CreateDate.ToShamsiDateTime()</td>
+                                                <td>@item.CreateDate.ToShamsi()</td>
                                                 <td>@item.Description</td>
                                             </tr>
                                             }

@@ -46,6 +46,7 @@ namespace ServiceHost
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISellerWalletService, SellerWalletService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IProductDiscountService, ProductDiscountService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();

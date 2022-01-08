@@ -7,6 +7,7 @@
     var productCategories = ViewBag.ProductCategories as List<ProductCategory>;
     var productColor = ViewBag.ProductColors as List<ProductColor>;
 
+
 }
 
 
@@ -65,6 +66,13 @@
                                 <div class="product">
                                     <figure class="product-media">
                                         <span class="product-label label-new">جدید</span>
+                                        @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x=>x.ExpireDate >= DateTime.Now))
+                                        {
+                                            @foreach (var discount in product.ProductDiscounts)
+                                            {
+                                                <span class="product-label label-discount">@discount.Percentage %</span>
+                                            }
+                                        }
                                         <a asp-controller="Product" asp-action="ProductDetails"
                                            asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
                                             <img src="@(PathExtension.ProductOrigin + product.Image)" alt="@product.Title" title="@product.Title" class="product-image">
@@ -91,7 +99,7 @@
                                         @if (product.ProductSelectedCategories != null)
                                         {
                                             <div class="product-cat product-filter-margin">
-                                                @foreach (var category in product.ProductSelectedCategories.Where(x=>x.ProductCategory.ParentId == null).Select(x => x.ProductCategory))
+                                                @foreach (var category in product.ProductSelectedCategories.Where(x => x.ProductCategory.ParentId == null).Select(x => x.ProductCategory))
                                                 {
                                                     <a href="#">
                                                         @category.Title
@@ -105,20 +113,35 @@
                                                asp-route-title="@product.Title.FixTextForUrl()">@product.Title</a>
                                         </h3>
                                         <!-- End .product-title -->
-                                        <div class="product-price">
-                                            <span class="new-price">@product.Price.ToString("#,0") تومان</span>
-                                            <span class="old-price">
-                                                <del>
+                                        @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x=>x.ExpireDate >= DateTime.Now))
+                                        {
+                                            <div class="product-price">
+                                                @foreach (var discount in product.ProductDiscounts)
+                                                {
+                                                    <span class="new-price">@(Convert.ToInt32(product.Price - ((product.Price * discount.Percentage) / (double)100)).ToString("#,0 تومان"))</span>
+                                                    <span class="old-price">
+                                                        <del>
+                                                            @product.Price.ToString("#,0") تومان
+                                                        </del>
+                                                    </span>
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-price">
+                                                <span class="old-price text-primary">
                                                     @product.Price.ToString("#,0") تومان
-                                                </del>
-                                            </span>
-                                        </div>
+                                                </span>
+
+                                            </div>
+                                        }
                                         <div class="ratings-container">
                                             <div class="ratings">
                                                 <div class="ratings-val"></div>
                                                 <!-- End .ratings-val -->
                                             </div><!-- End .ratings -->
-                                            <span class="ratings-text">( 0 دیدگاه )</span>
+                                            <span class="ratings-text">( @product.View بازدید )</span>
                                         </div><!-- End .rating-container -->
 
                                         @if (product.Seller != null)

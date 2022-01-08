@@ -1,5 +1,4 @@
-﻿
-function open_waiting(selector = 'body') {
+﻿function open_waiting(selector = 'body') {
     $(selector).waitMe({
         effect: 'facebook',
         text: 'لطفا صبر کنید ...',
@@ -310,16 +309,16 @@ function checkDetailCount() {
         open_waiting();
         var detailId = $(this).attr('order-detail-count');
         $.get('/user/change-detail-count/' + detailId + '/' + event.target.value).then(result => {
-            $('#user-open-order-wrapper').html(result);  
+            $('#user-open-order-wrapper').html(result);
             setTimeout(function () {
                 close_waiting();
                 location.reload();
             }, 500);
-            
+
         });
-        
+
     });
-    
+
 }
 
 function reloadPage() {
@@ -357,7 +356,5 @@ var options = {
     },
     theme: "plate-dark",
 
-    
+
 };
-
-
