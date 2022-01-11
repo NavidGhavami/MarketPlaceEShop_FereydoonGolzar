@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.ProductOrder;
@@ -13,7 +14,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<Order> GetUserLatestOpenOrder(long userId);
         Task<int> GetTotalOrderPriceForPayment(long userId);
         Task PayOrderProductPriceToSeller(long userId, long refId, string trackingCode);
-        
+        Task<FilterUserOrderDTO> GetUserOrder(FilterUserOrderDTO filter);
+
 
         #endregion
 
@@ -23,6 +25,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<UserOpenOrderDTO> GetUserOpenOrderDetail(long userId);
         Task<bool> RemoveOrderDetail(long detailId, long userId);
         Task ChangeOrderDetailCount(long detailId, long userId, int count);
+        Task<List<UserOrderDetailItemDTO>> GetUserOrderDetailItem(long orderId, long userId);
 
         #endregion
     }

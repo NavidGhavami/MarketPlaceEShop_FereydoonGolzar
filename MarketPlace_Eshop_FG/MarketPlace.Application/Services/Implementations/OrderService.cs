@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
+using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
+using MarketPlace.DataLayer.DTOs.Seller;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
+using MarketPlace.DataLayer.Entities.Store;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +45,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<long> AddOrderForUser(long userId)
         {
-            var order = new Order { UserId = userId };
+            var order = new Order { UserId = userId , OrderAcceptanceState = OrderAcceptanceState.UnderProgress};
 
             await _orderRepository.AddEntity(order);
 
@@ -135,8 +140,10 @@ namespace MarketPlace.Application.Services.Implementations
                     SellerId = detail.Product.SellerId,
                     Price = (int)Math.Ceiling(totalPriceWithDiscount - (totalPriceWithDiscount * detail.Product.SiteProfit / (double)100)),
                     TransactionType = TransactionType.Deposit,
-                    Description = $"پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}، با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف {discount:#,0 تومان}، به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
-                                  $"درصد برای فروشنده و {detail.Product.SiteProfit} درصد برای فروشگاه"
+                    Description = $"پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}،" +
+                                  $" با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف" +
+                                  $" {discount:#,0 تومان}، به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
+                                  $"درصد برای فروشنده و {detail.Product.SiteProfit} درصد برای فروشگاه" 
                 };
 
                 await _sellerWalletService.AddWallet(sellerWallet);
@@ -150,13 +157,71 @@ namespace MarketPlace.Application.Services.Implementations
             openOrder.IsPaid = true;
             openOrder.TrackingCode = trackingCode;
             openOrder.PaymentDate = DateTime.Now;
+            openOrder.OrderAcceptanceState = OrderAcceptanceState.PaymentSuccessful;
+            openOrder.Description = $"سفارش شما در تاریخ {DateTime.Now.ToShamsi()} با موفقیت ثبت شد.";
             _orderRepository.EditEntity(openOrder);
 
 
             await _orderRepository.SaveChanges();
         }
 
+        public async Task<FilterUserOrderDTO> GetUserOrder(FilterUserOrderDTO filter)
+        {
+            var query = _orderRepository.GetQuery()
+               .Include(x => x.OrderDetails)
+               .AsQueryable()
+               .OrderByDescending(x => x.Id)
+               .Where(x=>x.TrackingCode != null);
 
+            #region State
+
+            switch (filter.FilterUserOrderState)
+            {
+                case FilterUserOrderState.All:
+                    query = query.Where(x => !x.IsDelete);
+                    break;
+                case FilterUserOrderState.PaymentSuccessful:
+                    query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.PaymentSuccessful && !x.IsDelete);
+                    break;
+                case FilterUserOrderState.PaymentCancel:
+                    query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.PaymentCancel && !x.IsDelete);
+                    break;
+                case FilterUserOrderState.UnderProgress:
+                    query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.UnderProgress && !x.IsDelete);
+                    break;
+            }
+
+            #endregion
+
+            #region Filter
+
+            if (filter.UserId != null && filter.UserId != 0)
+            {
+                query = query.Where(x => x.UserId == filter.UserId);
+            }
+
+            if (!string.IsNullOrEmpty(filter.TrackingCode))
+            {
+                query = query.Where(x => EF.Functions.Like(x.TrackingCode, $"%{filter.TrackingCode}%"));
+            }
+
+            #endregion
+
+            #region Paging
+
+
+            var orderCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, orderCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetUserOrders(allEntities);
+        }
 
         #endregion
 
@@ -255,6 +320,57 @@ namespace MarketPlace.Application.Services.Implementations
 
                 await _orderDetailRepository.SaveChanges();
             }
+        }
+
+        public async Task<List<UserOrderDetailItemDTO>> GetUserOrderDetailItem(long orderId, long userId)
+        {
+            var order = await _orderRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x=>x.OrderDetails)
+                .ThenInclude(x=>x.Product)
+                .ThenInclude(x => x.ProductColors)
+                .Include(x=>x.OrderDetails)
+                .ThenInclude(x=>x.Product.Seller)
+                .FirstOrDefaultAsync(x => x.Id == orderId && x.UserId == userId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            var discount = await _productDiscountRepository
+                .GetQuery()
+                .AsQueryable()
+                .Select(x => new {x.ProductId, x.Percentage}).ToListAsync();
+
+            var items = order.OrderDetails.Select(x => new UserOrderDetailItemDTO
+            {
+                OrderId = x.Id,
+                ProductId = x.ProductId,
+                ProductTitle = x.Product.Title,
+                StoreName = x.Product.Seller.StoreName,
+                ColorName = x.ProductColor.ColorName,
+                Count = x.Count,
+                ProductColorPrice = Convert.ToInt32(x.ProductColor.Price),
+                ProductPrice = x.ProductPrice,
+                MainProductPrice = x.Product.Price + x.ProductColorPrice,
+                ProductColorId = x.ProductColorId,
+                ProductImage = x.Product.Image,
+
+            }).ToList();
+
+
+            foreach (var item in items)
+            {
+                item.DiscountPercentage = discount
+                    .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
+
+                item.DiscountPrice = item.MainProductPrice - item.ProductPrice;
+            }
+
+            return items;
+
         }
 
         #endregion

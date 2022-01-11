@@ -18,6 +18,8 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 
+        public OrderAcceptanceState OrderAcceptanceState { get; set; }
+
         #endregion
 
         #region Relations
@@ -26,5 +28,18 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
 
         #endregion
 
+    }
+
+    public enum OrderAcceptanceState
+    {
+        
+        [Display(Name = "پرداخت شده")]
+        PaymentSuccessful,
+
+        [Display(Name = "پرداخت نشده")]
+        PaymentCancel,
+
+        [Display(Name = "درحال بررسی")]
+        UnderProgress
     }
 }

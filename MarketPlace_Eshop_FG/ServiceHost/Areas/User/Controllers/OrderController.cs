@@ -185,6 +185,33 @@ namespace ServiceHost.Areas.User.Controllers
 
         #endregion
 
+        #region User Order List
+
+        [HttpGet("user-order")]
+        public async Task<IActionResult> GetUserOrder(FilterUserOrderDTO filter)
+        {
+            filter.TakeEntity = 5;
+            filter.UserId = User.GetUserId();
+            filter.FilterUserOrderState = FilterUserOrderState.All;
+
+            var userOrder = await _orderService.GetUserOrder(filter);
+
+            return View(userOrder);
+        }
+
+        #endregion
+
+        #region User Order Detail Items
+
+        [HttpGet("user-order-detail/{orderId}")]
+        public async Task<IActionResult> GetUserOrderDetailItem(long orderId)
+        {
+            var orderDetailItem = await _orderService.GetUserOrderDetailItem(orderId, User.GetUserId());
+            return View(orderDetailItem);
+        }
+
+        #endregion
+
 
 
     }

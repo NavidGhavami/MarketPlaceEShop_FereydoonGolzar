@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using MarketPlace.DataLayer.DTOs.Paging;
-using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.Products;
 
 namespace MarketPlace.DataLayer.DTOs.Products

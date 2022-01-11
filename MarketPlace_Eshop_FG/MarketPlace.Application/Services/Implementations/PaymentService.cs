@@ -2,8 +2,6 @@
 using MarketPlace.DataLayer.DTOs.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using ZarinpalSandbox;
-using Payment = ZarinPal.Class.Payment;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -14,7 +12,6 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IConfiguration _configuration;
 
         public string Prefix { get; set; }
-        private string MerchantId { get; }
 
         public PaymentService(IConfiguration configuration)
         {

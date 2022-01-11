@@ -1,0 +1,116 @@
+﻿@using MarketPlace.Application.Utilities
+@model List<MarketPlace.DataLayer.DTOs.ProductOrder.UserOrderDetailItemDTO>
+@{
+    ViewData["Title"] = "جزییات سفارش";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Order" asp-action="GetUserOrder">سفارشات من</a></li>
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                @*<aside class="col-md-4 col-lg-3">
+                        @await Component.InvokeAsync("UserSidebarDashboard")
+                    </aside>*@
+
+                <div class="col-md-12 col-lg-12">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            <h3 class="title mb-3">لیست جزییات سفارش</h3>
+
+                            <div class="col-md-12">
+                                @if (Model != null && Model.Any())
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <div id="accordion">
+                                            <div class="card">
+                                                <div class="card-header" id="headingOne">
+                                                    <h5 class="mb-0">
+                                                        <a class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_@item.ProductId" aria-expanded="false" aria-controls="collapseOne_@item.ProductId">
+                                                            <img style="width: 150px; height: 150px;"
+                                                                 src="@(!string.IsNullOrEmpty(item.ProductImage) ?
+                                                                          PathExtension.ProductOrigin + item.ProductImage : PathExtension.DefaultAvatar)"
+                                                                 alt="@item.ProductTitle" title="@item.ProductTitle" />
+                                                            <span class="product-title-lineHeight text-justify" style="font-size: 15px;">
+                                                                @item.ProductTitle
+                                                            </span>
+                                                        </a>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="collapseOne_@item.ProductId" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                    <div class="card-body">
+                                                        <table class="table table-striped table-responsive-lg table-hover text-center">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th scope="col">قیمت اصلی</th>
+                                                                    <th scope="col">قیمت پرداخت شده</th>
+                                                                    <th scope="col">فروشنده</th>
+                                                                    <th scope="col">تعداد</th>
+                                                                    <th scope="col">رنگ</th>
+                                                                    <th scope="col">قیمت رنگ</th>
+                                                                    <th scope="col">مقدار تخفیف</th>
+                                                                    <th scope="col">درصد تخفیف</th>
+                                                                    <th scope="col"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>@item.MainProductPrice.ToString("#,0 تومان")</td>
+                                                                    <td>@item.ProductPrice.ToString("#,0 تومان")</td>
+                                                                    <td>@item.StoreName</td>
+                                                                    <td>@item.Count عدد</td>
+                                                                    <td>@item.ColorName</td>
+                                                                    <td>@item.ProductColorPrice.ToString("#,0 تومان")</td>
+                                                                    <td>@(item.DiscountPrice!=0 ? item.DiscountPrice.ToString("#,0 تومان") : "---")</td>
+                                                                    <td>@(item.DiscountPercentage!=null ? item.DiscountPercentage + "%" : 0) </td>
+                                                                    <td>
+                                                                        <a class="btn btn-warning btn-round" asp-area="" asp-controller="Product" asp-action="ProductDetails"
+                                                                           asp-route-productId="@item.ProductId" asp-route-title="@item.ProductTitle">
+                                                                            مشاهده محصول
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+

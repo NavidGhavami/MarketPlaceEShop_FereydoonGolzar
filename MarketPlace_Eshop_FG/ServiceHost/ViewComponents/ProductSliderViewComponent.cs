@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 namespace ServiceHost.ViewComponents
 {
