@@ -1,0 +1,92 @@
+﻿@model MarketPlace.DataLayer.DTOs.ProductOrder.CancelOrderDTO
+@{
+    ViewData["Title"] = "توضیحات سفارش";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Order" asp-action="GetUserOrder">سفارشات</a></li>
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            @if (Model != null)
+                            {
+                                <h3 class="title mb-3">توضیحات</h3>
+
+                                <div class="col-md-12">
+
+
+                                    <table class="table table-striped table-responsive-md text-center">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">تاریخ ثبت سفارش</th>
+                                                <th scope="col">تاریخ لغو سفارش</th>
+                                                <th scope="col">نمایش توضیحات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>@Model.SuccessOrderDate</td>
+                                                @if (Model.SuccessOrderDate != Model.CancelOrderDate)
+                                                {
+                                                    <td>@Model.CancelOrderDate</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>---</td>
+                                                }
+                                                <td>@Html.Raw(Model.Description)</td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            }
+                            else
+                            {
+                                <partial name="_NoItemFound" />
+                            }
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+
+

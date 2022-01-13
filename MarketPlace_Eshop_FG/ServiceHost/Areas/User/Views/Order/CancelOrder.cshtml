@@ -1,0 +1,67 @@
+﻿@model MarketPlace.DataLayer.DTOs.ProductOrder.CancelOrderDTO
+@{
+    ViewData["Title"] = "لغو سفارش";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Order" asp-action="GetUserOrder">سفارشات من</a></li>
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+
+                            <h6 class="title mb-3">لطفا با ذکر دلیل ، هدف خود را از لغو سفارش توضیح دهید</h6>
+                            <form asp-area="User" asp-controller="Order" asp-action="CancelOrder" id="filter-form" method="post">
+                                <input type="hidden" asp-for="Id"/>
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <br/>
+                                        <textarea class="form-control" ckeditor="1" asp-for="Description"></textarea>
+                                        <span class="text-danger float-right" asp-validation-for="Description"></span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" onclick="wait_me()" class="btn btn-round btn-danger float-right">
+                                    <span>لغو سفارش</span>
+                                    <i class="icon-long-arrow-left"></i>
+                                </button>
+                            </form>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+
+

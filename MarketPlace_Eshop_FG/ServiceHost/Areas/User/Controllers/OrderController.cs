@@ -37,7 +37,7 @@ namespace ServiceHost.Areas.User.Controllers
 
         #region Add Product to Open order
         [AllowAnonymous]
-        [HttpPost("add-product-to-order")]
+        [HttpPost("add-product-to-order"), ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProductToOrder(AddProductToOrderDTO order)
         {
             if (ModelState.IsValid)
@@ -101,7 +101,7 @@ namespace ServiceHost.Areas.User.Controllers
 
 
 
-            return RedirectToAction("UserOpenOrder","Order");
+            return RedirectToAction("UserOpenOrder", "Order");
         }
 
         #endregion
@@ -208,6 +208,64 @@ namespace ServiceHost.Areas.User.Controllers
         {
             var orderDetailItem = await _orderService.GetUserOrderDetailItem(orderId, User.GetUserId());
             return View(orderDetailItem);
+        }
+
+        #endregion
+
+        #region Cancel Order
+
+        [HttpGet("cancel-order/{orderId}")]
+        public async Task<IActionResult> CancelOrder(long orderId)
+        {
+            var order = await _orderService.GetOrderForCancel(orderId, User.GetUserId());
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+        [HttpPost("cancel-order/{orderId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelOrder(CancelOrderDTO cancel)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _orderService.CancelOrder(cancel, User.GetUserId());
+
+                switch (result)
+                {
+                    case CancelOrderResult.OrderNotFound:
+                        TempData[WarningMessage] = "سفارش مورد نظر یافت نشد";
+                        break;
+                    case CancelOrderResult.Error:
+                        TempData[ErrorMessage] = "عملیات مورد نظر با خطا مواجه شد";
+                        break;
+                    case CancelOrderResult.Success:
+                        TempData[SuccessMessage] = "سفارش مورد نظر با موفقیت لغو شد";
+                        return RedirectToAction("GetUserOrder");
+                }
+            }
+
+
+
+            return View();
+        }
+
+        #endregion
+
+        #region Order Description
+
+        [HttpGet("order-description/{orderId}")]
+        public async Task<IActionResult> OrderDescription(long orderId)
+        {
+            var order = await _orderService.GetOrderForCancel(orderId, User.GetUserId());
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
         }
 
         #endregion

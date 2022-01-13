@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.ProductOrder;
 
@@ -15,6 +16,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<int> GetTotalOrderPriceForPayment(long userId);
         Task PayOrderProductPriceToSeller(long userId, long refId, string trackingCode);
         Task<FilterUserOrderDTO> GetUserOrder(FilterUserOrderDTO filter);
+        Task<CancelOrderResult> CancelOrder(CancelOrderDTO cancel, long userId);
+        Task<CancelOrderDTO> GetOrderForCancel(long orderId, long userId);
 
 
         #endregion

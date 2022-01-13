@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
+using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.DTOs.Seller;
@@ -221,6 +222,52 @@ namespace MarketPlace.Application.Services.Implementations
             #endregion
 
             return filter.SetPaging(pager).SetUserOrders(allEntities);
+        }
+
+        public async Task<CancelOrderResult> CancelOrder(CancelOrderDTO cancel, long userId)
+        {
+            var order = await _orderRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == cancel.Id);
+
+            if (order != null)
+            {
+                if (!order.IsPaid && order.UserId != userId)
+                {
+                    return CancelOrderResult.OrderNotFound;
+                }
+
+                order.OrderAcceptanceState = OrderAcceptanceState.PaymentCancel;
+                order.Description = cancel.Description;
+                order.LastUpdateDate = DateTime.Now;
+
+                _orderRepository.EditEntity(order);
+                await _orderRepository.SaveChanges();
+
+                return CancelOrderResult.Success;
+            }
+
+            return CancelOrderResult.Error;
+
+        }
+
+        public async Task<CancelOrderDTO> GetOrderForCancel(long orderId, long userId)
+        {
+            var order = await _orderRepository.GetEntityById(orderId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            return new CancelOrderDTO
+            {
+                Id = order.Id,
+                Description = order.Description,
+                CancelOrderDate = order.LastUpdateDate.ToString("yyyy/MM/dd"),
+                SuccessOrderDate = order.CreateDate.ToString("yyyy/MM/dd"),
+            };
         }
 
         #endregion

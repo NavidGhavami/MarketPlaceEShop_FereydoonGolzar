@@ -1,19 +1,20 @@
 ﻿@using MarketPlace.Application.Extensions
+@using MarketPlace.DataLayer.Entities.ProductOrder
 @model MarketPlace.DataLayer.DTOs.ProductOrder.FilterUserOrderDTO
 @{
     ViewData["Title"] = "سفارشات من";
 }
 
 <div class="page-header text-center">
-<div class="container">
-    <h3 class="text-danger">@ViewData["Title"]</h3>
-</div><!-- End .container -->
-@if (User.Identity.IsAuthenticated)
-{
     <div class="container">
-        <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        <h3 class="text-danger">@ViewData["Title"]</h3>
     </div><!-- End .container -->
-}
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
 </div>
 
 <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
@@ -63,29 +64,40 @@
                                             @foreach (var item in Model.Orders)
                                             {
 
-                                            <tr>
-                                                <td>@item.Id</td>
-                                                <td>@item.TrackingCode</td>
+                                                <tr>
+                                                    <td>@item.Id</td>
+                                                    <td>@item.TrackingCode</td>
 
-                                                @switch (item.OrderAcceptanceState.GetEnumName())
-                                                {
-                                                    case "درحال بررسی":
-                                                        <td class="text-warning">@item.OrderAcceptanceState.GetEnumName()</td>
-                                                        break;
-                                                    case "پرداخت شده":
-                                                        <td class="text-success">@item.OrderAcceptanceState.GetEnumName()</td>
-                                                        break;
-                                                    case "لغو شده":
-                                                        <td class="text-danger">@item.OrderAcceptanceState.GetEnumName()</td>
-                                                        break;
-                                                }
-                                                <td>@item.PaymentDate</td>
+                                                    @switch (item.OrderAcceptanceState.GetEnumName())
+                                                    {
+                                                        case "درحال بررسی":
+                                                            <td class="text-warning">@item.OrderAcceptanceState.GetEnumName()</td>
+                                                            break;
+                                                        case "پرداخت شده":
+                                                            <td class="text-success">@item.OrderAcceptanceState.GetEnumName()</td>
+                                                            break;
+                                                        case "لغو شده":
+                                                            <td class="text-danger">@item.OrderAcceptanceState.GetEnumName()</td>
+                                                            break;
+                                                    }
+                                                    <td>@item.PaymentDate</td>
 
-                                                <td>
-                                                    <a asp-area="User" asp-controller="Order" asp-action="GetUserOrderDetailItem" asp-route-orderId="@item.Id"
-                                                       class="btn btn-round btn-info btn-sm">نمایش محصولات</a>
-                                                </td>
-                                            </tr>
+                                                    <td>
+
+                                                        <div class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">
+                                                            <a asp-area="User" asp-controller="Order" asp-action="GetUserOrderDetailItem" asp-route-orderId="@item.Id"
+                                                               class="btn btn-round btn-info btn-sm">نمایش محصولات</a>
+                                                            @if (item.OrderAcceptanceState != OrderAcceptanceState.PaymentCancel)
+                                                            {
+                                                                <a asp-area="User" asp-controller="Order" asp-action="CancelOrder" asp-route-orderId="@item.Id"
+                                                                   class="btn btn-round btn-danger btn-sm">لغو سفارش</a>
+                                                            }
+                                                            <a asp-area="User" asp-controller="Order" asp-action="OrderDescription" asp-route-orderId="@item.Id"
+                                                               class="btn btn-round btn-primary btn-sm">توضیحات</a>
+                                                        </div>
+
+                                                    </td>
+                                                </tr>
 
 
                                             }

@@ -435,7 +435,6 @@ namespace MarketPlace.Application.Services.Implementations
             return EditProductResult.Success;
         }
 
-
         public async Task<ProductDetailsDTO> GetProductDetailsBy(long productId)
         {
             var product = await _productRepository

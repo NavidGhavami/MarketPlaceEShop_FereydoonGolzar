@@ -10,4 +10,5 @@ namespace MarketPlace.DataLayer.DTOs.Common
         [Display(Name = "توضیحات تایید / عدم تایید اطلاعات")]
         public string RejectMessage { get; set; }
     }
+
 }

@@ -36,8 +36,11 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
         [Display(Name = "پرداخت شده")]
         PaymentSuccessful,
 
-        [Display(Name = "پرداخت نشده")]
+        [Display(Name = "لغو شده")]
         PaymentCancel,
+
+        [Display(Name = "پرداخت نشده")]
+        PaymentNotSuccessful,
 
         [Display(Name = "درحال بررسی")]
         UnderProgress

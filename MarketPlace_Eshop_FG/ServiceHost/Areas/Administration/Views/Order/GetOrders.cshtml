@@ -15,7 +15,6 @@
     <div class="col-sm-9">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
-            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت فروشندگان</a></li>
             <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
         </ol>
     </div>
@@ -98,10 +97,15 @@
                                                 }
                                                 <td>@order.PaymentDate</td>
                                                 <td>
-                                                    <a class="btn btn-sm btn-success" ajax-url-button="@order.Id"
-                                                       asp-area="Administration" asp-controller="Seller" asp-action="AcceptSellerRequest"
-                                                       asp-route-requestId="@order.Id">
-                                                        تایید اطلاعات
+                                                    <a class="btn btn-sm btn-info"
+                                                       asp-area="Administration" asp-controller="Order" asp-action="GetUserOrderDetailItem"
+                                                       asp-route-orderId="@order.Id">
+                                                        مشاهده محصولات
+                                                    </a>
+                                                    <a class="btn btn-sm btn-warning"
+                                                       asp-area="Administration" asp-controller="Order" asp-action="OrderDescription"
+                                                       asp-route-orderId="@order.Id">
+                                                        توضیحات
                                                     </a>
                                                 </td>
                                             </tr>
