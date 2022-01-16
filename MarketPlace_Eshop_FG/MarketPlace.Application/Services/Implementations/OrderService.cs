@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
-using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
-using MarketPlace.DataLayer.DTOs.Seller;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
-using MarketPlace.DataLayer.Entities.Store;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -25,18 +21,20 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<Order> _orderRepository;
         private readonly IGenericRepository<OrderDetail> _orderDetailRepository;
         private readonly ISellerWalletService _sellerWalletService;
+        private readonly ISellerService _sellerService;
         private readonly IGenericRepository<ProductDiscount> _productDiscountRepository;
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
 
         public OrderService(IGenericRepository<Order> orderRepository, IGenericRepository<OrderDetail> orderDetailRepository,
             ISellerWalletService sellerWalletService, IGenericRepository<ProductDiscount> productDiscountRepository,
-            IGenericRepository<ProductDiscountUse> productDiscountUseRepository)
+            IGenericRepository<ProductDiscountUse> productDiscountUseRepository, ISellerService sellerService)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
             _sellerWalletService = sellerWalletService;
             _productDiscountRepository = productDiscountRepository;
             _productDiscountUseRepository = productDiscountUseRepository;
+            _sellerService = sellerService;
         }
 
         #endregion
@@ -184,8 +182,11 @@ namespace MarketPlace.Application.Services.Implementations
                 case FilterUserOrderState.PaymentSuccessful:
                     query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.PaymentSuccessful && !x.IsDelete);
                     break;
+                case FilterUserOrderState.PaymentNotSuccessful:
+                    query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.PaymentNotSuccessful && !x.IsPaid && !x.IsDelete);
+                    break;
                 case FilterUserOrderState.PaymentCancel:
-                    query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.PaymentCancel && !x.IsDelete);
+                    query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.PaymentCancel && x.IsPaid && !x.IsDelete);
                     break;
                 case FilterUserOrderState.UnderProgress:
                     query = query.Where(x => x.OrderAcceptanceState == OrderAcceptanceState.UnderProgress && !x.IsDelete);
@@ -268,6 +269,35 @@ namespace MarketPlace.Application.Services.Implementations
                 CancelOrderDate = order.LastUpdateDate.ToString("yyyy/MM/dd"),
                 SuccessOrderDate = order.CreateDate.ToString("yyyy/MM/dd"),
             };
+        }
+
+        public async Task<FilterUserOrderDTO> GetOrderForSeller(FilterUserOrderDTO filter, long userId)
+        {
+            var seller = await _sellerService.GetLastActiveSellerByUserId(userId);
+            if (seller == null)
+            {
+                return null;
+            }
+            var query = _orderRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x=>x.IsPaid && x.UserId == seller.UserId);
+
+
+            #region Paging
+
+
+            var orderCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, orderCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetUserOrders(allEntities);
         }
 
         #endregion
@@ -418,6 +448,58 @@ namespace MarketPlace.Application.Services.Implementations
 
             return items;
 
+        }
+
+        public async Task<List<SellerOrderDetailItemDTO>> GetSellerOrderDetailItem(long orderId, long userId)
+        {
+            var seller = await _sellerService.GetLastActiveSellerByUserId(userId);
+
+            var order = await _orderRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Product)
+                .ThenInclude(x => x.ProductColors)
+                .Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Product.Seller)
+                .FirstOrDefaultAsync(x => x.Id == orderId && x.IsPaid && x.UserId == seller.UserId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            var discount = await _productDiscountRepository
+                .GetQuery()
+                .AsQueryable()
+                .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
+
+            var items = order.OrderDetails.Select(x => new SellerOrderDetailItemDTO
+            {
+                OrderId = x.Id,
+                ProductId = x.ProductId,
+                ProductTitle = x.Product.Title,
+                StoreName = x.Product.Seller.StoreName,
+                ColorName = x.ProductColor.ColorName,
+                Count = x.Count,
+                ProductColorPrice = Convert.ToInt32(x.ProductColor.Price),
+                ProductPrice = x.ProductPrice,
+                MainProductPrice = x.Product.Price + x.ProductColorPrice,
+                ProductColorId = x.ProductColorId,
+                ProductImage = x.Product.Image,
+
+            }).ToList();
+
+
+            foreach (var item in items)
+            {
+                item.DiscountPercentage = discount
+                    .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
+
+                item.DiscountPrice = item.MainProductPrice - item.ProductPrice;
+            }
+
+            return items;
         }
 
         #endregion

@@ -70,6 +70,9 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         PaymentSuccessful,
 
         [Display(Name = "پرداخت نشده")]
+        PaymentNotSuccessful,
+
+        [Display(Name = "لغو شده")]
         PaymentCancel,
 
         [Display(Name = "درحال بررسی")]

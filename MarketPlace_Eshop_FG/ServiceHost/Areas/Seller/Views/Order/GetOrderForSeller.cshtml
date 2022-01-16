@@ -1,0 +1,119 @@
+﻿@using MarketPlace.Application.Utilities
+@using MarketPlace.Application.Extensions
+@model MarketPlace.DataLayer.DTOs.ProductOrder.FilterUserOrderDTO
+@{
+    ViewData["Title"] = "سفارشات فروشنده";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل فروشندگی ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد پنل کاربری</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد پنل فروشندگی</a></li>
+            <li class="breadcrumb-item" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row col-md-12 col-lg-12">
+                <aside style="padding-right: 20px;" class="col-md-3 col-lg-2">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-9 col-lg-10">
+                    <div class="tab-content">
+                        <form asp-area="Seller" asp-controller="Order" asp-action="GetOrderForSeller" id="filter-form" method="get">
+                            <input type="hidden" asp-for="PageId" />
+                        </form>
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+
+
+                            <div>
+                                <h3 class="title mb-3">لیست سفارشات</h3>
+                            </div>
+
+                            @if (Model.Orders != null && Model.Orders.Any())
+                            {
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                    <table class="table table-bordered table-striped table-responsive-sm  text-center">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>شناسه</th>
+                                                <th>شماره پیگیری</th>
+                                                <th>وضعیت</th>
+                                                <th>تاریخ تراکنش</th>
+                                                <th>عملیات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Orders)
+                                            {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.TrackingCode</td>
+
+                                                @switch (item.OrderAcceptanceState.GetEnumName())
+                                                {
+                                                    case "درحال بررسی":
+                                                        <td class="text-warning">@item.OrderAcceptanceState.GetEnumName()</td>
+                                                        break;
+                                                    case "پرداخت شده":
+                                                        <td class="text-success">@item.OrderAcceptanceState.GetEnumName()</td>
+                                                        break;
+                                                    case "لغو شده":
+                                                        <td class="text-danger">
+                                                            @item.OrderAcceptanceState.GetEnumName()
+                                                        </td>
+                                                        break;
+                                                }
+                                                <td>@item.PaymentDate</td>
+
+                                                <td>
+                                                    <div class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">
+
+                                                        <a asp-area="Seller" asp-controller="Order" asp-action="GetOrderDetailItemForSeller" asp-route-OrderId="@item.Id"
+                                                           class="btn btn-info btn-sm">نمایش جزییات سفارش</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <partial name="_NoItemFound" />
+                            }
+                        </div><!-- .End .tab-pane -->
+                        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+
+
