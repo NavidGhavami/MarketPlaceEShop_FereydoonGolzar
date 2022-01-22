@@ -24,9 +24,15 @@ namespace ServiceHost.Areas.Seller.Controllers
         #region Seller Order
 
         [HttpGet("seller-order")]
-        public async Task<IActionResult> GetOrderForSeller(FilterUserOrderDTO filter)
+        public async Task<IActionResult> GetOrderForSeller(FilterSellerOrderDTO filter)
         {
-            var order = await _orderService.GetOrderForSeller(filter, User.GetUserId());
+            filter.TakeEntity = 10;
+
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+
+            filter.SellerId = seller.Id;
+
+            var order = await _orderService.GetOrderForSeller(filter);
             return View(order);
         }
 
@@ -37,9 +43,25 @@ namespace ServiceHost.Areas.Seller.Controllers
         [HttpGet("seller-order-detail/{orderId}")]
         public async Task<IActionResult> GetOrderDetailItemForSeller(long orderId)
         {
-            var orderDetail = await _orderService.GetSellerOrderDetailItem(orderId, User.GetUserId());
+            var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
+            var order = await _orderService.GetSellerOrderDetailItem(orderId,seller.Id);
 
-            return View(orderDetail);
+            return View(order);
+        }
+
+        #endregion
+
+        #region User Address for Order
+
+        [HttpGet("user-order-address/{orderId}")]
+        public async Task<IActionResult> UserOrderAddress(long orderId)
+        {
+            var userAddress = await _orderService.GetUserAddressForOrder(orderId, User.GetUserId());
+            if (userAddress == null)
+            {
+                return NotFound();
+            }
+            return View(userAddress);
         }
 
         #endregion

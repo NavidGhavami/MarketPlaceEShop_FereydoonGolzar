@@ -1,6 +1,5 @@
-﻿@using MarketPlace.Application.Utilities
-@using MarketPlace.Application.Extensions
-@model MarketPlace.DataLayer.DTOs.ProductOrder.FilterUserOrderDTO
+﻿@using MarketPlace.Application.Extensions
+@model MarketPlace.DataLayer.DTOs.ProductOrder.FilterSellerOrderDTO
 @{
     ViewData["Title"] = "سفارشات فروشنده";
 }
@@ -46,7 +45,7 @@
 
 
                             <div>
-                                <h3 class="title mb-3">لیست سفارشات</h3>
+                                <h3 class="title mb-3">لیست سفارشات فروشنده</h3>
                             </div>
 
                             @if (Model.Orders != null && Model.Orders.Any())
@@ -65,7 +64,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Model.Orders)
+                                            @foreach (var item in Model.Orders.Distinct())
                                             {
                                             <tr>
                                                 <td>@item.Id</td>
@@ -92,6 +91,9 @@
 
                                                         <a asp-area="Seller" asp-controller="Order" asp-action="GetOrderDetailItemForSeller" asp-route-OrderId="@item.Id"
                                                            class="btn btn-info btn-sm">نمایش جزییات سفارش</a>
+
+                                                        <a asp-area="Seller" asp-controller="Order" asp-action="UserOrderAddress" asp-route-OrderId="@item.Id"
+                                                           class="btn btn-warning btn-sm">آدرس پستی سفارش</a>
                                                     </div>
                                                 </td>
                                             </tr>

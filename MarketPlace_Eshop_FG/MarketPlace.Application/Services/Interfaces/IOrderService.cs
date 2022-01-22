@@ -17,7 +17,10 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<FilterUserOrderDTO> GetUserOrder(FilterUserOrderDTO filter);
         Task<CancelOrderResult> CancelOrder(CancelOrderDTO cancel, long userId);
         Task<CancelOrderDTO> GetOrderForCancel(long orderId, long userId);
-        Task<FilterUserOrderDTO> GetOrderForSeller(FilterUserOrderDTO filter, long userId);
+        Task<FilterSellerOrderDTO> GetOrderForSeller(FilterSellerOrderDTO filter);
+        Task<AddUserAddressResult> AddUserAddress(UserAddressDTO address, long userId);
+        Task<List<UserAddress>> GetAddressToUser(long userId);
+        Task<UserAddressDTO> GetUserAddressForOrder(long orderId, long userId);
 
 
         #endregion
@@ -29,7 +32,9 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<bool> RemoveOrderDetail(long detailId, long userId);
         Task ChangeOrderDetailCount(long detailId, long userId, int count);
         Task<List<UserOrderDetailItemDTO>> GetUserOrderDetailItem(long orderId, long userId);
-        Task<List<SellerOrderDetailItemDTO>> GetSellerOrderDetailItem(long orderId, long userId);
+        Task<List<SellerOrderDetailItemDTO>> GetSellerOrderDetailItem(long orderId, long sellerId);
+
+
 
         #endregion
     }

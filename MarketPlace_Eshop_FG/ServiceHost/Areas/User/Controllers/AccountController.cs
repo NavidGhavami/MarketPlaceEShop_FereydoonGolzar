@@ -13,10 +13,12 @@ namespace ServiceHost.Areas.User.Controllers
         #region Constructor
 
         private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IOrderService orderService)
         {
             _userService = userService;
+            _orderService = orderService;
         }
 
         #endregion
@@ -96,6 +98,17 @@ namespace ServiceHost.Areas.User.Controllers
             }
 
             return View(editProfile);
+        }
+
+        #endregion
+
+        #region User Address
+
+        [HttpGet("user-address")]
+        public async Task<IActionResult> UserAddress()
+        {
+            var userAddress = await _orderService.GetAddressToUser(User.GetUserId());
+            return View(userAddress);
         }
 
         #endregion

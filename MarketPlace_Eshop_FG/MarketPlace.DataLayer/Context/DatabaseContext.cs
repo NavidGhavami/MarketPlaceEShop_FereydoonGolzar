@@ -71,6 +71,7 @@ namespace MarketPlace.DataLayer.Context
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
         
 
         #endregion

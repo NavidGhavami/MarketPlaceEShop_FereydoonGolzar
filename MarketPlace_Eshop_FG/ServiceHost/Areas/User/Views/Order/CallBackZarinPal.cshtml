@@ -28,7 +28,7 @@
                     {
                         <div class="alert alert-success">
                             <p class="text-white">
-                                پرداخت شما با موفقیت انجام شد. با تشکر از خرید شما در سایت ما. باز هم به ما فروشگاه ما سر بزنید
+                                پرداخت شما با موفقیت انجام شد. با تشکر از خرید شما در سایت ما. به امید خرید های بیشتر. باز هم به فروشگاه مان سر بزنید
                             </p>
                         </div>
 
@@ -60,7 +60,7 @@
                             <a class="btn btn-primary  " asp-area="User" asp-controller="Home" asp-action="Dashboard">بازگشت به پنل کاربری</a>
                         </div>
                     }
-                    @if (TempData["WarningMessage"] != null)
+                    @if (TempData["ErrorMessage"] != null)
                     {
                         <div class="alert alert-danger">
                             <p class="text-white">در عملیات پرداخت خطایی رخ داد. لطفا مجدداَ خرید خود را ثبت نمایید</p>

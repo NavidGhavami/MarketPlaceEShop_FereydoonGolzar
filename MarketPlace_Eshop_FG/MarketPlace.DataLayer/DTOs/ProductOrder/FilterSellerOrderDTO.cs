@@ -6,13 +6,14 @@ using MarketPlace.DataLayer.Entities.ProductOrder;
 
 namespace MarketPlace.DataLayer.DTOs.ProductOrder
 {
-    public class FilterUserOrderDTO : BasePaging
+    public class FilterSellerOrderDTO : BasePaging
     {
+
         #region Constructor
 
-        public FilterUserOrderDTO()
+        public FilterSellerOrderDTO()
         {
-            OrderBy = FilterUserOrder.CreateDateDescending;
+            OrderBy = FilterSellerOrder.CreateDateDescending;
         }
 
         #endregion
@@ -20,38 +21,49 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         #region Properties
 
         public long? UserId { get; set; }
+        public long SellerId { get; set; }
+        public long OrderId { get; set; }
+        public long ProductId { get; set; }
         public DateTime? PaymentDate { get; set; }
         public bool IsPaid { get; set; }
-
-        [Display(Name = "کد پیگیری")]
         public string TrackingCode { get; set; }
-
-        [Display(Name = "توضیحات")]
         public string Description { get; set; }
+        public string ProductTitle { get; set; }
+        public int Count { get; set; }
+        public long? ProductColorId { get; set; }
+        public int MainProductPrice { get; set; }
+        public int ProductPrice { get; set; }
+        public int ProductColorPrice { get; set; }
+        public string ColorName { get; set; }
+        public string ProductImage { get; set; }
+        public string StoreName { get; set; }
+        public int? DiscountPercentage { get; set; }
+        public int DiscountPrice { get; set; }
 
-        public FilterUserOrderState FilterUserOrderState { get; set; }
-        public FilterUserOrder OrderBy { get; set; }
+        public FilterSellerOrderState FilterUserOrderState { get; set; }
+        public FilterSellerOrder OrderBy { get; set; }
 
         public List<Order> Orders { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
 
         #endregion
 
+
+
         #region Methods
 
-        public FilterUserOrderDTO SetUserOrders(List<Order> orders)
+        public FilterSellerOrderDTO SetSellerOrder(List<Order> orders)
         {
             this.Orders = orders;
             return this;
         }
-
-        public FilterUserOrderDTO SetUserOrderDetails(List<OrderDetail> orderDetails)
+        public FilterSellerOrderDTO SetSellerOrderDetails(List<OrderDetail> orderDetails)
         {
             this.OrderDetails = orderDetails;
             return this;
         }
 
-        public FilterUserOrderDTO SetPaging(BasePaging paging)
+        public FilterSellerOrderDTO SetPaging(BasePaging paging)
         {
             this.PageId = paging.PageId;
             this.AllEntitiesCount = paging.AllEntitiesCount;
@@ -68,7 +80,7 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         #endregion
     }
 
-    public enum FilterUserOrderState
+    public enum FilterSellerOrderState
     {
         [Display(Name = "همه")]
         All,
@@ -86,10 +98,11 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         UnderProgress
     }
 
-    public enum FilterUserOrder
+    public enum FilterSellerOrder
     {
         CreateDateDescending,
         CreateDateAscending,
 
     }
 }
+

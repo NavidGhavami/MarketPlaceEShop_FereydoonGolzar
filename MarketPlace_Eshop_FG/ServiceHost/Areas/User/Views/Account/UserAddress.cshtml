@@ -1,0 +1,105 @@
+﻿@model List<MarketPlace.DataLayer.Entities.ProductOrder.UserAddress>
+@{
+    ViewData["Title"] = "آدرس های من";
+}
+
+
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+                            <p>
+                                کلیه آدرس هایی که برای سفارشاتتان ثبت نموده اید در اینجا قابل مشاهده است
+                            </p>
+                            
+                            @foreach (var item in Model)
+                            {
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card card-dashboard">
+                                            <div class="card-body">
+                                                <h3 class="card-title">آدرس ذخیره شده برای سفارش با شناسه : @item.OrderId</h3><br />
+                                                <p>
+                                                    نام و نام خانوادگی : @(item.Name + " " + item.Family)
+                                                </p>
+                                                <p>
+                                                    شرکت : @(item.Company ?? "---")
+                                                </p>
+                                                <p>
+                                                    استان : @item.State
+                                                </p>
+                                                <p>
+                                                    شهر / شهرستان : @item.City
+                                                </p>
+                                                <p>
+                                                    خیابان : @item.Street
+                                                </p>
+                                                <p>
+                                                    کد پستی : @item.PostalCode
+                                                </p>
+                                                <p>
+                                                    شماره پلاک : @item.PlaqueNo
+                                                </p>
+                                                <p>
+                                                    موبایل : @item.Mobile
+                                                </p>
+                                                <p>
+                                                    ایمیل : @item.Email
+                                                </p>
+                                                <p>
+                                                    نحوه پرداخت : @item.PaymentMethod
+                                                </p>
+                                                <p>
+                                                    توضیحات : @(item.Description ?? "---")
+                                                </p>
+
+                                            </div><!-- End .card-body -->
+                                        </div><!-- End .card-dashboard -->
+                                    </div><!-- End .col-lg-12 -->
+                                </div><!-- End .row -->
+                            }
+                        
+                        </div>
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>

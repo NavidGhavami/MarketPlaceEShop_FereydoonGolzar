@@ -25,6 +25,7 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
         #region Relations
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
+        public UserAddress UserAddress { get; set; }
 
         #endregion
 

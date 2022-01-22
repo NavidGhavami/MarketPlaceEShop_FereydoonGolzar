@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _0_Framework.Application;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Paging;
@@ -11,6 +12,7 @@ using MarketPlace.DataLayer.Entities.ProductOrder;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
+using RestSharp.Authenticators;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -24,10 +26,11 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly ISellerService _sellerService;
         private readonly IGenericRepository<ProductDiscount> _productDiscountRepository;
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
+        private readonly IGenericRepository<UserAddress> _userAddressRepository;
 
         public OrderService(IGenericRepository<Order> orderRepository, IGenericRepository<OrderDetail> orderDetailRepository,
             ISellerWalletService sellerWalletService, IGenericRepository<ProductDiscount> productDiscountRepository,
-            IGenericRepository<ProductDiscountUse> productDiscountUseRepository, ISellerService sellerService)
+            IGenericRepository<ProductDiscountUse> productDiscountUseRepository, ISellerService sellerService, IGenericRepository<UserAddress> userAddressRepository)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
@@ -35,6 +38,7 @@ namespace MarketPlace.Application.Services.Implementations
             _productDiscountRepository = productDiscountRepository;
             _productDiscountUseRepository = productDiscountUseRepository;
             _sellerService = sellerService;
+            _userAddressRepository = userAddressRepository;
         }
 
         #endregion
@@ -44,8 +48,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<long> AddOrderForUser(long userId)
         {
-            var order = new Order { UserId = userId , OrderAcceptanceState = OrderAcceptanceState.UnderProgress};
-
+            var order = new Order { UserId = userId, OrderAcceptanceState = OrderAcceptanceState.UnderProgress };
             await _orderRepository.AddEntity(order);
 
             await _orderRepository.SaveChanges();
@@ -142,7 +145,7 @@ namespace MarketPlace.Application.Services.Implementations
                     Description = $"پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}،" +
                                   $" با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف" +
                                   $" {discount:#,0 تومان}، به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
-                                  $"درصد برای فروشنده و {detail.Product.SiteProfit} درصد برای فروشگاه" 
+                                  $"درصد برای فروشنده و {detail.Product.SiteProfit} درصد برای فروشگاه"
                 };
 
                 await _sellerWalletService.AddWallet(sellerWallet);
@@ -170,7 +173,7 @@ namespace MarketPlace.Application.Services.Implementations
                .Include(x => x.OrderDetails)
                .AsQueryable()
                .OrderByDescending(x => x.Id)
-               .Where(x=>x.TrackingCode != null);
+               .Where(x => x.TrackingCode != null);
 
             #region State
 
@@ -267,21 +270,24 @@ namespace MarketPlace.Application.Services.Implementations
                 Id = order.Id,
                 Description = order.Description,
                 CancelOrderDate = order.LastUpdateDate.ToString("yyyy/MM/dd"),
-                SuccessOrderDate = order.CreateDate.ToString("yyyy/MM/dd"),
+                SuccessOrderDate = order.PaymentDate.ToFarsi()
             };
         }
 
-        public async Task<FilterUserOrderDTO> GetOrderForSeller(FilterUserOrderDTO filter, long userId)
+        public async Task<FilterSellerOrderDTO> GetOrderForSeller(FilterSellerOrderDTO filter)
         {
-            var seller = await _sellerService.GetLastActiveSellerByUserId(userId);
-            if (seller == null)
-            {
-                return null;
-            }
-            var query = _orderRepository
+
+            var query = _orderDetailRepository
                 .GetQuery()
                 .AsQueryable()
-                .Where(x=>x.IsPaid && x.UserId == seller.UserId);
+                .Include(x => x.Order)
+                .ThenInclude(x => x.OrderDetails)
+                .ThenInclude(x => x.Product)
+                .Where(x => x.Product.SellerId == filter.SellerId && x.Order.IsPaid)
+                .Select(x => x.Order)
+                .OrderByDescending(x => x.Id);
+
+
 
 
             #region Paging
@@ -297,7 +303,77 @@ namespace MarketPlace.Application.Services.Implementations
 
             #endregion
 
-            return filter.SetPaging(pager).SetUserOrders(allEntities);
+            return filter.SetPaging(pager).SetSellerOrder(allEntities);
+        }
+
+        public async Task<AddUserAddressResult> AddUserAddress(UserAddressDTO address, long userId)
+        {
+            var openOrder = GetUserLatestOpenOrder(userId);
+
+            var addUserAddress = new UserAddress
+            {
+                UserId = userId,
+                OrderId = address.OrderId,
+                Name = address.Name,
+                Family = address.Family,
+                State = address.State,
+                City = address.City,
+                Street = address.Street,
+                PostalCode = address.PostalCode,
+                PlaqueNo = address.PlaqueNo,
+                Company = address.Company,
+                Mobile = address.Mobile,
+                Email = address.Email,
+                Description = address.Description,
+                PaymentMethod = "پرداخت آنلاین"
+            };
+
+            await _userAddressRepository.AddEntity(addUserAddress);
+            await _userAddressRepository.SaveChanges();
+
+            return AddUserAddressResult.Success;
+
+
+        }
+
+        public async Task<List<UserAddress>> GetAddressToUser(long userId)
+        {
+            return  await _userAddressRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x=>x.Id)
+                .Take(5)
+                .ToListAsync();
+        }
+
+        public async Task<UserAddressDTO> GetUserAddressForOrder(long orderId, long userId)
+        {
+            var userAddress = await _userAddressRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Order)
+                .Select(x => new UserAddressDTO
+                {
+                    OrderId = x.OrderId,
+                    UserId = x.UserId,
+                    Name = x.Name,
+                    Family = x.Family,
+                    Company = x.Company,
+                    State = x.State,
+                    City = x.City,
+                    Street = x.Street,
+                    Mobile = x.Mobile,
+                    Email = x.Email,
+                    PostalCode = x.PostalCode,
+                    PlaqueNo = x.PlaqueNo,
+                    PaymentMethod = x.PaymentMethod,
+                    Description = x.Description,
+                    Order = x.Order
+                })
+                .SingleOrDefaultAsync(x=>x.OrderId == orderId && x.UserId == userId);
+
+            return userAddress;
         }
 
         #endregion
@@ -404,11 +480,11 @@ namespace MarketPlace.Application.Services.Implementations
             var order = await _orderRepository
                 .GetQuery()
                 .AsQueryable()
-                .Include(x=>x.OrderDetails)
-                .ThenInclude(x=>x.Product)
+                .Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Product)
                 .ThenInclude(x => x.ProductColors)
-                .Include(x=>x.OrderDetails)
-                .ThenInclude(x=>x.Product.Seller)
+                .Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Product.Seller)
                 .FirstOrDefaultAsync(x => x.Id == orderId && x.UserId == userId);
 
             if (order == null)
@@ -419,7 +495,7 @@ namespace MarketPlace.Application.Services.Implementations
             var discount = await _productDiscountRepository
                 .GetQuery()
                 .AsQueryable()
-                .Select(x => new {x.ProductId, x.Percentage}).ToListAsync();
+                .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
 
             var items = order.OrderDetails.Select(x => new UserOrderDetailItemDTO
             {
@@ -450,31 +526,25 @@ namespace MarketPlace.Application.Services.Implementations
 
         }
 
-        public async Task<List<SellerOrderDetailItemDTO>> GetSellerOrderDetailItem(long orderId, long userId)
+        public async Task<List<SellerOrderDetailItemDTO>> GetSellerOrderDetailItem(long orderId, long sellerId)
         {
-            var seller = await _sellerService.GetLastActiveSellerByUserId(userId);
 
-            var order = await _orderRepository
+            var orderDetail = _orderDetailRepository
                 .GetQuery()
                 .AsQueryable()
-                .Include(x => x.OrderDetails)
+                .Include(x => x.Order)
+                .ThenInclude(x => x.OrderDetails)
                 .ThenInclude(x => x.Product)
-                .ThenInclude(x => x.ProductColors)
-                .Include(x => x.OrderDetails)
-                .ThenInclude(x => x.Product.Seller)
-                .FirstOrDefaultAsync(x => x.Id == orderId && x.IsPaid && x.UserId == seller.UserId);
+                .Where(x => x.OrderId == orderId && x.Order.IsPaid && x.Product.SellerId == sellerId)
+                .OrderByDescending(x => x.Id);
 
-            if (order == null)
-            {
-                return null;
-            }
 
             var discount = await _productDiscountRepository
                 .GetQuery()
                 .AsQueryable()
                 .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
 
-            var items = order.OrderDetails.Select(x => new SellerOrderDetailItemDTO
+            var items = orderDetail.Select(x => new SellerOrderDetailItemDTO
             {
                 OrderId = x.Id,
                 ProductId = x.ProductId,
@@ -502,6 +572,8 @@ namespace MarketPlace.Application.Services.Implementations
             return items;
         }
 
+
+
         #endregion
 
 
@@ -527,6 +599,10 @@ namespace MarketPlace.Application.Services.Implementations
             if (_productDiscountUseRepository != null)
             {
                 await _productDiscountUseRepository.DisposeAsync();
+            }
+            if (_userAddressRepository != null)
+            {
+                await _userAddressRepository.DisposeAsync();
             }
         }
 

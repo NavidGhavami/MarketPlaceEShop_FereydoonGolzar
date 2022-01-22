@@ -116,7 +116,7 @@ namespace ServiceHost.Areas.User.Controllers
 
             if (authority == "")
             {
-                TempData[WarningMessage] = "عملیات پرداخت با شکست مواجه شد";
+                TempData[ErrorMessage] = "عملیات پرداخت با شکست مواجه شد";
                 return View();
             }
             var openOrderAmount = await _orderService.GetTotalOrderPriceForPayment(User.GetUserId());
@@ -136,7 +136,7 @@ namespace ServiceHost.Areas.User.Controllers
             }
             else
             {
-                TempData[WarningMessage] = "عملیات پرداخت با خطا مواجه شد";
+                TempData[ErrorMessage] = "عملیات پرداخت با خطا مواجه شد";
             }
 
 
@@ -181,6 +181,37 @@ namespace ServiceHost.Areas.User.Controllers
                 null);
 
 
+        }
+
+        #endregion
+
+        #region Add User Address to Order
+
+        [HttpGet("user-address/{userId}")]
+        public async Task<IActionResult> AddUserAddress(long userId)
+        {
+            return View();
+        }
+
+        [HttpPost("user-address/{userId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddUserAddress(UserAddressDTO address, long userId)
+        {
+            var openOrder = await _orderService.GetUserLatestOpenOrder(userId);
+            address.OrderId = openOrder.Id;
+
+            var result = await _orderService.AddUserAddress(address, User.GetUserId());
+
+            switch (result)
+            {
+                case AddUserAddressResult.Error:
+                    TempData[ErrorMessage] = "ثبت و ذخیره اطلاعات با شکست مواجه شد";
+                    break;
+                case AddUserAddressResult.Success:
+                    TempData[SuccessMessage] = "اطلاعات شما با موفقیت ذخیره و ثبت گردید";
+                    return RedirectToAction("PayUserOrderPrice", "Order");
+            }
+
+            return View();
         }
 
         #endregion
@@ -266,6 +297,21 @@ namespace ServiceHost.Areas.User.Controllers
                 return NotFound();
             }
             return View(order);
+        }
+
+        #endregion
+
+        #region User Order Address
+
+        [HttpGet("user-order-address/{orderId}")]
+        public async Task<IActionResult> UserOrderAddress(long orderId)
+        {
+            var userAddress = await _orderService.GetUserAddressForOrder(orderId, User.GetUserId());
+            if (userAddress == null)
+            {
+                return NotFound();
+            }
+            return View(userAddress);
         }
 
         #endregion

@@ -93,7 +93,7 @@
                                     </a>
                                 </h3>
                                 <!-- End .product-title -->
-                                @if (product.ProductDiscounts != null && product.ProductDiscounts.Any())
+                                @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x=>x.ExpireDate >= DateTime.Now))
                                 {
                                     foreach (var discount in product.ProductDiscounts)
                                     {
