@@ -67,6 +67,8 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         [MaxLength(300, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string Description { get; set; }
 
+        public bool IsDelete { get; set; }
+
         public Order Order { get; set; }
 
         #endregion
@@ -75,6 +77,7 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
     public enum AddUserAddressResult
     {
         Success,
-        Error
+        Error,
+        OrderExist
     }
 }

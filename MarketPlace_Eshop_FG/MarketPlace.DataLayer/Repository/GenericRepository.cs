@@ -86,6 +86,12 @@ namespace MarketPlace.DataLayer.Repository
             _context.RemoveRange(entities);
         }
 
+        public void DeletePhysically(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+
+        }
+
         public async Task DeletePermanentBy(long entityId)
         {
             TEntity entity = await GetEntityById(entityId);

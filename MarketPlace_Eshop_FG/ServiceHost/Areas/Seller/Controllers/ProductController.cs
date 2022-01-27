@@ -102,7 +102,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             ViewBag.Categories = await _productService.GetAllActiveProductCategories();
@@ -180,7 +180,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
             if (product == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             ViewBag.Product = product;
@@ -240,7 +240,7 @@ namespace ServiceHost.Areas.Seller.Controllers
             var gallery = await _productService.GetProductGalleryForEdit(galleryId, seller.Id);
             if (gallery == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
             
             return View(gallery);

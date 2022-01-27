@@ -1,9 +1,15 @@
-﻿
+﻿@using MarketPlace.Application.Utilities
+@using ServiceHost.PresentationExtensions
+@using MarketPlace.Application.Services.Interfaces
+@inject IAuthHelper _authHelper
+@inject IUserService _userService
+
+@{
+    var avatar = _userService.GetUserById(User.GetUserId()).Result.Avatar;
+}
+
 <!DOCTYPE html>
 <html lang="en">
-
-
-
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -35,11 +41,29 @@
             </div>
             <div class="user-details">
                 <div class="media align-items-center user-pointer collapsed" data-toggle="collapse" data-target="#user-dropdown">
-                    <div class="avatar"><img class="mr-3 side-user-img" src="~/Admin/assets/images/avatars/avatar-13.png" alt="user avatar"></div>
+                    <div class="avatar">
+                        <img class="mr-3 side-user-img" src="@(!string.IsNullOrEmpty(avatar) ? PathExtension.UserAvatarOrigin + avatar : PathExtension.DefaultAvatar)"  alt="user avatar">
+                    </div>
+
+                    @{
+                        System.Diagnostics.Debug.Assert(User.Identity != null, "User.Identity != null");
+                    }
                     @if (User.Identity.IsAuthenticated)
                     {
                         <div class="media-body">
                             <h6 class="side-user-name">@User.Identity.Name</h6>
+                            @switch (_authHelper.CurrentAccountRole())
+                            {
+                                case Roles.Administrator:
+                                    <h6 class="side-user-name">(@Roles.GetRoleBy(long.Parse(Roles.Administrator)))</h6>
+                                    break;
+                                case Roles.ContentUploader:
+                                    <h6 class="side-user-name">(@Roles.GetRoleBy(long.Parse(Roles.ContentUploader)))</h6>
+                                    break;
+                                case Roles.AdminAssistant:
+                                    <h6 class="side-user-name">(@Roles.GetRoleBy(long.Parse(Roles.AdminAssistant)))</h6>
+                                    break;
+                            }
                         </div>
                     }
                 </div>
@@ -51,7 +75,7 @@
                     </ul>
                 </div>
             </div>
-            <partial name="_AdminSidebarMenu"/>
+            <partial name="_AdminSidebarMenu" />
 
         </div>
         <!--End sidebar-wrapper-->

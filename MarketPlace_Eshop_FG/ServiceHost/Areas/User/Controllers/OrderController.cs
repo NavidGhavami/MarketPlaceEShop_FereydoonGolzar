@@ -113,6 +113,12 @@ namespace ServiceHost.Areas.User.Controllers
         public async Task<IActionResult> CallBackZarinPal()
         {
             var authority = _paymentService.GetAuthorityCodeFromCallback(HttpContext);
+            var openOrder = _orderService.GetUserLatestOpenOrder(User.GetUserId());
+
+            if (openOrder == null)
+            {
+                return RedirectToAction("PageNotFound", "Home");
+            }
 
             if (authority == "")
             {
@@ -134,10 +140,8 @@ namespace ServiceHost.Areas.User.Controllers
 
                 return View();
             }
-            else
-            {
-                TempData[ErrorMessage] = "عملیات پرداخت با خطا مواجه شد";
-            }
+
+            TempData[ErrorMessage] = "عملیات پرداخت با خطا مواجه شد";
 
 
             return View();
@@ -206,8 +210,11 @@ namespace ServiceHost.Areas.User.Controllers
                 case AddUserAddressResult.Error:
                     TempData[ErrorMessage] = "ثبت و ذخیره اطلاعات با شکست مواجه شد";
                     break;
+                case AddUserAddressResult.OrderExist:
+                    TempData[ErrorMessage] = "سفارش خود را مجددا ثبت نمایید";
+                    break;
                 case AddUserAddressResult.Success:
-                    TempData[SuccessMessage] = "اطلاعات شما با موفقیت ذخیره و ثبت گردید";
+                    TempData[InfoMessage] = "اطلاعات شما با موفقیت ذخیره و ثبت گردید";
                     return RedirectToAction("PayUserOrderPrice", "Order");
             }
 
@@ -252,7 +259,7 @@ namespace ServiceHost.Areas.User.Controllers
 
             if (order == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
             return View(order);
         }
@@ -294,7 +301,7 @@ namespace ServiceHost.Areas.User.Controllers
 
             if (order == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
             return View(order);
         }
@@ -309,7 +316,7 @@ namespace ServiceHost.Areas.User.Controllers
             var userAddress = await _orderService.GetUserAddressForOrder(orderId, User.GetUserId());
             if (userAddress == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
             return View(userAddress);
         }

@@ -83,7 +83,7 @@ namespace ServiceHost.Areas.User.Controllers
 
             if (requestSeller == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             return View(requestSeller);

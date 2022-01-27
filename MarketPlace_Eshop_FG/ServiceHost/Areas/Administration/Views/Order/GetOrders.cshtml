@@ -102,7 +102,14 @@
                                                        asp-route-orderId="@order.Id">
                                                         مشاهده محصولات
                                                     </a>
+
                                                     <a class="btn btn-sm btn-warning"
+                                                       asp-area="Administration" asp-controller="Order" asp-action="UserOrderAddress"
+                                                       asp-route-orderId="@order.Id">
+                                                        آدرس پستی سفارش
+                                                    </a>
+
+                                                    <a class="btn btn-sm btn-primary"
                                                        asp-area="Administration" asp-controller="Order" asp-action="OrderDescription"
                                                        asp-route-orderId="@order.Id">
                                                         توضیحات

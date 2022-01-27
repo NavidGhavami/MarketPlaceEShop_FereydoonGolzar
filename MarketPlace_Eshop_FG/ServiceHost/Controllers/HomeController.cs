@@ -14,7 +14,6 @@ namespace ServiceHost.Controllers
         private readonly ISiteService _siteService;
         private readonly IContactService _contactService;
         private readonly ICaptchaValidator _captchaValidator;
-        private readonly IProductService _productService;
 
         public HomeController(IContactService contactService, ICaptchaValidator captchaValidator, ISiteService siteService)
         {
@@ -67,6 +66,16 @@ namespace ServiceHost.Controllers
 
         [HttpGet("About-Us")]
         public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        #endregion
+
+        #region 404 NotFound Page
+
+        [HttpGet("404Error-page-not-found")]
+        public IActionResult PageNotFound()
         {
             return View();
         }

@@ -82,7 +82,7 @@ namespace ServiceHost.Areas.User.Controllers
 
             if (ticket == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             return View(ticket);

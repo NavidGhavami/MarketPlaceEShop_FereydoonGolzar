@@ -33,7 +33,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
             if (seller == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             filter.SellerId = seller.Id;

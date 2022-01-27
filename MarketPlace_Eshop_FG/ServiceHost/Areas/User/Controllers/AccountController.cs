@@ -67,7 +67,7 @@ namespace ServiceHost.Areas.User.Controllers
             var userProfile = await _userService.GetProfileForEdit(User.GetUserId());
             if (userProfile == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             return View(userProfile);

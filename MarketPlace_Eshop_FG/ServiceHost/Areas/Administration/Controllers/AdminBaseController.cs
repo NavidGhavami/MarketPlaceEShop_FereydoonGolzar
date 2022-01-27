@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ServiceHost.Areas.Administration.Controllers
 {
-    [Authorize]
+    [Authorize("AdminArea")]
     [Area("Administration")]
     [Route("administration")]
     public class AdminBaseController : Controller

@@ -75,7 +75,6 @@
                                                                     <th scope="col">رنگ</th>
                                                                     <th scope="col">قیمت رنگ</th>
                                                                     <th scope="col">مقدار تخفیف</th>
-                                                                    <th scope="col">درصد تخفیف</th>
                                                                     <th scope="col"></th>
                                                                 </tr>
                                                             </thead>
@@ -88,7 +87,6 @@
                                                                     <td>@item.ColorName</td>
                                                                     <td>@item.ProductColorPrice.ToString("#,0 تومان")</td>
                                                                     <td>@(item.DiscountPrice!=0 ? item.DiscountPrice.ToString("#,0 تومان") : "---")</td>
-                                                                    <td>@(item.DiscountPercentage!=null ? item.DiscountPercentage + "%" : 0) </td>
                                                                     <td>
                                                                         <a class="btn btn-warning btn-round" asp-area="" asp-controller="Product" asp-action="ProductDetails"
                                                                            asp-route-productId="@item.ProductId" asp-route-title="@item.ProductTitle">

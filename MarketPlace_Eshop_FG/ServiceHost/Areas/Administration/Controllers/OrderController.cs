@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceHost.PresentationExtensions;
 
 namespace ServiceHost.Areas.Administration.Controllers
 {
+    [Authorize("NotContentSection")]
     public class OrderController : AdminBaseController
     {
         #region Constructor
@@ -53,6 +55,20 @@ namespace ServiceHost.Areas.Administration.Controllers
                 return NotFound();
             }
             return View(order);
+        }
+
+        #endregion
+
+        #region User Address for Order
+        [HttpGet("user-order-address/{orderId}")]
+        public async Task<IActionResult> UserOrderAddress(long orderId)
+        {
+            var userAddress = await _orderService.GetUserAddressForOrder(orderId, User.GetUserId());
+            if (userAddress == null)
+            {
+                return NotFound();
+            }
+            return View(userAddress);
         }
 
         #endregion

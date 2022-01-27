@@ -308,31 +308,39 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<AddUserAddressResult> AddUserAddress(UserAddressDTO address, long userId)
         {
-            var openOrder = GetUserLatestOpenOrder(userId);
+            var similarUserAddress = await _userAddressRepository.GetQuery()
+                .SingleOrDefaultAsync(x => x.OrderId == address.OrderId);
 
-            var addUserAddress = new UserAddress
+            if (similarUserAddress == null)
             {
-                UserId = userId,
-                OrderId = address.OrderId,
-                Name = address.Name,
-                Family = address.Family,
-                State = address.State,
-                City = address.City,
-                Street = address.Street,
-                PostalCode = address.PostalCode,
-                PlaqueNo = address.PlaqueNo,
-                Company = address.Company,
-                Mobile = address.Mobile,
-                Email = address.Email,
-                Description = address.Description,
-                PaymentMethod = "پرداخت آنلاین"
-            };
+                var addUserAddress = new UserAddress
+                {
+                    UserId = userId,
+                    OrderId = address.OrderId,
+                    Name = address.Name,
+                    Family = address.Family,
+                    State = address.State,
+                    City = address.City,
+                    Street = address.Street,
+                    PostalCode = address.PostalCode,
+                    PlaqueNo = address.PlaqueNo,
+                    Company = address.Company,
+                    Mobile = address.Mobile,
+                    Email = address.Email,
+                    Description = address.Description,
+                    PaymentMethod = "پرداخت آنلاین",
+                };
 
-            await _userAddressRepository.AddEntity(addUserAddress);
-            await _userAddressRepository.SaveChanges();
+                await _userAddressRepository.AddEntity(addUserAddress);
+                await _userAddressRepository.SaveChanges();
 
-            return AddUserAddressResult.Success;
-
+                return AddUserAddressResult.Success;
+            }
+            else
+            {
+                var userAddressDto = new UserAddressDTO();
+                return AddUserAddressResult.Success;
+            }
 
         }
 
@@ -495,9 +503,9 @@ namespace MarketPlace.Application.Services.Implementations
             var discount = await _productDiscountRepository
                 .GetQuery()
                 .AsQueryable()
-                .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
+                .Select(x => new { x.ProductId, x.Percentage}).ToListAsync();
 
-            var items = order.OrderDetails.Select(x => new UserOrderDetailItemDTO
+            var items = order.OrderDetails.Where(x=>!x.IsDelete).Select(x => new UserOrderDetailItemDTO
             {
                 OrderId = x.Id,
                 ProductId = x.ProductId,
@@ -517,7 +525,7 @@ namespace MarketPlace.Application.Services.Implementations
             foreach (var item in items)
             {
                 item.DiscountPercentage = discount
-                    .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
+                        .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
 
                 item.DiscountPrice = item.MainProductPrice - item.ProductPrice;
             }
@@ -535,7 +543,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .Include(x => x.Order)
                 .ThenInclude(x => x.OrderDetails)
                 .ThenInclude(x => x.Product)
-                .Where(x => x.OrderId == orderId && x.Order.IsPaid && x.Product.SellerId == sellerId)
+                .Where(x => x.OrderId == orderId && x.Order.IsPaid && x.Product.SellerId == sellerId && !x.IsDelete)
                 .OrderByDescending(x => x.Id);
 
 

@@ -2,11 +2,13 @@
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceHost.Http;
 
 namespace ServiceHost.Areas.Administration.Controllers
 {
+    [Authorize("NotContentSection")]
     public class ProductController : AdminBaseController
     {
 

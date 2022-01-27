@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "صفحه مورد نظر یافت نشد";
+}
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+<div class="error-content text-center" style="background-image: url(~/Theme/assets/images/backgrounds/error-bg.jpg)">
+    <div class="container">
+        <h1 class="error-title text-danger">خطای 404</h1><!-- End .error-title -->
+        <p class="text-center">متاسفانه صفحه مورد نظر شما در سایت وجود ندارد</p>
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary-2 btn-minwidth-lg">
+            <span>بازگشت به صفحه اصلی</span>
+            <i class="icon-long-arrow-left"></i>
+        </a>
+    </div><!-- End .container -->
+</div>

@@ -32,7 +32,7 @@
                             </p>
                         </div>
 
-                        <br/>
+                        <br />
 
                         <table class="table table-cart table-responsive-sm table-bordered text-center">
                             <thead class="thead-dark text-white">
@@ -60,12 +60,12 @@
                             <a class="btn btn-primary  " asp-area="User" asp-controller="Home" asp-action="Dashboard">بازگشت به پنل کاربری</a>
                         </div>
                     }
-                    @if (TempData["ErrorMessage"] != null)
+                    else
                     {
                         <div class="alert alert-danger">
                             <p class="text-white">در عملیات پرداخت خطایی رخ داد. لطفا مجدداَ خرید خود را ثبت نمایید</p>
                         </div>
-
+                        <br/>
                         <div class="btn-group btn-round">
                             <a class="btn btn-info  " asp-area="" asp-controller="Home" asp-action="Index">بازگشت به صفحه اصلی</a>
                             <a class="btn btn-primary  " asp-area="User" asp-controller="Home" asp-action="Dashboard">بازگشت به پنل کاربری</a>

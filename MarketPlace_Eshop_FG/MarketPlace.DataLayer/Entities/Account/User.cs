@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Common;
 using MarketPlace.DataLayer.Entities.Contact;
@@ -10,6 +9,8 @@ namespace MarketPlace.DataLayer.Entities.Account
     public class User : BaseEntity
     {
         #region Properties
+
+        public long RoleId { get; set; }
 
         [Display(Name = "ایمیل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -70,6 +71,7 @@ namespace MarketPlace.DataLayer.Entities.Account
         public ICollection<Ticket> Tickets { get; set; }
         public ICollection<TicketMessage> TicketMessages { get; set; }
         public ICollection<Seller> Sellers { get; set; }
+        public Role Role { get; set; }
 
         #endregion
     }

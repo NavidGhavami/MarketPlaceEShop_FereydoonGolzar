@@ -69,7 +69,7 @@ namespace ServiceHost.Controllers
         [HttpGet("activate-mobile/{mobile}")]
         public IActionResult ActivateMobile(string mobile)
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 return Redirect("/");
             }
@@ -110,7 +110,7 @@ namespace ServiceHost.Controllers
         [HttpGet("login")]
         public IActionResult Login()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 return Redirect("/");
             }
@@ -148,8 +148,7 @@ namespace ServiceHost.Controllers
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                             new Claim(ClaimTypes.Email, user.Email),
                             new Claim(ClaimTypes.Name, user.FirstName +" "+ user.LastName),
-
-
+                            new Claim(ClaimTypes.Role, user.RoleId.ToString())
 
                         };
 
@@ -165,7 +164,6 @@ namespace ServiceHost.Controllers
 
                         TempData[SuccessMessage] = "شما با موفقیت وارد سایت شدید";
                         return Redirect("/");
-
                 }
             }
 
@@ -225,6 +223,7 @@ namespace ServiceHost.Controllers
         }
 
         #endregion
+
 
     }
 }

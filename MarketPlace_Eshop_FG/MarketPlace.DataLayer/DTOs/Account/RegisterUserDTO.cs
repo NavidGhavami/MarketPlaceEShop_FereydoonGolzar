@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.DTOs.Site;
+using MarketPlace.DataLayer.Entities.Account;
 
 namespace MarketPlace.DataLayer.DTOs.Account
 {
     public class RegisterUserDTO : CaptchaViewModel
     {
+        public long RoleId { get; set; }
         [Display(Name = "تلفن همراه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(200, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]

@@ -37,7 +37,7 @@
                 <div class="col-md-12 col-lg-12">
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
-                            <h3 class="title mb-3">لیست جزییات سفارش فروشنده</h3>
+                            <h3 class="title mb-3">لیست جزییات سفارش</h3>
 
                             <div class="col-md-12">
                                 @if (Model != null && Model.Any())
@@ -72,7 +72,6 @@
                                                                     <th scope="col">رنگ</th>
                                                                     <th scope="col">قیمت رنگ</th>
                                                                     <th scope="col">مقدار تخفیف</th>
-                                                                    <th scope="col">درصد تخفیف</th>
                                                                     <th scope="col"></th>
                                                                 </tr>
                                                             </thead>
@@ -85,7 +84,6 @@
                                                                     <td>@item.ColorName</td>
                                                                     <td>@item.ProductColorPrice.ToString("#,0 تومان")</td>
                                                                     <td>@(item.DiscountPrice!=0 ? item.DiscountPrice.ToString("#,0 تومان") : "---")</td>
-                                                                    <td>@(item.DiscountPercentage!=null ? item.DiscountPercentage + "%" : 0) </td>
                                                                     <td>
                                                                         <a class="btn btn-warning btn-round" asp-area="" asp-controller="Product" asp-action="ProductDetails"
                                                                            asp-route-productId="@item.ProductId" asp-route-title="@item.ProductTitle">

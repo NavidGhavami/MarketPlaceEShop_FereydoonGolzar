@@ -82,6 +82,12 @@ namespace ServiceHost.Areas.Seller.Controllers
         public async Task<IActionResult> EditDiscount(long discountId)
         {
             var discount = await _productDiscountService.GetDiscountForEdit(discountId);
+
+            if (discount == null)
+            {
+                return RedirectToAction("PageNotFound", "Home");
+            }
+
             return View(discount);
         }
 

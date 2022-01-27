@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -12,9 +13,11 @@ using Microsoft.Extensions.Hosting;
 using MarketPlace.Application.Services.Implementations;
 using MarketPlace.DataLayer.Repository;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace ServiceHost
@@ -34,7 +37,7 @@ namespace ServiceHost
             #region Config Services
 
             services.AddControllersWithViews();
-
+            services.AddHttpContextAccessor();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -50,6 +53,7 @@ namespace ServiceHost
             services.AddScoped<IProductDiscountService, ProductDiscountService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IAuthHelper, AuthHelper>();
             services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
             #endregion
@@ -85,9 +89,24 @@ namespace ServiceHost
             {
                 options.LoginPath = "/Login";
                 options.LogoutPath = "/Logout";
+                options.AccessDeniedPath = "/404Error-page-not-found";
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
             });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminArea",
+                    builder => builder.RequireRole(new List<string> { Roles.Administrator, Roles.AdminAssistant, Roles.ContentUploader }));
+
+                options.AddPolicy("UserManagement",
+                    builder => builder.RequireRole(new List<string> { Roles.Administrator }));
+
+                options.AddPolicy("NotContentSection",
+                    builder => builder.RequireRole(new List<string> { Roles.Administrator, Roles.AdminAssistant }));
+
+            });
+
+            
 
 
 

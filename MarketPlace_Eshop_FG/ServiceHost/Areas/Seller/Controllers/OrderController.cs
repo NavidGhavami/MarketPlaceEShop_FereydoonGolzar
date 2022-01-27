@@ -59,7 +59,7 @@ namespace ServiceHost.Areas.Seller.Controllers
             var userAddress = await _orderService.GetUserAddressForOrder(orderId, User.GetUserId());
             if (userAddress == null)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
             return View(userAddress);
         }

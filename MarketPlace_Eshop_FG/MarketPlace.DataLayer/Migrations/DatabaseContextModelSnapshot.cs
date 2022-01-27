@@ -19,6 +19,32 @@ namespace MarketPlace.DataLayer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.User", b =>
                 {
                     b.Property<long>("Id")
@@ -83,7 +109,12 @@ namespace MarketPlace.DataLayer.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -965,6 +996,17 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("SellerWallet");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.User", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Account.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.ContactUs", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
@@ -1165,6 +1207,11 @@ namespace MarketPlace.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Seller");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Account.User", b =>
