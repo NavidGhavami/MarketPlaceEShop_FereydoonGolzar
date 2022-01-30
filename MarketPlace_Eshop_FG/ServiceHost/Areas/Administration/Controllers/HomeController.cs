@@ -2,7 +2,10 @@
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Account;
+using MarketPlace.DataLayer.DTOs.Contact;
+using MarketPlace.DataLayer.DTOs.Site;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceHost.Areas.Administration.Controllers
@@ -12,10 +15,14 @@ namespace ServiceHost.Areas.Administration.Controllers
         #region Constructor
 
         private readonly IUserService _userService;
+        private readonly ISiteService _siteService;
+        private readonly IContactService _contactService;
 
-        public HomeController(IUserService userService)
+        public HomeController(IUserService userService, ISiteService siteService, IContactService contactService)
         {
             _userService = userService;
+            _siteService = siteService;
+            _contactService = contactService;
         }
 
         #endregion
@@ -26,6 +33,128 @@ namespace ServiceHost.Areas.Administration.Controllers
         {
             return View();
         }
+        #endregion
+
+        #region Site Setting
+
+        [HttpGet("site-setting")]
+        public async Task<IActionResult> SiteSetting()
+        {
+            var setting = await _siteService.GetDefaultSiteSetting();
+            return View(setting);
+        }
+
+        [HttpGet("site-setting/{settingId}")]
+        public async Task<IActionResult> EditSiteSetting(long settingId)
+        {
+            var setting = await _siteService.GetSiteSettingForEdit(settingId);
+            return View(setting);
+        }
+
+        [HttpPost("site-setting/{settingId}")]
+        public async Task<IActionResult> EditSiteSetting(EditSiteSettingDTO edit)
+        {
+            var result = await _siteService.EditSiteSetting(edit);
+
+            switch (result)
+            {
+                case false:
+                    return null;
+                case true:
+                    return RedirectToAction("SiteSetting", "Home");
+            }
+
+
+        }
+
+
+
+        #endregion
+
+        #region ContactUs
+
+        [HttpGet("contact-us-list")]
+        public async Task<IActionResult> ContactUsList(FilterContactUs filter)
+        {
+            var contactUs = await _contactService.FilterContactUs(filter);
+            return View(contactUs);
+        }
+
+        #endregion
+
+        #region Slider
+
+        [HttpGet("list-of-slider")]
+        public async Task<IActionResult> SliderList()
+        {
+            var slider = await _siteService.GetAllSlider();
+            return View(slider);
+        }
+
+        [HttpGet("create-slider")]
+        public async Task<IActionResult> CreateSlider()
+        {
+            return View();
+        }
+
+
+        [HttpPost("create-slider")]
+        public async Task<IActionResult> CreateSlider(CreateSliderDTO slider, IFormFile sliderImage)
+        {
+            var result = await _siteService.CreateSlider(slider,sliderImage);
+
+            switch (result)
+            {
+                case CreateSliderResult.Error:
+                    TempData[ErrorMessage] = "در عملیات افزودن اسلایدر خطایی رخ داد";
+                    break;
+                case CreateSliderResult.Success:
+                    TempData[SuccessMessage] = "اسلایدر با موفقیت ایجاد گردید";
+                    return RedirectToAction("SliderList", "Home");
+            }
+            return View();
+        }
+
+        [HttpGet("edit-slider/{sliderId}")]
+        public async Task<IActionResult> EditSlider(long sliderId)
+        {
+            var slider = await _siteService.GetSliderForEdit(sliderId);
+            return View(slider);
+
+        }
+
+        [HttpPost("edit-slider/{sliderId}")]
+        public async Task<IActionResult> EditSlider(EditSliderDTO edit, IFormFile sliderImage)
+        {
+            var result = await _siteService.EditSlider(edit, sliderImage);
+
+            switch (result)
+            {
+                case EditSliderResult.NotFound:
+                    TempData[ErrorMessage] = "اطلاعات مورد نظر یافت نشد";
+                    break;
+                case EditSliderResult.Success:
+                    TempData[SuccessMessage] = "ویرایش اطلاعات با موفقیت انجام شد";
+                    return RedirectToAction("SliderList", "Home");
+            }
+            return View();
+
+        }
+
+        [HttpGet("active-slider/{sliderId}")]
+        public async Task<IActionResult> ActiveSlider(long sliderId)
+        {
+            var slider = await _siteService.ActiveSlider(sliderId);
+            return RedirectToAction("SliderList", "Home");
+        }
+        [HttpGet("deactive-slider/{sliderId}")]
+        public async Task<IActionResult> DeactiveSlider(long sliderId)
+        {
+            var slider = await _siteService.DeactiveSlider(sliderId);
+            return RedirectToAction("SliderList", "Home");
+        }
+
+
         #endregion
 
         #region User List
@@ -95,6 +224,7 @@ namespace ServiceHost.Areas.Administration.Controllers
         #endregion
 
         #region Add Role
+
         [Authorize("UserManagement" , Roles = Roles.Administrator)]
         [HttpGet("create-role")]
         public IActionResult CreateRole()
@@ -124,6 +254,7 @@ namespace ServiceHost.Areas.Administration.Controllers
         #endregion
 
         #region Edit Role
+
         [Authorize("UserManagement" , Roles = Roles.Administrator)]
         [HttpGet("edit-role/{roleId}")]
         public async Task<IActionResult> EditRole(long roleId)
@@ -149,7 +280,7 @@ namespace ServiceHost.Areas.Administration.Controllers
                     break;
                 case EditRoleResult.Success:
                     TempData[SuccessMessage] = "ویرایش نقش با موفقیت انجام شد";
-                    return RedirectToAction("RoleList", "Home");
+                    return RedirectToAction("RoleList", "Home");;
             }
 
             return View();

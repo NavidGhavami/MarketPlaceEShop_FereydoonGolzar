@@ -5,7 +5,9 @@
     ViewData["Title"] = "تماس با ما";
 }
 
-@{ var siteSetting = ViewBag.siteSetting as SiteSetting; }
+@{
+    var siteSetting = ViewBag.siteSetting as SiteSetting;
+}
 
 @section Scripts
 {
@@ -29,13 +31,13 @@
                 <li class="breadcrumb-item active"><a href="#">@User.Identity.Name</a></li>
             }
         </ol>
-    </div><!-- End .container -->
+    </div>
 </nav>
 
 <div class="page-content">
     <div class="col-12 d-flex mb-5">
         <div class="bg-white w-100">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.0762034011345!2d51.33938432078328!3d35.69974233666176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDQxJzU5LjEiTiA1McKwMjAnMTMuOSJF!5e0!3m2!1sfa!2s!4v1585894944267!5m2!1sfa!2s" style="border:0" allowfullscreen="" width="100%" height="450px" frameborder="0"></iframe>
+            <iframe src="@ViewBag.SiteSetting" style="border:0" allowfullscreen="" width="100%" height="450px" frameborder="0"></iframe>
         </div>
     </div>
     <div class="container">

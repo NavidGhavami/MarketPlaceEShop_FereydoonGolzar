@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Contact;
@@ -30,6 +31,38 @@ namespace MarketPlace.Application.Services.Implementations
 
 
         #region ContactUs
+
+        public async Task<FilterContactUs> FilterContactUs(FilterContactUs filter)
+        {
+            var query = _contactUsRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x=>x.User)
+                .OrderByDescending(x=>x.Id);
+
+            #region Filter
+
+            if (!string.IsNullOrEmpty(filter.Mobile))
+            {
+                query = query.Where(x => EF.Functions.Like(x.Mobile, $"%{filter.Mobile}%")).OrderByDescending(x => x.CreateDate);
+            }
+
+
+            #endregion
+
+            #region Paging
+
+            var contactCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, contactCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return filter.SetPaging(pager).SetContactUs(allEntities);
+        }
 
         public async Task CreateContactUs(CreateContactUsDTO contact, string userIp, long? userId)
         {

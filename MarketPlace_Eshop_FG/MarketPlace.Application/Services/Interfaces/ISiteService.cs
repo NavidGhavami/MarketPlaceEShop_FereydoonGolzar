@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MarketPlace.DataLayer.DTOs.Site;
 using MarketPlace.DataLayer.Entities.Site;
+using Microsoft.AspNetCore.Http;
 
 namespace MarketPlace.Application.Services.Interfaces
 {
@@ -10,12 +12,20 @@ namespace MarketPlace.Application.Services.Interfaces
         #region Site Setting
 
         Task<SiteSetting> GetDefaultSiteSetting();
+        Task<EditSiteSettingDTO> GetSiteSettingForEdit(long id);
+        Task<bool> EditSiteSetting(EditSiteSettingDTO edit);
 
         #endregion
 
         #region Slider
 
         Task<List<Slider>> GetAllActiveSlider();
+        Task<List<Slider>> GetAllSlider();
+        Task<CreateSliderResult> CreateSlider(CreateSliderDTO slider, IFormFile sliderImage);
+        Task<EditSliderDTO> GetSliderForEdit(long sliderId);
+        Task<EditSliderResult> EditSlider(EditSliderDTO edit, IFormFile sliderImage);
+        Task<bool> ActiveSlider(long sliderId);
+        Task<bool> DeactiveSlider(long sliderId);
 
         #endregion
 

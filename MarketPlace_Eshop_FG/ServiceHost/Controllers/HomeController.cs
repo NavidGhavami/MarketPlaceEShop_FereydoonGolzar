@@ -35,8 +35,10 @@ namespace ServiceHost.Controllers
         #region ContactUs
 
         [HttpGet("Contact-Us")]
-        public IActionResult ContactUs()
+        public async Task<IActionResult> ContactUs()
         {
+            var setting = await _siteService.GetDefaultSiteSetting();
+            ViewBag.SiteSetting = setting.MapScript;
             return View();
         }
 

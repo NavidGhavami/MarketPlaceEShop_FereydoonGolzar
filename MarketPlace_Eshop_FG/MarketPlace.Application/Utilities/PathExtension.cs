@@ -74,7 +74,11 @@ namespace MarketPlace.Application.Utilities
 
         #region Slider
 
-        public static string SliderOrigin = "/Theme/assets/images/demos/demo-13/slider/";
+        public static string SliderOrigin = "/Content/Images/Slider/Origin/";
+        public static string SliderOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Slider/Origin/");
+
+        public static string SliderThumb = "/Content/Images/Slider/Thumb/";
+        public static string SliderThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Slider/Thumb/");
 
         #endregion
 

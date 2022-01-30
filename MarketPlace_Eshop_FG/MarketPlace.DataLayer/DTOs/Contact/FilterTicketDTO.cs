@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.Entities.Contact;
 
