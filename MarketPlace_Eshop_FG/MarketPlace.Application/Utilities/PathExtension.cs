@@ -84,7 +84,11 @@ namespace MarketPlace.Application.Utilities
 
         #region Banner
 
-        public static string BannerOrigin = "/Theme/assets/images/demos/demo-13/banners/";
+        public static string BannerOrigin = "/Content/Images/Banner/Origin/";
+        public static string BannerOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Banner/Origin/");
+                             
+        public static string BannerThumb = "/Content/Images/Banner/Thumb/";
+        public static string BannerThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Banner/Thumb/");
 
         #endregion
     }

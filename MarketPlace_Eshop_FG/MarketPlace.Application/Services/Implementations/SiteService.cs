@@ -106,7 +106,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .GetQuery()
                 .AsQueryable()
                 .Where(x => x.IsActive && !x.IsDelete)
-                .OrderByDescending(x=>x.Id)
+                .OrderByDescending(x => x.Id)
                 .ToListAsync();
         }
 
@@ -180,7 +180,7 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(sliderImage.FileName);
                 sliderImage.AddImageToServer(imageName, PathExtension.SliderOriginServer,
-                    100, 100, PathExtension.ProductThumbServer, mainSlider.ImageName);
+                    100, 100, PathExtension.SliderThumbServer, mainSlider.ImageName);
 
                 mainSlider.ImageName = imageName;
             }
@@ -246,13 +246,144 @@ namespace MarketPlace.Application.Services.Implementations
 
         #region Site Banners
 
-            public async Task<List<SiteBanner>> GetSiteBannersByLocations(List<SiteBanner.BannersLocations> locations)
+        public async Task<List<SiteBanner>> GetSiteBannersByLocations(List<SiteBanner.BannersLocations> locations)
         {
             return await _siteBanner
                 .GetQuery()
                 .AsQueryable()
-                .Where(x => locations.Contains(x.BannersLocation))
+                .Where(x => locations.Contains(x.BannersLocation) && !x.IsDelete)
                 .ToListAsync();
+        }
+
+        public async Task<List<SiteBanner>> GetAllBanners()
+        {
+            return await _siteBanner
+                .GetQuery()
+                .AsQueryable()
+                .ToListAsync();
+        }
+
+        public async Task<CreateBannerResult> CreateBanner(CreateBannerDTO banner, IFormFile bannerImage)
+        {
+            if (bannerImage != null && bannerImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(bannerImage.FileName);
+                bannerImage.AddImageToServer(imageName, PathExtension.BannerOriginServer,
+                    100, 100, PathExtension.BannerThumbServer);
+
+                var newBanner = new SiteBanner
+                {
+                    Header = banner.Header,
+                    MainText = banner.MainText,
+                    BtnText = banner.BtnText,
+                    BannersLocation = banner.BannersLocation,
+                    ColSize = banner.ColSize,
+                    Url = banner.Url,
+                    ImageName = imageName,
+
+                };
+
+                await _siteBanner.AddEntity(newBanner);
+                await _siteBanner.SaveChanges();
+
+                return CreateBannerResult.Success;
+            }
+
+            return CreateBannerResult.Error;
+        }
+
+        public async Task<EditBannerDTO> GetBannerForEdit(long bannerId)
+        {
+            var banner = await _siteBanner
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == bannerId);
+
+            return new EditBannerDTO
+            {
+                Id = banner.Id,
+                BtnText = banner.BtnText,
+                BannersLocation = banner.BannersLocation,
+                MainText = banner.MainText,
+                Url = banner.Url,
+                ImageName = banner.ImageName,
+                ColSize = banner.ColSize,
+                Header = banner.Header,
+            };
+        }
+
+        public async Task<EditBannerResult> EditBanner(EditBannerDTO edit, IFormFile bannerImage)
+        {
+            var mainBanner = await _siteBanner
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == edit.Id);
+
+            if (mainBanner == null)
+            {
+                return EditBannerResult.Error;
+            }
+
+            if (bannerImage != null && bannerImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(bannerImage.FileName);
+                bannerImage.AddImageToServer(imageName, PathExtension.BannerOriginServer,
+                    100, 100, PathExtension.BannerThumbServer, mainBanner.ImageName);
+
+                mainBanner.ImageName = imageName;
+            }
+
+            mainBanner.Id = edit.Id;
+            mainBanner.BtnText = edit.BtnText;
+            mainBanner.BannersLocation = edit.BannersLocation;
+            mainBanner.MainText = edit.MainText;
+            mainBanner.Url = edit.Url;
+            mainBanner.ColSize = edit.ColSize;
+            mainBanner.Header = edit.Header;
+
+            _siteBanner.EditEntity(mainBanner);
+            await _siteBanner.SaveChanges();
+
+            return EditBannerResult.Success;
+
+        }
+
+        public async Task<bool> ActiveBanner(long bannerId)
+        {
+            var banner = await _siteBanner.GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == bannerId);
+
+            if (banner == null)
+            {
+                return false;
+            }
+
+            banner.IsDelete = false;
+
+            _siteBanner.EditEntity(banner);
+            await _siteBanner.SaveChanges();
+
+            return true;
+        }
+
+        public async Task<bool> DeactiveBanner(long bannerId)
+        {
+            var banner = await _siteBanner.GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == bannerId);
+
+            if (banner == null)
+            {
+                return false;
+            }
+
+            banner.IsDelete = true;
+
+            _siteBanner.EditEntity(banner);
+            await _siteBanner.SaveChanges();
+
+            return true;
         }
 
         #endregion

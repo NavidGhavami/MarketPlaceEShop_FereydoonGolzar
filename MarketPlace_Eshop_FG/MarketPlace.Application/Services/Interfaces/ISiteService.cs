@@ -32,6 +32,12 @@ namespace MarketPlace.Application.Services.Interfaces
         #region Site Banners
 
         Task<List<SiteBanner>> GetSiteBannersByLocations(List<SiteBanner.BannersLocations> locations);
+        Task<List<SiteBanner>> GetAllBanners();
+        Task<CreateBannerResult> CreateBanner(CreateBannerDTO banner, IFormFile bannerImage);
+        Task<EditBannerDTO> GetBannerForEdit(long bannerId);
+        Task<EditBannerResult> EditBanner(EditBannerDTO edit, IFormFile bannerImage);
+        Task<bool> ActiveBanner(long bannerId);
+        Task<bool> DeactiveBanner(long bannerId);
 
         #endregion
     }

@@ -7,6 +7,7 @@ using MarketPlace.DataLayer.DTOs.Site;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace ServiceHost.Areas.Administration.Controllers
 {
@@ -154,6 +155,88 @@ namespace ServiceHost.Areas.Administration.Controllers
             return RedirectToAction("SliderList", "Home");
         }
 
+
+        #endregion
+
+        #region Banners
+
+        [HttpGet("banners-list")]
+        public async Task<IActionResult> BannerList()
+        {
+            var banner = await _siteService.GetAllBanners();
+
+            if (banner == null)
+            {
+                return NotFound();
+            }
+            return View(banner);
+        }
+
+        [HttpGet("create-banner")]
+        public async Task<IActionResult> CreateBanner()
+        {
+            return View();
+        }
+
+
+        [HttpPost("create-banner")]
+        public async Task<IActionResult> CreateBanner(CreateBannerDTO banner, IFormFile bannerImage)
+        {
+            var result = await _siteService.CreateBanner(banner, bannerImage);
+
+            switch (result)
+            {
+                case CreateBannerResult.Error:
+                    TempData[ErrorMessage] = "در عملیات افزودن بنر خطایی رخ داد";
+                    break;
+                case CreateBannerResult.Success:
+                    TempData[SuccessMessage] = "بنر با موفقیت ایجاد گردید";
+                    return RedirectToAction("BannerList", "Home");
+            }
+            return View();
+        }
+
+        [HttpGet("edit-banner/{bannerId}")]
+        public async Task<IActionResult> EditBanner(long bannerId)
+        {
+            var banner = await _siteService.GetBannerForEdit(bannerId);
+            return View(banner);
+        }
+
+        [HttpPost("edit-banner/{bannerId}")]
+        public async Task<IActionResult> EditBanner(EditBannerDTO edit, IFormFile bannerImage)
+        {
+            var result= await _siteService.EditBanner(edit, bannerImage);
+
+            switch (result)
+            {
+                case EditBannerResult.Error:
+                    TempData[ErrorMessage] = "اطلاعات مورد نظر یافت نشد";
+                    break;
+                case EditBannerResult.Success:
+                    TempData[SuccessMessage] = "ویرایش بنر با موفقیت انجام شد";
+                    return RedirectToAction("BannerList", "Home");
+
+            }
+
+            return View();
+
+        }
+
+
+        [HttpGet("active-banner/{bannerId}")]
+        public async Task<IActionResult> ActiveBanner(long bannerId)
+        {
+            var banner = await _siteService.ActiveBanner(bannerId);
+            return RedirectToAction("BannerList", "Home");
+        }
+
+        [HttpGet("deactive-banner/{bannerId}")]
+        public async Task<IActionResult> DeactiveBanner(long bannerId)
+        {
+            var banner = await _siteService.DeactiveBanner(bannerId);
+            return RedirectToAction("BannerList", "Home");
+        }
 
         #endregion
 

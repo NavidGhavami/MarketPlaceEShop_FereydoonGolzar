@@ -41,8 +41,13 @@ namespace MarketPlace.DataLayer.Entities.Site
 
         public enum BannersLocations
         {
+            [Display(Name = "بالا")]
             Home1,
+
+            [Display(Name = "وسط")]
             Home2,
+
+            [Display(Name = "پایین")]
             Home3
         }
 
