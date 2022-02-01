@@ -20,7 +20,7 @@
 
                     <div class="icon-box-content">
                         <h3 class="icon-box-title">ارسال رایگان</h3><!-- End .icon-box-title -->
-                        <p>برای سفارشات بالای 50 هزار تومان</p>
+                        <p>برای سفارشات بالای 350 هزار تومان</p>
                     </div><!-- End .icon-box-content -->
                 </div><!-- End .icon-box -->
             </div><!-- End .col-sm-6 col-lg-3 -->
@@ -33,7 +33,7 @@
 
                     <div class="icon-box-content">
                         <h3 class="icon-box-title">بازگرداندن رایگان</h3><!-- End .icon-box-title -->
-                        <p>تا 30 روز بعد از خرید</p>
+                        <p>تا 7 روز بعد از خرید</p>
                     </div><!-- End .icon-box-content -->
                 </div><!-- End .icon-box -->
             </div><!-- End .col-sm-6 col-lg-3 -->
@@ -45,7 +45,7 @@
                     </span>
 
                     <div class="icon-box-content">
-                        <h3 class="icon-box-title">20% تخفیف برای اولین خرید</h3>
+                        <h3 class="icon-box-title">10% تخفیف برای اولین خرید</h3>
                         <!-- End .icon-box-title -->
                         <p>کافیست ثبت نام کنید</p>
                     </div><!-- End .icon-box-content -->
@@ -70,134 +70,28 @@
 
 <div class="mb-4"></div><!-- End .mb-2 -->
 
-<div class="container">
-    <h2 class="title text-center mb-2">دسته بندی های محبوب</h2><!-- End .title -->
-
-    <div class="cat-blocks-container">
-        <div class="row">
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/1.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">کامپیوتر و لپ تاپ</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/2.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">روشنایی</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/3.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">گوشی هوشمند</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/4.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">تلویزیون</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/5.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">پخت و پز</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/6.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">مبلمان</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/6.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">مبلمان</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-            <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
-                    <figure>
-                        <span>
-                            <img src="~/Theme/assets/images/demos/demo-13/cats/6.jpg" alt="Category image">
-                        </span>
-                    </figure>
-
-                    <h3 class="cat-block-title">مبلمان</h3><!-- End .cat-block-title -->
-                </a>
-            </div><!-- End .col-sm-4 col-lg-2 -->
-        </div><!-- End .row -->
-    </div><!-- End .cat-blocks-container -->
-</div><!-- End .container -->
+@await Component.InvokeAsync("LatestArrivalProducts")
 
 <div class="mb-2"></div><!-- End .mb-2 -->
 
 @await Component.InvokeAsync("SiteBannerHome1")
-
-<div class="mb-3"></div><!-- End .mb-3 -->
-
-@await Component.InvokeAsync("LatestArrivalProducts")
-
-<div class="mb-3"></div><!-- End .mb-3 -->
-
-
-@await Component.InvokeAsync("SiteBannerHome2")
 
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
 @await Component.InvokeAsync("OffProducts")
 
+<div class="mb-3"></div><!-- End .mb-3 -->
+
+@await Component.InvokeAsync("SiteBannerHome2")
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
-@await Component.InvokeAsync("SiteBannerHome3")
+@await Component.InvokeAsync("MaximumProductsView")
 
 <div class="mb-1"></div><!-- End .mb-1 -->
 
-@await Component.InvokeAsync("MaximumProductsView")
+@await Component.InvokeAsync("SiteBannerHome3")
 
 <div class="mb-3"></div><!-- End .mb-3 -->
 
@@ -589,7 +483,7 @@
 
                     <div class="icon-box-content">
                         <h3 class="icon-box-title">پرداخت و ارسال</h3><!-- End .icon-box-title -->
-                        <p>ارسال رایگان برای سفارشات بالای 50 هزار تومان</p>
+                        <p>ارسال رایگان برای سفارشات بالای 350 هزار تومان</p>
                     </div><!-- End .icon-box-content -->
                 </div><!-- End .icon-box -->
             </div><!-- End .col-sm-6 col-lg-4 -->

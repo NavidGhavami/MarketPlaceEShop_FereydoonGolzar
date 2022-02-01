@@ -91,5 +91,15 @@ namespace MarketPlace.Application.Utilities
         public static string BannerThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Banner/Thumb/");
 
         #endregion
+
+        #region AbouUs
+
+        public static string AboutUsOrigin = "/Content/Images/AboutUs/Origin/";
+        public static string AboutUsOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/AboutUs/Origin/");
+                             
+        public static string AboutUsThumb = "/Content/Images/AboutUs/Thumb/";
+        public static string AboutUsThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/AboutUs/Thumb/");
+
+        #endregion
     }
 }

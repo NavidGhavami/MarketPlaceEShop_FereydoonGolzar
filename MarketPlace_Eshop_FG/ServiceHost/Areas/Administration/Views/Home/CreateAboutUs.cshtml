@@ -1,0 +1,123 @@
+﻿@model MarketPlace.DataLayer.DTOs.Contact.CreateAboutUsDTO
+@{
+    ViewData["Title"] = "افرودن اطلاعات";
+}
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت صفحات</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-plus"></i> @ViewData["Title"]</div>
+            <div class="card-body">
+
+                <form asp-area="Administration" asp-controller="Home" asp-action="CreateAboutUs" method="post" enctype="multipart/form-data" id="filter-form">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>متن درباره ما</label>
+                            <input type="text" class="form-control" ckeditor="1" rows="20" asp-for="AboutUsText">
+                            <span class="text-danger float-right" asp-validation-for="AboutUsText"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>عنوان متن اول</label>
+                            <input class="form-control" asp-for="ServiceSubject1" />
+                            <span class="text-danger float-right" asp-validation-for="ServiceSubject1"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>توضیح متن اول</label>
+                            <input class="form-control" asp-for="Service1" />
+                            <span class="text-danger float-right" asp-validation-for="Service1"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>عنوان متن دوم</label>
+                            <input class="form-control" asp-for="ServiceSubject2" />
+                            <span class="text-danger float-right" asp-validation-for="ServiceSubject2"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>توضیح متن دوم</label>
+                            <input class="form-control" asp-for="Service2" />
+                            <span class="text-danger float-right" asp-validation-for="Service2"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>عنوان متن سوم</label>
+                            <input class="form-control" asp-for="ServiceSubject3" />
+                            <span class="text-danger float-right" asp-validation-for="ServiceSubject3"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>توضیح متن سوم</label>
+                            <input class="form-control" asp-for="Service3" />
+                            <span class="text-danger float-right" asp-validation-for="Service3"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>عنوان متن چهارم</label>
+                            <input class="form-control" asp-for="ServiceSubject4" />
+                            <span class="text-danger float-right" asp-validation-for="ServiceSubject4"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>توضیح متن چهارم</label>
+                            <input class="form-control" asp-for="Service4" />
+                            <span class="text-danger float-right" asp-validation-for="Service4"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>عنوان متن پنجم</label>
+                            <input class="form-control" asp-for="ServiceSubject5" />
+                            <span class="text-danger float-right" asp-validation-for="ServiceSubject5"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>توضیح متن پنجم</label>
+                            <input class="form-control" asp-for="Service5" />
+                            <span class="text-danger float-right" asp-validation-for="Service5"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label>عنوان متن ششم</label>
+                            <input class="form-control" asp-for="ServiceSubject6" />
+                            <span class="text-danger float-right" asp-validation-for="ServiceSubject6"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>توضیح متن ششم</label>
+                            <input class="form-control" asp-for="Service6" />
+                            <span class="text-danger float-right" asp-validation-for="Service6"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>آپلود تصویر</label>
+                            <input type="file" name="aboutImage" class="form-control" accept=".png, .jpeg, .jpg" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">افزودن اطلاعات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

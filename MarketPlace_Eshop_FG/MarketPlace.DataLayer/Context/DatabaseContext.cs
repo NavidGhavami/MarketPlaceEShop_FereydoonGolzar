@@ -37,6 +37,7 @@ namespace MarketPlace.DataLayer.Context
 
         
         public DbSet<ContactUs> ContactUs { get; set; }
+        public DbSet<AboutUs> AboutUs { get; set; }
 
         //add Ticket
         public DbSet<Ticket> Tickets { get; set; }

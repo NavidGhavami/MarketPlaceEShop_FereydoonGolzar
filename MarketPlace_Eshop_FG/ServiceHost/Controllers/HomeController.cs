@@ -67,9 +67,10 @@ namespace ServiceHost.Controllers
         #region About Us
 
         [HttpGet("About-Us")]
-        public IActionResult AboutUs()
+        public async Task<IActionResult> AboutUs()
         {
-            return View();
+            var data = await _contactService.GetAboutUs();
+            return View(data);
         }
 
         #endregion

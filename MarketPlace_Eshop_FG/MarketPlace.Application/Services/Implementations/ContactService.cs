@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Contact;
 using MarketPlace.DataLayer.DTOs.Paging;
+using MarketPlace.DataLayer.DTOs.Site;
 using MarketPlace.DataLayer.Entities.Contact;
+using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Application.Services.Implementations
@@ -15,15 +22,17 @@ namespace MarketPlace.Application.Services.Implementations
         #region Constructor
 
         private readonly IGenericRepository<ContactUs> _contactUsRepository;
+        private readonly IGenericRepository<AboutUs> _aboutUsRepository;
 
         private readonly IGenericRepository<Ticket> _ticketRepository;
         private readonly IGenericRepository<TicketMessage> _ticketMessageRepository;
 
-        public ContactService(IGenericRepository<Ticket> ticketRepository, IGenericRepository<TicketMessage> ticketMessageRepository, IGenericRepository<ContactUs> contactUsRepository)
+        public ContactService(IGenericRepository<Ticket> ticketRepository, IGenericRepository<TicketMessage> ticketMessageRepository, IGenericRepository<ContactUs> contactUsRepository, IGenericRepository<AboutUs> aboutUsRepository)
         {
             _ticketRepository = ticketRepository;
             _ticketMessageRepository = ticketMessageRepository;
             _contactUsRepository = contactUsRepository;
+            _aboutUsRepository = aboutUsRepository;
         }
 
         #endregion
@@ -79,6 +88,117 @@ namespace MarketPlace.Application.Services.Implementations
 
             await _contactUsRepository.AddEntity(newContact);
             await _contactUsRepository.SaveChanges();
+        }
+
+        public async Task<AboutUs> GetAboutUs()
+        {
+            return await _aboutUsRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<CreateAboutUsResult> CreateAboutUs(CreateAboutUsDTO about, IFormFile aboutImage)
+        {
+            if (aboutImage != null && aboutImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(aboutImage.FileName);
+                aboutImage.AddImageToServer(imageName, PathExtension.AboutUsOriginServer,
+                    100, 100, PathExtension.AboutUsThumbServer);
+
+                var newAboutUs = new AboutUs
+                {
+                    AboutUsText = about.AboutUsText,
+                    AboutUsImage = imageName,
+                    Service1 = about.Service1,
+                    Service2 = about.Service2,
+                    Service3 = about.Service3,
+                    Service4 = about.Service4,
+                    Service5 = about.Service5,
+                    Service6 = about.Service6,
+                    ServiceSubject1 = about.ServiceSubject1,
+                    ServiceSubject2 = about.ServiceSubject2,
+                    ServiceSubject3 = about.ServiceSubject3,
+                    ServiceSubject4 = about.ServiceSubject4,
+                    ServiceSubject5 = about.ServiceSubject5,
+                    ServiceSubject6 = about.ServiceSubject6,
+                };
+
+                await _aboutUsRepository.AddEntity(newAboutUs);
+                await _aboutUsRepository.SaveChanges();
+
+                return CreateAboutUsResult.Success;
+            }
+
+            return CreateAboutUsResult.Error;
+        }
+
+        public async Task<EditAboutUsDTO> GetAboutUsForEdit(long id)
+        {
+            var aboutUs = await _aboutUsRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+            return new EditAboutUsDTO
+            {
+                AboutUsText = aboutUs.AboutUsText,
+                AboutUsImage = aboutUs.AboutUsImage,
+                Service1 = aboutUs.Service1,
+                Service2 = aboutUs.Service2,
+                Service3 = aboutUs.Service3,
+                Service4 = aboutUs.Service4,
+                Service5 = aboutUs.Service5,
+                Service6 = aboutUs.Service6,
+                ServiceSubject1 = aboutUs.ServiceSubject1,
+                ServiceSubject2 = aboutUs.ServiceSubject2,
+                ServiceSubject3 = aboutUs.ServiceSubject3,
+                ServiceSubject4 = aboutUs.ServiceSubject4,
+                ServiceSubject5 = aboutUs.ServiceSubject5,
+                ServiceSubject6 = aboutUs.ServiceSubject6,
+            };
+        }
+
+        public async Task<EditAboutUsResult> EditAboutUs(EditAboutUsDTO edit, IFormFile aboutImage)
+        {
+            var mainAbout = await _aboutUsRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == edit.Id);
+
+            if (mainAbout == null)
+            {
+                return EditAboutUsResult.NotFound;
+            }
+
+            if (aboutImage != null && aboutImage.IsImage())
+            {
+                var imageName = Guid.NewGuid().ToString("N") + Path.GetExtension(aboutImage.FileName);
+                aboutImage.AddImageToServer(imageName, PathExtension.AboutUsOriginServer,
+                    100, 100, PathExtension.AboutUsThumbServer, mainAbout.AboutUsImage);
+
+                mainAbout.AboutUsImage = imageName;
+            }
+
+
+            mainAbout.AboutUsText = edit.AboutUsText;
+            mainAbout.Service1 = edit.Service1;
+            mainAbout.Service2 = edit.Service2;
+            mainAbout.Service3 = edit.Service3;
+            mainAbout.Service4 = edit.Service4;
+            mainAbout.Service5 = edit.Service5;
+            mainAbout.Service6 = edit.Service6;
+            mainAbout.ServiceSubject1 = edit.ServiceSubject1;
+            mainAbout.ServiceSubject2 = edit.ServiceSubject2;
+            mainAbout.ServiceSubject3 = edit.ServiceSubject3;
+            mainAbout.ServiceSubject4 = edit.ServiceSubject4;
+            mainAbout.ServiceSubject5 = edit.ServiceSubject5;
+            mainAbout.ServiceSubject6 = edit.ServiceSubject6;
+
+            _aboutUsRepository.EditEntity(mainAbout);
+            await _aboutUsRepository.SaveChanges();
+
+            return EditAboutUsResult.Success;
         }
 
         #endregion
@@ -260,7 +380,10 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 await _contactUsRepository.DisposeAsync();
             }
-
+            if (_aboutUsRepository != null)
+            {
+                await _aboutUsRepository.DisposeAsync();
+            }
             if (_ticketRepository != null)
             {
                 await _ticketRepository.DisposeAsync();

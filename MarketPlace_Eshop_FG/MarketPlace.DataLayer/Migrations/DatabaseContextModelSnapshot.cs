@@ -119,6 +119,72 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.AboutUs", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AboutUsImage")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("AboutUsText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Service1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Service2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Service3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Service4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Service5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Service6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceSubject1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceSubject2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceSubject3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceSubject4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceSubject5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceSubject6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AboutUs");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.ContactUs", b =>
                 {
                     b.Property<long>("Id")

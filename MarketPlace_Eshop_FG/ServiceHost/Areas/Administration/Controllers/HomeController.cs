@@ -7,7 +7,6 @@ using MarketPlace.DataLayer.DTOs.Site;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace ServiceHost.Areas.Administration.Controllers
 {
@@ -79,6 +78,70 @@ namespace ServiceHost.Areas.Administration.Controllers
         {
             var contactUs = await _contactService.FilterContactUs(filter);
             return View(contactUs);
+        }
+
+        #endregion
+
+        #region AboutUs
+
+        [HttpGet("about-us")]
+        public async Task<IActionResult> AboutUsList()
+        {
+            var aboutUs = await _contactService.GetAboutUs();
+            return View(aboutUs);
+        }
+
+        [HttpGet("create-about-us")]
+        public async Task<IActionResult> CreateAboutUs()
+        {
+            return View();
+        }
+
+        [HttpPost("create-about-us")]
+        public async Task<IActionResult> CreateAboutUs(CreateAboutUsDTO create, IFormFile aboutImage)
+        {
+            var result = await _contactService.CreateAboutUs(create, aboutImage);
+
+            switch (result)
+            {
+                case CreateAboutUsResult.Error:
+                    TempData[ErrorMessage] = "در افزودن اطلاعات خطایی رخ داد";
+                    break;
+                case CreateAboutUsResult.Success:
+                    TempData[SuccessMessage] = "عملیات ثبت اطلاعات با موفقیت انجام شد";
+                    return RedirectToAction("AboutUsList", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpGet("edit-about-us/{id}")]
+        public async Task<IActionResult> EditAboutUs(long id)
+        {
+            var result = await _contactService.GetAboutUsForEdit(id);
+            return View(result);
+        }
+
+        [HttpPost("edit-about-us/{id}")]
+        public async Task<IActionResult> EditAboutUs(EditAboutUsDTO edit, IFormFile aboutImage)
+        {
+            var result = await _contactService.EditAboutUs(edit, aboutImage);
+
+            switch (result)
+            {
+                case EditAboutUsResult.Error:
+                    TempData[ErrorMessage] = "فرمت تصویر نادرست می باشد";
+                    break;
+                case EditAboutUsResult.NotFound:
+                    TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                    break;
+                case EditAboutUsResult.Success:
+                    TempData[SuccessMessage] = "ویرایش اطلاعات با موفقیت انجام شد";
+                    return RedirectToAction("AboutUsList", "Home");
+
+            }
+
+            return View();
         }
 
         #endregion
