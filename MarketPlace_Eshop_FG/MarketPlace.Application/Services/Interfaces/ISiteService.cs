@@ -40,5 +40,15 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<bool> DeactiveBanner(long bannerId);
 
         #endregion
+
+        #region Frequently Questions
+
+        Task<List<FrequentlyQuestion>> GetAllFrequentlyQuestions();
+        Task<FilterFrequentlyQuestionDTO> GetFrequentlyQuestions(FilterFrequentlyQuestionDTO filter);
+        Task<CreateFaqResult> CreateFrequentlyQuestion(CreatefrequentlyQuestionDTO faq);
+        Task<EditFrequentlyQuestionDTO> GetFrequentlyQuestionForEdit(long faqId);
+        Task<EditFrequentlyQuestionResult> EditFrequentlyQuestion(EditFrequentlyQuestionDTO edit);
+
+        #endregion
     }
 }

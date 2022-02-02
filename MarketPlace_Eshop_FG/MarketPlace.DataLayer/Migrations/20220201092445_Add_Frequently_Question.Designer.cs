@@ -4,14 +4,16 @@ using MarketPlace.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MarketPlace.DataLayer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20220201092445_Add_Frequently_Question")]
+    partial class Add_Frequently_Question
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -820,12 +822,9 @@ namespace MarketPlace.DataLayer.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("QuestionHeader")
-                        .IsRequired()
-                        .HasMaxLength(550)
-                        .HasColumnType("nvarchar(550)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuestionText")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -35,6 +35,67 @@ namespace ServiceHost.Areas.Administration.Controllers
         }
         #endregion
 
+        #region Frequently Question
+
+        [HttpGet("frequently-questions")]
+        public async Task<IActionResult> FrequentlyQuestionList(FilterFrequentlyQuestionDTO filter)
+        {
+            var faq = await _siteService.GetFrequentlyQuestions(filter);
+            return View(faq);
+        }
+
+        [HttpGet("create-frequently-question")]
+        public async Task<IActionResult> CreateFrequentlyQuestion()
+        {
+            return View();
+        }
+
+        [HttpPost("create-frequently-question")]
+        public async Task<IActionResult> CreateFrequentlyQuestion(CreatefrequentlyQuestionDTO faq)
+        {
+            var result = await _siteService.CreateFrequentlyQuestion(faq);
+
+            switch (result)
+            {
+                case CreateFaqResult.Error:
+                    TempData[ErrorMessage] = "در افزودن اطلاعات خطایی رخ داد";
+                    break;
+
+                case CreateFaqResult.Success:
+                    TempData[SuccessMessage] = "افزودن سوال با موفثیت انجام شد";
+                    return RedirectToAction("FrequentlyQuestionList", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpGet("edit-frequently-question/{faqId}")]
+        public async Task<IActionResult> EditFrequentlyQuestion(long faqId)
+        {
+            var faq = await _siteService.GetFrequentlyQuestionForEdit(faqId);
+            return View(faq);
+        }
+
+        [HttpPost("edit-frequently-question/{faqId}")]
+        public async Task<IActionResult> EditFrequentlyQuestion(EditFrequentlyQuestionDTO edit)
+        {
+            var result = await _siteService.EditFrequentlyQuestion(edit);
+
+            switch (result)
+            {
+                case EditFrequentlyQuestionResult.NotFound:
+                    TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                    break;
+                case EditFrequentlyQuestionResult.Success:
+                    TempData[SuccessMessage] = "ویرایش اطلاعات با موفقیت انجام شد";
+                    return RedirectToAction("FrequentlyQuestionList", "Home");
+            }
+
+            return View();
+        }
+
+        #endregion
+
         #region Site Setting
 
         [HttpGet("site-setting")]

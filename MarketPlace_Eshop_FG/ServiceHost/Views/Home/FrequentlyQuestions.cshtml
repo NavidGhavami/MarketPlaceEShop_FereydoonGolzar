@@ -1,0 +1,47 @@
+﻿@model List<MarketPlace.DataLayer.Entities.Site.FrequentlyQuestion>
+
+@{
+    ViewData["Title"] = "سوالات متداول";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1 class="page-title">سوالات متداول</h1>
+    </div><!-- End .container -->
+</div>
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="container">
+        <h2 class="title text-center mb-3">هر آنچه که نیاز دارید بدانید!</h2><!-- End .title -->
+        <div class="accordion accordion-rounded" id="accordion-1">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var faq in Model)
+                {
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-1">
+                            <h2 class="card-title">
+                                <a role="button" data-toggle="collapse" href="#collapse-@faq.Id" aria-expanded="true" aria-controls="collapse-@faq.Id">
+                                    @faq.QuestionHeader
+                                </a>
+                            </h2>
+                        </div><!-- End .card-header -->
+                        <div id="collapse-@faq.Id" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
+                            <div class="card-body">
+                                @faq.QuestionText
+                            </div><!-- End .card-body -->
+                        </div><!-- End .collapse -->
+                    </div><!-- End .card -->
+                }
+            }
+        </div><!-- End .accordion -->
+    </div><!-- End .container -->
+</div>

@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
+using MarketPlace.DataLayer.DTOs.Paging;
+using MarketPlace.DataLayer.DTOs.Seller;
 using MarketPlace.DataLayer.DTOs.Site;
 using MarketPlace.DataLayer.Entities.Site;
+using MarketPlace.DataLayer.Entities.Store;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -22,12 +25,15 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<SiteSetting> _siteSettingRepository;
         private readonly IGenericRepository<Slider> _sliderRepository;
         private readonly IGenericRepository<SiteBanner> _siteBanner;
+        private readonly IGenericRepository<FrequentlyQuestion> _frequentlyQuestionRepository;
 
-        public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository, IGenericRepository<SiteBanner> siteBanner)
+        public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository,
+            IGenericRepository<SiteBanner> siteBanner, IGenericRepository<FrequentlyQuestion> frequentlyQuestionRepository)
         {
             _siteSettingRepository = siteSettingRepository;
             _sliderRepository = sliderRepository;
             _siteBanner = siteBanner;
+            _frequentlyQuestionRepository = frequentlyQuestionRepository;
         }
 
         #endregion
@@ -386,6 +392,101 @@ namespace MarketPlace.Application.Services.Implementations
             return true;
         }
 
+        public async Task<List<FrequentlyQuestion>> GetAllFrequentlyQuestions()
+        {
+            return await _frequentlyQuestionRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => !x.IsDelete)
+                .OrderBy(x=>x.Id)
+                .ToListAsync();
+        }
+
+        #endregion
+
+        #region Frequently Questions
+
+        public async Task<FilterFrequentlyQuestionDTO> GetFrequentlyQuestions(FilterFrequentlyQuestionDTO filter)
+        {
+            var query = _frequentlyQuestionRepository
+                .GetQuery()
+                .AsQueryable();
+
+
+            #region Paging
+
+
+            var faqCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, faqCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetFaq(allEntities);
+        }
+
+        public async Task<CreateFaqResult> CreateFrequentlyQuestion(CreatefrequentlyQuestionDTO faq)
+        {
+            var newFaq = new FrequentlyQuestion
+            {
+                QuestionHeader = faq.QuestionHeader,
+                QuestionText = faq.QuestionText
+            };
+
+            await _frequentlyQuestionRepository.AddEntity(newFaq);
+            await _frequentlyQuestionRepository.SaveChanges();
+
+            return CreateFaqResult.Success;
+        }
+
+        public async Task<EditFrequentlyQuestionDTO> GetFrequentlyQuestionForEdit(long faqId)
+        {
+            var faq = await _frequentlyQuestionRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == faqId);
+
+
+            if (faq == null)
+            {
+                return null;
+            }
+
+            return new EditFrequentlyQuestionDTO
+            {
+                Id = faq.Id,
+                QuestionHeader = faq.QuestionHeader,
+                QuestionText = faq.QuestionText
+            };
+        }
+
+        public async Task<EditFrequentlyQuestionResult> EditFrequentlyQuestion(EditFrequentlyQuestionDTO edit)
+        {
+            var mainFaq = await _frequentlyQuestionRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == edit.Id);
+
+            if (mainFaq == null)
+            {
+                return EditFrequentlyQuestionResult.NotFound;
+            }
+
+            mainFaq.Id = edit.Id;
+            mainFaq.QuestionHeader = edit.QuestionHeader;
+            mainFaq.QuestionText = edit.QuestionText;
+
+            _frequentlyQuestionRepository.EditEntity(mainFaq);
+            await _frequentlyQuestionRepository.SaveChanges();
+
+            return EditFrequentlyQuestionResult.Success;
+
+        }
+
         #endregion
 
         #region Dispose
@@ -399,6 +500,14 @@ namespace MarketPlace.Application.Services.Implementations
             if (_sliderRepository != null)
             {
                 await _sliderRepository.DisposeAsync();
+            }
+            if (_siteBanner != null)
+            {
+                await _siteBanner.DisposeAsync();
+            }
+            if (_frequentlyQuestionRepository != null)
+            {
+                await _frequentlyQuestionRepository.DisposeAsync();
             }
         }
 

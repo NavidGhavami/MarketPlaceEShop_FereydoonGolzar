@@ -30,6 +30,7 @@ namespace MarketPlace.DataLayer.Context
         public DbSet<SiteSetting> SiteSettings { get; set; }
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<SiteBanner> SiteBanners { get; set; }
+        public DbSet<FrequentlyQuestion> FrequentlyQuestions { get; set; }
 
         #endregion
 

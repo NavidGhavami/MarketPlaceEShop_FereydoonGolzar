@@ -1,0 +1,51 @@
+﻿@model MarketPlace.DataLayer.DTOs.Site.CreatefrequentlyQuestionDTO
+
+@{
+    ViewData["Title"] = "افزودن سوال جدید";
+}
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت صفحات</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-plus"></i> @ViewData["Title"]</div>
+            <div class="card-body">
+
+                <form asp-area="Administration" asp-controller="Home" asp-action="CreateFrequentlyQuestion" method="post" id="filter-form">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>عنوان سوال</label>
+                            <input class="form-control" asp-for="QuestionHeader" />
+                            <span class="text-danger float-right" asp-validation-for="QuestionHeader"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>پاسخ سوال</label>
+                            <textarea class="form-control" rows="5" asp-for="QuestionText"></textarea>
+                            <span class="text-danger float-right" asp-validation-for="QuestionText"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">افزودن سوال</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

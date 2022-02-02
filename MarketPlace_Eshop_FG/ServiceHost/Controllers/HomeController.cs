@@ -75,6 +75,17 @@ namespace ServiceHost.Controllers
 
         #endregion
 
+        #region Frequently Question
+
+        [HttpGet("frequently-questions")]
+        public async Task<IActionResult> FrequentlyQuestions()
+        {
+            var data = await _siteService.GetAllFrequentlyQuestions();
+            return View(data);
+        }
+
+        #endregion
+
         #region 404 NotFound Page
 
         [HttpGet("404Error-page-not-found")]
