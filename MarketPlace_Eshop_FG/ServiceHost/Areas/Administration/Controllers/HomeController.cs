@@ -50,7 +50,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View();
         }
 
-        [HttpPost("create-frequently-question")]
+        [HttpPost("create-frequently-question"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateFrequentlyQuestion(CreatefrequentlyQuestionDTO faq)
         {
             var result = await _siteService.CreateFrequentlyQuestion(faq);
@@ -76,7 +76,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View(faq);
         }
 
-        [HttpPost("edit-frequently-question/{faqId}")]
+        [HttpPost("edit-frequently-question/{faqId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditFrequentlyQuestion(EditFrequentlyQuestionDTO edit)
         {
             var result = await _siteService.EditFrequentlyQuestion(edit);
@@ -112,7 +112,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View(setting);
         }
 
-        [HttpPost("site-setting/{settingId}")]
+        [HttpPost("site-setting/{settingId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditSiteSetting(EditSiteSettingDTO edit)
         {
             var result = await _siteService.EditSiteSetting(edit);
@@ -158,7 +158,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View();
         }
 
-        [HttpPost("create-about-us")]
+        [HttpPost("create-about-us"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAboutUs(CreateAboutUsDTO create, IFormFile aboutImage)
         {
             var result = await _contactService.CreateAboutUs(create, aboutImage);
@@ -183,7 +183,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View(result);
         }
 
-        [HttpPost("edit-about-us/{id}")]
+        [HttpPost("edit-about-us/{id}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAboutUs(EditAboutUsDTO edit, IFormFile aboutImage)
         {
             var result = await _contactService.EditAboutUs(edit, aboutImage);
@@ -223,7 +223,7 @@ namespace ServiceHost.Areas.Administration.Controllers
         }
 
 
-        [HttpPost("create-slider")]
+        [HttpPost("create-slider"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSlider(CreateSliderDTO slider, IFormFile sliderImage)
         {
             var result = await _siteService.CreateSlider(slider,sliderImage);
@@ -248,7 +248,7 @@ namespace ServiceHost.Areas.Administration.Controllers
 
         }
 
-        [HttpPost("edit-slider/{sliderId}")]
+        [HttpPost("edit-slider/{sliderId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditSlider(EditSliderDTO edit, IFormFile sliderImage)
         {
             var result = await _siteService.EditSlider(edit, sliderImage);
@@ -303,7 +303,7 @@ namespace ServiceHost.Areas.Administration.Controllers
         }
 
 
-        [HttpPost("create-banner")]
+        [HttpPost("create-banner"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBanner(CreateBannerDTO banner, IFormFile bannerImage)
         {
             var result = await _siteService.CreateBanner(banner, bannerImage);
@@ -327,7 +327,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View(banner);
         }
 
-        [HttpPost("edit-banner/{bannerId}")]
+        [HttpPost("edit-banner/{bannerId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditBanner(EditBannerDTO edit, IFormFile bannerImage)
         {
             var result= await _siteService.EditBanner(edit, bannerImage);
@@ -380,6 +380,7 @@ namespace ServiceHost.Areas.Administration.Controllers
         #endregion
 
         #region Edit User
+
         [Authorize("UserManagement" , Roles = Roles.Administrator)]
         [HttpGet("edit-user/{userId}")]
         public async Task<IActionResult> EditUser(long userId)
@@ -397,7 +398,7 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View(user);
         }
 
-        [HttpPost("edit-user/{userId}")]
+        [HttpPost("edit-user/{userId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUser(EditUserDTO edit)
         {
             var result = await _userService.EditUser(edit);

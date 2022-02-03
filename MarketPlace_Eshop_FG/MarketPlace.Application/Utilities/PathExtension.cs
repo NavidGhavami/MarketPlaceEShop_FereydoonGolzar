@@ -18,6 +18,23 @@ namespace MarketPlace.Application.Utilities
 
         #endregion
 
+        #region Blog
+
+        public static string ArticleCategoryOrigin = "/Content/Images/ArticleCategory/Origin/";
+        public static string ArticleCategoryOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/ArticleCategory/Origin/");
+                             
+        public static string ArticleCategoryThumb = "/Content/Images/ArticleCategory/Thumb/";
+        public static string ArticleCategoryThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/ArticleCategory/Thumb/");
+
+
+        public static string ArticleOrigin = "/Content/Images/Article/Origin/";
+        public static string ArticleOriginServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Article/Origin/");
+
+        public static string ArticleThumb = "/Content/Images/Article/Thumb/";
+        public static string ArticleThumbServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Content/Images/Article/Thumb/");
+
+        #endregion
+
         #region Uploader
 
         public static string UploaderImage = "/Theme/assets/images/upload/";

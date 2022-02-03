@@ -8,7 +8,8 @@
 
 @section scripts
 {
-    <partial name="_JqueryValidators" />
+    <partial name="_AdminJqueryValidators" />
+
 }
 
 <div class="row pt-2 pb-2">
@@ -70,7 +71,7 @@
                                             <tr id="ajax-url-item-@faq.Id" role="row" class="odd">
                                                 <td class="sorting">@faq.Id</td>
                                                 <td>@faq.QuestionHeader</td>
-                                                <td>@(faq.QuestionText.Substring(0, Math.Min(faq.QuestionText.Length, 80)) + "..."))</td>
+                                                <td>@(faq.QuestionText.Substring(0, Math.Min(faq.QuestionText.Length, 80)) + "...")</td>
                                                 <td>@faq.CreateDate.ToStringShamsiDate()</td>
                                                 <td>
                                                     <a class="btn btn-sm btn-warning"

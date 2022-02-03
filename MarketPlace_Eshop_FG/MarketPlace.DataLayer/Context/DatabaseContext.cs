@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using MarketPlace.DataLayer.Entities.Account;
+using MarketPlace.DataLayer.Entities.Blog;
 using MarketPlace.DataLayer.Entities.Contact;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
@@ -7,7 +8,6 @@ using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Entities.Store;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace MarketPlace.DataLayer.Context
 {
@@ -67,6 +67,13 @@ namespace MarketPlace.DataLayer.Context
 
         public DbSet<ProductDiscount> ProductDiscounts { get; set; }
         public DbSet<ProductDiscountUse> ProductDiscountUses { get; set; }
+
+        #endregion
+
+        #region Blog
+
+        public DbSet<ArticleCategory> ArticleCategories { get; set; }
+        public DbSet<Article> Articles { get; set; }
 
         #endregion
 
