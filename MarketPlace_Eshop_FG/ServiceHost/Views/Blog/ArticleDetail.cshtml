@@ -1,0 +1,82 @@
+﻿@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.Blog.Article.ArticleDTO
+@{
+    ViewData["Title"] = "جزییات مقاله";
+    ViewData["metaDescription"] = Model.MetaDescription;
+    ViewData["keywords"] = Model.Keywords;
+}
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a href="#">مقالات</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <figure class="entry-media">
+        <img src="@(PathExtension.ArticleOrigin + Model.Image)" alt="@Model.Title" title="@Model.Title">
+    </figure><!-- End .entry-media -->
+    <div class="container">
+        <article class="entry single-entry entry-fullwidth">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="entry-body">
+                        <div class="entry-meta">
+                            <span class="entry-author">
+                                نویسنده : <a href="#">مدیر سایت</a>
+                            </span>
+                            <span class="meta-separator">|</span>
+                            <a href="#">@Model.PublishDate</a>
+                            <span class="meta-separator">|</span>
+                            <a href="#">@Model.CategoryName</a>
+                        </div><!-- End .entry-meta -->
+                        <br />
+                        <h1 class="entry-title entry-title-big">
+                            @Model.Title
+                        </h1><!-- End .entry-title -->
+
+
+                        <div class="entry-content editor-content">
+                            <p>
+                                @Html.Raw(Model.Description)
+                            </p>
+
+
+                        </div><!-- End .entry-content -->
+
+                        <div class="entry-footer row no-gutters">
+                            <div class="col-12">
+                                <div class="entry-tags">
+                                    <span>کلمات کلیدی : </span>
+                                    @if (Model.KeywordList != null && Model.KeywordList.Any())
+                                    {
+                                        @foreach (var tag in Model.KeywordList)
+                                        {
+                                            <a href="#">@tag</a>
+                                        }
+                                    }
+                                </div><!-- End .entry-tags -->
+                            </div><!-- End .col -->
+                        </div><!-- End .entry-footer row no-gutters -->
+                    </div><!-- End .entry-body -->
+                </div><!-- End .col-lg-11 -->
+
+                <div class="col-lg-1 order-lg-first mb-2 mb-lg-0">
+                    <div class="sticky-content" style="">
+                        <div class="social-icons social-icons-colored social-icons-vertical">
+                            <span class="social-label">اشتراک گذاری</span>
+                            <a href="#" class="social-icon social-facebook" title="فیسبوک" target="_blank"><i class="icon-facebook-f"></i></a>
+                            <a href="#" class="social-icon social-twitter" title="توییتر" target="_blank"><i class="icon-twitter"></i></a>
+                            <a href="#" class="social-icon social-pinterest" title="پینترست" target="_blank"><i class="icon-pinterest"></i></a>
+                            <a href="#" class="social-icon social-linkedin" title="لینکدین" target="_blank"><i class="icon-linkedin"></i></a>
+                        </div><!-- End .soial-icons -->
+                    </div><!-- End .sticky-content -->
+                </div><!-- End .col-lg-1 -->
+            </div><!-- End .row -->
+        </article><!-- End .entry -->
+    </div><!-- End .container -->
+</div>

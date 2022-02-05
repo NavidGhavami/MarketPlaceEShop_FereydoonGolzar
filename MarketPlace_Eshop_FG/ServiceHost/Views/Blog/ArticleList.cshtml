@@ -1,0 +1,126 @@
+﻿@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.Blog.Article.FilterArticleDTO
+@{
+    ViewData["Title"] = "لیست مقالات";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1 class="page-title">مقالات فروشگاه</h1>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a href="#">مقالات فروشگاه</a></li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="container">
+        <form method="get" asp-area="" asp-controller="Blog" asp-action="ArticleList" id="filter-form">
+            <input type="hidden" asp-for="PageId"/>
+            <div class="row">
+                <div class="col-lg-9">
+                    @if (Model.Articles != null && Model.Articles.Any())
+                    {
+                        foreach (var article in Model.Articles)
+                        {
+
+                            <article class="entry entry-list">
+                                <div class="row align-items-center">
+                                    <div class="col-md-5">
+                                        <figure class="entry-media">
+                                            <a asp-area="" asp-controller="Blog" asp-action="ArticleDetail" asp-route-articleId="@article.Id" asp-route-title="@article.Title">
+                                                <img src="@(PathExtension.ArticleOrigin + article.Image)" alt="@article.Title" title="@article.Title">
+                                            </a>
+                                        </figure><!-- End .entry-media -->
+                                    </div><!-- End .col-md-5 -->
+
+                                    <div class="col-md-7">
+                                        <div class="entry-body">
+                                            <div class="entry-meta">
+                                                <span class="entry-author">
+                                                    نویسنده : <a href="#">مدیر سایت</a>
+                                                </span>
+                                                <span class="meta-separator">|</span>
+                                                <a href="#">@article.PublishDate.ToStringShamsiDate()</a>
+                                            </div><!-- End .entry-meta -->
+
+                                            <h2 class="entry-title">
+                                                <a asp-area="" asp-controller="Blog" asp-action="ArticleDetail"
+                                                   asp-route-articleId="@article.Id" asp-route-title="@article.Title">
+                                                    @article.Title
+                                                </a>
+                                            </h2><!-- End .entry-title -->
+
+                                            <div class="entry-cats">
+                                                <a href="#">@article.ArticleCategory.Name</a>
+                                            </div><!-- End .entry-cats -->
+
+                                            <div class="entry-content">
+                                                <p>
+                                                    @article.ShortDescription
+                                                </p>
+                                                <a asp-area="" asp-controller="Blog" asp-action="ArticleDetail"
+                                                   asp-route-articleId="@article.Id" asp-route-title="@article.Title" class="read-more">
+                                                    ادامه
+                                                    خواندن
+                                                </a>
+                                            </div><!-- End .entry-content -->
+                                        </div><!-- End .entry-body -->
+                                    </div><!-- End .col-md-7 -->
+                                </div><!-- End .row -->
+                            </article><!-- End .entry -->
+                        }
+                    }
+                    <partial name="_PagingPartial" model="@Model.GetCurrentPaging()"/>
+                </div><!-- End .col-lg-9 -->
+
+                <aside class="col-lg-3">
+                    <div class="sidebar">
+
+                        @if (Model.Articles != null && Model.Articles.Any())
+                        {
+                            <div class="widget widget-cats">
+                                <h3 class="widget-title">دسته بندی ها</h3><!-- End .widget-title -->
+                                <ul>
+
+                                    @foreach (var category in ViewBag.category)
+                                    {
+                                        <li><a href="#">@category.Name<span>@category.Articles.Count</span></a></li>
+                                    }
+                                </ul>
+                            </div><!-- End .widget -->
+
+                            <div class="widget">
+                                <h3 class="widget-title">آخرین مقالات</h3><!-- End .widget-title -->
+
+                                <ul class="posts-list">
+                                    @foreach (var item in Model.Articles)
+                                    {
+                                        <li>
+                                            <figure>
+                                                <a asp-area="" asp-controller="Blog" asp-action="ArticleDetail" asp-route-articleId="@item.Id" asp-route-title="@item.Title">
+                                                    <img src="@(PathExtension.ArticleOrigin + item.Image)" alt="@item.Title" title="@item.Title">
+                                                </a>
+                                            </figure>
+
+                                            <div>
+                                                <span>@item.PublishDate</span>
+                                                <h4><a href="#">@item.Title</a></h4>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul><!-- End .posts-list -->
+                            </div><!-- End .widget -->
+                        }
+                    </div><!-- End .sidebar -->
+                </aside><!-- End .col-lg-3 -->
+            </div><!-- End .row -->
+        </form>
+    </div><!-- End .container -->
+</div>

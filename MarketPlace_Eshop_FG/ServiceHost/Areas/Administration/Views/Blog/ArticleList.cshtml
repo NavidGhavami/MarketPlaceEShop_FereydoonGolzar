@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group col-lg-5">
                             <label>دسته مقاله</label>
-                            <select class="form-control" asp-for="CategoryId" asp-items='new SelectList(ViewBag.Category, "Id", "Name")'>
+                            <select class="form-control" asp-for="ArticleCategoryId" asp-items='new SelectList(ViewBag.Category, "Id", "Name")'>
                                 <option value="0">دسته مقاله مورد نظر را انتخاب نمایید...</option>
                             </select>
                         </div>
@@ -70,6 +70,7 @@
                                                 <th class="sorting_asc">شناسه</th>
                                                 <th class="sorting">تصویر</th>
                                                 <th class="sorting">عنوان مقاله</th>
+                                                <th class="sorting">دسته مقاله</th>
                                                 <th class="sorting">توضیحات کوتاه</th>
                                                 <th class="sorting">تاریخ انتشار</th>
                                                 <th class="sorting">تاریخ ایجاد</th>
@@ -87,6 +88,7 @@
                                                          src="@(!string.IsNullOrEmpty(article.Image) ? PathExtension.ArticleOrigin + article.Image : PathExtension.DefaultAvatar)" title="@article.Title" />
                                                 </td>
                                                 <td>@article.Title</td>
+                                                <td>@article.ArticleCategory.Name</td>
                                                 <td>@(article.ShortDescription.Substring(0, Math.Min(article.ShortDescription.Length, 50)) + " ...")</td>
                                                 <td>@article.PublishDate.ToStringShamsiDate()</td>
                                                 <td>@article.CreateDate.ToStringShamsiDate()</td>

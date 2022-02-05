@@ -2,17 +2,12 @@
 @using MarketPlace.DataLayer.DTOs.Products
 @using MarketPlace.DataLayer.Entities.Products
 @model MarketPlace.DataLayer.DTOs.Products.FilterProductDTO
+
 @{
     ViewData["Title"] = "محصولات فروشگاه";
     var productCategories = ViewBag.ProductCategories as List<ProductCategory>;
     var productColor = ViewBag.ProductColors as List<ProductColor>;
-
-
 }
-
-
-
-
 
 
 <div class="page-header text-center">

@@ -7,7 +7,7 @@ namespace MarketPlace.DataLayer.Entities.Blog
     public class Article : BaseEntity
     {
         #region Properties
-        public long CategoryId { get; set; }
+        public long ArticleCategoryId { get; set; }
 
         [Display(Name = "عنوان مقاله")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]

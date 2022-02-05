@@ -9,9 +9,7 @@ using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Blog.Article;
 using MarketPlace.DataLayer.DTOs.Blog.ArticleCategory;
 using MarketPlace.DataLayer.DTOs.Paging;
-using MarketPlace.DataLayer.DTOs.Site;
 using MarketPlace.DataLayer.Entities.Blog;
-using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +39,7 @@ namespace MarketPlace.Application.Services.Implementations
         {
             var articleCategory = await _articleCategoryRepository
                 .GetQuery()
+                .Include(x=>x.Articles)
                 .AsQueryable()
                 .ToListAsync();
 
@@ -158,9 +157,9 @@ namespace MarketPlace.Application.Services.Implementations
 
             #region Filter
 
-            if (filter.CategoryId != 0)
+            if (filter.ArticleCategoryId != 0)
             {
-                query = query.Where(x => x.CategoryId == filter.CategoryId);
+                query = query.Where(x => x.ArticleCategoryId == filter.ArticleCategoryId);
             }
 
             if (!string.IsNullOrEmpty(filter.Title))
@@ -178,7 +177,7 @@ namespace MarketPlace.Application.Services.Implementations
             var pager = Pager.Build(filter.PageId, articleCount, filter.TakeEntity,
                 filter.HowManyShowPageAfterAndBefore);
 
-            var allEntities = await query.Paging(pager).ToListAsync();
+            var allEntities = await query.Paging(pager).OrderByDescending(x=>x.Id).ToListAsync();
 
 
             #endregion
@@ -196,7 +195,7 @@ namespace MarketPlace.Application.Services.Implementations
 
                 var newArticle = new Article
                 {
-                    CategoryId = article.CategoryId,
+                    ArticleCategoryId = article.CategoryId,
                     Title = article.Title,
                     Image = imageName,
                     CanonicalAddress = article.CanonicalAddress,
@@ -221,13 +220,13 @@ namespace MarketPlace.Application.Services.Implementations
             var article = await _articleRepository
                 .GetQuery()
                 .AsQueryable()
-                .Include(x=>x.ArticleCategory)
+                .Include(x => x.ArticleCategory)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             return new EditArticleDTO
             {
                 Id = article.Id,
-                CategoryId = article.CategoryId,
+                CategoryId = article.ArticleCategoryId,
                 Title = article.Title,
                 CanonicalAddress = article.CanonicalAddress,
                 Description = article.Description,
@@ -274,15 +273,67 @@ namespace MarketPlace.Application.Services.Implementations
             return EditArticleResult.Success;
         }
 
+        public async Task<List<ArticleDTO>> LatestArticles(int take = 10)
+        {
+            return await _articleRepository
+                .GetQuery()
+                .Include(x => x.ArticleCategory)
+                .AsQueryable()
+                .Where(x => !x.IsDelete && x.PublishDate <= DateTime.Now)
+                .Take(take)
+                .OrderByDescending(x=>x.Id)
+                .Select(x => new ArticleDTO
+                {
+                    Id = x.Id,
+                    CategoryId = x.ArticleCategoryId,
+                    CategoryName = x.ArticleCategory.Name,
+                    CanonicalAddress = x.CanonicalAddress,
+                    Description = x.Description,
+                    ShortDescription = x.ShortDescription,
+                    Image = x.Image,
+                    Keywords = x.Keywords,
+                    MetaDescription = x.MetaDescription,
+                    PublishDate = x.PublishDate.ToStringShamsiDate(),
+                    Title = x.Title,
+
+                }).ToListAsync();
+
+        }
+
+        public async Task<ArticleDTO> GetArticleDetails(long articleId)
+        {
+            var article = await _articleRepository
+                .GetQuery()
+                .Include(x => x.ArticleCategory)
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == articleId);
+
+            if (article == null)
+            {
+                return new ArticleDTO();
+            }
+
+            var articleDetail = new ArticleDTO
+            {
+                Id = article.Id,
+                Title = article.Title,
+                CategoryId = article.ArticleCategoryId,
+                CategoryName = article.ArticleCategory.Name,
+                CanonicalAddress = article.CanonicalAddress,
+                Description = article.Description,
+                ShortDescription = article.ShortDescription,
+                Image = article.Image,
+                Keywords = article.Keywords,
+                MetaDescription = article.MetaDescription,
+                PublishDate = article.PublishDate.ToStringShamsiDate(),
+                KeywordList = article.Keywords.Split(".").ToList()
+            };
+
+
+            return articleDetail;
+        }
 
         #endregion
-
-
-
-
-
-
-
 
 
         #region Dispose

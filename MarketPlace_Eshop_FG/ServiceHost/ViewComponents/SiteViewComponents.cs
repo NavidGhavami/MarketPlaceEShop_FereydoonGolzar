@@ -295,4 +295,25 @@ namespace ServiceHost.ViewComponents
 
     #endregion
 
+    #region Latest Articles
+
+    public class LatestArticlesViewComponent : ViewComponent
+    {
+        private readonly IBlogService _blogService;
+
+        public LatestArticlesViewComponent(IBlogService blogService)
+        {
+            _blogService = blogService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            ViewData["LatestArticles"] = await _blogService.LatestArticles();
+            return View("LatestArticles");
+        }
+
+    }
+
+    #endregion
+
 }

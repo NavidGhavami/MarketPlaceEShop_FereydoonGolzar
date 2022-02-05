@@ -8,7 +8,7 @@ namespace MarketPlace.DataLayer.DTOs.Blog.Article
     {
         #region Properties
 
-        public long CategoryId { get; set; }
+        public long ArticleCategoryId { get; set; }
         public string Title { get; set; }
         public string Image { get; set; }
         public string ShortDescription { get; set; }

@@ -26,6 +26,8 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<CreateArticleResult> CreateArticle(CreateArticleDTO article, IFormFile articleImage);
         Task<EditArticleDTO> GetArticleForEdit(long id);
         Task<EditArticleResult> EditArticle(EditArticleDTO edit, IFormFile articleImage);
+        Task<List<ArticleDTO>> LatestArticles(int take = 10);
+        Task<ArticleDTO> GetArticleDetails(long articleId);
 
         #endregion
     }

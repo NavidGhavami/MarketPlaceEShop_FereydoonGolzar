@@ -43,6 +43,7 @@ namespace ServiceHost.Areas.Seller.Controllers
         {
             var seller = await _sellerService.GetLastActiveSellerByUserId(User.GetUserId());
 
+            filter.TakeEntity = 10;
             filter.SellerId = seller.Id;
             filter.ProductState = FilterProductState.All;
             filter = await _productService.FilterProductsInAdmin(filter);
