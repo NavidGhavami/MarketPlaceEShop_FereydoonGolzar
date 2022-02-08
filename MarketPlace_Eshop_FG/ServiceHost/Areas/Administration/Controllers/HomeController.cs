@@ -4,9 +4,11 @@ using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Account;
 using MarketPlace.DataLayer.DTOs.Contact;
 using MarketPlace.DataLayer.DTOs.Site;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ServiceHost.PresentationExtensions;
 
 namespace ServiceHost.Areas.Administration.Controllers
 {
@@ -494,6 +496,54 @@ namespace ServiceHost.Areas.Administration.Controllers
             return View();
         }
 
+
+        #endregion
+
+        #region SignOut
+
+        [HttpGet("log-out")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region Edit User Profile
+
+        [HttpGet("my-profile")]
+        public async Task<IActionResult> GetUserProfile()
+        {
+            var user = await _userService.GetUserProfile(User.GetUserId());
+            return View(user);
+        }
+
+        [HttpGet("edit-profile/{userId}")]
+        public async Task<IActionResult> EditProfile(long userId)
+        {
+            var user = await _userService.GetProfileForEdit(userId);
+            return View(user);
+        }
+
+        [HttpPost("edit-profile/{userId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile(EditUserProfileDTO edit, IFormFile avatarImage)
+        {
+            var result = await _userService.EditUserProfile(edit, User.GetUserId(), avatarImage);
+
+            switch (result)
+            {
+                case EditUserProfileResult.NotFound:
+                    TempData[WarningMessage] = "مشخصات کاربری شما یافت نشد";
+                    break;
+                case EditUserProfileResult.Success:
+                    TempData[SuccessMessage] = "ویرایش پروفایل من با موفقیت انجام شد";
+                    TempData[InfoMessage] = "برای اعمال تغییرات خروج نمایید و مجددا وارد سایت شوید";
+                    return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
 
         #endregion
 

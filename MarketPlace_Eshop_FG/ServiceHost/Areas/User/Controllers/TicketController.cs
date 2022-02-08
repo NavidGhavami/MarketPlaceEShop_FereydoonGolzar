@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Contact;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,6 @@ namespace ServiceHost.Areas.User.Controllers
         public async Task<IActionResult> Index(FilterTicketDTO filter)
         {
             filter.UserId = User.GetUserId();
-            filter.FilterTicketState = FilterTicketState.NotDeleted;
             filter.OrderBy = FilterTicketOrder.CreateDateDescending;
 
             var result = await _contactService.FilterTickets(filter);

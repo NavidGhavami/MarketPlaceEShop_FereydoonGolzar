@@ -40,6 +40,10 @@ namespace MarketPlace.DataLayer.Entities.Contact
 
     public enum TicketSection
     {
+
+        [Display(Name = "همه")]
+        All,
+
         [Display(Name = "پشتیبانی")]
         Support,
 
@@ -53,6 +57,9 @@ namespace MarketPlace.DataLayer.Entities.Contact
 
     public enum TicketPriority
     {
+        [Display(Name = "همه")]
+        All,
+
         [Display(Name = "کم")]
         Low,
 
@@ -65,6 +72,9 @@ namespace MarketPlace.DataLayer.Entities.Contact
 
     public enum TicketState
     {
+        [Display(Name = "همه")]
+        All,
+
         [Display(Name = "درحال بررسی")]
         UnderProgress,
 

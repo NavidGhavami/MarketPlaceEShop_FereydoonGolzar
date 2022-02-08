@@ -13,7 +13,7 @@ namespace MarketPlace.Application.Utilities
 
         #region Default Images
 
-        public static string DefaultAvatar = "/Theme/assets/images/defaults/no-photo.png";
+        public static string DefaultAvatar = "/Theme/assets/images/defaults/no-image.jpg";
 
 
         #endregion

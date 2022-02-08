@@ -1,0 +1,161 @@
+﻿@using MarketPlace.Application.Utilities
+@using MarketPlace.DataLayer.DTOs.Common
+@using MarketPlace.DataLayer.DTOs.Products
+@using MarketPlace.DataLayer.Entities.Products
+@using MarketPlace.Application.Extensions
+@using MarketPlace.DataLayer.DTOs.Contact
+@using MarketPlace.DataLayer.Entities.Contact
+@model MarketPlace.DataLayer.DTOs.Contact.FilterTicketDTO
+
+@{
+    ViewData["Title"] = "لیست تیکت ها";
+}
+
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت تیکت ها</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-filter"></i> فیلتر ها</div>
+            <div class="card-body">
+
+                <form asp-area="Administration" asp-controller="Ticket" asp-action="TicketList" method="get" id="filter-form">
+                    <input type="hidden" asp-for="PageId" />
+                    <div class="row">
+                        <div class="form-group col-lg-5">
+                            <label>عنوان تیکت</label>
+                            <input class="form-control" asp-for="Title" />
+                        </div>
+                        <div class="form-group col-lg-7">
+                            <div>
+                                <label>وضعیت تیکت</label>
+                            </div>
+                            @foreach (var item in Html.GetEnumSelectList<FilterTicketState>())
+                            {
+                                <div class=" radio icheck-material-white icheck-inline">
+                                    <label>
+                                        <input type="radio" style="width: 16px;height: 16px" value="@item.Value" name="@nameof(Model.FilterTicketState)"
+                                               @(Convert.ToInt32(item.Value) == Convert.ToInt32(Model.FilterTicketState) ? "checked" : "")>
+                                        <span class="text">@item.Text</span>
+                                    </label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">اعمال فیلتر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-table"></i> @ViewData["Title"]</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="default-datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @if (Model.Tickets != null && Model.Tickets.Any())
+                                {
+                                    <table id="default-datatable" class="table table-bordered dataTable" role="grid" aria-describedby="default-datatable_info">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="sorting_asc">شناسه</th>
+                                                <th class="sorting">عنوان تیکت</th>
+                                                <th class="sorting">نام کاربر</th>
+                                                <th class="sorting">واحد</th>
+                                                <th class="sorting">اولویت</th>
+                                                <th class="sorting">وضعیت</th>
+                                                <th class="sorting">خوانده شده توسط کاربر</th>
+                                                <th class="sorting">خوانده شده توسط ادمین</th>
+                                                <th class="sorting">تاریخ ایجاد</th>
+                                                <th class="sorting">دستورات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach (var ticket in Model.Tickets)
+                                            {
+                                                <tr id="ajax-url-item-@ticket.Id" role="row" class="odd">
+                                                    <td>@ticket.Id</td>
+                                                    <td>@ticket.Title</td>
+                                                    <td>@(ticket.Owner.FirstName + " " + ticket.Owner.LastName)</td>
+                                                    <td>@ticket.TicketSection.GetEnumName()</td>
+                                                    <td>@ticket.TicketPriority.GetEnumName()</td>
+                                                    <td>
+                                                        @switch (ticket.TicketState)
+                                                        {
+                                                            case TicketState.UnderProgress:
+                                                            <span class="text-warning">@ticket.TicketState.GetEnumName()</span>
+                                                            break;
+                                                        case TicketState.Answered:
+                                                            <span class="text-success">@ticket.TicketState.GetEnumName()</span>
+                                                            break;
+                                                        case TicketState.Closed:
+                                                            <span class="text-danger">@ticket.TicketState.GetEnumName()</span>
+                                                            break;
+
+                                                    }
+                                                        </td>
+                                                        <td>@(ticket.IsReadByOwner == true ? "خوانده شده" : "خوانده نشده")</td>
+                                                        <td>@(ticket.IsReadByAdmin == true ? "خوانده شده" : "خوانده نشده")</td>
+                                                        <td>@ticket.CreateDate.ToStringShamsiDate()</td>
+                                                        <td>
+                                                            
+                                                            <a class="btn btn-sm btn-success"
+                                                               asp-area="Administration" asp-controller="Ticket"
+                                                               asp-action="AdminTicketDetail"
+                                                               asp-route-ticketId="@ticket.Id">
+                                                                نمایش جزییات و ارسال پاسخ به تیکت
+                                                            </a>
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                }
+                                        </tbody>
+                                    </table>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning alert-dismissible mb-0" role="alert">
+                                        <div class="alert-icon">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="alert-message text-dark">
+                                            <span><strong>هشدار!</strong> هیچ اطلاعاتی یافت نشد</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                        <hr />
+                    </div>
+                </div>
+                <br />
+                <partial name="_AdminPaging" model="@Model.GetCurrentPaging()" />
+                <div class="col-sm-12 col-md-12">
+                    <div class="dataTables_info" id="default-datatable_info" role="status" aria-live="polite">نمایش تعداد 10 تیکت در هر صفحه از تعداد کل : @Model.Tickets.Count تیکت</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

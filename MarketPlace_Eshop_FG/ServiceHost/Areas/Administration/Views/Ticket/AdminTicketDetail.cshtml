@@ -1,0 +1,95 @@
+﻿@using MarketPlace.Application.Utilities
+@using MarketPlace.DataLayer.DTOs.Contact
+@model MarketPlace.DataLayer.DTOs.Contact.TicketDetailDTO
+
+@{
+    ViewData["Ticket"] = Model.Ticket.Title;
+    ViewData["Title"] = " جزییات و ارسال پاسخ به تیکت";
+}
+
+@section styles
+{
+    <link href="/Theme/assets/css/ChatRoom.css" rel="stylesheet" />
+}
+
+@section scripts
+{
+    <partial name="_JqueryValidators" />
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت تیکت ها</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Ticket"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-table"></i> @ViewData["Title"] | @ViewData["Ticket"]</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div id="default-datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <partial name="_AdminAnswerTicketPartial" model="@(new AnswerTicketDTO{Id = Model.Ticket.Id})" />
+                            </div>
+
+                            <hr />
+                            <div class="col-sm-12">
+                                @if (Model.TicketMessage != null && Model.TicketMessage.Any())
+                                {
+                                    <ul class="messages" id="messages">
+                                        @foreach (var message in Model.TicketMessage)
+                                        {
+                                            <li class="message @(message.SenderId == Model.Ticket.OwnerId ? "left" : "right") appeared">
+                                                <div class="avatar">
+                                                    <img style="width: 70px; height: 80px;" src="@(PathExtension.DefaultAvatar)">
+                                                </div>
+                                                <div class="text_wrapper text-right">
+                                                    <div class="time text-dark">
+                                                        @message.CreateDate.ToStringShamsiDate() - ساعت: @message.CreateDate.ToString("HH:mm")
+                                                    </div>
+                                                    <br />
+                                                    <div class="text-right MessageText text-dark">
+                                                        @Html.Raw(message.Text)
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning alert-dismissible mb-0" role="alert">
+                                        <div class="alert-icon">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="alert-message text-dark">
+                                            <span><strong>هشدار!</strong> هیچ اطلاعاتی یافت نشد</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                        <hr />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

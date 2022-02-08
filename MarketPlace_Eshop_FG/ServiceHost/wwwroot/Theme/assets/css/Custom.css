@@ -7,9 +7,7 @@
 }
 
 .SliderContent {
-    padding-top: 70px;
-    padding-bottom: 80px;
-    position: relative;
+    padding-bottom: 145px;
 }
 
 .SlideHeight {
@@ -151,4 +149,12 @@
     .button-73 {
         font-size: 15px;
     }
+}
+
+
+
+.full-screen {
+    background-size: inherit;
+    background-position: center;
+    background-repeat: no-repeat;
 }

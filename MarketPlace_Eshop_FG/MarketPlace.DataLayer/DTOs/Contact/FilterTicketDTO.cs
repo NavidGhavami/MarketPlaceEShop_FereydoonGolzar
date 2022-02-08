@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.Entities.Contact;
 
@@ -12,6 +13,7 @@ namespace MarketPlace.DataLayer.DTOs.Contact
         public long? UserId { get; set; }
         public TicketSection? TicketSection { get; set; }
         public TicketPriority? TicketPriority { get; set; }
+        public TicketState? TicketState { get; set; }
         public FilterTicketState FilterTicketState { get; set; }
         public FilterTicketOrder OrderBy { get; set; }
         public List<Ticket> Tickets { get; set; }
@@ -46,9 +48,20 @@ namespace MarketPlace.DataLayer.DTOs.Contact
 
     public enum FilterTicketState
     {
+        [Display(Name = "همه")]
         All,
-        Deleted,
-        NotDeleted
+
+        [Display(Name = "درحال بررسی")]
+        UnderProgress,
+
+
+        [Display(Name = "بسته شده")]
+        Closed,
+
+        [Display(Name = "پاسخ داده شده")]
+        Answered,
+
+
     }
 
     public enum FilterTicketOrder

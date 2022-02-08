@@ -331,7 +331,20 @@ namespace MarketPlace.Application.Services.Implementations
             return EditUserResult.Success;
         }
 
-        
+        public async Task<EditUserProfileDTO> GetUserProfile(long userId)
+        {
+            return await _userRepository
+                .GetQuery()
+                .AsQueryable()
+                .Select(x => new EditUserProfileDTO
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Avatar = x.Avatar,
+                })
+                .SingleOrDefaultAsync(x => x.Id == userId);
+        }
 
         #endregion
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +7,7 @@ using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Contact;
 using MarketPlace.DataLayer.DTOs.Paging;
-using MarketPlace.DataLayer.DTOs.Site;
 using MarketPlace.DataLayer.Entities.Contact;
-using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -46,8 +43,8 @@ namespace MarketPlace.Application.Services.Implementations
             var query = _contactUsRepository
                 .GetQuery()
                 .AsQueryable()
-                .Include(x=>x.User)
-                .OrderByDescending(x=>x.Id);
+                .Include(x => x.User)
+                .OrderByDescending(x => x.Id);
 
             #region Filter
 
@@ -77,7 +74,7 @@ namespace MarketPlace.Application.Services.Implementations
         {
             var newContact = new ContactUs
             {
-                UserId = (userId != null && userId.Value != 0) ? userId.Value : (long?) null,
+                UserId = (userId != null && userId.Value != 0) ? userId.Value : (long?)null,
                 UserIp = userIp,
                 Email = contact.Email,
                 Mobile = contact.Mobile,
@@ -249,19 +246,26 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter)
         {
-            var query = _ticketRepository.GetQuery().AsQueryable();
+            var query = _ticketRepository
+                .GetQuery()
+                .Include(x => x.Owner)
+                .AsQueryable();
 
             #region State
 
             switch (filter.FilterTicketState)
             {
                 case FilterTicketState.All:
-                    break;
-                case FilterTicketState.Deleted:
-                    query = query.Where(x => x.IsDelete);
-                    break;
-                case FilterTicketState.NotDeleted:
                     query = query.Where(x => !x.IsDelete);
+                    break;
+                case FilterTicketState.UnderProgress:
+                    query = query.Where(x => !x.IsDelete && x.TicketState == TicketState.UnderProgress);
+                    break;
+                case FilterTicketState.Closed:
+                    query = query.Where(x => !x.IsDelete && x.TicketState == TicketState.Closed);
+                    break;
+                case FilterTicketState.Answered:
+                    query = query.Where(x => !x.IsDelete && x.TicketState == TicketState.Answered);
                     break;
             }
 
@@ -286,6 +290,10 @@ namespace MarketPlace.Application.Services.Implementations
             if (filter.TicketPriority != null)
             {
                 query = query.Where(x => x.TicketPriority == filter.TicketPriority.Value);
+            }
+            if (filter.TicketState != null)
+            {
+                query = query.Where(x => x.TicketState == filter.TicketState.Value);
             }
 
             if (filter.UserId != null && filter.UserId != 0)
@@ -337,6 +345,33 @@ namespace MarketPlace.Application.Services.Implementations
                 TicketMessage = ticketMessage
             };
         }
+        public async Task<TicketDetailDTO> GetAdminTicketDetail(long ticketId, long userId)
+        {
+            var ticket = await _ticketRepository.GetQuery().AsQueryable()
+                .Include(x => x.Owner)
+                .OrderByDescending(x => x.CreateDate)
+                .SingleOrDefaultAsync(x => x.Id == ticketId);
+
+            var ticketMessage = await _ticketMessageRepository.GetQuery().AsQueryable()
+                .Where(x => x.TicketId == ticketId && !x.IsDelete)
+                .OrderByDescending(x => x.CreateDate)
+                .ToListAsync();
+
+            if (ticket == null)
+            {
+                return null;
+            }
+
+            ticket.Owner.Avatar ??= "no-photo.png";
+
+
+
+            return new TicketDetailDTO
+            {
+                Ticket = ticket,
+                TicketMessage = ticketMessage
+            };
+        }
 
         public async Task<AnswerTicketResult> AnswerTicket(AnswerTicketDTO answer, long userId)
         {
@@ -364,6 +399,36 @@ namespace MarketPlace.Application.Services.Implementations
 
             ticket.IsReadByAdmin = false;
             ticket.IsReadByOwner = true;
+            ticket.TicketState = TicketState.UnderProgress;
+
+            await _ticketRepository.SaveChanges();
+
+            return AnswerTicketResult.Success;
+        }
+
+        public async Task<AnswerTicketResult> AdminAnswerTicket(AnswerTicketDTO answer, long userId)
+        {
+            var ticket = await _ticketRepository.GetEntityById(answer.Id);
+
+            if (ticket == null)
+            {
+                return AnswerTicketResult.NotFound;
+            }
+
+
+            var ticketMessage = new TicketMessage
+            {
+                TicketId = ticket.Id,
+                SenderId = userId,
+                Text = answer.Text
+            };
+
+            await _ticketMessageRepository.AddEntity(ticketMessage);
+            await _ticketMessageRepository.SaveChanges();
+
+            ticket.IsReadByAdmin = true;
+            ticket.IsReadByOwner = false;
+            ticket.TicketState = TicketState.Answered;
 
             await _ticketRepository.SaveChanges();
 

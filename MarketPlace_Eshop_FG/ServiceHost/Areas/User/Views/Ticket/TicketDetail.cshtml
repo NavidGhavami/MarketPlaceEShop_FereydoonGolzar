@@ -3,7 +3,7 @@
 @model MarketPlace.DataLayer.DTOs.Contact.TicketDetailDTO
 
 @{
-    ViewData["Title"] = @Model.Ticket.Title;
+    ViewData["Title"] = Model.Ticket.Title;
     ViewData["Ticket"] = "جزییات تیکت";
 }
 
@@ -65,7 +65,7 @@
                                         {
                                             <li class="message @(message.SenderId == Model.Ticket.OwnerId ? "right" : "left" ) appeared">
                                                 <div class="avatar">
-                                                    <img src="/Theme/assets/images/defaults/no-photo.png" alt="@message.Text" title="@message.Text">
+                                                    <img src="@(PathExtension.DefaultAvatar)" alt="@message.Ticket.Title" title="@message.Ticket.Title">
                                                 </div>
                                                 <div class="text_wrapper">
                                                     <div class="time">
