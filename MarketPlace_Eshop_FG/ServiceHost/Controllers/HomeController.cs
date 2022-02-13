@@ -14,12 +14,14 @@ namespace ServiceHost.Controllers
         private readonly ISiteService _siteService;
         private readonly IContactService _contactService;
         private readonly ICaptchaValidator _captchaValidator;
+        private readonly IProductService _productService;
 
-        public HomeController(IContactService contactService, ICaptchaValidator captchaValidator, ISiteService siteService)
+        public HomeController(IContactService contactService, ICaptchaValidator captchaValidator, ISiteService siteService, IProductService productService)
         {
             _contactService = contactService;
             _captchaValidator = captchaValidator;
             _siteService = siteService;
+            _productService = productService;
         }
 
         #endregion
@@ -95,6 +97,7 @@ namespace ServiceHost.Controllers
         }
 
         #endregion
+
 
 
     }

@@ -37,9 +37,10 @@
                                                             @if (categories.Any(x => x.ParentId == subCategory.Id))
                                                             {
                                                         <ul>
-                                                            @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subCategory.Id))
+                                                            @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subCategory.Id).Take(6))
                                                             {
-                                                        <li><a href="#">@secondSubCategory.Title</a></li>}
+                                                        <li><a asp-area="" asp-controller="Product" asp-action="FilterProducts"
+                                                               asp-route-Category="@secondSubCategory.UrlName">@secondSubCategory.Title</a></li>}
                                                         </ul>
                                                             }
                                                         </div><!-- End .col-md-6 -->

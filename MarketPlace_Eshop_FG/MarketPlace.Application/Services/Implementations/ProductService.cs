@@ -165,6 +165,113 @@ namespace MarketPlace.Application.Services.Implementations
 
         }
 
+        public async Task<FilterProductDTO> SearchProducts(FilterProductDTO filter)
+        {
+            var query = _productRepository
+                .GetQuery()
+                .Include(x => x.Seller)
+                .ThenInclude(x => x.User)
+                .Include(x => x.ProductSelectedCategories)
+                .ThenInclude(x => x.ProductCategory)
+                .Include(x => x.ProductColors)
+                .Include(x => x.ProductDiscounts)
+                .AsSplitQuery()
+                .AsQueryable();
+
+
+
+
+
+            #region State
+
+            switch (filter.ProductState)
+            {
+                case FilterProductState.All:
+                    query = query.Where(x => x.IsActive);
+                    break;
+                case FilterProductState.Active:
+                    query = query.Where(x => x.IsActive && x.ProductAcceptanceState == ProductAcceptanceState.Accepted);
+                    break;
+                case FilterProductState.NotActive:
+                    query = query.Where(x => !x.IsActive && x.ProductAcceptanceState == ProductAcceptanceState.Accepted);
+                    break;
+                case FilterProductState.Accepted:
+                    query = query.Where(x => x.ProductAcceptanceState == ProductAcceptanceState.Accepted);
+                    break;
+                case FilterProductState.Rejected:
+                    query = query.Where(x => x.ProductAcceptanceState == ProductAcceptanceState.Rejected);
+                    break;
+                case FilterProductState.UnderProgress:
+                    query = query.Where(x => x.ProductAcceptanceState == ProductAcceptanceState.UnderProgress);
+                    break;
+            }
+
+            switch (filter.OrderBy)
+            {
+                case FilterProductOrderBy.CreateDateDescending:
+                    query = query.OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductOrderBy.CreateDateAscending:
+                    query = query.OrderBy(x => x.CreateDate);
+                    break;
+                case FilterProductOrderBy.PriceDescending:
+                    query = query.OrderByDescending(x => x.Price);
+                    break;
+                case FilterProductOrderBy.PriceAscending:
+                    query = query.OrderBy(x => x.Price);
+                    break;
+                case FilterProductOrderBy.ViewDescending:
+                    query = query.OrderByDescending(x => x.View);
+                    break;
+                case FilterProductOrderBy.ViewAscending:
+                    query = query.OrderBy(x => x.View);
+                    break;
+            }
+
+            #endregion
+
+            #region Filter
+
+            if (!string.IsNullOrEmpty(filter.ProductTitle))
+            {
+                query = query.Where(x => EF.Functions.Like(x.Title, $"%{filter.ProductTitle}%"));
+            }
+
+            if (!string.IsNullOrEmpty(filter.StoreName))
+            {
+                query = query.Where(x => EF.Functions.Like(x.Seller.StoreName, $"%{filter.StoreName}%"));
+            }
+
+            if (filter.SellerId != null && filter.SellerId != 0)
+            {
+                query = query.Where(x => x.SellerId == filter.SellerId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(filter.Category))
+            {
+                query = query.Where(x => x.ProductSelectedCategories.Any(s => s.ProductCategory.UrlName == filter.Category && x.ProductAcceptanceState == ProductAcceptanceState.Accepted));
+            }
+
+
+
+
+            #endregion
+
+            #region Paging
+
+            var productCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, productCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetProduct(allEntities);
+        }
+
         public async Task<FilterProductDTO> FilterProductsInAdmin(FilterProductDTO filter)
         {
             var query = _productRepository
@@ -562,7 +669,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .ThenInclude(x => x.ProductCategory)
                 .Include(x => x.ProductColors)
                 .Include(x => x.ProductDiscounts)
-                .Where(x=>x.IsActive
+                .Where(x => x.IsActive
                 && !x.IsDelete
                 && x.ProductAcceptanceState == ProductAcceptanceState.Accepted)
                 .Skip(0)
@@ -677,8 +784,8 @@ namespace MarketPlace.Application.Services.Implementations
                 .AsQueryable()
                 .Include(x => x.Product)
                 .Where(x => x.ProductCategoryId == category.Id
-                            && x.Product.IsActive 
-                            && !x.IsDelete 
+                            && x.Product.IsActive
+                            && !x.IsDelete
                             && x.Product.ProductAcceptanceState == ProductAcceptanceState.Accepted)
                 .Select(x => x.Product)
                 .OrderByDescending(x => x.CreateDate)

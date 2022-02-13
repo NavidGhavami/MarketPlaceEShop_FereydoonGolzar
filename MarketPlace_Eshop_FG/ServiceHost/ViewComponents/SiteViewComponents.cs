@@ -52,8 +52,16 @@ namespace ServiceHost.ViewComponents
     #region Mobile Menu
     public class MobileMenuViewComponent : ViewComponent
     {
+        private readonly IProductService _productService;
+
+        public MobileMenuViewComponent(IProductService productService)
+        {
+            _productService = productService;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
+            ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
             return View("MobileMenu");
         }
     }

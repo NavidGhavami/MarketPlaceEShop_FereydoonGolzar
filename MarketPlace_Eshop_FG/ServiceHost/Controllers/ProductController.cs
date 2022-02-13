@@ -30,13 +30,34 @@ namespace ServiceHost.Controllers
 
             if (filter.PageId > filter.GetLastPage() && filter.GetLastPage() != 0)
             {
-                return NotFound();
+                return RedirectToAction("PageNotFound", "Home");
             }
 
             return View(filter);
         }
 
         #endregion
+
+        #region Search Products
+
+        [HttpGet("search-products")]
+        [HttpGet("search-products/{Category}")]
+        public async Task<IActionResult> SearchProducts(FilterProductDTO filter)
+        {
+            filter.TakeEntity = 12;
+            filter = await _productService.SearchProducts(filter);
+            ViewBag.ProductCategories = await _productService.GetAllActiveProductCategories();
+
+            if (filter.PageId > filter.GetLastPage() && filter.GetLastPage() != 0)
+            {
+                return RedirectToAction("PageNotFound", "Home");
+            }
+
+            return View(filter);
+        }
+
+        #endregion
+
 
         #region Show Product Details
 

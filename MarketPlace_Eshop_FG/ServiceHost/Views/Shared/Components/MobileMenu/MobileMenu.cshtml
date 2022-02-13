@@ -1,13 +1,16 @@
-﻿<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+﻿@using MarketPlace.DataLayer.Entities.Products
+@model MarketPlace.DataLayer.DTOs.Products.FilterProductDTO
+@{ var categories = ViewBag.ProductCategories as List<ProductCategory>; }
 
+<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
 <div class="mobile-menu-container mobile-menu-light">
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-        <form action="#" method="get" class="mobile-search">
+        <form asp-area="" asp-controller="Product" asp-action="SearchProducts" method="get" class="mobile-search">
             <label for="mobile-search" class="sr-only">جستجو</label>
-            <input type="search" class="form-control" name="mobile-search" id="mobile-search"
-                   placeholder="جستجو در ..." required>
+            <input type="search" class="form-control" asp-for="ProductTitle"
+                   placeholder="جستجوی محصول ..." required>
             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
         </form>
 
@@ -52,17 +55,41 @@
             <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                 <nav class="mobile-cats-nav">
                     <ul class="mobile-cats-menu">
-                        <li><a class="mobile-cats-lead" href="#">پیشنهاد روزانه</a></li>
-                        <li><a class="mobile-cats-lead" href="#">هدیه</a></li>
-                        <li><a href="#">تخت خواب</a></li>
-                        <li><a href="#">روشنایی</a></li>
-                        <li><a href="#">مبلمان</a></li>
-                        <li><a href="#">فضای ذخیره سازی</a></li>
-                        <li><a href="#">میز وصندلی</a></li>
-                        <li><a href="#">دکور </a></li>
-                        <li><a href="#">کابینت</a></li>
-                        <li><a href="#">قهوه</a></li>
-                        <li><a href="#">مبلمان خارج از منزل </a></li>
+                        @if (categories != null && categories.Any())
+                        {
+                            @foreach (var category in categories.Where(x => x.ParentId == null))
+                            {
+                                <li class="active">
+                                    <a>@category.Title<span class="mmenu-btn"></span></a>
+                                    <ul style="display: none;">
+                                        @if (categories.Any(x=>x.ParentId == category.Id))
+                                        {
+                                            @foreach (var subcategory in categories.Where(x => x.ParentId == category.Id))
+                                            {
+                                                <li class="active">
+                                                    <a class="text-danger">@subcategory.Title<span class="mmenu-btn"></span></a>
+                                                    <ul style="display: none;">
+                                                        @if (categories.Any(x=>x.ParentId == subcategory.Id))
+                                                        {
+                                                            @foreach (var secondSubCategory in categories.Where(x=>x.ParentId == subcategory.Id))
+                                                            {
+                                                                <li class="active">
+                                                                    <a class="text-info" asp-area="" asp-controller="Product" asp-action="FilterProducts"
+                                                                       asp-route-Category="@secondSubCategory.UrlName">
+                                                                        @secondSubCategory.Title
+                                                                    </a>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+
                     </ul><!-- End .mobile-cats-menu -->
                 </nav><!-- End .mobile-cats-nav -->
             </div><!-- .End .tab-pane -->

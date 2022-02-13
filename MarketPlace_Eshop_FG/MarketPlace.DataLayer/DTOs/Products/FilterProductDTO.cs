@@ -22,6 +22,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public string ProductTitle { get; set; }
         public string Category { get; set; }
         public long? SellerId { get; set; }
+        public string StoreName { get; set; }
         public int FilterMinPrice { get; set; }
         public int FilterMaxPrice { get; set; }
         public int SelectedMinPrice { get; set; }

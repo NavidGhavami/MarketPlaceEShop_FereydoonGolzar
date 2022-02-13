@@ -1,0 +1,307 @@
+﻿@using MarketPlace.Application.Utilities
+@using MarketPlace.DataLayer.DTOs.Products
+@using MarketPlace.DataLayer.Entities.Products
+@model FilterProductDTO
+
+@{
+    ViewData["Title"] = "محصولات فروشگاه";
+    var productCategories = ViewBag.ProductCategories as List<ProductCategory>;
+    var productColor = ViewBag.ProductColors as List<ProductColor>;
+}
+
+
+<div class="page-header text-center">
+    <div class="container-fluid">
+        <h1 class="page-title">جستجوی محصولات<span>فروشگاه</span></h1>
+    </div><!-- End .container-fluid -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+    <div class="container-fluid">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a href="#">فروشگاه</a></li>
+            <li class="breadcrumb-item active" aria-current="page">جستجوی محصولات</li>
+        </ol>
+    </div><!-- End .container-fluid -->
+</nav>
+
+<div class="page-content">
+    <div class="container-fluid">
+        <form asp-controller="Product" asp-action="FilterProducts" id="filter-form" method="get">
+            <div class="toolbox">
+                <div class="toolbox-left">
+                    <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>فیلتر ها</a>
+                </div><!-- End .toolbox-left -->
+
+                <div class="toolbox-center">
+                    <div class="toolbox-info">
+                        @Model.GetCurrentPaging().GetCurrentPagingStatus() محصول
+                    </div><!-- End .toolbox-info -->
+                </div><!-- End .toolbox-center -->
+
+                <div class="toolbox-right">
+                    <div class="toolbox-sort">
+                        <label for="sortby">مرتب سازی بر اساس : </label>
+                        <div class="select-custom">
+                            <select asp-for="OrderBy" asp-items="@(Html.GetEnumSelectList<FilterProductOrderBy>())" class="form-control">
+                            </select>
+                        </div>
+                    </div><!-- End .toolbox-sort -->
+                </div><!-- End .toolbox-right -->
+            </div><!-- End .toolbox -->
+
+            <div class="products">
+                <div class="row">
+                    @if (Model.Products != null && Model.Products.Any())
+                    {
+                        foreach (var product in Model.Products)
+                        {
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3 col-xxl-2">
+                                <div class="product">
+                                    <figure class="product-media">
+                                        <span class="product-label label-new">جدید</span>
+                                        @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x => x.ExpireDate >= DateTime.Now))
+                                        {
+                                            @foreach (var discount in product.ProductDiscounts)
+                                            {
+                                                <span class="product-label label-discount">@discount.Percentage %</span>
+                                            }
+                                        }
+                                        <a asp-controller="Product" asp-action="ProductDetails"
+                                           asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
+                                            <img src="@(PathExtension.ProductOrigin + product.Image)" alt="@product.Title" title="@product.Title" class="product-image">
+                                        </a>
+
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                                                <span>
+                                                    افزودن
+                                                    به لیست علاقه مندی
+                                                </span>
+                                            </a>
+                                        </div><!-- End .product-action -->
+
+
+                                        <div class="product-action action-icon-top">
+                                            <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id"
+                                               asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
+                                        </div><!-- End .product-action -->
+                                    </figure><!-- End .product-media -->
+
+                                    <div class="product-body">
+
+                                        @if (product.ProductSelectedCategories != null)
+                                        {
+                                            <div class="product-cat product-filter-margin">
+                                                @foreach (var category in product.ProductSelectedCategories.Where(x => x.ProductCategory.ParentId == null).Select(x => x.ProductCategory))
+                                                {
+                                                    <a href="#">
+                                                        @category.Title
+                                                    </a>
+                                                }
+                                            </div><!-- End .product-cat -->
+                                        }
+
+                                        <h3 class="product-title">
+                                            <a class="product-title-lineHeight" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id"
+                                               asp-route-title="@product.Title.FixTextForUrl()">@product.Title</a>
+                                        </h3>
+                                        <!-- End .product-title -->
+                                        @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x => x.ExpireDate >= DateTime.Now))
+                                        {
+                                            <div class="product-price">
+                                                @foreach (var discount in product.ProductDiscounts)
+                                                {
+                                                    <span class="new-price">@(Convert.ToInt32(product.Price - ((product.Price * discount.Percentage) / (double)100)).ToString("#,0 تومان"))</span>
+                                                    <span class="old-price">
+                                                        <del>
+                                                            @product.Price.ToString("#,0") تومان
+                                                        </del>
+                                                    </span>
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="product-price">
+                                                <span class="old-price text-primary">
+                                                    @product.Price.ToString("#,0") تومان
+                                                </span>
+
+                                            </div>
+                                        }
+                                        <div class="ratings-container">
+                                            <div class="ratings">
+                                                <div class="ratings-val"></div>
+                                                <!-- End .ratings-val -->
+                                            </div><!-- End .ratings -->
+                                            <span class="ratings-text">( @product.View بازدید )</span>
+                                        </div><!-- End .rating-container -->
+
+                                        @if (product.Seller != null)
+                                        {
+                                            <div class="product-cat text-primary product-filter-margin">
+                                                <a href="#">
+                                                    @product.Seller.StoreName
+                                                </a>
+                                            </div><!-- End .product-cat -->
+                                        }
+
+                                        @if (product.ProductColors != null && product.ProductColors.Any())
+                                        {
+                                            <div class="product-nav product-nav-dots">
+
+                                                @foreach (var color in product.ProductColors)
+                                                {
+                                                    <a class="" title="@color.ColorName" style="background: @color.ColorCode; border-color: gainsboro;">
+                                                        <span class="sr-only">@color.ColorName</span>
+                                                    </a>
+                                                }
+
+                                            </div><!-- End .product-nav -->
+                                        }
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product -->
+                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-md-12 text-center alert alert-warning no-product">
+                            <i class="bi bi-exclamation-triangle-fill text-dark"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                            <span>هیچ محصولی با مشخصات فوق یافت نشد</span>
+
+                        </div>
+                    }
+                </div><!-- End .row -->
+                <br />
+                <hr />
+                <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
+                <!-- PAGINATION-->
+            </div><!-- End .products -->
+
+            <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
+
+
+            <aside class="sidebar-shop sidebar-filter">
+                <div class="sidebar-filter-wrapper">
+                    <div class="widget widget-clean">
+                        <label><i class="icon-close"></i>فیلترها</label>
+                        <a href="#" class="sidebar-filter-clear">پاک کردن همه</a>
+                    </div><!-- End .widget -->
+
+                    <div class="widget widget-collapsible">
+                        <h3 class="widget-title">
+                            <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="false" aria-controls="widget-1">
+                                دسته بندی محصولات
+                            </a>
+                        </h3><!-- End .widget-title -->
+                        <hr />
+                        @if (productCategories != null && productCategories.Any())
+                        {
+                            @foreach (var mainCategory in productCategories.Where(x => x.ParentId == null))
+                            {
+                                <div class="widget widget-collapsible">
+                                    <h3 class="widget-title categoryFilter-title">
+                                        <a data-toggle="collapse" id="widget-1" href="#widget-@mainCategory.Id" role="button" aria-expanded="false" aria-controls="widget-@mainCategory.Id">
+                                            <i class="filter-item  filter-items-count">
+                                                @mainCategory.Title
+                                            </i>
+                                        </a>
+                                    </h3><!-- End .widget-title -->
+                                    <div class="collapse show" id="widget-@mainCategory.Id">
+                                        <div class="sidebar sidebar-shop">
+                                            <div class="widget widget-categories">
+                                                @if (productCategories.Any(x => x.ParentId == mainCategory.Id))
+                                                {
+                                                    <div class="accordion" id="widget-cat-acc">
+
+                                                        @foreach (var subCategory in productCategories.Where(x => x.ParentId == mainCategory.Id))
+                                                        {
+                                                            <div class="acc-item">
+                                                                <h5>
+                                                                    <a role="button" data-toggle="collapse" href="#collapse-@subCategory.Id" aria-expanded="false" aria-controls="collapse-@subCategory.Id" class="collapsed">
+                                                                        @subCategory.Title
+                                                                    </a>
+                                                                </h5>
+                                                                <div id="collapse-@subCategory.Id" class="collapse" data-parent="#widget-cat-acc">
+                                                                    <div class="collapse-wrap">
+                                                                        <ul>
+
+                                                                            @if (productCategories.Any(x => x.ParentId == subCategory.Id))
+                                                                            {
+                                                                                foreach (var secondSubcategory in productCategories.Where(x => x.ParentId == subCategory.Id))
+                                                                                {
+                                                                                    <li>
+                                                                                        <a asp-area="" asp-controller="Product" asp-action="FilterProducts"
+                                                                                           asp-route-Category="@secondSubcategory.UrlName">@secondSubcategory.Title</a>
+                                                                                    </li>
+                                                                                }
+                                                                            }
+                                                                        </ul>
+                                                                    </div><!-- End .collapse-wrap -->
+                                                                </div><!-- End .collapse -->
+                                                            </div><!-- End .acc-item -->
+                                                        }
+                                                    </div><!-- End .accordion -->
+                                                }
+                                            </div><!-- End .widget -->
+                                        </div>
+                                    </div>
+                                </div><!-- End .widget -->
+                            }
+                        }
+
+                    </div><!-- End .widget -->
+                    <hr />
+                    <div class="widget widget-collapsible">
+                        <h3 class="widget-title">
+                            <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
+                                فیلتر با قیمت
+                            </a>
+                        </h3><!-- End .widget-title -->
+
+                        <div class="collapse show" id="widget-5">
+                            <div class="widget-body sliderPrice-direction">
+                                <div class="filter-price">
+
+                                    <div row col-md-12>
+                                        <span col-md-6>
+                                            <label class="">قیمت از</label>
+                                            <input asp-for="SelectedMinPrice" placeholder="1000 تومان" type="number" />
+                                        </span>
+                                        <br />
+                                        <span col-md-6>
+                                            <label class="">قیمت تا</label>
+                                            <input asp-for="SelectedMaxPrice" placeholder="100000000 تومان" type="number" />
+                                        </span>
+                                    </div>
+                                    <br />
+
+                                    <button type="submit" class="btn btn-info btn-round btn-block">فیلتر</button>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <input type="hidden" asp-for="PageId" />
+                                            <input type="hidden" asp-for="ProductTitle" />
+                                            <input type="hidden" asp-for="FilterMinPrice" />
+                                            <input type="hidden" asp-for="FilterMaxPrice" />
+
+                                        </div>
+                                    </div>
+
+                                </div><!-- End .filter-price -->
+                            </div><!-- End .widget-body -->
+                        </div>
+                    </div>
+                </div><!-- End .sidebar-filter-wrapper -->
+            </aside><!-- End .sidebar-filter -->
+        </form>
+    </div><!-- End .container-fluid -->
+</div>
+
+

@@ -14,6 +14,7 @@ namespace MarketPlace.Application.Services.Interfaces
         #region Products
 
         Task<FilterProductDTO> FilterProducts(FilterProductDTO filter);
+        Task<FilterProductDTO> SearchProducts(FilterProductDTO filter);
         Task<FilterProductDTO> FilterProductsInAdmin(FilterProductDTO filter);
         Task<CreateProductResult> CreateProduct(CreateProductDTO product, long sellerId, IFormFile productImage);
         Task<bool> AcceptSellerProduct(long productId);
