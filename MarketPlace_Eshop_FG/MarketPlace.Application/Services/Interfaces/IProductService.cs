@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.Common;
+using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.Products;
@@ -31,7 +32,6 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<List<Product>> GetProductWithMaximumView(int take);
         Task<List<Product>> GetLatestArrivalProducts(int take);
 
-
         #endregion
 
         #region Product Category
@@ -59,6 +59,15 @@ namespace MarketPlace.Application.Services.Interfaces
         Task RemoveAllProductFeatures(long productId);
         Task AddProductFeatures(long productId, List<CreateProductFeatureDTO> features);
 
+
+        #endregion
+
+        #region Product Comment
+
+        Task<FilterProductCommentDTO> FilterProductsComment(FilterProductCommentDTO filter);
+        Task<AddProductCommentResult> AddComment(AddProductCommentDTO comment, long productId, long userId);
+        Task<bool> AcceptProductComment(long commentId);
+        Task<bool> RejectProductComment(long commentId);
 
         #endregion
     }

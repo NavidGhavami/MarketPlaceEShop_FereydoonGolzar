@@ -159,7 +159,6 @@
                                     </span>
                                     افزودن به لیست علاقه مندی
                                     <i class="bi bi-suit-heart-fill"></i>
-
                                 </a>
 
                             </div>
@@ -218,7 +217,7 @@
                     <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">مشخصات فنی</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">نظرات (2)</a>
+                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">نظرات (@Model.ProductComments.Count)</a>
                 </li>
             </ul>
         </div><!-- End .container -->
@@ -262,67 +261,72 @@
             <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
                 <div class="reviews">
                     <div class="container">
-                        <h3>دیدگاه ها (2)</h3>
                         <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <h4><a href="#">کاربر 1</a></h4>
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div>
-                                            <!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                    <span class="review-date">4 روز پیش</span>
-                                </div><!-- End .col -->
-                                <div class="col-12">
-                                    <h4>عالی، سایز فوق العاده</h4>
+                            @if (Model.ProductComments != null && Model.ProductComments.Any())
+                            {
+                                foreach (var comment in Model.ProductComments)
+                                {
+                                    <div class="row no-gutters">
+                                        <div class="col-auto">
+                                            <h3>
+                                                <a href="#">@comment.FullName</a>
+                                            </h3>
+                                        </div><!-- End .col -->
+                                        <div class="col-12">
+                                            <p class="review-date">@comment.CreateDate.ToStringShamsiDate()</p>
+                                            <h4>@comment.CommentFeature</h4>
 
-                                    <div class="review-content">
-                                        <p>
-                                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم،لورم ایپسوم متن
-                                            ساختگی با تولید سادگی نامفهوم، لورم ایپسوم متن ساختگی با تولید
-                                            سادگی نامفهوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم!
-                                        </p>
-                                    </div><!-- End .review-content -->
-
-                                    <div class="review-action">
-                                        <a href="#"><i class="icon-thumbs-up"></i>مثبت (2)</a>
-                                        <a href="#"><i class="icon-thumbs-down"></i>منفی (0)</a>
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
+                                            <div class="review-content">
+                                                <p>
+                                                    @Html.Raw(comment.CommentText)
+                                                </p>
+                                            </div><!-- End .review-content -->
+                                        </div><!-- End .col-auto -->
+                                    </div><!-- End .row -->
+                                }
+                            }
                         </div><!-- End .review -->
-                        <div class=" col-md-12 reply">
-                            <div class="heading">
-                                <h3 class="title">ارسال دیدگاه ارزشمندتان</h3>
-                                <!-- End .title -->
-                                <p class="title-desc">
-                                    ایمیل شما منتشر نخواهد شد، فیلد های اجباری با علامت * مشخص شده اند.
-                                </p>
-                            </div><!-- End .heading -->
+                        <form asp-area="" asp-controller="Product" asp-action="AddProductComment" method="post">
+                            <div class=" col-md-12 reply">
+                                <div class="heading">
+                                    <h3 class="title">ارسال دیدگاه ارزشمندتان</h3>
+                                    <!-- End .title -->
+                                    <p class="title-desc">
+                                        ایمیل شما منتشر نخواهد شد، فیلد های اجباری با علامت * مشخص شده اند.
+                                    </p>
+                                </div><!-- End .heading -->
 
-                            <label for="reply-message" class="sr-only">دیدگاه</label>
-                            <textarea name="reply-message" id="reply-message" cols="30" rows="4" ckeditor="1" class="form-control" required="" placeholder="دیدگاه شما *"></textarea>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="reply-name" class="sr-only">نام</label>
-                                    <input type="text" class="form-control" id="reply-name" name="reply-name" required="" placeholder="نام شما *">
-                                </div><!-- End .col-md-6 -->
+                                <label for="commentText" class="sr-only">دیدگاه</label>
+                                <textarea name="commentText" id="commentText" cols="30" rows="4" ckeditor="1" class="form-control" required="" placeholder="دیدگاه شما *"></textarea>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label for="commentFeature" class="sr-only">نقاط قوت، نقاط ضعف محصول و ...</label>
+                                        <input type="text" class="form-control" id="commentFeature" name="commentFeature" required="" placeholder="نقاط قوت، نقاط ضعف محصول و ... *">
+                                    </div><!-- End .col-md-6 -->
+                                </div><!-- End .row -->
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="fullname" class="sr-only">نام و نام خانوادگی</label>
+                                        <input type="text" class="form-control" id="fullname" name="fullname" required="" placeholder="نام و نام خانوادگی شما *">
+                                    </div><!-- End .col-md-6 -->
 
-                                <div class="col-md-6">
-                                    <label for="reply-email" class="sr-only">ایمیل</label>
-                                    <input type="email" class="form-control" id="reply-email" name="reply-email" required="" placeholder="ایمیل شما *">
-                                </div><!-- End .col-md-6 -->
-                            </div><!-- End .row -->
+                                    <div class="col-md-6">
+                                        <label for="email" class="sr-only">ایمیل</label>
+                                        <input type="email" class="form-control" id="email" name="email" required="" placeholder="ایمیل شما *">
+                                    </div><!-- End .col-md-6 -->
+                                </div><!-- End .row -->
 
-                            <button type="submit" class="btn btn-outline-primary-2 float-right">
-                                <span>ارسال دیدگاه</span>
-                                <i class="icon-long-arrow-left"></i>
-                            </button>
+                                <input type="hidden" asp-for="ProductId"/>
 
-                        </div>
+                                <button type="submit" class="btn btn-outline-primary-2 float-right">
+                                    <span>ارسال دیدگاه</span>
+                                    <i class="icon-long-arrow-left"></i>
+                                </button>
+
+                            </div>
+                        </form>
                     </div><!-- End .container -->
                 </div><!-- End .reviews -->
             </div><!-- .End .tab-pane -->

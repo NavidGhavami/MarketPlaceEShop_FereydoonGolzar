@@ -60,6 +60,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         public ICollection<ProductFeature> ProductFeatures { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
         public ICollection<ProductDiscount.ProductDiscount> ProductDiscounts { get; set; }
+        public ICollection<ProductComment.ProductComment> ProductComments { get; set; }
 
         #endregion
     }

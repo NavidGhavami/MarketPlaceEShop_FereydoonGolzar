@@ -87,7 +87,7 @@
 
             <div class="dropdown-cart-action">
                 <a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder" asp-route-userId="@Model.UserId" class="btn btn-primary">مشاهده سبد خرید</a>
-                <a href="checkout.html" class="btn btn-outline-primary-2">
+                <a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder" asp-route-userId="@Model.UserId" class="btn btn-outline-primary-2">
                     <span>پرداخت</span><i class="icon-long-arrow-left"></i>
                 </a>
             </div><!-- End .dropdown-cart-total -->

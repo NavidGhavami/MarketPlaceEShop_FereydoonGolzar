@@ -1,15 +1,14 @@
 ﻿@using MarketPlace.DataLayer.Entities.Products
-@model MarketPlace.DataLayer.DTOs.Products.FilterProductDTO
 @{ var categories = ViewBag.ProductCategories as List<ProductCategory>; }
 
-<div class="mobile-menu-overlay"></div><!-- End .mobil-menu-overlay -->
+<div class="mobile-menu-overlay"></div><!-- End .mobile-menu-overlay -->
 <div class="mobile-menu-container mobile-menu-light">
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
         <form asp-area="" asp-controller="Product" asp-action="SearchProducts" method="get" class="mobile-search">
             <label for="mobile-search" class="sr-only">جستجو</label>
-            <input type="search" class="form-control" asp-for="ProductTitle"
+            <input type="search" class="form-control" name="productTitle"
                    placeholder="جستجوی محصول ..." required>
             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
         </form>

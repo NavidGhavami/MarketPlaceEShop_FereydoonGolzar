@@ -37,6 +37,21 @@ namespace ServiceHost.ViewComponents
     }
     #endregion
 
+    #region Search
+
+    public class SearchViewComponent : ViewComponent
+    {
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            return View("Search");
+        }
+    }
+
+
+    
+
+    #endregion
+
     #region Get Menu Categories
     public class GetMenuCategoriesViewComponent : ViewComponent
     {

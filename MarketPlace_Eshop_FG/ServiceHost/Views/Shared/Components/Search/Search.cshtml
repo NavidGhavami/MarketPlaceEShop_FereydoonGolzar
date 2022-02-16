@@ -1,0 +1,17 @@
+﻿
+
+<div class="header-center">
+    <div class="header-search header-search-extended header-search-visible header-search-no-radius d-none d-lg-block">
+        <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+        <form asp-area="" asp-controller="Product" asp-action="SearchProducts"  method="get">
+            <div class="header-search-wrapper search-wrapper-wide">
+                <label class="sr-only">جستجو</label>
+                <input type="search" class="form-control" name="productTitle"
+                       placeholder="جستجو بر اساس نام محصول ...">
+                <input type="search" class="form-control" name="storeName"
+                       placeholder="جستجو بر اساس نام فروشگاه ...">
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+            </div><!-- End .header-search-wrapper -->
+        </form>
+    </div><!-- End .header-search -->
+</div>

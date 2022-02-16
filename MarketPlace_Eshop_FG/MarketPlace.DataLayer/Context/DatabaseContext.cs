@@ -2,6 +2,7 @@
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Blog;
 using MarketPlace.DataLayer.Entities.Contact;
+using MarketPlace.DataLayer.Entities.ProductComment;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
 using MarketPlace.DataLayer.Entities.Products;
@@ -67,6 +68,12 @@ namespace MarketPlace.DataLayer.Context
 
         public DbSet<ProductDiscount> ProductDiscounts { get; set; }
         public DbSet<ProductDiscountUse> ProductDiscountUses { get; set; }
+
+        #endregion
+
+        #region Product Comment
+
+        public DbSet<ProductComment> ProductComments { get; set; }
 
         #endregion
 

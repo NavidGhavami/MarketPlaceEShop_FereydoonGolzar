@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Common;
+using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +79,56 @@ namespace ServiceHost.Areas.Administration.Controllers
         }
 
         #endregion
+
+        #region Product Comment
+
+        [HttpGet("product-comment-list")]
+        public async Task<IActionResult> ProductsCommentList(FilterProductCommentDTO filter)
+        {
+
+            var productComment = await _productService.FilterProductsComment(filter);
+
+            return View(filter);
+        }
+
+        #endregion
+
+        #region Accept Product Comment
+
+        [HttpGet("product-comment/acceptProductComment/{id}")]
+        public async Task<IActionResult> AcceptProductComment(long id)
+        {
+            var result = await _productService.AcceptProductComment(id);
+
+            if (result)
+            {
+                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "دیدگاه مورد نظر با موفقیت تایید شد", null);
+
+            }
+
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "دیدگاه مورد نظر یافت نشد", null);
+        }
+
+        #endregion
+
+        #region Reject Product Comment
+
+        [HttpGet("product-comment/rejectProductComment/{id}")]
+        public async Task<IActionResult> RejectProductComment(long id)
+        {
+            var result = await _productService.RejectProductComment(id);
+
+            if (result)
+            {
+                return JsonResponseStatus.SendStatus(JsonResponseStatusType.Success, "دیدگاه مورد نظر با موفقیت رد شد", null);
+
+            }
+
+            return JsonResponseStatus.SendStatus(JsonResponseStatusType.Danger, "دیدگاه مورد نظر یافت نشد", null);
+        }
+
+        #endregion
+
 
     }
 }

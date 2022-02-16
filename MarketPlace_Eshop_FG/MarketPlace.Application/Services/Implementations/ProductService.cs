@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Paging;
+using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
+using MarketPlace.DataLayer.Entities.ProductComment;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Repository;
@@ -29,11 +32,13 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<ProductSelectedCategory> _productSelectedRepository;
         private readonly IGenericRepository<ProductDiscount> _productDiscountRepository;
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
+        private readonly IGenericRepository<ProductComment> _productCommentRepository;
 
         public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository,
             IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository,
             IGenericRepository<ProductGallery> productGalleryRepository, IGenericRepository<ProductFeature> productFeatureRepository,
-            IGenericRepository<ProductDiscount> productDiscountRepository, IGenericRepository<ProductDiscountUse> productDiscountUseRepository)
+            IGenericRepository<ProductDiscount> productDiscountRepository, IGenericRepository<ProductDiscountUse> productDiscountUseRepository,
+            IGenericRepository<ProductComment> productCommentRepository)
         {
             _productRepository = productRepository;
             _productColorRepository = productColorRepository;
@@ -41,6 +46,7 @@ namespace MarketPlace.Application.Services.Implementations
             _productFeatureRepository = productFeatureRepository;
             _productDiscountRepository = productDiscountRepository;
             _productDiscountUseRepository = productDiscountUseRepository;
+            _productCommentRepository = productCommentRepository;
             _productCategoryRepository = productCategoryRepository;
             _productSelectedRepository = productSelectedRepository;
         }
@@ -177,10 +183,6 @@ namespace MarketPlace.Application.Services.Implementations
                 .Include(x => x.ProductDiscounts)
                 .AsSplitQuery()
                 .AsQueryable();
-
-
-
-
 
             #region State
 
@@ -555,6 +557,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .Include(x => x.ProductGalleries)
                 .Include(x => x.ProductFeatures)
                 .Include(x => x.ProductDiscounts)
+                .Include(x=>x.ProductComments)
                 .SingleOrDefaultAsync(x => x.Id == productId);
 
             if (product == null)
@@ -580,6 +583,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .FirstOrDefaultAsync(x =>
                     x.ProductId == productId && x.DiscountNumber - x.ProductDiscountUse.Count > 0 && x.ExpireDate > DateTime.Now);
 
+
             product.View += 1;
             await _productRepository.SaveChanges();
 
@@ -599,7 +603,11 @@ namespace MarketPlace.Application.Services.Implementations
                 ProductGalleries = product.ProductGalleries.ToList(),
                 ProductDiscount = productDiscount,
                 ProductCategories = product.ProductSelectedCategories.Select(x => x.ProductCategory).ToList(),
-                RelatedProducts = relatedProducts
+                RelatedProducts = relatedProducts,
+                ProductComments = product.ProductComments
+                    .Where(x=>x.CommentAcceptanceState == CommentAcceptanceState.Accepted && !x.IsDelete)
+                    .OrderByDescending(x=>x.Id)
+                    .ToList()
             };
 
             return productDetail;
@@ -952,6 +960,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         }
 
+
         public async Task RemoveAllProductFeatures(long productId)
         {
             var productFeatures = await _productFeatureRepository.GetQuery()
@@ -962,6 +971,114 @@ namespace MarketPlace.Application.Services.Implementations
             await _productFeatureRepository.SaveChanges();
         }
 
+
+        #endregion
+
+        #region Product Comment
+
+        public async Task<FilterProductCommentDTO> FilterProductsComment(FilterProductCommentDTO filter)
+        {
+            var query = _productCommentRepository
+               .GetQuery()
+               .Include(x => x.Product)
+               .AsQueryable();
+
+            #region State
+
+            switch (filter.ProductCommentState)
+            {
+                case FilterProductCommentState.All:
+                    query = query.Where(x => !x.IsDelete).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductCommentState.Accepted:
+                    query = query.Where(x => x.CommentAcceptanceState == CommentAcceptanceState.Accepted).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductCommentState.Rejected:
+                    query = query.Where(x => x.CommentAcceptanceState == CommentAcceptanceState.Rejected).OrderByDescending(x => x.CreateDate);
+                    break;
+                case FilterProductCommentState.UnderProgress:
+                    query = query.Where(x => x.CommentAcceptanceState == CommentAcceptanceState.UnderProgress).OrderByDescending(x => x.CreateDate);
+                    break;
+            }
+
+            #endregion
+
+            #region Filter
+
+            if (!string.IsNullOrEmpty(filter.FullName))
+            {
+                query = query.Where(x => EF.Functions.Like(x.FullName, $"%{filter.FullName}%")).OrderByDescending(x => x.CreateDate);
+            }
+
+            #endregion
+
+            #region Paging
+
+            var productCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, productCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetProductComment(allEntities);
+        }
+
+        public async Task<AddProductCommentResult> AddComment(AddProductCommentDTO comment, long productId, long userId)
+        {
+            var newComment = new ProductComment
+            {
+                UserId = comment.UserId,
+                ProductId = comment.ProductId,
+                FullName = comment.FullName,
+                Email = comment.Email,
+                CommentFeature = comment.CommentFeature,
+                CommentText = comment.CommentText,
+                CommentAcceptanceState =  CommentAcceptanceState.UnderProgress,
+            };
+
+            await _productCommentRepository.AddEntity(newComment);
+            await _productCommentRepository.SaveChanges();
+
+            return AddProductCommentResult.Success;
+        }
+
+        public async Task<bool> AcceptProductComment(long commentId)
+        {
+            var comment = await _productCommentRepository.GetEntityById(commentId);
+
+            if (comment != null)
+            {
+                comment.CommentAcceptanceState = CommentAcceptanceState.Accepted;
+                _productCommentRepository.EditEntity(comment);
+
+                await _productRepository.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> RejectProductComment(long commentId)
+        {
+            var comment = await _productCommentRepository.GetEntityById(commentId);
+
+            if (comment != null)
+            {
+                comment.CommentAcceptanceState = CommentAcceptanceState.Rejected;
+                _productCommentRepository.EditEntity(comment);
+
+                await _productRepository.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
 
         #endregion
 
@@ -999,6 +1116,10 @@ namespace MarketPlace.Application.Services.Implementations
             if (_productDiscountUseRepository != null)
             {
                 await _productDiscountUseRepository.DisposeAsync();
+            }
+            if (_productCommentRepository != null)
+            {
+                await _productCommentRepository.DisposeAsync();
             }
         }
 
