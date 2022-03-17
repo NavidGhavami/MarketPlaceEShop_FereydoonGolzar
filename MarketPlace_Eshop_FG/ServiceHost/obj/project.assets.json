@@ -10724,19 +10724,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\navid\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
+      "projectUniqueName": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
       "projectName": "ServiceHost",
-      "projectPath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\obj\\",
+      "projectPath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
+      "packagesPath": "C:\\Users\\navid\\.nuget\\packages\\",
+      "outputPath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\navid\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10750,11 +10750,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.Application\\MarketPlace.Application.csproj": {
-              "projectPath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.Application\\MarketPlace.Application.csproj"
+            "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.Application\\MarketPlace.Application.csproj": {
+              "projectPath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.Application\\MarketPlace.Application.csproj"
             },
-            "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj": {
-              "projectPath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj"
+            "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj": {
+              "projectPath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj"
             }
           }
         }
@@ -10816,7 +10816,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

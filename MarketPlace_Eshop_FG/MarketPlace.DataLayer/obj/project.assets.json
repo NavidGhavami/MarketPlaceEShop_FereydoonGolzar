@@ -5866,19 +5866,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DELL\\.nuget\\packages\\": {}
+    "C:\\Users\\navid\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj",
+      "projectUniqueName": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj",
       "projectName": "MarketPlace.DataLayer",
-      "projectPath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj",
-      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-      "outputPath": "E:\\Programming\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\obj\\",
+      "projectPath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\MarketPlace.DataLayer.csproj",
+      "packagesPath": "C:\\Users\\navid\\.nuget\\packages\\",
+      "outputPath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\MarketPlace.DataLayer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\navid\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5944,7 +5944,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
