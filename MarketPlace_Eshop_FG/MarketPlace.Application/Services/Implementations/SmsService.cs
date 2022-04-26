@@ -31,5 +31,13 @@ namespace MarketPlace.Application.Services.Implementations
             await api.VerifyLookup(mobile, password, "VerifyRecoverPassword");
         }
 
+        public async Task SendOrderTrackingCodeSms(string mobile, string userName, string trackingCode, string orderDate)
+        {
+            var apiKey = _configuration.GetSection("KavenegarSmsApiKey")["apiKey"];
+
+            Kavenegar.KavenegarApi api = new Kavenegar.KavenegarApi(apiKey);
+            await api.VerifyLookup(mobile, userName, trackingCode, orderDate, "VerifyOrderTrackingCode");
+
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         #region Properties
 
         public long? UserId { get; set; }
-        public DateTime? PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; }
         public bool IsPaid { get; set; }
 
         [Display(Name = "کد پیگیری")]

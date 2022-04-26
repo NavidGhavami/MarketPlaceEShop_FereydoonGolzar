@@ -25,6 +25,9 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Display(Name = "فعال / غیرفعال")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "درصد سایت")]
+        public int SiteProfit { get; set; }
+
         public List<CreateProductColorDTO> ProductColors { get; set; }
         public List<CreateProductFeatureDTO> ProductFeatures { get; set; }
         public List<long> SelectedCategories { get; set; }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using _0_Framework.Application;
-using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
+using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
@@ -12,7 +11,6 @@ using MarketPlace.DataLayer.Entities.ProductOrder;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
-using RestSharp.Authenticators;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -169,6 +167,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<FilterUserOrderDTO> GetUserOrder(FilterUserOrderDTO filter)
         {
+
             var query = _orderRepository.GetQuery()
                .Include(x => x.OrderDetails)
                .AsQueryable()
@@ -269,7 +268,7 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 Id = order.Id,
                 Description = order.Description,
-                CancelOrderDate = order.LastUpdateDate.ToString("yyyy/MM/dd"),
+                CancelOrderDate = DateTime.Now.ToFarsi(),
                 SuccessOrderDate = order.PaymentDate.ToFarsi()
             };
         }

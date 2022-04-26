@@ -345,6 +345,17 @@ namespace MarketPlace.Application.Services.Implementations
                 })
                 .SingleOrDefaultAsync(x => x.Id == userId);
         }
+        public async Task<string> GetUserMobileById(long userId)
+        {
+            var user =  await _userRepository.GetQuery().AsQueryable().SingleOrDefaultAsync(x => x.Id == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return user.Mobile;
+        }
 
         #endregion
 
@@ -454,6 +465,8 @@ namespace MarketPlace.Application.Services.Implementations
                 await _userRepository.DisposeAsync();
             }
         }
+
+  
 
 
 

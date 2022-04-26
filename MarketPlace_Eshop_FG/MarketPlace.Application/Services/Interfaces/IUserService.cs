@@ -25,6 +25,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<EditUserDTO> GetUserForEdit(long userId);
         Task<EditUserResult> EditUser(EditUserDTO edit);
         Task<EditUserProfileDTO> GetUserProfile(long userId);
+        Task<string> GetUserMobileById(long userId);
 
         #endregion
 

@@ -18,15 +18,17 @@ namespace ServiceHost.Areas.User.Controllers
 
         private readonly IOrderService _orderService;
         private readonly IUserService _userService;
+        private readonly ISmsService _smsService;
         private readonly IPaymentService _paymentService;
         private readonly IConfiguration _configuration;
 
         private string MerchantId { get; }
 
-        public OrderController(IOrderService orderService, IUserService userService, IPaymentService paymentService, IConfiguration configuration)
+        public OrderController(IOrderService orderService, IUserService userService, IPaymentService paymentService, ISmsService smsService ,IConfiguration configuration)
         {
             _orderService = orderService;
             _userService = userService;
+            _smsService = smsService;
             _paymentService = paymentService;
             _configuration = configuration;
 
@@ -114,6 +116,8 @@ namespace ServiceHost.Areas.User.Controllers
         {
             var authority = _paymentService.GetAuthorityCodeFromCallback(HttpContext);
             var openOrder = _orderService.GetUserLatestOpenOrder(User.GetUserId());
+            var userMobile = await _userService.GetUserMobileById(User.GetUserId());
+            var user = _userService.GetUserById(User.GetUserId());
 
             if (openOrder == null)
             {
@@ -137,6 +141,7 @@ namespace ServiceHost.Areas.User.Controllers
                 ViewBag.RefId = refId;
                 ViewBag.OrderDate = DateTime.Now.ToShamsi();
                 await _orderService.PayOrderProductPriceToSeller(User.GetUserId(), refId, trackingCode);
+                await _smsService.SendOrderTrackingCodeSms(userMobile, user.Result.FirstName, trackingCode, DateTime.Now.ToShamsi());
 
                 return View();
             }
@@ -231,6 +236,7 @@ namespace ServiceHost.Areas.User.Controllers
             filter.TakeEntity = 5;
             filter.UserId = User.GetUserId();
             filter.FilterUserOrderState = FilterUserOrderState.All;
+            
 
             var userOrder = await _orderService.GetUserOrder(filter);
 

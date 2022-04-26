@@ -1,5 +1,6 @@
 ﻿@using MarketPlace.Application.Extensions
 @using MarketPlace.DataLayer.Entities.ProductOrder
+@using MarketPlace.Application.Utilities
 @model MarketPlace.DataLayer.DTOs.ProductOrder.FilterUserOrderDTO
 @{
     ViewData["Title"] = "سفارشات من";
@@ -80,7 +81,7 @@
                                                             <td class="text-danger">@item.OrderAcceptanceState.GetEnumName()</td>
                                                             break;
                                                     }
-                                                    <td>@item.PaymentDate</td>
+                                                    <td>@item.PaymentDate.ToFarsi()</td>
 
                                                     <td>
 

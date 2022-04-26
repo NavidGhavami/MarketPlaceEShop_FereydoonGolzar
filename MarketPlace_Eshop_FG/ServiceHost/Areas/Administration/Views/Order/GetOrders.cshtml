@@ -1,6 +1,7 @@
 ﻿@using MarketPlace.DataLayer.DTOs.ProductOrder
 @using MarketPlace.DataLayer.DTOs.Common
 @using MarketPlace.Application.Extensions
+@using MarketPlace.Application.Utilities
 @model FilterUserOrderDTO
 @{
     ViewData["Title"] = "مدیریت سفارشات";
@@ -96,7 +97,7 @@
                                                         <td class="text-danger">@order.OrderAcceptanceState.GetEnumName()</td>
                                                         break;
                                                 }
-                                                <td>@order.PaymentDate</td>
+                                                <td>@order.PaymentDate.ToFarsi()</td>
                                                 <td>
                                                     <a class="btn btn-sm btn-info"
                                                        asp-area="Administration" asp-controller="Order" asp-action="GetUserOrderDetailItem"

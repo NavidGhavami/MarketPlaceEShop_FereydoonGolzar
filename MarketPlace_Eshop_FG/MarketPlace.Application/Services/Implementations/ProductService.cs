@@ -361,7 +361,8 @@ namespace MarketPlace.Application.Services.Implementations
                     IsActive = product.IsActive,
                     Description = product.Description,
                     ShortDescription = product.ShortDescription,
-                    ProductAcceptanceState = ProductAcceptanceState.UnderProgress
+                    ProductAcceptanceState = ProductAcceptanceState.UnderProgress,
+                    SiteProfit = 3
 
                 };
 

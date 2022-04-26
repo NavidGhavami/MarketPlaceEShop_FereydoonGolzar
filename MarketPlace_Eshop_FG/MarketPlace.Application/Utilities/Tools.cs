@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 
-namespace _0_Framework.Application
+namespace MarketPlace.Application.Utilities
 {
     public static class Tools
     {
