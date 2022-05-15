@@ -64,7 +64,7 @@ namespace ServiceHost.Areas.Administration.Controllers
                     break;
 
                 case CreateFaqResult.Success:
-                    TempData[SuccessMessage] = "افزودن سوال با موفثیت انجام شد";
+                    TempData[SuccessMessage] = "افزودن سوال با موفقیت انجام شد";
                     return RedirectToAction("FrequentlyQuestionList", "Home");
             }
 

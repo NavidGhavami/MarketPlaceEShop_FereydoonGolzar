@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "DcVoxV8I043FZzBG0hwVhRSIiL5h/TTt6tsckhGiXPiYwRRDqwbPsDoKQs9MIBzo/YE7+7eRNi+B6c7PSfcTqQ==",
+  "dgSpecHash": "FpXXb8bTBLFw7ZfYlEADfY7xTSksxOVT1p21wZwwnhyW7wfF7myaakR75dWefznU0HoMnnsgmMbJxBx1vnbE8w==",
   "success": true,
   "projectFilePath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
   "expectedPackageFiles": [
@@ -197,7 +197,8 @@
     "C:\\Users\\navid\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\navid\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
     "C:\\Users\\navid\\.nuget\\packages\\zarinpal\\3.0.1\\zarinpal.3.0.1.nupkg.sha512",
-    "C:\\Users\\navid\\.nuget\\packages\\zarinpalsandbox\\2.0.4\\zarinpalsandbox.2.0.4.nupkg.sha512"
+    "C:\\Users\\navid\\.nuget\\packages\\zarinpalsandbox\\2.0.4\\zarinpalsandbox.2.0.4.nupkg.sha512",
+    "C:\\Users\\navid\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
   ],
   "logs": []
 }

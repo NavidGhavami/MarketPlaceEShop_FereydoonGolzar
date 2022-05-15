@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.DTOs.Paging;
 
 namespace MarketPlace.DataLayer.DTOs.SellerWallet
@@ -6,9 +7,25 @@ namespace MarketPlace.DataLayer.DTOs.SellerWallet
     public class FilterSellerWalletDTO : BasePaging
     {
         public long? SellerId { get; set; }
+        public string StoreName { get; set; }
         public int? PriceFrom { get; set; }
         public int? PriceTo { get; set; }
         public List<Entities.Wallet.SellerWallet> SellerWallets { get; set; }
+        public FilterSellerWallet State { get; set; }
+
+
+        public enum FilterSellerWallet
+        {
+            [Display(Name = "همه")]
+            All,
+
+            [Display(Name = "واریز")]
+            Deposit,
+
+            [Display(Name = "برداشت")]
+            Withdraw,
+        }
+
 
 
         #region Methods

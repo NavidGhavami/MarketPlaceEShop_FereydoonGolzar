@@ -7,7 +7,7 @@ namespace MarketPlace.Application.Utilities
     {
         public static string Generate(string symbol)
         {
-            return $"{symbol}{RandomString()}{RandomNumber()}";
+            return $"{symbol}{RandomNumber()}";
         }
 
         private static string RandomString()
@@ -31,7 +31,7 @@ namespace MarketPlace.Application.Utilities
         private static string RandomNumber()
         {
             var random = new Random();
-            return random.Next(100, 999).ToString();
+            return random.Next(10000000,99999999).ToString();
         }
     }
 }

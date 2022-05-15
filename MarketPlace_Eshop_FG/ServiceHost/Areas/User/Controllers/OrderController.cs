@@ -131,7 +131,7 @@ namespace ServiceHost.Areas.User.Controllers
             }
             var openOrderAmount = await _orderService.GetTotalOrderPriceForPayment(User.GetUserId());
             long refId = 0;
-            var trackingCode = CodeGenerator.Generate("FG_");
+            var trackingCode = CodeGenerator.Generate("JBC_");
             var result = _paymentService.PaymentVerification(MerchantId, authority, openOrderAmount, ref refId);
 
             if (result == PaymentStatus.St100)

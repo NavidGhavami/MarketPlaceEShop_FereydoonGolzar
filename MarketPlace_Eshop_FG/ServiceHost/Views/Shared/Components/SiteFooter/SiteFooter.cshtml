@@ -1,6 +1,8 @@
 ﻿@using MarketPlace.DataLayer.Entities.Site
 
-@{ var siteSetting = ViewBag.siteSetting as SiteSetting; }
+@{
+    var siteSetting = ViewBag.siteSetting as SiteSetting;
+}
 
 
 <footer class="footer footer-2">
@@ -10,16 +12,16 @@
                 <div class="col-sm-12 col-lg-6">
                     <div class="widget widget-about">
                         <img src="~/Theme/assets/images/demos/demo-13/logo-footer.png" class="footer-logo"
-                             alt="Footer Logo" width="105" height="25">
+                             alt="Footer Logo">
                         <p>
-                           @siteSetting.FooterText
+                            @siteSetting.FooterText
                         </p>
 
                         <div class="widget-about-info">
                             <div class="row">
                                 <div class="col-sm-6 col-md-4">
                                     <span class="widget-about-title">سوالی دارید؟ 7روز هفته/24ساعته</span>
-                                    <a href="tel:123456789">@siteSetting.Mobile</a>
+                                    <a href="@siteSetting.Mobile">@siteSetting.Mobile</a>
                                 </div><!-- End .col-sm-6 -->
                             </div><!-- End .row -->
                         </div><!-- End .widget-about-info -->
@@ -31,25 +33,9 @@
                         <h4 class="widget-title">لینک های مفید</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="about.html">درباره ما</a></li>
-                            <li><a href="#">خدمات</a></li>
-                            <li><a href="#">نحوه خرید</a></li>
-                            <li><a href="faq.html">سوالات متداول</a></li>
-                            <li><a href="contact.html">تماس با ما</a></li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-6 col-lg-3 -->
-
-                <div class="col-sm-4 col-lg-2">
-                    <div class="widget">
-                        <h4 class="widget-title">خدمات مشتری</h4><!-- End .widget-title -->
-
-                        <ul class="widget-list">
-                            <li><a href="#">شیوه پرداخت</a></li>
-                            <li><a href="#">گارانتی بازگشت وجه</a></li>
-                            <li><a href="#">شیوه ارسال محصولات</a></li>
-                            <li><a href="#">قوانین و مقررات</a></li>
-                            <li><a href="#">خط مشی</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="AboutUs">درباره ما</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="FrequentlyQuestions">سوالات متداول</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="ContactUs">تماس با ما</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -59,11 +45,10 @@
                         <h4 class="widget-title">حساب کاربری</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="#">ورود</a></li>
-                            <li><a href="cart.html">سبد خرید</a></li>
-                            <li><a href="#">لیست علاقه مندی ها</a></li>
-                            <li><a href="#">پیگیری سفارشات</a></li>
-                            <li><a href="#">راهنما</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Login">ورود</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Register">ثبت نام</a></li>
+                            <li><a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder">سبد خرید</a></li>
+                            <li><a asp-area="User" asp-controller="Order" asp-action="GetUserOrder">پیگیری سفارشات</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -77,23 +62,12 @@
             <!-- End .footer-copyright -->
 
             <div class="social-icons social-icons-color">
-                <span class="social-label">شبکه های اجتماعی</span>
-                <a href="#" class="social-icon social-facebook" title="فیسبوک" target="_blank">
-                    <i class="icon-facebook-f"></i>
-                </a>
-                <a href="#" class="social-icon social-twitter" title="توییتر" target="_blank">
-                    <i class="icon-twitter"></i>
-                </a>
-                <a href="#" class="social-icon social-instagram" title="اینستاگرام" target="_blank">
-                    <i class="icon-instagram"></i>
-                </a>
-                <a href="#" class="social-icon social-youtube" title="یوتیوب" target="_blank">
-                    <i class="icon-youtube"></i>
-                </a>
-                <a href="#" class="social-icon social-pinterest" title="پینترست" target="_blank">
-                    <i class="icon-pinterest"></i>
+                <span class="social-label"> طراح و برنامه نویس سایت | </span>
+                <a href="https://navid-ghavami.ir" class="text-danger" title="طراح و برنامه نویس سایت : نوید قوامی" target="_blank">
+                    نوید قوامی
                 </a>
             </div><!-- End .soial-icons -->
+
         </div><!-- End .container -->
     </div><!-- End .footer-bottom -->
 </footer><!-- End .footer -->

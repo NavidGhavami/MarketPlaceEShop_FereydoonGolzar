@@ -243,7 +243,6 @@ namespace MarketPlace.Application.Services.Implementations
 
                 order.OrderAcceptanceState = OrderAcceptanceState.PaymentCancel;
                 order.Description = cancel.Description;
-                order.LastUpdateDate = DateTime.Now;
 
                 _orderRepository.EditEntity(order);
                 await _orderRepository.SaveChanges();

@@ -1,4 +1,5 @@
 ﻿@using MarketPlace.Application.Extensions
+@using MarketPlace.Application.Utilities
 @model MarketPlace.DataLayer.DTOs.ProductOrder.FilterSellerOrderDTO
 @{
     ViewData["Title"] = "سفارشات فروشنده";
@@ -84,7 +85,7 @@
                                                         </td>
                                                         break;
                                                 }
-                                                <td>@item.PaymentDate</td>
+                                                <td>@item.PaymentDate.ToFarsi()</td>
 
                                                 <td>
                                                     <div class="btn-group btn-group-lg" role="group" aria-label="Basic mixed styles example">

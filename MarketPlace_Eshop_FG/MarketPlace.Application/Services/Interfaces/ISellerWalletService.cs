@@ -9,5 +9,6 @@ namespace MarketPlace.Application.Services.Interfaces
     {
         Task<FilterSellerWalletDTO> FilterSellerWallet(FilterSellerWalletDTO filter);
         Task AddWallet(SellerWallet wallet);
+        Task<bool> ChangeTransActionTypeInSellerWallet(long walletId);
     }
 }
