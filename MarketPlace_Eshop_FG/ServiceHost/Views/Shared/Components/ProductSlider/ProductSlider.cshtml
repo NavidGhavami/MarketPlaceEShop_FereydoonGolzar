@@ -63,15 +63,6 @@
                                     </a>
                                 </div>
 
-                                <div class="product-action">
-                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart"
-                                       title="افزودن به سبد خرید">
-                                        <span>
-                                            افزودن به
-                                            سبد خرید
-                                        </span>
-                                    </a>
-                                </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
@@ -79,7 +70,7 @@
                                 {
                                     @foreach (var category in product.ProductSelectedCategories.Where(x => x.ProductCategory.ParentId == null))
                                     {
-                                        <div class="product-cat">
+                                        <div class="product-cat text-info">
                                             <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.ProductCategory.UrlName">
                                                 @category.ProductCategory.Title
                                             </a>
@@ -113,7 +104,7 @@
                                 <div class="ratings-container">
                                     @if (product.Seller != null)
                                     {
-                                        <span class="ratings-text">@product.Seller.StoreName</span>
+                                        <span class="ratings-text text-info">@product.Seller.StoreName</span>
                                     }
                                 </div><!-- End .rating-container -->
 
@@ -130,6 +121,12 @@
                                             }
 
                                         </div><!-- End .product-nav -->
+
+                                        <a asp-area="" asp-controller="Product" asp-action="ProductDetails"
+                                           asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()" class=""
+                                           title="افزودن به سبد خرید">
+                                            <i class="fa fa-plus cartButton btn-round cartButtonIconPadding"></i>
+                                        </a>
                                     }
                                 </div><!-- End .product-body -->
 

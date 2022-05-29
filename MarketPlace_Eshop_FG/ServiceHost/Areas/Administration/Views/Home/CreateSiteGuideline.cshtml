@@ -1,0 +1,56 @@
+﻿@model MarketPlace.DataLayer.DTOs.Site.CreateSiteGuidelineDTO
+@{
+    ViewData["Title"] = "افزودن خدمات جدید";
+}
+
+@section scripts
+{
+    <partial name="_AdminJqueryValidators" />
+
+}
+
+<div class="row pt-2 pb-2">
+    <div class="col-sm-9">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت صفحات</a></li>
+            <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+        </ol>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header"><i class="fa fa-plus"></i> @ViewData["Title"]</div>
+            <div class="card-body">
+
+                <form asp-area="Administration" asp-controller="Home" asp-action="CreateSiteGuideline" method="post" id="filter-form">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>عنوان</label>
+                            <input class="form-control" asp-for="Header" />
+                            <span class="text-danger float-right" asp-validation-for="Header"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>متن</label>
+                            <input class="form-control" asp-for="Text"/>
+                            <span class="text-danger float-right" asp-validation-for="Text"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>آیکون</label>
+                            <input class="form-control" asp-for="Icon"/>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">افزودن خدمات جدید</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

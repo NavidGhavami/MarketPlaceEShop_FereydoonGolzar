@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.DTOs.Paging;
-using MarketPlace.DataLayer.DTOs.Seller;
 using MarketPlace.DataLayer.Entities.Site;
 
 namespace MarketPlace.DataLayer.DTOs.Site

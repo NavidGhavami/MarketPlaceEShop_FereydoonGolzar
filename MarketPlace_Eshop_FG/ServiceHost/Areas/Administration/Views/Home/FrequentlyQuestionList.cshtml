@@ -71,7 +71,7 @@
                                             <tr id="ajax-url-item-@faq.Id" role="row" class="odd">
                                                 <td class="sorting">@faq.Id</td>
                                                 <td>@faq.QuestionHeader</td>
-                                                <td>@(faq.QuestionText.Substring(0, Math.Min(faq.QuestionText.Length, 80)) + "...")</td>
+                                                <td class="text-white">@(Html.Raw(faq.QuestionText.Substring(0, Math.Min(faq.QuestionText.Length, 80)) + "..."))</td>
                                                 <td>@faq.CreateDate.ToStringShamsiDate()</td>
                                                 <td>
                                                     <a class="btn btn-sm btn-warning"

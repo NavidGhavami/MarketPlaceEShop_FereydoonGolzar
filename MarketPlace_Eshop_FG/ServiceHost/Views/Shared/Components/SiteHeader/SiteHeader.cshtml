@@ -1,17 +1,6 @@
 ﻿
 
 <header class="header header-10 header-intro-clearance">
-    <div class="header-top">
-        <div class="container">
-            <div class="header-left">
-                <a href="#"><i class="header-dropdown icon-star"></i>به فروشگاه اینترنتی جیبی سنتر خوش آمدید</a>
-            </div><!-- End .header-left -->
-
-            <div class="header-right">
-            </div><!-- End .header-right -->
-        </div><!-- End .container -->
-    </div><!-- End .header-top -->
-
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
@@ -19,77 +8,72 @@
                     <span class="sr-only">فهرست</span>
                     <i class="icon-bars"></i>
                 </button>
-
                 <a href="/" class="logo">
-                    <img src="~/Theme/assets/images/demos/demo-13/logo.png" alt="فروشگاه اینترنتی جیبی سنتر" title="فروشگاه اینترنتی جیبی سنتر">
+                    <img src="~/Theme/assets/images/demos/demo-13/logo.svg" alt="فروشگاه اینترنتی جیبی سنتر" title="فروشگاه اینترنتی جیبی سنتر">
                 </a>
             </div><!-- End .header-left -->
-
             @await Component.InvokeAsync("Search")
 
 
             <div class="header-right">
                 <div class="header-dropdown-link">
                     <div class="dropdown compare-dropdown">
-                      @if (!User.Identity.IsAuthenticated)
-                      {
-                          <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                             aria-haspopup="true" aria-expanded="false" data-display="static"
-                             title="ورود و ثبت نام کاربر" aria-label="Compare Products">
-                              <i class="icon-user"></i>
-                              <span class="compare-txt">ورود | ثبت نام</span>
-                          </a>
+                        @if (!User.Identity.IsAuthenticated)
+                        {
 
-                          <div class="dropdown-menu dropdown-menu-right">
-                              <ul class="compare-products">
-                                  <li class="compare-product">
-                                      <h4 class="compare-product-title">
-                                          <a asp-controller="Account" asp-action="Login">
-                                              <i class=" icon-check">    ورود   </i>
-                                          </a>
-                                      </h4>
-                                  </li>
-                                  <li class="compare-product">
-                                      <h4 class="compare-product-title">
-                                          <a asp-controller="Account" asp-action="Register">
-                                              <i class=" icon-check">    ثبت نام   </i>
-                                          </a>
-                                      </h4>
-                                  </li>
-                              </ul>
-                          </div><!-- End .dropdown-menu -->
-                      }
-                      else
-                      {
-                          <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                             aria-haspopup="true" aria-expanded="false" data-display="static"
-                             title="ورود و ثبت نام کاربر" aria-label="Compare Products">
-                              <i class="icon-user"></i>
-                              <span class="compare-txt">پنل کاربری</span>
-                          </a>
+                            <a asp-controller="Account" asp-action="Login" class="wishlist-link">
+                                <i class="bi bi-box-arrow-in-left"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />
+                                    <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                                </svg>
+                                <span class="wishlist-txt">ورود</span>
+                            </a>
 
-                          <div class="dropdown-menu dropdown-menu-right">
-                              <ul class="compare-products">
-                                  <li class="compare-product">
-                                      <h4 class="compare-product-title">
-                                          <a asp-area="User" asp-controller="Home" asp-action="Dashboard">
-                                              پنل کاربری (@User.Identity.Name عزیز، خوش آمدید)
-                                          </a>
-                                      </h4>
-                                  </li>
-                                  <li class="compare-product">
-                                      <h4 class="compare-product-title">
-                                          <a asp-controller="Account" asp-action="Logout">
-                                              خروج
-                                          </a>
-                                      </h4>
-                                  </li>
-                              </ul>
-                          </div><!-- End .dropdown-menu -->
-                      }
+                            <a asp-controller="Account" asp-action="Register" class="wishlist-link">
+                                <i class="bi bi-person-circle"></i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                </svg>
+                                <span class="wishlist-txt">ثبت نام</span>
+                            </a>
+
+                            <!-- End .dropdown-menu -->
+                        }
+                        else
+                        {
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false" data-display="static"
+                           title="ورود و ثبت نام کاربر" aria-label="Compare Products">
+                                <i class="icon-user"></i>
+                                <span class="compare-txt">پنل کاربری</span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <ul class="compare-products">
+                                    <li class="compare-product">
+                                        <h4 class="compare-product-title">
+                                            <a asp-area="User" asp-controller="Home" asp-action="Dashboard">
+                                                پنل کاربری (@User.Identity.Name عزیز، خوش آمدید)
+                                            </a>
+                                        </h4>
+                                    </li>
+                                    <li class="compare-product">
+                                        <h4 class="compare-product-title">
+                                            <a asp-controller="Account" asp-action="Logout">
+                                                خروج
+                                            </a>
+                                        </h4>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- End .dropdown-menu -->
+                        }
                     </div><!-- End .compare-dropdown -->
 
-                    <a href="wishlist.html" class="wishlist-link">
+                    <a href="#" class="wishlist-link">
                         <i class="icon-heart-o"></i>
                         <span class="wishlist-count">0</span>
                         <span class="wishlist-txt">مورد علاقه</span>
@@ -97,12 +81,18 @@
 
                     @await Component.InvokeAsync("UserOrder")
 
+
+
                 </div>
             </div>
+
         </div><!-- End .container -->
+
+
+
     </div><!-- End .header-middle -->
+    @await Component.InvokeAsync("GetMenuCategories")
 
-@await Component.InvokeAsync("GetMenuCategories")
 
-<!-- End .header-bottom -->
+    <!-- End .header-bottom -->
 </header><!-- End .header -->

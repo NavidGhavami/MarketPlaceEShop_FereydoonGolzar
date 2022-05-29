@@ -3,16 +3,29 @@
 
 <div class="mobile-menu-overlay"></div><!-- End .mobile-menu-overlay -->
 <div class="mobile-menu-container mobile-menu-light">
+
+    <a href="/" class="logo">
+        <img src="~/Theme/assets/images/demos/demo-13/logo.svg" alt="فروشگاه اینترنتی جیبی سنتر" title="فروشگاه اینترنتی جیبی سنتر" class="logoAndSelletTextRightPadding">
+    </a>
+    
+    <form asp-area="" asp-controller="Product" asp-action="SearchProducts" method="get" class="mobile-search">
+        <label for="mobile-search" class="sr-only">جستجو</label>
+        <input type="search" class="form-control" name="productTitle"
+               placeholder="جستجوی محصول ..." required>
+        <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+    </form>
+    <br/>
+    <br/>
+    <div class="header-right logoAndSelletTextRightPadding">
+        <span>
+            <a asp-controller="Home" asp-action="SellerGuidelines" class="text-warning SellerTextElement">
+                <span class="SellerText">فروشنده شوید</span>
+            </a>
+        </span>
+
+    </div>
+
     <div class="mobile-menu-wrapper">
-        <span class="mobile-menu-close"><i class="icon-close"></i></span>
-
-        <form asp-area="" asp-controller="Product" asp-action="SearchProducts" method="get" class="mobile-search">
-            <label for="mobile-search" class="sr-only">جستجو</label>
-            <input type="search" class="form-control" name="productTitle"
-                   placeholder="جستجوی محصول ..." required>
-            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-        </form>
-
         <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab"
@@ -20,7 +33,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab"
-                   aria-controls="mobile-cats-tab" aria-selected="false">دسته بندی ها</a>
+                   aria-controls="mobile-cats-tab" aria-selected="false">دسته بندی</a>
             </li>
         </ul>
 
@@ -30,23 +43,46 @@
                 <nav class="mobile-nav">
                     <ul class="mobile-menu">
                         <li class="active">
-                            <a href="/">صفحه اصلی</a>
+                            <a href="/">
+                                <i class="fa fa-home text-dark mobileMenuCategoryPadding"></i>
+                                صفحه اصلی
+                            </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a>
+                            <a class="text-dark" asp-area="" asp-controller="Product" asp-action="FilterProducts">
+                                <i class="fa fa-image text-dark mobileMenuCategoryPadding"></i>
+                                محصولات
+                            </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Blog" asp-action="ArticleList" class="sf-with-ul">بلاگ</a>
+                            <a class="text-dark" asp-area="" asp-controller="Home" asp-action="SellerGuidelines">
+                                <i class="fa fa-shopping-bag text-dark mobileMenuCategoryPadding"></i>
+                                فروشنده شوید
+                            </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="FrequentlyQuestions">سوالات متداول</a>
+                            <a class="text-dark" asp-area="" asp-controller="Blog" asp-action="ArticleList" class="sf-with-ul">	
+                                <i class="fa fa-copy text-dark mobileMenuCategoryPadding"></i>
+                                بلاگ
+                            </a>
                         </li>
                         <li>
-                        <li>
-                            <a asp-area="" asp-controller="Home" asp-action="ContactUs">تماس با ما</a>
+                            <a class="text-dark" asp-area="" asp-controller="Home" asp-action="FrequentlyQuestions">
+                                <i class="fas fa-question text-dark mobileMenuCategoryPadding"></i>
+                                سوالات متداول
+                            </a>
                         </li>
                         <li>
-                            <a asp-area="" asp-controller="Home" asp-action="AboutUs">درباره ما</a>
+                            <a class="text-dark" asp-area="" asp-controller="Home" asp-action="ContactUs">
+                                <i class="fa fa-phone text-dark mobileMenuCategoryPadding"></i>
+                                تماس با ما
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">
+                                <i class="fas fa-info text-dark mobileMenuCategoryPadding"></i>
+                                درباره ما
+                            </a>
                         </li>
                     </ul>
                 </nav><!-- End .mobile-nav -->
@@ -59,18 +95,21 @@
                             @foreach (var category in categories.Where(x => x.ParentId == null))
                             {
                                 <li class="active">
-                                    <a>@category.Title<span class="mmenu-btn"></span></a>
+                                    <a class="text-dark" asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.UrlName">
+                                        <i class="@category.Icon text-dark mobileMenuCategoryPadding"></i>
+                                        @category.Title<span class="mmenu-btn"></span>
+                                    </a>
                                     <ul style="display: none;">
-                                        @if (categories.Any(x=>x.ParentId == category.Id))
+                                        @if (categories.Any(x => x.ParentId == category.Id))
                                         {
                                             @foreach (var subcategory in categories.Where(x => x.ParentId == category.Id))
                                             {
                                                 <li class="active">
                                                     <a class="text-danger">@subcategory.Title<span class="mmenu-btn"></span></a>
                                                     <ul style="display: none;">
-                                                        @if (categories.Any(x=>x.ParentId == subcategory.Id))
+                                                        @if (categories.Any(x => x.ParentId == subcategory.Id))
                                                         {
-                                                            @foreach (var secondSubCategory in categories.Where(x=>x.ParentId == subcategory.Id))
+                                                            @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subcategory.Id))
                                                             {
                                                                 <li class="active">
                                                                     <a class="text-info" asp-area="" asp-controller="Product" asp-action="FilterProducts"

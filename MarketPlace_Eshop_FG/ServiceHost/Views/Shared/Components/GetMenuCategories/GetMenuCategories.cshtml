@@ -1,15 +1,15 @@
 ﻿@using MarketPlace.DataLayer.Entities.Products
 
-@{ var categories = ViewBag.ProductCategories as List<ProductCategory>; }
+@{
+    var categories = ViewBag.ProductCategories as List<ProductCategory>;
+}
 
 <div class="header-bottom sticky-header">
     <div class="container">
         <div class="header-left">
-            <div class="dropdown category-dropdown show is-on" data-visible="true">
-                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="true" data-display="static"
-                   title="دسته بندی فروشگاه">
-                    فهرست دسته بندی ها
+            <div class="dropdown category-dropdown">
+                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="دسته بندی های فروشگاه">
+                    دسته بندی محصولات
                 </a>
 
                 <div class="dropdown-menu">
@@ -17,43 +17,51 @@
                         <ul class="menu-vertical sf-arrows ">
                             @if (categories != null && categories.Any())
                             {
-                        @foreach (var category in categories.Where(x=>x.ParentId == null))
-                        {
-                        <li class="megamenu-container">
-                            <a class="sf-with-ul" href="#">@category.Title</a>
+                                @foreach (var category in categories.Where(x => x.ParentId == null))
+                                {
+                                    <li class="megamenu-container">
+                                        <a class="sf-with-ul text-dark" asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.UrlName">
+                                            <i class="@category.Icon text-dark"></i>
+                                            @category.Title
+                                        </a>
 
-                            <div class="megamenu">
-                                <div class="row no-gutters">
-                                    <div class="col-md-12">
-                                        <div class="menu-col">
-                                            <div class="row">
-                                                @if (categories.Any(x => x.ParentId == category.Id))
-                                                {
-                                                    @foreach (var subCategory in categories.Where(x=>x.ParentId == category.Id))
-                                                    {
-                                                        <div class="col-md-3">
-                                                            <div class="menu-title">@subCategory.Title</div>
-                                                            <!-- End .menu-title -->
-                                                            @if (categories.Any(x => x.ParentId == subCategory.Id))
+                                        <div class="megamenu">
+                                            <div class="row no-gutters">
+                                                <div class="col-md-12">
+                                                    <div class="menu-col">
+                                                        <div class="row">
+                                                            @if (categories.Any(x => x.ParentId == category.Id))
                                                             {
-                                                        <ul>
-                                                            @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subCategory.Id).Take(6))
-                                                            {
-                                                        <li><a asp-area="" asp-controller="Product" asp-action="FilterProducts"
-                                                               asp-route-Category="@secondSubCategory.UrlName">@secondSubCategory.Title</a></li>}
-                                                        </ul>
+                                                                @foreach (var subCategory in categories.Where(x => x.ParentId == category.Id))
+                                                                {
+                                                                    <div class="col-md-3">
+                                                                        <div class="menu-title">@subCategory.Title</div>
+                                                                        <!-- End .menu-title -->
+                                                                        @if (categories.Any(x => x.ParentId == subCategory.Id))
+                                                                        {
+                                                                            <ul>
+                                                                                @foreach (var secondSubCategory in categories.Where(x => x.ParentId == subCategory.Id).Take(6))
+                                                                                {
+                                                                                    <li>
+                                                                                        <a class="text-dark" asp-area="" asp-controller="Product" asp-action="FilterProducts"
+                                                                                           asp-route-Category="@secondSubCategory.UrlName">@secondSubCategory.Title</a>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        }
+                                                                    </div>
+
+                                                                    <!-- End .col-md-6 -->
+                                                                }
                                                             }
-                                                        </div><!-- End .col-md-6 -->
-                                                    }
-                                                }
+                                                        </div><!-- End .row -->
+                                                    </div><!-- End .menu-col -->
+                                                </div><!-- End .col-md-8 -->
                                             </div><!-- End .row -->
-                                        </div><!-- End .menu-col -->
-                                    </div><!-- End .col-md-8 -->
-                                </div><!-- End .row -->
-                            </div><!-- End .megamenu -->
-                        </li>
+                                        </div><!-- End .megamenu -->
+                                    </li>
 
-                        }
+                                }
 
                             }
                         </ul><!-- End .menu-vertical -->
@@ -65,23 +73,35 @@
             <nav class="main-nav">
                 <ul class="menu sf-arrows">
                     <li class="megamenu-container active">
-                        <a href="/" class="">صفحه اصلی</a>
+                        <a href="/" class="">
+                            صفحه اصلی
+                        </a>
                     </li>
 
                     <li class="megamenu-container">
-                        <a asp-area="" asp-controller="Product" asp-action="FilterProducts" class="">محصولات</a>
+                        <a asp-area="" asp-controller="Product" asp-action="FilterProducts" class="">
+                            محصولات
+                        </a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Blog" asp-action="ArticleList" class="">بلاگ</a>
+                        <a asp-area="" asp-controller="Blog" asp-action="ArticleList" class="">
+                            بلاگ
+                        </a>
                     </li>
                     <li class="megamenu-container">
-                        <a asp-controller="Home" asp-action="FrequentlyQuestions" class="">سوالات متداول</a>
+                        <a asp-controller="Home" asp-action="FrequentlyQuestions" class="">
+                            سوالات متداول
+                        </a>
                     </li>
                     <li class="megamenu-container">
-                        <a asp-controller="Home" asp-action="AboutUs" class="">درباره ما</a>
+                        <a asp-controller="Home" asp-action="AboutUs" class="">
+                            درباره ما
+                        </a>
                     </li>
                     <li class="megamenu-container">
-                        <a asp-controller="Home" asp-action="ContactUs" class="">تماس با ما</a>
+                        <a asp-controller="Home" asp-action="ContactUs" class="">
+                            تماس با ما
+                        </a>
                     </li>
 
 
@@ -89,11 +109,13 @@
             </nav><!-- End .main-nav -->
         </div><!-- End .col-lg-9 -->
         <div class="header-right">
-            <i class="la la-lightbulb-o"></i>
             <span>
-                <a href="index-1.html" class="text-warning">جشنواره و تخفیفات</a>
+                <a asp-controller="Home" asp-action="SellerGuidelines" class="text-warning SellerTextElement">
+                    <span class="SellerText">فروشنده شوید</span>
+                </a>
             </span>
 
         </div>
     </div><!-- End .container -->
 </div>
+

@@ -32,6 +32,8 @@ namespace MarketPlace.DataLayer.Context
         public DbSet<Slider> Sliders { get; set; }
         public DbSet<SiteBanner> SiteBanners { get; set; }
         public DbSet<FrequentlyQuestion> FrequentlyQuestions { get; set; }
+        public DbSet<SellerGuideline> SellerGuidelines { get; set; }
+        public DbSet<SiteGuideline> SiteGuidelines { get; set; }
 
         #endregion
 

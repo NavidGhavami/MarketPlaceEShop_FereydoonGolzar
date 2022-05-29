@@ -7,10 +7,8 @@ using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Paging;
-using MarketPlace.DataLayer.DTOs.Seller;
 using MarketPlace.DataLayer.DTOs.Site;
 using MarketPlace.DataLayer.Entities.Site;
-using MarketPlace.DataLayer.Entities.Store;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -26,14 +24,19 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<Slider> _sliderRepository;
         private readonly IGenericRepository<SiteBanner> _siteBanner;
         private readonly IGenericRepository<FrequentlyQuestion> _frequentlyQuestionRepository;
+        private readonly IGenericRepository<SellerGuideline> _sellerGuidelineRepository;
+        private readonly IGenericRepository<SiteGuideline> _siteGuidelineRepository;
 
-        public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository,
-            IGenericRepository<SiteBanner> siteBanner, IGenericRepository<FrequentlyQuestion> frequentlyQuestionRepository)
+            public SiteService(IGenericRepository<SiteSetting> siteSettingRepository, IGenericRepository<Slider> sliderRepository,
+            IGenericRepository<SiteBanner> siteBanner, IGenericRepository<FrequentlyQuestion> frequentlyQuestionRepository, IGenericRepository<SellerGuideline> sellerGuidelineRepository,
+            IGenericRepository<SiteGuideline> siteGuidelineRepository)
         {
             _siteSettingRepository = siteSettingRepository;
             _sliderRepository = sliderRepository;
             _siteBanner = siteBanner;
             _frequentlyQuestionRepository = frequentlyQuestionRepository;
+            _sellerGuidelineRepository = sellerGuidelineRepository;
+            _siteGuidelineRepository = siteGuidelineRepository;
         }
 
         #endregion
@@ -392,19 +395,20 @@ namespace MarketPlace.Application.Services.Implementations
             return true;
         }
 
+
+        #endregion
+
+        #region Frequently Questions
+
         public async Task<List<FrequentlyQuestion>> GetAllFrequentlyQuestions()
         {
             return await _frequentlyQuestionRepository
                 .GetQuery()
                 .AsQueryable()
                 .Where(x => !x.IsDelete)
-                .OrderBy(x=>x.Id)
+                .OrderBy(x => x.Id)
                 .ToListAsync();
         }
-
-        #endregion
-
-        #region Frequently Questions
 
         public async Task<FilterFrequentlyQuestionDTO> GetFrequentlyQuestions(FilterFrequentlyQuestionDTO filter)
         {
@@ -487,6 +491,201 @@ namespace MarketPlace.Application.Services.Implementations
 
         }
 
+
+
+        #endregion
+
+        #region Seller Guideline
+
+        public async Task<List<SellerGuideline>> GetAllSellerGuidelines()
+        {
+            return await _sellerGuidelineRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => !x.IsDelete)
+                .OrderBy(x => x.Id)
+                .ToListAsync();
+        }
+
+        public async Task<FilterSellerGuidelineDTO> GetSellerGuidelines(FilterSellerGuidelineDTO filter)
+        {
+            var query = _sellerGuidelineRepository
+                .GetQuery()
+                .AsQueryable();
+
+
+            #region Paging
+
+
+            var guidelineCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, guidelineCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetSellerGuideline(allEntities);
+        }
+
+        public async Task<CreateSellerGuidelineDTO.CreateSellerGuidelineResult> CreateSellerGuideline(CreateSellerGuidelineDTO guideline)
+        {
+            var newGuideline = new SellerGuideline
+            {
+                QuestionTitle = guideline.QuestionTitle,
+                AnswerTitle = guideline.AnswerTitle
+            };
+
+            await _sellerGuidelineRepository.AddEntity(newGuideline);
+            await _sellerGuidelineRepository.SaveChanges();
+
+            return CreateSellerGuidelineDTO.CreateSellerGuidelineResult.Success;
+        }
+
+        public async Task<EditSellerGuidelineDTO> GetSellerGuidelineForEdit(long guidelineId)
+        {
+            var guideline = await _sellerGuidelineRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == guidelineId);
+
+
+            if (guideline == null)
+            {
+                return null;
+            }
+
+            return new EditSellerGuidelineDTO
+            {
+                Id = guideline.Id,
+                QuestionTitle = guideline.QuestionTitle,
+                AnswerTitle = guideline.AnswerTitle
+            };
+        }
+
+        public async Task<EditSellerGuidelineResult> EditSellerGuideline(EditSellerGuidelineDTO edit)
+        {
+            var mainGuideline = await _sellerGuidelineRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == edit.Id);
+
+            if (mainGuideline == null)
+            {
+                return EditSellerGuidelineResult.NotFound;
+            }
+
+            mainGuideline.Id = edit.Id;
+            mainGuideline.QuestionTitle = edit.QuestionTitle;
+            mainGuideline.AnswerTitle = edit.AnswerTitle;
+
+            _sellerGuidelineRepository.EditEntity(mainGuideline);
+            await _sellerGuidelineRepository.SaveChanges();
+
+            return EditSellerGuidelineResult.Success;
+        }
+
+
+
+        #endregion
+
+        #region Site Guideline
+
+        public async Task<List<SiteGuideline>> GetAllSiteGuidelines()
+        {
+            return await _siteGuidelineRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => !x.IsDelete)
+                .OrderBy(x => x.Id)
+                .ToListAsync();
+        }
+
+        public async Task<FilterSiteGuidelineDTO> GetSiteGuidelines(FilterSiteGuidelineDTO filter)
+        {
+            var query = _siteGuidelineRepository
+                .GetQuery()
+                .AsQueryable();
+
+
+            #region Paging
+
+
+            var guidelineCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, guidelineCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+
+            #endregion
+
+            return filter.SetPaging(pager).SetSiteGuideline(allEntities);
+        }
+
+        public async Task<CreateSiteGuidelineDTO.CreateSiteGuidelineResult> CreateSiteGuideline(CreateSiteGuidelineDTO guideline)
+        {
+            var newGuideline = new SiteGuideline
+            {
+                Header = guideline.Header,
+                Text = guideline.Text,
+                Icon = guideline.Icon
+            };
+
+            await _siteGuidelineRepository.AddEntity(newGuideline);
+            await _siteGuidelineRepository.SaveChanges();
+
+            return CreateSiteGuidelineDTO.CreateSiteGuidelineResult.Success;
+        }
+
+        public async Task<EditSiteGuidelineDTO> GetSiteGuidelineForEdit(long guidelineId)
+        {
+            var guideline = await _siteGuidelineRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == guidelineId);
+
+
+            if (guideline == null)
+            {
+                return null;
+            }
+
+            return new EditSiteGuidelineDTO
+            {
+                Id = guideline.Id,
+                Header = guideline.Header,
+                Text = guideline.Text,
+                Icon = guideline.Icon
+            };
+        }
+
+        public async Task<EditSiteGuidelineDTO.EditSiteGuidelineResult> EditSiteGuideline(EditSiteGuidelineDTO edit)
+        {
+            var mainGuideline = await _siteGuidelineRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == edit.Id);
+
+            if (mainGuideline == null)
+            {
+                return EditSiteGuidelineDTO.EditSiteGuidelineResult.NotFound;
+            }
+
+            mainGuideline.Id = edit.Id;
+            mainGuideline.Header = edit.Header;
+            mainGuideline.Text = edit.Text;
+            mainGuideline.Icon = edit.Icon;
+
+            _siteGuidelineRepository.EditEntity(mainGuideline);
+            await _siteGuidelineRepository.SaveChanges();
+
+            return EditSiteGuidelineDTO.EditSiteGuidelineResult.Success;
+        }
+
         #endregion
 
         #region Dispose
@@ -508,6 +707,14 @@ namespace MarketPlace.Application.Services.Implementations
             if (_frequentlyQuestionRepository != null)
             {
                 await _frequentlyQuestionRepository.DisposeAsync();
+            }
+            if (_sellerGuidelineRepository != null)
+            {
+                await _sellerGuidelineRepository.DisposeAsync();
+            }
+            if (_sellerGuidelineRepository != null)
+            {
+                await _sellerGuidelineRepository.DisposeAsync();
             }
         }
 

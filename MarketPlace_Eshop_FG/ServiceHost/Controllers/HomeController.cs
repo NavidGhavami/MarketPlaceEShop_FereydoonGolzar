@@ -88,6 +88,17 @@ namespace ServiceHost.Controllers
 
         #endregion
 
+        #region Seller Guidelines
+
+        [HttpGet("seller-guidelines")]
+        public async Task<IActionResult> SellerGuidelines()
+        {
+            var data = await _siteService.GetAllSellerGuidelines();
+            return View(data);
+        }
+
+        #endregion
+
         #region 404 NotFound Page
 
         [HttpGet("404Error-page-not-found")]

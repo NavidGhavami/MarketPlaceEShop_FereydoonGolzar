@@ -5,19 +5,21 @@
 }
 
 @section Scripts
-{
+    {
     <partial name="_JqueryValidators" />
 }
 
-<div class="page-header text-center">
-    <div class="container">
-        <h3 class="text-danger">@ViewData["Title"]</h3>
-    </div><!-- End .container -->
-    @if (User.Identity.IsAuthenticated)
+    <div class="page-header text-center">
+        <div class="container">
+            <h3 class="text-danger">@ViewData["Title"]</h3>
+        </div><!-- End .container -->
+        @if (User.Identity.IsAuthenticated)
     {
         <div class="container">
             <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
-        </div><!-- End .container -->
+        </div>
+
+        <!-- End .container -->
     }
 </div>
 
@@ -48,45 +50,65 @@
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-6">
                                         <label>نام فروشگاه</label>
-                                        <input type="text" asp-for="StoreName" class="form-control">
+                                        <input type="text" asp-for="StoreName" placeholder="نام فروشگاه خود را ذکر نمایید" class="form-control">
                                         <span class="text-danger float-right" asp-validation-for="StoreName"></span>
                                     </div>
                                     <br />
                                     <div class="form-group col-md-6">
                                         <label>کد ملّی فروشنده</label>
-                                        <input type="text" asp-for="NationalId" class="form-control">
+                                        <input type="text" asp-for="NationalId" placeholder="کد ملّی 10 رقمی خود را وارد نمایید" class="form-control">
                                         <span class="text-danger float-right" asp-validation-for="NationalId"></span>
                                     </div>
                                     <br />
                                 </div>
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-6">
-                                        <label>تلفن تماس</label>
-                                        <input type="text" asp-for="Phone" class="form-control">
+                                        <label>تلفن ثابت فروشگاه</label>
+                                        <input type="text" asp-for="Phone" placeholder="تلفن ثابت فروشگاه را وارد نمایید" class="form-control">
                                         <span class="text-danger float-right" asp-validation-for="Phone"></span>
                                     </div>
                                     <br />
                                     <div class="form-group col-md-6">
-                                        <label>موبایل</label>
-                                        <input type="text" asp-for="Mobile" class="form-control">
-                                        <span class="text-danger float-right" asp-validation-for="Mobile"></span>
+                                        <label>تلفن همراه فروشنده / فروشگاه</label>
+                                        <input type="text" asp-for="Mobile" placeholder="تلفن همراه فروشنده / فروشگاه را وارد نمایید" class="form-control">
                                     </div>
                                     <br />
                                 </div>
+                                <br />
                                 <div class="row col-md-12">
-                                    <div class="form-group col-md-6">
+                                    <div class="form-group col-md-12">
                                         <label>آدرس فروشگاه</label>
-                                        <textarea class="form-control" asp-for="Address" rows="1"></textarea>
+                                        <textarea class="form-control" asp-for="Address" placeholder="آدرس دقیق فروشگاه را بنویسید" rows="1"></textarea>
                                         <span class="text-danger float-right" asp-validation-for="Address"></span>
                                     </div>
                                     <br />
+                                    <div class="form-group col-md-12">
+                                        <label>توضیحات مدیر سایت</label>
+                                        <textarea class="form-control text-danger" asp-for="AdminDescription" disabled="" rows="1"></textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row col-md-12">
                                     <div class="form-group col-md-6">
-                                        <label>توضیحات ادمین سایت</label>
-                                        <textarea class="form-control text-danger" disabled="disabled" asp-for="AdminDescription" rows="2"></textarea>
-                                        <span class="text-danger float-right" asp-validation-for="AdminDescription"></span>
+                                        <label>شماره حساب بانکی</label>
+                                        <input type="text" asp-for="BankAccountNumber" placeholder="شماره حساب بانکی خود را وارد نمایید" class="form-control">
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>شماره شبا بانکی</label>
+                                        <input type="text" asp-for="BankAccountShabaNumber" placeholder="شماره شبا بانکی خود را وارد نمایید (IR10000211122111122)" class="form-control">
                                     </div>
                                     <br />
                                 </div>
+                                <br />
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>شماره کارت بانکی</label>
+                                        <input type="text" class="form-control" asp-for="BankAccountCardNumber" placeholder="شماره کارت بانکی 16 رقمی خود را وارد نمایید" />
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
                                 <div class="form-group">
                                     <label>توضیحات فروشگاه</label>
                                     <br />
@@ -96,39 +118,52 @@
                                 </div>
                                 <br />
                                 <br />
+
+
                                 <div class="row col-md-12">
-                                    <div class="form-group col-md-6">
-                                        <label>لوگو فروشگاه</label>
+                                    <div class="file-upload col-md-9">
+                                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">آپلود تصویر کارت ملّی</button>
+
+                                        <div class="image-upload-wrap">
+                                            <input class="file-upload-input" name="nationalcard" type='file' onchange="readURL(this);" accept="image/*" />
+                                            <div class="drag-text">
+                                                <h3>تصویر مورد نظر را به داخل کادر بکشید یا دکمه آپلود تصویر را بزنید</h3>
+                                            </div>
+                                        </div>
+                                        <div class="file-upload-content">
+                                            <img class="file-upload-image" src="@(!string.IsNullOrEmpty(Model.NationalCardImage) ? PathExtension.SellerNationalCardImageThumb + Model.NationalCardImage
+                                                                                    : PathExtension.DefaultAvatar )" alt="تصویر کارت ملّی" />
+                                            <div class="image-title-wrap">
+                                                <button type="button" onclick="removeUpload()" class="remove-image">حذف تصویر</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <img style="width: 80px; height: 100px; border-radius: 50%"
-                                             src="@(!string.IsNullOrEmpty(Model.Logo) ? PathExtension.SellerLogoThumb + Model.Logo
-                                                                      : PathExtension.DefaultAvatar )" alt="تصویر لوگو" />
+
+                                    <div class="file-upload col-md-3">
+
+                                        <div class="image-upload-wrap" style="width: 165px; height: 125px;">
+                                            <div class="drag-text">
+                                                <img style="width: 150px; height: 110px;"
+                                                     src="@(!string.IsNullOrEmpty(Model.NationalCardImage) ? PathExtension.SellerNationalCardImageThumb + Model.NationalCardImage
+                                                              : PathExtension.DefaultAvatar )" alt="تصویر کارت ملّی" />
+                                                <br />
+                                                <h5>تصویر آپلود شده</h5>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="form-group">
-                                        <input type="file" name="logo" class="form-control">
-                                    </div>
-                                    
-                                    <div class="form-group col-md-6">
-                                        <label>تصویر کارت ملّی</label>
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <img style="width: 80px; height: 100px;"
-                                             src="@(!string.IsNullOrEmpty(Model.NationalCardImage) ? PathExtension.SellerNationalCardImageThumb + Model.NationalCardImage
-                                                      : PathExtension.DefaultAvatar )" alt="تصویر کارت ملّی" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="file" name="nationalcard" class="form-control">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="btn-group btn-round group-round float-right m-1">
-                                    <button type="submit" onclick="wait_me()" class="btn  btn-warning waves-effect waves-light">ویرایش</button>
-                                    <a class="btn btn-primary  " asp-area="User" asp-controller="Seller" asp-action="SellerRequests">بازگشت</a>
 
                                 </div>
+                                <br />
+                                <button type="submit" onclick="wait_me()" class="btn btn-round btn-primary btn-block float-right">
+                                    <span>ویرایش اطلاعات</span>
+                                    <i class="fa fa-edit fa fa-2x"></i>
+                                </button>
+                                <button onclick="window.history.go(-1)" class="btn btn-round btn-info btn-block float-right">
+                                    <span>بازگشت به صفحه قبل</span>
+                                    <i class="fa fa-arrow-circle-left fa fa-2x"></i>
+                                </button>
+
                             </form>
                         </div><!-- .End .tab-pane -->
                     </div>

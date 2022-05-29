@@ -6,7 +6,7 @@
 
 @section Scripts
 {
-    <partial name="_JqueryValidators" />
+<partial name="_JqueryValidators" />
 }
 
 <div class="page-header text-center">
@@ -17,7 +17,9 @@
     {
         <div class="container">
             <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
-        </div><!-- End .container -->
+        </div>
+
+        <!-- End .container -->
     }
 </div>
 
@@ -48,31 +50,61 @@
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-6">
                                         <label>نام فروشگاه</label>
-                                        <input type="text" asp-for="StoreName" class="form-control">
+                                        <input type="text" asp-for="StoreName" placeholder="نام فروشگاه خود را ذکر نمایید" class="form-control">
                                         <span class="text-danger float-right" asp-validation-for="StoreName"></span>
                                     </div>
                                     <br />
                                     <div class="form-group col-md-6">
                                         <label>کد ملّی فروشنده</label>
-                                        <input type="text" asp-for="NationalId" class="form-control">
+                                        <input type="text" asp-for="NationalId" placeholder="کد ملّی 10 رقمی خود را وارد نمایید" class="form-control">
                                         <span class="text-danger float-right" asp-validation-for="NationalId"></span>
                                     </div>
                                     <br />
                                 </div>
-                                <div class="form-group">
-                                    <label>تلفن ثابت فروشگاه</label>
-                                    <input type="text" asp-for="Phone" class="form-control">
-                                    <span class="text-danger float-right" asp-validation-for="Phone"></span>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>تلفن ثابت فروشگاه</label>
+                                        <input type="text" asp-for="Phone" placeholder="تلفن ثابت فروشگاه را وارد نمایید" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="Phone"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>تلفن همراه فروشنده / فروشگاه</label>
+                                        <input type="text" asp-for="Mobile" placeholder="تلفن همراه فروشنده / فروشگاه را وارد نمایید" class="form-control">
+                                    </div>
+                                    <br />
                                 </div>
                                 <br />
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-12">
                                         <label>آدرس فروشگاه</label>
-                                        <textarea class="form-control" asp-for="Address" rows="1"></textarea>
+                                        <textarea class="form-control" asp-for="Address" placeholder="آدرس دقیق فروشگاه را بنویسید"  rows="1"></textarea>
                                         <span class="text-danger float-right" asp-validation-for="Address"></span>
                                     </div>
                                     <br />
                                 </div>
+                                <br/>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>شماره حساب بانکی</label>
+                                        <input type="text" asp-for="BankAccountNumber" placeholder="شماره حساب بانکی خود را وارد نمایید" class="form-control">
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>شماره شبا بانکی</label>
+                                        <input type="text" asp-for="BankAccountShabaNumber" placeholder="شماره شبا بانکی خود را وارد نمایید (IR10000211122111122)" class="form-control">
+                                    </div>
+                                    <br />
+                                </div>
+                                <br/>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>شماره کارت بانکی</label>
+                                        <input type="text" class="form-control" asp-for="BankAccountCardNumber" placeholder="شماره کارت بانکی 16 رقمی خود را وارد نمایید" /> 
+                                    </div>
+                                    <br />
+                                </div>
+                                <br/>
                                 <div class="form-group">
                                     <label>توضیحات فروشگاه</label>
                                     <br />
@@ -84,21 +116,31 @@
                                 <br />
 
                                 <div class="row col-md-12">
-                                    <div class="form-group">
-                                        <label>لوگو فروشگاه</label>
-                                        <input type="file" name="logo" class="form-control">
-                                    </div>
-                                    <br />
-                                    <div class="form-group">
-                                        <label>تصویر کارت ملّی فروشنده</label>
-                                        <input type="file" name="nationalcard" class="form-control">
-                                        <span class="text-danger float-right" asp-validation-for="NationalCardImage"></span>
+                                    <div class="file-upload form-group">
+                                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">آپلود تصویر کارت ملّی</button>
+
+                                        <div class="image-upload-wrap">
+                                            <input class="file-upload-input" name="nationalcard" type='file' onchange="readURL(this);" accept="image/*" />
+                                            <div class="drag-text">
+                                                <h3>تصویر مورد نظر را به داخل کادر بکشید یا دکمه آپلود تصویر را بزنید</h3>
+                                            </div>
+                                        </div>
+                                        <div class="file-upload-content">
+                                            <img class="file-upload-image" src="#" alt="تصویر کارت ملّی" />
+                                            <div class="image-title-wrap">
+                                                <button type="button" onclick="removeUpload()" class="remove-image">حذف تصویر</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <br />
-                                <button type="submit" onclick="wait_me()" class="btn btn-round btn-success float-right">
+                                <button type="submit" onclick="wait_me()" class="btn btn-round btn-success btn-block float-right">
                                     <span>ثبت اطلاعات</span>
-                                    <i class="icon-long-arrow-left"></i>
+                                    <i class="fa fa-save fa fa-2x"></i>
+                                </button>
+                                <button onclick="window.history.go(-1);" class="btn btn-round btn-primary btn-block float-right">
+                                    <span>بازگشت به صفحه قبل</span>
+                                    <i class="fa fa-arrow-circle-left fa fa-2x"></i>
                                 </button>
                             </form>
                         </div><!-- .End .tab-pane -->

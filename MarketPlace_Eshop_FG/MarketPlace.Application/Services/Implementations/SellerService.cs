@@ -52,12 +52,6 @@ namespace MarketPlace.Application.Services.Implementations
                 return RequestSellerResult.HasUnderProgressRequest;
             }
 
-            if (logo != null && logo.IsImage())
-            {
-                var logoName = Guid.NewGuid().ToString("N") + Path.GetExtension(logo.FileName);
-                logo.AddImageToServer(logoName, PathExtension.SellerLogoOriginServer, 80, 80, PathExtension.SellerLogoThumbServer);
-                seller.Logo = logoName;
-            }
 
             if (nationalCard != null && nationalCard.IsImage())
             {
@@ -71,11 +65,13 @@ namespace MarketPlace.Application.Services.Implementations
                 UserId = userId,
                 Phone = seller.Phone,
                 Mobile = user.Mobile,
-                Logo = seller.Logo,
                 NationalCardImage = seller.NationalCardImage,
                 Address = seller.Address,
                 StoreName = seller.StoreName,
                 NationalId = seller.NationalId,
+                BankAccountNumber = seller.BankAccountNumber,
+                BankAccountCardNumber = seller.BankAccountCardNumber,
+                BankAccountShabaNumber = seller.BankAccountShabaNumber,
                 Description = seller.Description,
                 StoreAcceptanceState = StoreAcceptanceState.UnderProgress,
             };
@@ -178,7 +174,9 @@ namespace MarketPlace.Application.Services.Implementations
                 Address = seller.Address,
                 Description = seller.Description,
                 AdminDescription = seller.AdminDescription,
-                Logo = seller.Logo,
+                BankAccountNumber = seller.BankAccountNumber,
+                BankAccountCardNumber = seller.BankAccountCardNumber,
+                BankAccountShabaNumber = seller.BankAccountShabaNumber,
                 NationalCardImage = seller.NationalCardImage,
                 NationalId = seller.NationalId
             };
@@ -193,18 +191,13 @@ namespace MarketPlace.Application.Services.Implementations
                 return EditSellerRequestResult.NotFound;
             }
 
-            if (logo != null && logo.IsImage())
-            {
-                var logoName = Guid.NewGuid().ToString("N") + Path.GetExtension(logo.FileName);
-                logo.AddImageToServer(logoName, PathExtension.SellerLogoOriginServer, 80, 80, PathExtension.SellerLogoThumbServer, seller.Logo);
-                request.Logo = logoName;
-            }
-
             if (nationalCard != null && nationalCard.IsImage())
             {
                 var nationalCardName = Guid.NewGuid().ToString("N") + Path.GetExtension(nationalCard.FileName);
-                nationalCard.AddImageToServer(nationalCardName, PathExtension.SellerNationalCardImageOriginServer, 120, 100, PathExtension.SellerNationalCardImageThumbServer, seller.NationalCardImage);
-                request.NationalCardImage = nationalCardName;
+                nationalCard.AddImageToServer(nationalCardName, PathExtension.SellerNationalCardImageOriginServer, 120, 100, 
+                    PathExtension.SellerNationalCardImageThumbServer, seller.NationalCardImage);
+
+                seller.NationalCardImage = nationalCardName;
             }
 
             seller.StoreName = request.StoreName;
@@ -212,10 +205,11 @@ namespace MarketPlace.Application.Services.Implementations
             seller.Phone = request.Phone;
             seller.Mobile = request.Mobile;
             seller.Address = request.Address;
+            seller.BankAccountNumber = request.BankAccountNumber;
+            seller.BankAccountCardNumber = request.BankAccountCardNumber;
+            seller.BankAccountShabaNumber = request.BankAccountShabaNumber;
             seller.AdminDescription = request.AdminDescription;
             seller.Description = request.Description;
-            seller.Logo = request.Logo;
-            seller.NationalCardImage = request.NationalCardImage;
             seller.StoreAcceptanceState = StoreAcceptanceState.UnderProgress;
 
             _sellerRepository.EditEntity(seller);

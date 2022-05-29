@@ -15,7 +15,6 @@ namespace MarketPlace.DataLayer.DTOs.Seller
         public string NationalId { get; set; }
 
         [Display(Name = "تصویر کارت ملّی فروشنده")]
-        [Required(ErrorMessage = "لطفا {0} را آپلود کنید")]
         public string NationalCardImage { get; set; }
 
         [Display(Name = "تلفن ثابت فروشگاه")]
@@ -23,14 +22,26 @@ namespace MarketPlace.DataLayer.DTOs.Seller
         [MaxLength(50, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string Phone { get; set; }
 
+        [Display(Name = "تلفن ثابت فروشگاه")]
+        [MaxLength(50, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string Mobile { get; set; }
+
         [Display(Name = "آدرس فروشگاه")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(650, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string Address { get; set; }
 
-        [Display(Name = "لوگو فروشگاه")]
+        [Display(Name = "شماره حساب بانکی")]
         [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        public string Logo { get; set; }
+        public string BankAccountNumber { get; set; }
+
+        [Display(Name = "شماره کارت بانکی")]
+        [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string BankAccountCardNumber { get; set; }
+
+        [Display(Name = "شماره شبا بانکی")]
+        [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string BankAccountShabaNumber { get; set; }
 
         [Display(Name = "توضیحات فروشگاه")]
         public string Description { get; set; }

@@ -83,9 +83,11 @@
                                         </div><!-- End .product-action -->
 
 
-                                        <div class="product-action action-icon-top">
+                                        <div class="">
                                             <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id"
-                                               asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart"><span>افزودن به سبد خرید</span></a>
+                                               asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
+                                                <span >افزودن به سبد خرید</span>
+                                            </a>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
@@ -93,7 +95,7 @@
 
                                         @if (product.ProductSelectedCategories != null)
                                         {
-                                            <div class="product-cat product-filter-margin">
+                                            <div class="product-cat product-filter-margin text-info">
                                                 @foreach (var category in product.ProductSelectedCategories.Where(x => x.ProductCategory.ParentId == null).Select(x => x.ProductCategory))
                                                 {
                                                     <a href="#">
@@ -141,7 +143,7 @@
 
                                         @if (product.Seller != null)
                                         {
-                                            <div class="product-cat text-primary product-filter-margin">
+                                            <div class="product-cat text-info product-filter-margin">
                                                 <a href="#">
                                                     @product.Seller.StoreName
                                                 </a>

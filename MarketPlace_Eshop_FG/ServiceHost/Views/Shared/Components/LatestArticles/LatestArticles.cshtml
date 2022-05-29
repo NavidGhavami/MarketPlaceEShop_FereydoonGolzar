@@ -1,5 +1,4 @@
-﻿@using MarketPlace.DataLayer.Entities.Blog
-@using MarketPlace.Application.Utilities
+﻿@using MarketPlace.Application.Utilities
 @using MarketPlace.DataLayer.DTOs.Blog.Article
 
 
@@ -49,19 +48,19 @@
                         <div class="entry-body text-right">
 
                             <div class="entry-meta d-flex justify-content-start">
-                                <a href="#">توسط : مدیر سایت</a>
+                                <a class="text-dark" href="#">توسط : مدیر سایت</a>
                             </div><!-- End .entry-meta -->
 
                             <div class="entry-meta d-flex justify-content-start">
-                                <a href="#">دسته بندی : @article.CategoryName</a>
+                                <a class="text-dark" href="#">دسته بندی : @article.CategoryName</a>
                             </div><!-- End .entry-meta -->
 
                             <div class="entry-meta d-flex justify-content-start">
-                                <a href="#">تاریخ انتشار : @article.PublishDate</a>
+                                <a class="text-dark" href="#">تاریخ انتشار : @article.PublishDate</a>
                             </div><!-- End .entry-meta -->
 
                             <h2 class="entry-title">
-                                <a class=" text-justify product-title-lineHeight" asp-area="" asp-controller="Blog" asp-action="ArticleDetail"
+                                <a class=" text-justify text-primary product-title-lineHeight" asp-area="" asp-controller="Blog" asp-action="ArticleDetail"
                                    asp-route-articleId="@article.Id" asp-route-title="@article.Title.FixTextForUrl()">
                                     @article.Title
                                 </a>

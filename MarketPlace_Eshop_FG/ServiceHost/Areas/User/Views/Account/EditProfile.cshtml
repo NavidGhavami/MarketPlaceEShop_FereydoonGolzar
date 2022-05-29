@@ -48,34 +48,62 @@
                             <form method="post" asp-area="User" asp-controller="Account" asp-action="EditProfile" enctype="multipart/form-data">
 
 
-                                <div class="form-group">
-                                    <label>نام</label>
-                                    <input type="text" asp-for="FirstName" class="form-control">
-                                    <span class="text-danger float-right" asp-validation-for="FirstName"></span>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label>نام</label>
+                                        <input type="text" asp-for="FirstName" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="FirstName"></span>
+                                    </div>
+                                    <br />
+                                    <div class="form-group col-md-6">
+                                        <label>نام خانوادگی</label>
+                                        <input type="text" asp-for="LastName" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="LastName"></span>
+                                    </div>
                                 </div>
                                 <br />
-                                <div class="form-group">
-                                    <label>نام خانوادگی</label>
-                                    <input type="text" asp-for="LastName" class="form-control">
-                                    <span class="text-danger float-right" asp-validation-for="LastName"></span>
+                                <div class="row col-md-12">
+                                    <div class="file-upload col-md-9">
+                                        <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">آپلود تصویر پروفایل</button>
+
+                                        <div class="image-upload-wrap">
+                                            <input class="file-upload-input" name="avatarImage" type='file' onchange="readURL(this);" accept="image/*" />
+                                            <div class="drag-text">
+                                                <h3>تصویر مورد نظر را به داخل کادر بکشید یا دکمه آپلود تصویر را بزنید</h3>
+                                            </div>
+                                        </div>
+                                        <div class="file-upload-content">
+                                            <img class="file-upload-image" src="@(!string.IsNullOrEmpty(Model.Avatar) ? PathExtension.SellerNationalCardImageThumb + Model.Avatar
+                                                                                    : PathExtension.DefaultAvatar )" alt="تصویر پروفایل" />
+                                            <div class="image-title-wrap">
+                                                <button type="button" onclick="removeUpload()" class="remove-image">حذف تصویر</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="file-upload col-md-3">
+
+                                        <div class="image-upload-wrap" style="width: 165px; height: 125px;">
+                                            <div class="drag-text">
+                                                <img style="width: 150px; height: 110px;"
+                                                     src="@(!string.IsNullOrEmpty(Model.Avatar) ? PathExtension.UserAvatarThumb + Model.Avatar
+                                                              : PathExtension.DefaultAvatar )" alt="تصویر پروفایل" />
+                                                <br/>
+                                                <h5>تصویر آپلود شده</h5>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                                 <br />
-                                <div class="form-group col-md-8">
-                                    <label>تصویر آواتار</label>
-                                </div>
-                                <br />
-                                <div class="form-group col-md-4">
-                                    <img style="width: 80px; height: 100px; border-radius: 50%"
-                                         src="@(!string.IsNullOrEmpty(Model.Avatar) ? PathExtension.UserAvatarThumb + Model.Avatar
-                                                  : PathExtension.DefaultAvatar )" alt="تصویر آواتار" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="file" name="avatarImage" class="form-control">
-                                </div>
-                                <br />
-                                <button type="submit" onclick="wait_me()" class="btn btn-round btn-warning float-right">
-                                    <span>ویرایش</span>
-                                    <i class="icon-long-arrow-left"></i>
+                                <  <button type="submit" onclick="wait_me()" class="btn btn-round btn-primary btn-block float-right">
+                                    <span>ویرایش اطلاعات</span>
+                                    <i class="fa fa-edit fa fa-2x"></i>
+                                </button>
+                                <button onclick="window.history.go(-1)" class="btn btn-round btn-info btn-block float-right">
+                                    <span>بازگشت به صفحه قبل</span>
+                                    <i class="fa fa-arrow-circle-left fa fa-2x"></i>
                                 </button>
                             </form>
                         </div><!-- .End .tab-pane -->

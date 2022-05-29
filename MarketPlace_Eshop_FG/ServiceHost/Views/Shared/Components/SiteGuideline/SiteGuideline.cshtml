@@ -1,0 +1,26 @@
+﻿@model List<MarketPlace.DataLayer.Entities.Site.SiteGuideline>
+
+<div class="icon-boxes-container">
+    <div class="container">
+        <div class="row">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="icon-box icon-box-side">
+                            <span class="icon-box-icon">
+                                <i class="@item.Icon"></i>
+                            </span>
+
+                            <div class="icon-box-content">
+                                <h3 class="icon-box-title text-primary boxIconPadding">@item.Header</h3><!-- End .icon-box-title -->
+                                <p class="text-dark">@item.Text</p>
+                            </div><!-- End .icon-box-content -->
+                        </div><!-- End .icon-box -->
+                    </div><!-- End .col-sm-6 col-lg-3 -->
+                }
+            }
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</div><!-- End .icon-boxes-container -->

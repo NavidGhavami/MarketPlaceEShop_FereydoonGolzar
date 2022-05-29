@@ -6,7 +6,7 @@ namespace MarketPlace.Application.Utilities
     {
         #region domain Address
 
-        public static string DomainAddress = "https://localhost:5001";
+        public static string DomainAddress = "https://jibicenter.com";
 
 
         #endregion

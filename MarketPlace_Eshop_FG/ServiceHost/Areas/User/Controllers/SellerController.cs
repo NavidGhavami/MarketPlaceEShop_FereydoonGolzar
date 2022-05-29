@@ -31,8 +31,7 @@ namespace ServiceHost.Areas.User.Controllers
         [HttpPost("request-seller-panel"), ValidateAntiForgeryToken]
         public async Task<IActionResult> RequestSellerPanel(RequestSellerDTO seller, IFormFile logo, IFormFile nationalCard)
         {
-            if (ModelState.IsValid)
-            {
+            
                 var result = await _sellerService.AddNewSellerRequest(seller, User.GetUserId(), logo, nationalCard);
 
                 switch (result)
@@ -50,9 +49,8 @@ namespace ServiceHost.Areas.User.Controllers
                         TempData[InfoMessage] = "فرایند تایید اطلاعات شما در حال پیگیری می باشد";
                         return RedirectToAction("SellerRequests");
                 }
-            }
-
-            return View(seller);
+            
+        return View(seller);
         }
 
         #endregion

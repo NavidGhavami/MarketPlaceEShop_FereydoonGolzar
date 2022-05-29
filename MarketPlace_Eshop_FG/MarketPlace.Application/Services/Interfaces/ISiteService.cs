@@ -50,5 +50,27 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<EditFrequentlyQuestionResult> EditFrequentlyQuestion(EditFrequentlyQuestionDTO edit);
 
         #endregion
+
+        #region Seller Guidelines
+
+        Task<List<SellerGuideline>> GetAllSellerGuidelines();
+        Task<FilterSellerGuidelineDTO> GetSellerGuidelines(FilterSellerGuidelineDTO filter);
+        Task<CreateSellerGuidelineDTO.CreateSellerGuidelineResult> CreateSellerGuideline(CreateSellerGuidelineDTO guideline);
+        Task<EditSellerGuidelineDTO> GetSellerGuidelineForEdit(long guidelineId);
+        Task<EditSellerGuidelineResult> EditSellerGuideline(EditSellerGuidelineDTO edit);
+
+
+        #endregion
+
+        #region Site Guidelines
+
+        Task<List<SiteGuideline>> GetAllSiteGuidelines();
+        Task<FilterSiteGuidelineDTO> GetSiteGuidelines(FilterSiteGuidelineDTO filter);
+        Task<CreateSiteGuidelineDTO.CreateSiteGuidelineResult> CreateSiteGuideline(CreateSiteGuidelineDTO guideline);
+        Task<EditSiteGuidelineDTO> GetSiteGuidelineForEdit(long guidelineId);
+        Task<EditSiteGuidelineDTO.EditSiteGuidelineResult> EditSiteGuideline(EditSiteGuidelineDTO edit);
+
+
+        #endregion
     }
 }

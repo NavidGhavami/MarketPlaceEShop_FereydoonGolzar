@@ -25,6 +25,10 @@ namespace MarketPlace.DataLayer.Entities.Products
         [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string UrlName { get; set; }
 
+        [Display(Name = "آیکون")]
+        [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string Icon { get; set; }
+
         [Display(Name = "فعال / غیرفعال")]
         public bool IsActive { get; set; }
 

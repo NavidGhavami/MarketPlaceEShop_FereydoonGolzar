@@ -86,13 +86,18 @@
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting_asc">شناسه</th>
-                                                <th class="sorting">لوگو</th>
                                                 <th class="sorting">کارت ملّی</th>
                                                 <th class="sorting">نام فروشگاه</th>
                                                 <th class="sorting">کد ملّی فروشنده</th>
                                                 <th class="sorting">تلفن تماس</th>
+                                                <th class="sorting">موبایل</th>
+                                                <th class="sorting">شماره حساب بانکی</th>
+                                                <th class="sorting">شماره شبا بانکی</th>
+                                                <th class="sorting">شماره کارت بانکی</th>
+                                                <th class="sorting">آدرس فروشگاه</th>
                                                 <th class="sorting">وضعیت</th>
                                                 <th class="sorting">تاریخ درخواست</th>
+                                                <th class="sorting">تاریخ ویرایش اطلاعات</th>
                                                 <th class="sorting">دستورات</th>
                                             </tr>
                                         </thead>
@@ -104,20 +109,52 @@
                                                 <td class="sorting">@seller.Id</td>
                                                 <td class="sorting">
                                                     <img style="width: 50px; height: 30px;"
-                                                         src="@(!string.IsNullOrEmpty(seller.Logo) ? PathExtension.SellerLogoOrigin + seller.Logo
-                                                                  : PathExtension.DefaultAvatar )" alt="تصویر کارت ملّی" />
-                                                </td>
-                                                <td class="sorting">
-                                                    <img style="width: 50px; height: 30px;"
                                                          src="@(!string.IsNullOrEmpty(seller.NationalCardImage) ? PathExtension.SellerNationalCardImageOrigin + seller.NationalCardImage
                                                                   : PathExtension.DefaultAvatar )" alt="تصویر کارت ملّی" />
                                                 </td>
-
                                                 <td>@seller.StoreName</td>
                                                 <td>@seller.NationalId</td>
                                                 <td>@seller.Phone</td>
+                                                @if (seller.Mobile != null)
+                                                {
+                                                    <td>@seller.Mobile</td>
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <td>---</td>
+                                                }
+                                                @if (seller.BankAccountNumber != null)
+                                                {
+                                                    <td>@seller.BankAccountNumber</td>
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <td>---</td>
+                                                }
+                                                @if (seller.BankAccountShabaNumber != null)
+                                                {
+                                                    <td>@seller.BankAccountShabaNumber</td>
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <td>---</td>
+                                                }
+                                                @if (seller.BankAccountCardNumber != null)
+                                                {
+                                                    <td>@seller.BankAccountCardNumber</td>
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <td>---</td>
+                                                }
+                                                <td>@seller.Address</td>
                                                 <td>@seller.StoreAcceptanceState.GetEnumName()</td>
                                                 <td>@seller.CreateDate.ToStringShamsiDate()</td>
+                                                <td>@seller.LastUpdateDate.ToStringShamsiDate()</td>
                                                 <td>
                                                     @if (seller.StoreAcceptanceState != StoreAcceptanceState.Accepted)
                                                     {

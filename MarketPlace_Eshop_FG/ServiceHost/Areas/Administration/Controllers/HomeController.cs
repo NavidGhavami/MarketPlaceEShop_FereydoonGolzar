@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.Account;
@@ -91,6 +92,128 @@ namespace ServiceHost.Areas.Administration.Controllers
                 case EditFrequentlyQuestionResult.Success:
                     TempData[SuccessMessage] = "ویرایش اطلاعات با موفقیت انجام شد";
                     return RedirectToAction("FrequentlyQuestionList", "Home");
+            }
+
+            return View();
+        }
+
+        #endregion
+
+        #region Seller Guideline
+
+        [HttpGet("seller-guidelines")]
+        public async Task<IActionResult> SellerGuidelineList(FilterSellerGuidelineDTO filter)
+        {
+            var guideline = await _siteService.GetSellerGuidelines(filter);
+            return View(guideline);
+        }
+
+        [HttpGet("create-seller-guideline")]
+        public async Task<IActionResult> CreateSellerGuideline()
+        {
+            return View();
+        }
+
+        [HttpPost("create-seller-guideline"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateSellerGuideline(CreateSellerGuidelineDTO guideline)
+        {
+            var result = await _siteService.CreateSellerGuideline(guideline);
+
+            switch (result)
+            {
+                case CreateSellerGuidelineDTO.CreateSellerGuidelineResult.Error:
+                    TempData[ErrorMessage] = "در افزودن اطلاعات خطایی رخ داد";
+                    break;
+
+                case CreateSellerGuidelineDTO.CreateSellerGuidelineResult.Success:
+                    TempData[SuccessMessage] = "افزودن سوال با موفقیت انجام شد";
+                    return RedirectToAction("SellerGuidelineList", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpGet("edit-seller-guideline/{guidelineId}")]
+        public async Task<IActionResult> EditSellerGuideline(long guidelineId)
+        {
+            var guideline = await _siteService.GetSellerGuidelineForEdit(guidelineId);
+            return View(guideline);
+        }
+
+        [HttpPost("edit-seller-guideline/{guidelineId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditSellerGuideline(EditSellerGuidelineDTO edit)
+        {
+            var result = await _siteService.EditSellerGuideline(edit);
+
+            switch (result)
+            {
+                case EditSellerGuidelineResult.NotFound:
+                    TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                    break;
+                case EditSellerGuidelineResult.Success:
+                    TempData[SuccessMessage] = "ویرایش اطلاعات با موفقیت انجام شد";
+                    return RedirectToAction("SellerGuidelineList", "Home");
+            }
+
+            return View();
+        }
+
+        #endregion
+
+        #region Site Guideline
+
+        [HttpGet("site-guidelines")]
+        public async Task<IActionResult> SiteGuidelineList(FilterSiteGuidelineDTO filter)
+        {
+            var guideline = await _siteService.GetSiteGuidelines(filter);
+            return View(guideline);
+        }
+
+        [HttpGet("create-site-guideline")]
+        public async Task<IActionResult> CreateSiteGuideline()
+        {
+            return View();
+        }
+
+        [HttpPost("create-site-guideline"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateSiteGuideline(CreateSiteGuidelineDTO guideline)
+        {
+            var result = await _siteService.CreateSiteGuideline(guideline);
+
+            switch (result)
+            {
+                case CreateSiteGuidelineDTO.CreateSiteGuidelineResult.Error:
+                    TempData[ErrorMessage] = "در افزودن اطلاعات خطایی رخ داد";
+                    break;
+
+                case CreateSiteGuidelineDTO.CreateSiteGuidelineResult.Success:
+                    TempData[SuccessMessage] = "افزودن خدمات با موفقیت انجام شد";
+                    return RedirectToAction("SiteGuidelineList", "Home");
+            }
+
+            return View();
+        }
+
+        [HttpGet("edit-site-guideline/{guidelineId}")]
+        public async Task<IActionResult> EditSiteGuideline(long guidelineId)
+        {
+            var guideline = await _siteService.GetSiteGuidelineForEdit(guidelineId);
+            return View(guideline);
+        }
+
+        [HttpPost("edit-site-guideline/{guidelineId}"), ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditSiteGuideline(EditSiteGuidelineDTO edit)
+        {
+            var result = await _siteService.EditSiteGuideline(edit);
+
+            switch (result)
+            {
+                case EditSiteGuidelineDTO.EditSiteGuidelineResult.NotFound:
+                    TempData[WarningMessage] = "اطلاعات مورد نظر یافت نشد";
+                    break;
+                case EditSiteGuidelineDTO.EditSiteGuidelineResult.Success:
+                    TempData[SuccessMessage] = "ویرایش اطلاعات با موفقیت انجام شد";
+                    return RedirectToAction("SiteGuidelineList", "Home");
             }
 
             return View();

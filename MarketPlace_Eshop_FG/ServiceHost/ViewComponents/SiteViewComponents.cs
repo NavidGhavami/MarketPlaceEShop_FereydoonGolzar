@@ -156,6 +156,26 @@ namespace ServiceHost.ViewComponents
 
     #endregion
 
+    #region Site Guideline
+
+    public class SiteGuidelineViewComponent : ViewComponent
+    {
+        private readonly ISiteService _siteService;
+
+        public SiteGuidelineViewComponent(ISiteService siteService)
+        {
+            _siteService = siteService;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var guideline = await _siteService.GetAllSiteGuidelines();
+            return View("SiteGuideline", guideline);
+        }
+    }
+
+    #endregion
+
     #region SiteBanner_Home1
 
     public class SiteBannerHome1ViewComponent : ViewComponent
