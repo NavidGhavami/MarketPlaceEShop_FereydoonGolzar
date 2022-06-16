@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
@@ -581,8 +580,7 @@ namespace MarketPlace.Application.Services.Implementations
             var productDiscount = await _productDiscountRepository.GetQuery()
                 .Include(x => x.ProductDiscountUse)
                 .OrderByDescending(x => x.CreateDate)
-                .FirstOrDefaultAsync(x =>
-                    x.ProductId == productId && x.DiscountNumber - x.ProductDiscountUse.Count > 0 && x.ExpireDate > DateTime.Now);
+                .FirstOrDefaultAsync(x => x.ProductId == productId || x.DiscountNumber - x.ProductDiscountUse.Count > 0 && x.ExpireDate > DateTime.Now);
 
 
             product.View += 1;

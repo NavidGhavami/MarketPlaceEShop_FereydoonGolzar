@@ -86,16 +86,16 @@
                             <div class="ratings">
                                 <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
                             </div><!-- End .ratings -->
-                            <a class="ratings-text" href="#" id="review-link">
+                            <a class="ratings-text text-info" href="#" id="review-link">
                                 بازدید محصول : @Model.View
                             </a>
                         </div>
-
+                        <br/>
                         <div class="product-price">
                             @if (Model.ProductColors != null && Model.ProductColors.Any())
                             {
                                 var firstColor = Model.ProductColors.FirstOrDefault();
-                                <span>@((Model.Price + Convert.ToInt32(firstColor.Price)).ToString("#,0 تومان")) ( @firstColor.ColorName )</span>
+                                <h3>@((Model.Price + Convert.ToInt32(firstColor.Price)).ToString("#,0 تومان")) ( @firstColor.ColorName )</h3>
                             }
                             else
                             {
@@ -168,7 +168,7 @@
                         @if (Model.ProductCategories != null && Model.ProductCategories.Any())
                         {
                             <div class="product-details-footer">
-                                <div class="product-cat text-center">
+                                <div class="product-cat text-center col-md-8">
                                     <span>دسته بندی : </span>
                                     @foreach (var category in Model.ProductCategories)
                                     {
@@ -176,29 +176,39 @@
                                         <span>،</span>
                                     }
                                 </div>
-
-                                <!-- End .product-cat -->
-
-                                <div class="social-icons social-icons-sm">
-                                    <span class="social-label">اشتراک گذاری : </span>
-                                    <a href="#" class="social-icon" title="فیسبوک" target="_blank"><i class="icon-facebook-f"></i></a>
-                                    <a href="#" class="social-icon" title="توییتر" target="_blank"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" title="اینستاگرام" target="_blank"><i class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" title="پینترست" target="_blank"><i class="icon-pinterest"></i></a>
+                                
+                                <div class="col-md-4">
+                                    <a asp-area="" asp-controller="Product" asp-action="ChatWithSeller" class="btn btn-warning btn-round btn-block text-dark">
+                                        <span class="cart-button-margin">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                                                <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                            </svg>
+                                        </span>
+                                        گفتگو با فروشنده
+                                        <i class="bi bi-chat-right-dots-fill"></i>
+                                    </a>
                                 </div>
-                            </div><!-- End .product-details-footer -->
+                                
+                            </div>
+                            
+                            
+                            
+                            
+                            <!-- End .product-details-footer -->
                         }
                         else
                         {
-                            <div class="product-details-footer">
-                                <div class="social-icons social-icons-sm">
-                                    <span class="social-label">اشتراک گذاری : </span>
-                                    <a href="#" class="social-icon" title="فیسبوک" target="_blank"><i class="icon-facebook-f"></i></a>
-                                    <a href="#" class="social-icon" title="توییتر" target="_blank"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" title="اینستاگرام" target="_blank"><i class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" title="پینترست" target="_blank"><i class="icon-pinterest"></i></a>
-                                </div>
-                            </div><!-- End .product-details-footer -->
+                            <div class="col-md-4">
+                                <a class="btn btn-warning btn-round btn-block text-dark">
+                                    <span class="cart-button-margin">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
+                                            <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                        </svg>
+                                    </span>
+                                    گفتگو با فروشنده
+                                    <i class="bi bi-chat-right-dots-fill"></i>
+                                </a>
+                            </div>
                         }
 
                     </div><!-- End .product-details -->
@@ -273,13 +283,13 @@
                                             </h3>
                                         </div><!-- End .col -->
                                         <div class="col-12">
-                                            <p class="review-date">@comment.CreateDate.ToStringShamsiDate()</p>
+                                            <p class="review-date text-danger">@comment.CreateDate.ToStringShamsiDate()</p>
                                             <h4>@comment.CommentFeature</h4>
 
-                                            <div class="review-content">
-                                                <p>
+                                            <div class="review-content text-info">
+                                                <h6>
                                                     @Html.Raw(comment.CommentText)
-                                                </p>
+                                                </h6>
                                             </div><!-- End .review-content -->
                                         </div><!-- End .col-auto -->
                                     </div><!-- End .row -->
@@ -386,19 +396,18 @@
                                             </a>
                                         </div>
 
-                                        <div class="product-action">
-                                            <a asp-controller="Product" asp-action="ProductDetails"
-                                               asp-route-productId="@related.Id" asp-route-title="@related.Title.FixTextForUrl()"
-                                               class="btn-product btn-cart">
-                                                <span>افزودن به سبد خرید</span>
+                                        <div class="">
+                                            <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@related.Id"
+                                               asp-route-title="@related.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
+                                                <span >افزودن به سبد خرید</span>
                                             </a>
-                                        </div>
+                                        </div><!-- End .product-action -->
                                     </figure>
 
                                     <div class="product-body">
                                         @if (related.Seller != null)
                                         {
-                                            <div class="product-cat text-center">
+                                            <div class="product-cat text-center text-info">
                                                 <a href="#">@related.Seller.StoreName</a>
                                             </div>
                                         }
@@ -407,7 +416,7 @@
                                                asp-route-productId="@related.Id" asp-route-title="@related.Title.FixTextForUrl()">@related.Title</a>
                                         </h3>
                                         <!-- End .product-title -->
-                                        <div class="product_price">
+                                        <div class="product_price text-primary">
                                             @related.Price.ToString("#,0 تومان")
                                         </div><!-- End .product-price -->
 

@@ -157,7 +157,7 @@ namespace ServiceHost.Controllers
 
                         var properties = new AuthenticationProperties
                         {
-                            IsPersistent = login.RememberMe
+                            IsPersistent = login.RememberMe,
                         };
 
                         await HttpContext.SignInAsync(principal, properties);

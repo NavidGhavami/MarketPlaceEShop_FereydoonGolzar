@@ -68,6 +68,7 @@ namespace MarketPlace.DataLayer.Entities.Store
 
         public User User { get; set; }
         public ICollection<SellerWallet> SellerWallets { get; set; }
+        public ICollection<ChatRoom.ChatRoom> ChatRooms { get; set; }
 
         #endregion
     }

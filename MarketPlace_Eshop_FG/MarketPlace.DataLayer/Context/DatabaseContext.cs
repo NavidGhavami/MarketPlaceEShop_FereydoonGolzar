@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Blog;
+using MarketPlace.DataLayer.Entities.ChatRoom;
 using MarketPlace.DataLayer.Entities.Contact;
 using MarketPlace.DataLayer.Entities.ProductComment;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
@@ -37,9 +38,16 @@ namespace MarketPlace.DataLayer.Context
 
         #endregion
 
+        #region Chat Room
+
+        public DbSet<ChatRoom> ChatRooms { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
+
+        #endregion
+
         #region Contact
 
-        
+
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<AboutUs> AboutUs { get; set; }
 
@@ -111,5 +119,6 @@ namespace MarketPlace.DataLayer.Context
         }
 
         #endregion
+
     }
 }

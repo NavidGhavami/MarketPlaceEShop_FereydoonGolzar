@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using GoogleReCaptcha.V3;
 using GoogleReCaptcha.V3.Interface;
+using MarketPlace.Application.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +18,6 @@ using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace ServiceHost
@@ -36,8 +36,15 @@ namespace ServiceHost
         {
             #region Config Services
 
-            services.AddControllersWithViews();
+            var mvcBuilder = services.AddControllersWithViews();
+
+#if DEBUG
+            mvcBuilder.AddRazorRuntimeCompilation();
+
+#endif
+
             services.AddHttpContextAccessor();
+            services.AddSignalR();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
@@ -52,6 +59,8 @@ namespace ServiceHost
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IProductDiscountService, ProductDiscountService>();
             services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IChatRoomService, ChatRoomService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IAuthHelper, AuthHelper>();
@@ -107,7 +116,7 @@ namespace ServiceHost
 
             });
 
-            
+
 
 
 
@@ -154,6 +163,9 @@ namespace ServiceHost
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<SiteChatHub>("/chathub");
+                endpoints.MapHub<SupportHub>("/supporthub");
             });
         }
     }

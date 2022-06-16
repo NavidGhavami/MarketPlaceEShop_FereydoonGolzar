@@ -231,6 +231,67 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("ArticleCategories");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ChatRoom.ChatMessage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("ChatRoomId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatRoomId");
+
+                    b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ChatRoom.ChatRoom", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("SellerId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("ChatRooms");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.AboutUs", b =>
                 {
                     b.Property<long>("Id")
@@ -1353,6 +1414,28 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("ArticleCategory");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ChatRoom.ChatMessage", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.ChatRoom.ChatRoom", "ChatRoom")
+                        .WithMany("ChatMessages")
+                        .HasForeignKey("ChatRoomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ChatRoom");
+                });
+
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ChatRoom.ChatRoom", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.Store.Seller", "Seller")
+                        .WithMany("ChatRooms")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Seller");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.ContactUs", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
@@ -1587,6 +1670,11 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("Articles");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.ChatRoom.ChatRoom", b =>
+                {
+                    b.Navigation("ChatMessages");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Contact.Ticket", b =>
                 {
                     b.Navigation("TicketMessages");
@@ -1633,6 +1721,8 @@ namespace MarketPlace.DataLayer.Migrations
 
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Store.Seller", b =>
                 {
+                    b.Navigation("ChatRooms");
+
                     b.Navigation("SellerWallets");
                 });
 #pragma warning restore 612, 618

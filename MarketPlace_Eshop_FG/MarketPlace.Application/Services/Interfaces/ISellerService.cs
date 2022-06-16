@@ -16,6 +16,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<bool> AcceptSellerRequest(long requestId);
         Task<bool> RejectSellerRequest(RejectItemDTO reject);
         Task<Seller> GetLastActiveSellerByUserId(long userId);
+        Task<Seller> GetLastActiveSellerByUserName(string name);
         Task<bool> HasUserAnyActiveSeller(long userId);
     }
 }

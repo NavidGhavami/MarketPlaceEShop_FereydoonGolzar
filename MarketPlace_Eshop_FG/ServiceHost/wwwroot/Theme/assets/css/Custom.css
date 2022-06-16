@@ -77,79 +77,7 @@
     margin-left: 5px;
 }
 
-/* CSS */
-.button-72 {
-    align-items: center;
-    background-color: initial;
-    background-image: linear-gradient(rgba(179, 132, 201, .84), rgba(57, 31, 91, .84) 50%);
-    border-radius: 42px;
-    border-width: 0;
-    box-shadow: rgba(57, 31, 91, 0.24) 0 2px 2px,rgba(179, 132, 201, 0.4) 0 8px 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
-    justify-content: center;
-    letter-spacing: .04em;
-    line-height: 16px;
-    margin: 0;
-    padding: 10px 18px;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: rgba(255, 255, 255, 0.4) 0 0 4px,rgba(255, 255, 255, 0.2) 0 0 12px,rgba(57, 31, 91, 0.6) 1px 1px 4px,rgba(57, 31, 91, 0.32) 4px 4px 16px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: baseline;
-}
 
-    .button-72:hover {
-        background-image: linear-gradient(#B384C9, #391F5B 50%);
-    }
-
-@media (min-width: 768px) {
-    .button-72 {
-        font-size: 15px;
-    }
-}
-
-/* CSS */
-.button-73 {
-    align-items: center;
-    background-color: initial;
-    background-image: linear-gradient(rgba(196, 0, 94, .9), rgba(255, 109, 177, .95) 50%);
-    border-radius: 42px;
-    border-width: 0;
-    box-shadow: rgba(196, 0, 94, 0.56) 0 2px 2px,rgba(196, 0, 94, 0.4) 0 8px 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
-    justify-content: center;
-    letter-spacing: .04em;
-    line-height: 16px;
-    margin: 0;
-    padding: 10px 18px;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: rgba(255, 255, 255, 0.4) 0 0 4px,rgba(255, 255, 255, 0.2) 0 0 12px,rgba(196, 0, 94, 0.6) 1px 1px 4px,rgba(196, 0, 94, 0.32) 4px 4px 16px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: baseline;
-}
-
-    .button-73:hover {
-        background-image: linear-gradient(#B384C9, #8e0042 50%);
-    }
-
-@media (min-width: 768px) {
-    .button-73 {
-        font-size: 15px;
-    }
-}
 
 
 
@@ -220,6 +148,15 @@
     position: relative;
 }
 
+
+
+
+
+
+/*/////////////////////Drag and Drop Image///////////////////////////////////////*/
+
+
+
 @keyframes shine {
     0% {
         background-position-x: -500%;
@@ -260,21 +197,20 @@
         cursor: pointer;
     }
 
-.file-upload-btn:active {
-    border: 0;
-    transition: all .2s ease;
-}
+    .file-upload-btn:active {
+        border: 0;
+        transition: all .2s ease;
+    }
 
 .file-upload-content {
     display: none;
     text-align: center;
-    
 }
 
-.file-upload-content img {
-    max-width: 80%;
-    max-height: 80%;
-}
+    .file-upload-content img {
+        max-width: 80%;
+        max-height: 80%;
+    }
 
 .file-upload-input {
     position: absolute;
@@ -308,12 +244,12 @@
     text-align: center;
 }
 
-.drag-text h3 {
-    font-weight: 100;
-    text-transform: uppercase;
-    color: #15824B;
-    padding: 60px 0;
-}
+    .drag-text h3 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: #15824B;
+        padding: 60px 0;
+    }
 
 .file-upload-image {
     max-height: 200px;
@@ -337,18 +273,164 @@
     font-weight: 700;
 }
 
-.remove-image:hover {
-    background: #c13b2a;
-    color: #ffffff;
-    transition: all .2s ease;
+    .remove-image:hover {
+        background: #c13b2a;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+    .remove-image:active {
+        border: 0;
+        transition: all .2s ease;
+    }
+
+
+
+
+/*/////////////////////Online Chat///////////////////////////////////////*/
+
+.msger {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 97%;
+    margin: 25px 10px;
+    height: calc(100% - 50px);
+    border: #8e0042;
+    border-radius: 5px;
+    background: black;
+    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+}
+
+.msger-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: red;
+    background: #eee;
+    color: #666;
+}
+
+.msger-chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+    .msger-chat::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .msger-chat::-webkit-scrollbar-track {
+        background: #ddd;
+    }
+
+    .msger-chat::-webkit-scrollbar-thumb {
+        background: #bdbdbd;
+    }
+
+.msg {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+    .msg:last-of-type {
+        margin: 0;
+    }
+
+.msg-img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    background: #ddd;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+}
+
+.msg-bubble {
+    max-width: 450px;
+    padding: 15px;
+    border-radius: 30px;
+    background: #ffcb49;
+    border: #15824b solid;
+}
+
+.msg-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.msg-info-name {
+    margin-right: 15px;
+    font-weight: bold;
+
+}
+
+.msg-info-time {
+    font-size: 0.85em;
+}
+
+.left-msg .msg-bubble {
+    border-bottom-right-radius: 0;
+}
+
+.right-msg {
+    flex-direction: row-reverse;
+}
+
+    .right-msg .msg-bubble {
+        background: darkorange;
+        color: #fff;
+        border-bottom-left-radius: 0;
+    }
+
+    .right-msg .msg-img {
+        margin: 0 10px 0 10px;
+    }
+
+.msger-inputarea {
+    display: flex;
+    padding: 15px;
+    border-top: red;
+    background: #eee;
+}
+
+    .msger-inputarea * {
+        padding: 15px;
+        border: none;
+        border-radius: 20px;
+        font-size: 1em;
+    }
+
+.msger-input {
+    flex: 1;
+    background: #f5deb3;
+}
+
+.msger-send-btn {
+    margin-left: 10px;
+    background: rgb(0, 196, 65);
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.23s;
 }
 
-.remove-image:active {
-    border: 0;
-    transition: all .2s ease;
-}
+    .msger-send-btn:hover {
+        background: rgb(0, 180, 50);
+    }
 
+.msger-chat {
+    background-color: white;
+    background-image: url("https://psl.org.br/assets/layout/images/profile-bg.svg" );
+}
 
 
 

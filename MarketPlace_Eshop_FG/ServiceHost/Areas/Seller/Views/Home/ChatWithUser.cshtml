@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "گفتگو با کاربران";
+}
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل فروشندگی ، @User.Identity.Name</h5>
+        </div>
+
+        <!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد پنل کاربری</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد پنل فروشندگی</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Product" asp-action="Index">مدیریت محصولات</a></li>
+            <li class="breadcrumb-item" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row col-md-12 col-lg-12">
+                <aside style="padding-right: 20px;" class="col-md-3 col-lg-2">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-9 col-lg-10">
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+
+
+                            <div>
+                                <h3 class="title mb-3">لیست گفتگو با کاربران</h3>
+                            </div>
+
+                            <section class="msger">
+                                <header class="msger-header">
+                                    <div class="msger-header-title">
+                                        <i class="fas fa-comment-alt"></i> گفتگو با کاربر
+                                    </div>
+                                    <div class="msger-header-options">
+                                        <span><i class="fas fa-cog"></i></span>
+                                    </div>
+                                </header>
+
+                                <main class="msger-chat" id="chatMessage">
+                                  
+                                </main>
+
+                                <form class="msger-inputarea" id="AnswerMessageForm">
+                                    <input type="text" class="msger-input" placeholder="متن پیام را اینجا بنویسید ...">
+                                    <button class="msger-send-btn">ارسال</button>
+                                </form>
+                            </section>
+
+                            <div class="list-group col-sm-12 col-md-12 col-lg-12" id="roomList">
+
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+@section Scripts
+{
+    <script src="~/Theme/assets/js/SupportSignalRService.js"></script>
+}
+
+

@@ -116,7 +116,7 @@
                                                 @foreach (var discount in product.ProductDiscounts)
                                                 {
                                                     <span class="new-price">@(Convert.ToInt32(product.Price - ((product.Price * discount.Percentage) / (double)100)).ToString("#,0 تومان"))</span>
-                                                    <span class="old-price">
+                                                    <span class="old-price text-dark">
                                                         <del>
                                                             @product.Price.ToString("#,0") تومان
                                                         </del>

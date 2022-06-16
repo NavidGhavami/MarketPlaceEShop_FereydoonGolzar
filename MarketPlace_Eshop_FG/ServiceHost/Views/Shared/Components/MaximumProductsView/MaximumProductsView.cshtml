@@ -90,7 +90,7 @@
                                             <div class="product-price">
                                                 <span class="new-price">@((product.Price - (product.Price * discount.Percentage) / (double)100).ToString("#,0 تومان"))</span>
                                                 <del>
-                                                    <span class="old-price">@product.Price.ToString("#,0")</span>
+                                                    <span class="old-price text-dark">@product.Price.ToString("#,0")</span>
                                                 </del>
                                             </div><!-- End .product-price -->
                                         }

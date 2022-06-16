@@ -268,6 +268,20 @@ namespace MarketPlace.Application.Services.Implementations
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
 
+        public async Task<Seller> GetLastActiveSellerByUserName(string name)
+        {
+            name = name.Replace(" ", string.Empty);
+
+            var result =  await _sellerRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x=>x.User)
+                .OrderByDescending(x => x.CreateDate)
+                .FirstOrDefaultAsync(x => (x.User.FirstName.Replace(" ",string.Empty) + x.User.LastName.Replace(" ",string.Empty)) == name && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
+
+            return result;
+        }
+
         public async Task<bool> HasUserAnyActiveSeller(long userId)
         {
             return await _sellerRepository

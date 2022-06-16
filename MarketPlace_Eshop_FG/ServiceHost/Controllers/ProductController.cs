@@ -2,6 +2,7 @@
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceHost.PresentationExtensions;
 
@@ -116,6 +117,17 @@ namespace ServiceHost.Controllers
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region Chat With Seller
+
+        [Authorize]
+        [HttpGet("chat-with-seller")]
+        public async Task<IActionResult> ChatWithSeller()
+        {
+            return View();
         }
 
         #endregion
