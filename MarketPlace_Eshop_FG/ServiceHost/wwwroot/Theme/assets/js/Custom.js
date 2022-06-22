@@ -398,6 +398,8 @@ $('.carousel').carousel({
 
 
 
+
+
 function readURL(input) {
     debugger;
     if (input.files && input.files[0]) {
@@ -434,4 +436,3 @@ $('.image-upload-wrap').bind('dragleave', function () {
 
 
 /////////////////////////////////////////////////////////////////////////////////
-

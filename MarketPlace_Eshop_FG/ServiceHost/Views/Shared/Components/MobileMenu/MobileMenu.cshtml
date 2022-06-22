@@ -1,5 +1,7 @@
 ﻿@using MarketPlace.DataLayer.Entities.Products
-@{ var categories = ViewBag.ProductCategories as List<ProductCategory>; }
+@{
+    var categories = ViewBag.ProductCategories as List<ProductCategory>;
+}
 
 <div class="mobile-menu-overlay"></div><!-- End .mobile-menu-overlay -->
 <div class="mobile-menu-container mobile-menu-light">
@@ -7,23 +9,12 @@
     <a href="/" class="logo">
         <img src="~/Theme/assets/images/demos/demo-13/logo.svg" alt="فروشگاه اینترنتی جیبی سنتر" title="فروشگاه اینترنتی جیبی سنتر" class="logoAndSelletTextRightPadding">
     </a>
-    
-    <form asp-area="" asp-controller="Product" asp-action="SearchProducts" method="get" class="mobile-search">
-        <label for="mobile-search" class="sr-only">جستجو</label>
-        <input type="search" class="form-control" name="productTitle"
-               placeholder="جستجوی محصول ..." required>
-        <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-    </form>
-    <br/>
-    <br/>
-    <div class="header-right logoAndSelletTextRightPadding">
-        <span>
-            <a asp-controller="Home" asp-action="SellerGuidelines" class="text-warning SellerTextElement">
-                <span class="SellerText">فروشنده شوید</span>
-            </a>
-        </span>
 
-    </div>
+
+
+    <br />
+    <br />
+
 
     <div class="mobile-menu-wrapper">
         <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
@@ -32,8 +23,12 @@
                    role="tab" aria-controls="mobile-menu-tab" aria-selected="true">منو</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" id="mobile-login-link" data-toggle="tab" href="#mobile-login-tab" role="tab"
+                   aria-controls="mobile-login-tab" aria-selected="false">ناحیه کاربری</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab"
-                   aria-controls="mobile-cats-tab" aria-selected="false">دسته بندی</a>
+                   aria-controls="mobile-cats-tab" aria-selected="false">دسته ها</a>
             </li>
         </ul>
 
@@ -61,7 +56,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="text-dark" asp-area="" asp-controller="Blog" asp-action="ArticleList" class="sf-with-ul">	
+                            <a class="text-dark" asp-area="" asp-controller="Blog" asp-action="ArticleList" class="sf-with-ul">
                                 <i class="fa fa-copy text-dark mobileMenuCategoryPadding"></i>
                                 بلاگ
                             </a>
@@ -85,6 +80,47 @@
                             </a>
                         </li>
                     </ul>
+                </nav><!-- End .mobile-nav -->
+            </div><!-- .End .tab-pane -->
+
+            <div class="tab-pane fade show active" id="mobile-login-tab" role="tabpanel"
+                 aria-labelledby="mobile-login-link">
+                <nav class="mobile-nav">
+                    <ul class="mobile-menu">
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                        <li>
+                            <a asp-controller="Account" asp-action="Login">
+                                <i class="fas fa-arrow-circle-left text-dark mobileMenuCategoryPadding"></i>
+                                ورود
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Account" asp-action="Register">
+                                <i class="fas fa-user text-dark mobileMenuCategoryPadding"></i>
+                                ثبت نام
+                            </a>
+                        </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-area="User" asp-controller="Home" asp-action="Dashboard">
+                                    <i class="fas fa-user-circle text-dark mobileMenuCategoryPadding"></i>
+                                    پنل کاربری (@User.Identity.Name عزیز، خوش آمدید)
+                                </a>
+                            </li>
+
+                            <li>
+                                <a asp-controller="Account" asp-action="Logout">
+                                    <i class="fas fa-arrow-circle-right text-dark mobileMenuCategoryPadding"></i>
+                                    خروج
+                                </a>
+                            </li>
+                        }
+                    </ul>
+
                 </nav><!-- End .mobile-nav -->
             </div><!-- .End .tab-pane -->
             <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
@@ -113,7 +149,7 @@
                                                             {
                                                                 <li class="active">
                                                                     <a class="text-info" asp-area="" asp-controller="Product" asp-action="FilterProducts"
-                                                                       asp-route-Category="@secondSubCategory.UrlName">
+                                               asp-route-Category="@secondSubCategory.UrlName">
                                                                         @secondSubCategory.Title
                                                                     </a>
                                                                 </li>
@@ -138,6 +174,7 @@
             <a href="#" class="social-icon" target="_blank" title="توییتر"><i class="icon-twitter"></i></a>
             <a href="#" class="social-icon" target="_blank" title="اینستاگرام"><i class="icon-instagram"></i></a>
             <a href="#" class="social-icon" target="_blank" title="یوتیوب"><i class="icon-youtube"></i></a>
+
         </div><!-- End .social-icons -->
     </div><!-- End .mobile-menu-wrapper -->
 </div><!-- End .mobile-menu-container -->

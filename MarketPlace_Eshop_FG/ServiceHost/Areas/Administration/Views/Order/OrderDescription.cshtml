@@ -34,7 +34,6 @@
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting">تاریخ ثبت سفارش</th>
-                                                <th class="sorting">تاریخ لغو سفارش</th>
                                                 <th class="sorting">توضیحات</th>
                                             </tr>
                                         </thead>
@@ -43,14 +42,6 @@
                                            
                                             <tr id="ajax-url-item" role="row" class="odd">
                                                 <td>@Model.SuccessOrderDate</td>
-                                                @if (Model.SuccessOrderDate != Model.CancelOrderDate)
-                                                {
-                                                    <td>@Model.CancelOrderDate</td>
-                                                }
-                                                else
-                                                {
-                                                    <td>---</td>
-                                                }
                                                 <td>@Html.Raw(Model.Description)</td>
                                             </tr>
                                             

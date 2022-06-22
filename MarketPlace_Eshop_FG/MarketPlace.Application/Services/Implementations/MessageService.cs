@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.ChatRoom;
 using MarketPlace.DataLayer.Entities.ChatRoom;
 using MarketPlace.DataLayer.Repository;
@@ -63,6 +64,34 @@ namespace MarketPlace.Application.Services.Implementations
             return await Task.FromResult(message);
         }
 
+        public async Task<MessageDTO> GetMessageDetail(long roomId)
+        {
+
+            var chatRoom = await _chatRoomRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == roomId);
+
+            var roomMessage = await _chatMessageRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.ChatRoom)
+                .Where(x=>x.ChatRoomId == roomId)
+                .ToListAsync();
+
+
+            if (roomMessage == null)
+            {
+                return null;
+            }
+
+
+            return new MessageDTO
+            {
+                ChatRoom = chatRoom,
+                Messages = roomMessage
+            };
+        }
 
 
         #region Dispose

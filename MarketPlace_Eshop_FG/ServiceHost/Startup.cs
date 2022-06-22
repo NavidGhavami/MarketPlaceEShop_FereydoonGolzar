@@ -72,7 +72,7 @@ namespace ServiceHost
 
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(Directory.GetCurrentDirectory() + "\\wwwroot\\Auth\\"))
-                .SetApplicationName("MarketPlaceProject")
+                .SetApplicationName("MarketPlace_Eshop_FG")
                 .SetDefaultKeyLifetime(TimeSpan.FromDays(30));
 
 

@@ -3064,6 +3064,7 @@ blockquote {
 }
 
     .mobile-search .form-control {
+        width: 150px;
         height: 36px;
         margin-bottom: 0;
         -webkit-appearance: none;
@@ -3071,19 +3072,19 @@ blockquote {
         line-height: 1.5;
         padding: .8rem 1.5rem;
         max-width: calc(100% - 36px);
-        background-color: #333;
+        background-color: lightgrey;
         border-color: rgba(255, 255, 255, 0.1);
         border-right-width: 0;
     }
 
         .mobile-search .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.45);
+            color: black;
         }
 
         .mobile-search .form-control:focus {
-            color: #fff;
+            color: black;
             border-color: #cc9966;
-            background-color: #333;
+            background-color: yellow;
         }
 
     .mobile-search .btn {
@@ -3130,7 +3131,6 @@ blockquote {
         text-transform: uppercase;
         border-bottom: .2rem solid transparent;
         background: none;
-        padding: .8rem 2rem;
         transition: all .35s ease;
     }
 
@@ -15717,7 +15717,7 @@ button:focus {
 .intro-title {
     color: #fff;
     font-weight: 700;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 1.2;
     letter-spacing: -.03em;
     margin-bottom: 1.2rem;

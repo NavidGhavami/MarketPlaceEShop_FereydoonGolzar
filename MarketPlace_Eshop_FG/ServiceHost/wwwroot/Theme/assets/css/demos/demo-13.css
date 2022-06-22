@@ -231,7 +231,7 @@
 
     .intro-title span {
         color: #777;
-        font-size: 3.6rem;
+        font-size: 2.5rem;
     }
 
     .intro-title sup {
@@ -944,7 +944,7 @@
     }
 
         .intro-title span {
-            font-size: 4rem;
+            font-size: 40px;
         }
 
         .intro-title sup {
@@ -959,8 +959,8 @@
 
 @media screen and (min-width: 768px) {
     .intro-subtitle {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .intro-title > span {
@@ -1031,7 +1031,7 @@
     }
 
     .intro-col {
-        padding-right: 8rem;
+        padding-right: 6rem;
     }
 
     .intro-subtitle {
@@ -1039,7 +1039,7 @@
     }
 
     .intro-title {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
         .intro-title > span {
@@ -1052,7 +1052,7 @@
             }
 
         .intro-title span {
-            font-size: 5rem;
+            font-size: 2.5rem;
         }
 
         .intro-title sup {

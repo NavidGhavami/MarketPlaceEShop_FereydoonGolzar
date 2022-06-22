@@ -9,5 +9,7 @@ namespace MarketPlace.Application.Services.Interfaces
     {
         Task SaveChatMessage(long roomId, MessageDTO message);
         Task<List<MessageDTO>> GetChatMessage(long roomId);
+        Task<MessageDTO> GetMessageDetail(long roomId);
+
     }
 }

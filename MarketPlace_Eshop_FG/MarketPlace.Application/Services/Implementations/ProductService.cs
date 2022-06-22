@@ -580,7 +580,7 @@ namespace MarketPlace.Application.Services.Implementations
             var productDiscount = await _productDiscountRepository.GetQuery()
                 .Include(x => x.ProductDiscountUse)
                 .OrderByDescending(x => x.CreateDate)
-                .FirstOrDefaultAsync(x => x.ProductId == productId || x.DiscountNumber - x.ProductDiscountUse.Count > 0 && x.ExpireDate > DateTime.Now);
+                .FirstOrDefaultAsync(x => x.ProductId == productId && x.DiscountNumber - x.ProductDiscountUse.Count > 0 || x.ExpireDate > DateTime.Now);
 
 
             product.View += 1;

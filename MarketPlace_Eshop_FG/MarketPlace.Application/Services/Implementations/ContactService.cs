@@ -243,7 +243,6 @@ namespace MarketPlace.Application.Services.Implementations
 
             return AddTicketResult.Success;
         }
-
         public async Task<FilterTicketDTO> FilterTickets(FilterTicketDTO filter)
         {
             var query = _ticketRepository
@@ -321,7 +320,6 @@ namespace MarketPlace.Application.Services.Implementations
 
             return filter.SetPaging(pager).SetTickets(allEntities);
         }
-
         public async Task<TicketDetailDTO> GetTicketDetail(long ticketId, long userId)
         {
             var ticket = await _ticketRepository.GetQuery().AsQueryable()
@@ -372,7 +370,6 @@ namespace MarketPlace.Application.Services.Implementations
                 TicketMessage = ticketMessage
             };
         }
-
         public async Task<AnswerTicketResult> AnswerTicket(AnswerTicketDTO answer, long userId)
         {
             var ticket = await _ticketRepository.GetEntityById(answer.Id);
@@ -405,7 +402,6 @@ namespace MarketPlace.Application.Services.Implementations
 
             return AnswerTicketResult.Success;
         }
-
         public async Task<AnswerTicketResult> AdminAnswerTicket(AnswerTicketDTO answer, long userId)
         {
             var ticket = await _ticketRepository.GetEntityById(answer.Id);

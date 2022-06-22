@@ -1,0 +1,89 @@
+﻿@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.ChatRoom.MessageDTO
+
+
+@{
+    ViewData["ChatRoomNumber"] = Model.ChatRoom.Id;
+    ViewData["Title"] = "جزییات گفتگو";
+}
+
+@section styles
+    {
+    <link href="/Theme/assets/css/ChatRoom.css" rel="stylesheet" />
+}
+
+    @section scripts
+    {
+    <partial name="_JqueryValidators" />
+}
+
+    <div class="row pt-2 pb-2">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="Administration" asp-controller="Home" asp-action="Index">داشبورد</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">مدیریت گفتگو ها</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item"><a href="javaScript:void();">@ViewData["ChatRoomNumber"]</a></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header"><i class="fa fa-table"></i> @ViewData["Title"] شماره :  @ViewData["ChatRoomNumber"]</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div id="default-datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                            <br />
+                            <div class="row">
+
+
+
+                                <hr />
+                                <div class="col-sm-12">
+                                    @if (Model.Messages != null && Model.Messages.Any())
+                                {
+                                    <ul class="messages" id="messages">
+                                        @foreach (var message in Model.Messages)
+                                        {
+                                            <li class="message right appeared">
+
+                                                <div class="text_wrapper text-right">
+                                                    <div class="time text-dark">
+                                                        @message.Sender --- @message.CreateDate.ToStringShamsiDate()
+                                                    </div>
+                                                    <br />
+                                                    <div class="text-right MessageText text-dark">
+                                                        @Html.Raw(message.Message)
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-warning alert-dismissible mb-0" role="alert">
+                                        <div class="alert-icon">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                        </div>
+                                        <div class="alert-message text-dark">
+                                            <span><strong>هشدار!</strong> هیچ اطلاعاتی یافت نشد</span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <hr />
+                        <hr />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

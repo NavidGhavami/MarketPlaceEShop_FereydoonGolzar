@@ -1,6 +1,8 @@
 ﻿
 
+
 <header class="header header-10 header-intro-clearance">
+    
     <div class="header-middle">
         <div class="container">
             <div class="header-left">
@@ -11,10 +13,9 @@
                 <a href="/" class="logo">
                     <img src="~/Theme/assets/images/demos/demo-13/logo.svg" alt="فروشگاه اینترنتی جیبی سنتر" title="فروشگاه اینترنتی جیبی سنتر">
                 </a>
+
             </div><!-- End .header-left -->
-            @await Component.InvokeAsync("Search")
-
-
+            
             <div class="header-right">
                 <div class="header-dropdown-link">
                     <div class="dropdown compare-dropdown">
@@ -24,8 +25,8 @@
                             <a asp-controller="Account" asp-action="Login" class="wishlist-link">
                                 <i class="bi bi-box-arrow-in-left"></i>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />
-                                    <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                                    <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z"/>
+                                    <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
                                 </svg>
                                 <span class="wishlist-txt">ورود</span>
                             </a>
@@ -33,19 +34,19 @@
                             <a asp-controller="Account" asp-action="Register" class="wishlist-link">
                                 <i class="bi bi-person-circle"></i>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                                 </svg>
                                 <span class="wishlist-txt">ثبت نام</span>
                             </a>
 
-                            <!-- End .dropdown-menu -->
+
                         }
                         else
                         {
                             <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false" data-display="static"
-                           title="ورود و ثبت نام کاربر" aria-label="Compare Products">
+                               aria-haspopup="true" aria-expanded="false" data-display="static"
+                               title="ورود و ثبت نام کاربر" aria-label="Compare Products">
                                 <i class="icon-user"></i>
                                 <span class="compare-txt">پنل کاربری</span>
                             </a>
@@ -69,9 +70,9 @@
                                 </ul>
                             </div>
 
-                            <!-- End .dropdown-menu -->
+
                         }
-                    </div><!-- End .compare-dropdown -->
+                    </div>
 
                     <a href="#" class="wishlist-link">
                         <i class="icon-heart-o"></i>
@@ -91,7 +92,9 @@
 
 
     </div><!-- End .header-middle -->
+
     @await Component.InvokeAsync("GetMenuCategories")
+    @await Component.InvokeAsync("Search")
 
 
     <!-- End .header-bottom -->
