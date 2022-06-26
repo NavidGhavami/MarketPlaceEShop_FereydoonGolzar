@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Account;
 using MarketPlace.DataLayer.Entities.Common;
 

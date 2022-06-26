@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Drawing.Printing;
+using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ServiceHost.Http;
 using ServiceHost.PresentationExtensions;
 
 namespace ServiceHost.Controllers
@@ -13,10 +15,14 @@ namespace ServiceHost.Controllers
         #region Constructor
 
         private readonly IProductService _productService;
+        private readonly IChatRoomService _chatRoomService;
 
-        public ProductController(IProductService productService)
+        public static long SellerId;
+
+        public ProductController(IProductService productService, IChatRoomService chatRoomService)
         {
             _productService = productService;
+            _chatRoomService = chatRoomService;
         }
 
         #endregion
@@ -124,9 +130,11 @@ namespace ServiceHost.Controllers
         #region Chat With Seller
 
         [Authorize]
-        [HttpGet("chat-with-seller")]
-        public async Task<IActionResult> ChatWithSeller()
+        [HttpGet("chat-with-seller/{sellerId}")]
+        public async Task<IActionResult> ChatWithSeller(long sellerId)
         {
+            var seller = _chatRoomService.GetSellerId(sellerId);
+
             return View();
         }
 

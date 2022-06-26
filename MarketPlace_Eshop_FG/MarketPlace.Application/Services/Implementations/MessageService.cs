@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
-using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.ChatRoom;
 using MarketPlace.DataLayer.Entities.ChatRoom;
 using MarketPlace.DataLayer.Repository;
@@ -70,6 +69,7 @@ namespace MarketPlace.Application.Services.Implementations
             var chatRoom = await _chatRoomRepository
                 .GetQuery()
                 .AsQueryable()
+                .Include(x=>x.Seller)
                 .SingleOrDefaultAsync(x => x.Id == roomId);
 
             var roomMessage = await _chatMessageRepository

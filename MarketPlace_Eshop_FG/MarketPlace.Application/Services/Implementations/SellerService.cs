@@ -268,6 +268,15 @@ namespace MarketPlace.Application.Services.Implementations
                 .FirstOrDefaultAsync(x => x.UserId == userId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
 
+        public async Task<Seller> GetLastActiveSellerBySellerId(long sellerId)
+        {
+            return await _sellerRepository
+                .GetQuery()
+                .AsQueryable()
+                .OrderByDescending(x => x.CreateDate)
+                .FirstOrDefaultAsync(x => x.Id == sellerId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
+        }
+
         public async Task<Seller> GetLastActiveSellerByUserName(string name)
         {
             name = name.Replace(" ", string.Empty);
@@ -290,6 +299,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .OrderByDescending(x => x.CreateDate)
                 .AnyAsync(x => x.UserId == userId && x.StoreAcceptanceState == StoreAcceptanceState.Accepted);
         }
+
 
         #endregion
 

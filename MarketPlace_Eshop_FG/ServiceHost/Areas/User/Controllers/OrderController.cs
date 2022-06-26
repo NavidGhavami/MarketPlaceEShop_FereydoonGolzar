@@ -199,7 +199,8 @@ namespace ServiceHost.Areas.User.Controllers
         [HttpGet("user-address/{userId}")]
         public async Task<IActionResult> AddUserAddress(long userId)
         {
-            return View();
+            var userAddress = await _orderService.GetExistUserAddress(userId);
+            return View(userAddress);
         }
 
         [HttpPost("user-address/{userId}"), ValidateAntiForgeryToken]

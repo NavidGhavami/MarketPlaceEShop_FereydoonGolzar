@@ -17,4 +17,5 @@ namespace ServiceHost.Http
         Danger,
         Info
     }
+
 }

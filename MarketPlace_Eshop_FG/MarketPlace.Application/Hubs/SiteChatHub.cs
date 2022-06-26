@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.ChatRoom;
-using MarketPlace.DataLayer.Entities.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+
 
 namespace MarketPlace.Application.Hubs
 {
@@ -16,12 +16,16 @@ namespace MarketPlace.Application.Hubs
         private readonly IChatRoomService _chatRoomService;
         private readonly IMessageService _messageService;
         private readonly ISellerService _sellerService;
+        private readonly IUserService _userService;
 
-        public SiteChatHub(IChatRoomService chatRoomService, IMessageService messageService, ISellerService sellerService)
+        public long SellerId;
+
+        public SiteChatHub(IChatRoomService chatRoomService, IMessageService messageService, ISellerService sellerService, IUserService userService)
         {
             _chatRoomService = chatRoomService;
             _messageService = messageService;
             _sellerService = sellerService;
+            _userService = userService;
         }
 
         #endregion
@@ -73,8 +77,8 @@ namespace MarketPlace.Application.Hubs
         
         public override async Task OnConnectedAsync()
         {
-            var seller = await _sellerService.GetLastActiveSellerByUserName(Context.User.Identity.Name);
-            var roomId = await _chatRoomService.CreateChatRoom(Context.ConnectionId, seller.Id);
+           
+            var roomId = await _chatRoomService.CreateChatRoom(Context.ConnectionId);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
             await Clients.Caller.SendAsync("getNewMessage", "فروشنده جیبی سنتر", "سلام و وقت بخیر. در خدمتتان هستم. چطور میتوانم کمکتان کنم؟");

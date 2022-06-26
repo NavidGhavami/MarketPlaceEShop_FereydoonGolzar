@@ -21,6 +21,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<AddUserAddressResult> AddUserAddress(UserAddressDTO address, long userId);
         Task<List<UserAddress>> GetAddressToUser(long userId);
         Task<UserAddressDTO> GetUserAddressForOrder(long orderId, long userId);
+        Task<UserAddressDTO> GetExistUserAddress(long userId);
 
 
         #endregion

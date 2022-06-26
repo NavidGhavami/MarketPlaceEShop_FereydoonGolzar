@@ -121,6 +121,14 @@ namespace MarketPlace.Application.Services.Implementations
 
         }
 
+        public async Task<User> GetUserByUserName(string name)
+        {
+            name = name.Replace(" ", string.Empty);
+
+            return await _userRepository.GetQuery().AsQueryable().SingleOrDefaultAsync(x => (x.FirstName.Replace(" ", string.Empty) + x.LastName.Replace(" ", string.Empty)) == name);
+
+        }
+
         public async Task<ForgotPasswordresult> RecoverUserPassword(ForgotPasswordDTO forgot)
         {
             var user = await _userRepository.GetQuery().SingleOrDefaultAsync(x => x.Mobile == forgot.Mobile);

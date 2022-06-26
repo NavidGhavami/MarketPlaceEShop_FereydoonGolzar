@@ -15,10 +15,14 @@ namespace MarketPlace.Application.Services.Implementations
         #region Constructor
 
         private readonly IGenericRepository<ChatRoom> _chatRoomRepository;
+        private readonly ISellerService _sellerService;
 
-        public ChatRoomService(IGenericRepository<ChatRoom> chatRoomRepository)
+        public static long SellerId { get; set; }
+
+        public ChatRoomService(IGenericRepository<ChatRoom> chatRoomRepository, ISellerService sellerService)
         {
             _chatRoomRepository = chatRoomRepository;
+            _sellerService = sellerService;
         }
 
         #endregion
@@ -27,7 +31,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         #region Chat Room
 
-        public async Task<long> CreateChatRoom(string connectionId, long sellerId)
+        public async Task<long> CreateChatRoom(string connectionId)
         {
             var existChatRoom = await _chatRoomRepository
                 .GetQuery()
@@ -39,10 +43,17 @@ namespace MarketPlace.Application.Services.Implementations
                 return await Task.FromResult(existChatRoom.Id);
             }
 
+
+            var sellerId = GetSellerId(SellerId);
+
+            var seller = await _sellerService.GetLastActiveSellerBySellerId(sellerId);
+
+            
+
             var newChatRoom = new ChatRoom
             {
                 ConnectionId = connectionId,
-                SellerId = sellerId
+                SellerId = seller.Id
 
             };
 
@@ -127,9 +138,14 @@ namespace MarketPlace.Application.Services.Implementations
             return filter.SetPaging(pager).SetChatRoom(allEntities);
         }
 
+        public long GetSellerId(long sellerId)
+        {
+            return SellerId = sellerId;
+        }
+
         #endregion
 
-        
+
 
         #region Dispose
 

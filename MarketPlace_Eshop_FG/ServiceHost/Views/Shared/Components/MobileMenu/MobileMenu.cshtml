@@ -23,10 +23,6 @@
                    role="tab" aria-controls="mobile-menu-tab" aria-selected="true">منو</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="mobile-login-link" data-toggle="tab" href="#mobile-login-tab" role="tab"
-                   aria-controls="mobile-login-tab" aria-selected="false">ناحیه کاربری</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab"
                    aria-controls="mobile-cats-tab" aria-selected="false">دسته ها</a>
             </li>
@@ -83,46 +79,6 @@
                 </nav><!-- End .mobile-nav -->
             </div><!-- .End .tab-pane -->
 
-            <div class="tab-pane fade show active" id="mobile-login-tab" role="tabpanel"
-                 aria-labelledby="mobile-login-link">
-                <nav class="mobile-nav">
-                    <ul class="mobile-menu">
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                        <li>
-                            <a asp-controller="Account" asp-action="Login">
-                                <i class="fas fa-arrow-circle-left text-dark mobileMenuCategoryPadding"></i>
-                                ورود
-                            </a>
-                        </li>
-
-                        <li>
-                            <a asp-controller="Account" asp-action="Register">
-                                <i class="fas fa-user text-dark mobileMenuCategoryPadding"></i>
-                                ثبت نام
-                            </a>
-                        </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-area="User" asp-controller="Home" asp-action="Dashboard">
-                                    <i class="fas fa-user-circle text-dark mobileMenuCategoryPadding"></i>
-                                    پنل کاربری (@User.Identity.Name عزیز، خوش آمدید)
-                                </a>
-                            </li>
-
-                            <li>
-                                <a asp-controller="Account" asp-action="Logout">
-                                    <i class="fas fa-arrow-circle-right text-dark mobileMenuCategoryPadding"></i>
-                                    خروج
-                                </a>
-                            </li>
-                        }
-                    </ul>
-
-                </nav><!-- End .mobile-nav -->
-            </div><!-- .End .tab-pane -->
             <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                 <nav class="mobile-cats-nav">
                     <ul class="mobile-cats-menu">

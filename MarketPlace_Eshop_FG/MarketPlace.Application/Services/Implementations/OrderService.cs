@@ -382,6 +382,35 @@ namespace MarketPlace.Application.Services.Implementations
             return userAddress;
         }
 
+        public async Task<UserAddressDTO> GetExistUserAddress(long userId)
+        {
+            var userAddress = await _userAddressRepository
+                .GetQuery()
+                .AsQueryable()
+                .OrderBy(x => x.CreateDate)
+                .LastOrDefaultAsync(x => x.UserId == userId);
+
+            if (userAddress == null)
+            {
+                return null;
+            }
+
+            return new UserAddressDTO
+            {
+                Name = userAddress.Name,
+                Family = userAddress.Family,
+                Company = userAddress.Company,
+                State = userAddress.State,
+                City = userAddress.City,
+                Street = userAddress.Street,
+                PostalCode = userAddress.PostalCode,
+                PlaqueNo = userAddress.PlaqueNo,
+                Mobile = userAddress.Mobile,
+                Email = userAddress.Email,
+                
+            };
+        }
+
         #endregion
 
         #region Order Details
