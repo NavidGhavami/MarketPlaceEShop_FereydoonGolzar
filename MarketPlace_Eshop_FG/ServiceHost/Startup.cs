@@ -61,6 +61,7 @@ namespace ServiceHost
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<IChatRoomService, ChatRoomService>();
             services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IShippingService, ShippingService>();
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IAuthHelper, AuthHelper>();

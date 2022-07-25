@@ -7,6 +7,7 @@
 
     var totalPriceWithoutDiscount = Model.GetTotalPriceWithoutDiscount();
     var totalPriceWithDiscount = Model.GetTotalPriceWithDiscount();
+    var totalShippingPrice = Model.GetTotalShippingPrice();
     var totalDiscountPrice = Model.GetTotalDiscountPrice();
 }
 
@@ -41,6 +42,7 @@
                                     <th>قیمت (تومان)</th>
                                     <th>درصد تخفیف</th>
                                     <th>رنگ (تومان)</th>
+                                    <th>هزینه پستی</th>
                                     <th>تعداد</th>
                                     <th>تخفیف</th>
                                     <th>مجموع</th>
@@ -86,6 +88,7 @@
                                             <td class="price-col text-danger">بدون تخفیف</td>
                                         }
                                         <td class="price-col">@detail.ColorName (@(Convert.ToInt32(detail.ProductColorPrice).ToString("#,0")))</td>
+                                        <td class="price-col">@detail.ProductShippingPrice.ToString("#,0 تومان")</td>
                                         <td class="quantity-col">
                                             <div class="cart-product-quantity">
                                                 <input order-detail-count="@detail.Id" type="number" class="form-control" value="@detail.Count"
@@ -151,8 +154,13 @@
                                         <td>جمع کل تخفیف : </td>
                                         <td class="text-left">@totalDiscountPrice.ToString("#,0 تومان") </td>
                                     </tr><!-- End .summary-subtotal -->
+                                
+                                <tr class="summary-subtotal">
+                                    <td>جمع کل هزینه پستی : </td>
+                                    <td class="text-left">@totalShippingPrice.ToString("#,0 تومان") </td>
+                                </tr><!-- End .summary-subtotal -->
 
-                                    <tr class="summary-total">
+                                <tr class="summary-total">
                                         <td>مبلغ قابل پرداخت :</td>
                                         <td class="text-left">@totalPriceWithDiscount.ToString("#,0 تومان")</td>
                                     </tr><!-- End .summary-total -->

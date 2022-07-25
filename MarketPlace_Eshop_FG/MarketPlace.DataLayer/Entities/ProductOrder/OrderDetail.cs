@@ -9,10 +9,12 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
 
         public long OrderId { get; set; }
         public long ProductId { get; set; }
-        public int Count { get; set; }
         public long? ProductColorId { get; set; }
+        public long? ShippingId { get; set; }
+        public int Count { get; set; }
         public int ProductPrice { get; set; }
         public int ProductColorPrice { get; set; }
+        public int ShippingPrice { get; set; }
 
 
         #endregion
@@ -22,6 +24,7 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
         public Order Order { get; set; }
         public Product Product { get; set; }
         public ProductColor ProductColor { get; set; }
+        public Shipping.Shipping Shipping { get; set; }
 
         #endregion
     }

@@ -44,6 +44,7 @@
                                                 <th class="sorting">رنگ</th>
                                                 <th class="sorting">قیمت رنگ</th>
                                                 <th class="sorting">مقدار تخفیف</th>
+                                                <th class="sorting">هزینه پستی</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -59,13 +60,14 @@
                                                              alt="@item.ProductTitle" title="@item.ProductTitle" />
                                                     </td>
                                                     <td>@item.ProductTitle</td>
-                                                    <td>@item.MainProductPrice.ToString("#,0 تومان")</td>
+                                                    <td>@item.OriginalProductPrice.ToString("#,0 تومان")</td>
                                                     <td>@item.ProductPrice.ToString("#,0 تومان")</td>
                                                     <td>@item.StoreName</td>
                                                     <td>@item.Count عدد</td>
                                                     <td>@item.ColorName</td>
                                                     <td>@item.ProductColorPrice.ToString("#,0 تومان")</td>
                                                     <td>@(item.DiscountPrice!=0 ? item.DiscountPrice.ToString("#,0 تومان") : "---")</td>
+                                                    <td>@(item.ProductShippingPrice!=0 ? item.ProductShippingPrice.ToString("#,0 تومان") : "---")</td>
                                                 </tr>
                                             }
                                         </tbody>

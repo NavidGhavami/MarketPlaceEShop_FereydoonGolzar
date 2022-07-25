@@ -7,6 +7,7 @@ using MarketPlace.DataLayer.Entities.ProductComment;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
 using MarketPlace.DataLayer.Entities.Products;
+using MarketPlace.DataLayer.Entities.Shipping;
 using MarketPlace.DataLayer.Entities.Site;
 using MarketPlace.DataLayer.Entities.Store;
 using Microsoft.EntityFrameworkCore;
@@ -84,6 +85,12 @@ namespace MarketPlace.DataLayer.Context
         #region Product Comment
 
         public DbSet<ProductComment> ProductComments { get; set; }
+
+        #endregion
+
+        #region Product Shipping
+
+        public DbSet<Shipping> Shippings { get; set; }
 
         #endregion
 

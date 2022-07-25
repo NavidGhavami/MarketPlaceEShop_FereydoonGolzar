@@ -72,18 +72,20 @@
                                                                     <th scope="col">رنگ</th>
                                                                     <th scope="col">قیمت رنگ</th>
                                                                     <th scope="col">مقدار تخفیف</th>
+                                                                    <th scope="col">هزینه پستی</th>
                                                                     <th scope="col"></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
-                                                                    <td>@item.MainProductPrice.ToString("#,0 تومان")</td>
+                                                                    <td>@item.OriginalProductPrice.ToString("#,0 تومان")</td>
                                                                     <td>@item.ProductPrice.ToString("#,0 تومان")</td>
                                                                     <td>@item.StoreName</td>
                                                                     <td>@item.Count عدد</td>
                                                                     <td>@item.ColorName</td>
                                                                     <td>@item.ProductColorPrice.ToString("#,0 تومان")</td>
                                                                     <td>@(item.DiscountPrice!=0 ? item.DiscountPrice.ToString("#,0 تومان") : "---")</td>
+                                                                    <td>@(item.ProductShippingPrice!=0 ? item.ProductShippingPrice.ToString("#,0 تومان") : "---")</td>
                                                                     <td>
                                                                         <a class="btn btn-warning btn-round" asp-area="" asp-controller="Product" asp-action="ProductDetails"
                                                                            asp-route-productId="@item.ProductId" asp-route-title="@item.ProductTitle">

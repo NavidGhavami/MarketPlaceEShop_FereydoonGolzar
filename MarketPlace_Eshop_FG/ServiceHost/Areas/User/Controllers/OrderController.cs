@@ -91,7 +91,7 @@ namespace ServiceHost.Areas.User.Controllers
             var status = _paymentService.CreatePaymentRequest(
                 MerchantId,
                 openOrderAmount,
-                "خرید از فروشگاه اینترنتی ...",
+                "خرید از فروشگاه اینترنتی جیبی سنتر",
                 callbackUrl,
                 ref redirectUrl
             );

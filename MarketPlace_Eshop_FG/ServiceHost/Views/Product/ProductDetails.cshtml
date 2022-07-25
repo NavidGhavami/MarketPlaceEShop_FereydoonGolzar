@@ -6,7 +6,7 @@
 }
 
 @section Scripts
-{
+    {
     <partial name="_JqueryValidators" />
 
     @if (Model.ProductColors != null && Model.ProductColors.Any())
@@ -25,37 +25,37 @@
 }
 
 
-<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
-    <div class="container d-flex align-items-center">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
-            <li class="breadcrumb-item"><a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
-        </ol>
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container d-flex align-items-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Product" asp-action="FilterProducts">محصولات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+            </ol>
 
-    </div><!-- End .container -->
-</nav><!-- End .breadcrumb-nav -->
-<hr />
-<div class="page-content">
-    <div class="container">
-        <div class="row">
-            <partial name="_AddProductToCartPartial" model="@(new AddProductToOrderDTO{Count = 1, ProductId = Model.ProductId})" />
-        </div>
-        <div class="product-details-top mb-2">
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    <hr />
+    <div class="page-content">
+        <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="product-gallery">
-                        <figure class="product-main-image">
-                            <img id="product-zoom" src="@(PathExtension.ProductOrigin + Model.Image)" data-zoom-image="@(PathExtension.ProductOrigin + Model.Image)" alt="@Model.Title" title="@Model.Title">
+                <partial name="_AddProductToCartPartial" model="@(new AddProductToOrderDTO{Count = 1, ProductId = Model.ProductId, ProductShippingId = Model.ProductShippingId})" />
+            </div>
+            <div class="product-details-top mb-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="product-gallery">
+                            <figure class="product-main-image">
+                                <img id="product-zoom" src="@(PathExtension.ProductOrigin + Model.Image)" data-zoom-image="@(PathExtension.ProductOrigin + Model.Image)" alt="@Model.Title" title="@Model.Title">
 
-                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                <i class="icon-arrows"></i>
-                            </a>
-                        </figure><!-- End .product-main-image -->
+                                <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                    <i class="icon-arrows"></i>
+                                </a>
+                            </figure><!-- End .product-main-image -->
 
-                        <div id="product-zoom-gallery" class="product-image-gallery">
+                            <div id="product-zoom-gallery" class="product-image-gallery">
 
-                            @if (Model.ProductGalleries != null && Model.ProductGalleries.Any())
+                                @if (Model.ProductGalleries != null && Model.ProductGalleries.Any())
                             {
                                 @foreach (var gallery in Model.ProductGalleries)
                                 {
@@ -75,9 +75,9 @@
                             @Model.Title
                             @if (Model.ProductDiscount != null)
                             {
-                            <span class="text-danger">
-                                (@Model.ProductDiscount.Percentage درصد تخفیف)
-                            </span>
+                                <span class="text-danger">
+                                    (@Model.ProductDiscount.Percentage درصد تخفیف)
+                                </span>
                             }
                         </h1>
                         <!-- End .product-title -->
@@ -89,8 +89,15 @@
                             <a class="ratings-text text-info" href="#" id="review-link">
                                 بازدید محصول : @Model.View
                             </a>
+                            |
+                            @if (Model.Shippings != null && Model.Shippings.Any())
+                            {
+                                <a class="ratings-text text-danger" href="#" id="review-link">
+                                    هزینه پستی محصول : @Model.ShippingTotalPrice.ToString("#,0 تومان")
+                                </a>
+                            }
                         </div>
-                        <br/>
+                        <br />
                         <div class="product-price">
                             @if (Model.ProductColors != null && Model.ProductColors.Any())
                             {
@@ -121,13 +128,15 @@
                                         @foreach (var color in Model.ProductColors)
                                         {
                                             <a onclick="changeProductPriceBasedOnColor(@color.Id, @color.Price, '@color.ColorName')" class="productColor-dot"
-                                               title="@color.ColorName" style="background: @color.ColorCode; border-color: gainsboro;">
+                                       title="@color.ColorName" style="background: @color.ColorCode; border-color: gainsboro;">
                                                 <span class="sr-only">@color.ColorName</span>
                                             </a>
                                         }
 
                                     </div><!-- End .product-nav -->
-                                </div><!-- End .details-filter-row -->
+                                </div>
+
+                                <!-- End .details-filter-row -->
                             }
 
                             <div class="details-filter-row details-row-size col-md-6">
@@ -176,24 +185,24 @@
                                         <span>،</span>
                                     }
                                 </div>
-                                
+
                                 <div class="col-md-4">
                                     <a asp-area="" asp-controller="Product" asp-action="ChatWithSeller" asp-route-sellerId="@Model.SellerId" class="btn btn-warning btn-round btn-block text-dark">
                                         <span class="cart-button-margin">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
-                                                <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                                <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                                             </svg>
                                         </span>
                                         گفتگو با فروشنده
                                         <i class="bi bi-chat-right-dots-fill"></i>
                                     </a>
                                 </div>
-                                
+
                             </div>
-                            
-                            
-                            
-                            
+
+
+
+
                             <!-- End .product-details-footer -->
                         }
                         else
@@ -202,7 +211,7 @@
                                 <a class="btn btn-warning btn-round btn-block text-dark">
                                     <span class="cart-button-margin">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-dots-fill" viewBox="0 0 16 16">
-                                            <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                            <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
                                         </svg>
                                     </span>
                                     گفتگو با فروشنده
@@ -247,6 +256,12 @@
                     <div class="container">
 
                         <table class="table table-striped table-bordered  text-center">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ویژگی</th>
+                                    <th scope="col">توضیحات</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
                                 {
@@ -292,7 +307,9 @@
                                                 </h6>
                                             </div><!-- End .review-content -->
                                         </div><!-- End .col-auto -->
-                                    </div><!-- End .row -->
+                                    </div>
+
+                                    <!-- End .row -->
                                 }
                             }
                         </div><!-- End .review -->
@@ -328,7 +345,7 @@
                                     </div><!-- End .col-md-6 -->
                                 </div><!-- End .row -->
 
-                                <input type="hidden" asp-for="ProductId"/>
+                                <input type="hidden" asp-for="ProductId" />
 
                                 <button type="submit" class="btn btn-outline-primary-2 float-right">
                                     <span>ارسال دیدگاه</span>
@@ -342,7 +359,6 @@
             </div><!-- .End .tab-pane -->
         </div><!-- End .tab-content -->
     </div><!-- End .product-details-tab -->
-
     @if (Model.RelatedProducts != null && Model.RelatedProducts.Any())
     {
         <div class="container">
@@ -383,7 +399,7 @@
                                     <figure class="product-media">
                                         <span class="product-label label-new">جدید</span>
                                         <a asp-controller="Product" asp-action="ProductDetails"
-                                           asp-route-productId="@related.Id" asp-route-title="@related.Title.FixTextForUrl()">
+                                   asp-route-productId="@related.Id" asp-route-title="@related.Title.FixTextForUrl()">
                                             <img src="@(PathExtension.ProductOrigin + related.Image)" alt="@related.Title" title="@related.Title" class="product-image">
                                         </a>
 
@@ -398,8 +414,8 @@
 
                                         <div class="">
                                             <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@related.Id"
-                                               asp-route-title="@related.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
-                                                <span >افزودن به سبد خرید</span>
+                                       asp-route-title="@related.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
+                                                <span>افزودن به سبد خرید</span>
                                             </a>
                                         </div><!-- End .product-action -->
                                     </figure>
@@ -413,13 +429,12 @@
                                         }
                                         <h3 class="product-title text-center">
                                             <a class="product-title-lineHeight" asp-controller="Product" asp-action="ProductDetails"
-                                               asp-route-productId="@related.Id" asp-route-title="@related.Title.FixTextForUrl()">@related.Title</a>
+                                       asp-route-productId="@related.Id" asp-route-title="@related.Title.FixTextForUrl()">@related.Title</a>
                                         </h3>
                                         <!-- End .product-title -->
                                         <div class="product_price text-primary">
                                             @related.Price.ToString("#,0 تومان")
                                         </div><!-- End .product-price -->
-
                                         @if (related.ProductGalleries != null && related.ProductGalleries.Any())
                                         {
                                             <div class="product-nav product-nav-thumbs">
@@ -444,7 +459,9 @@
                     </button><button type="button" role="presentation" class="owl-next"><i class="icon-angle-right"></i></button>
                 </div><div class="owl-dots disabled"></div>
             </div>
-        </div><!-- End .container -->
+        </div>
+
+        <!-- End .container -->
     }
 
 </div>

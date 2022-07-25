@@ -13,6 +13,7 @@ using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.Entities.ProductComment;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.Products;
+using MarketPlace.DataLayer.Entities.Shipping;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -32,12 +33,14 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<ProductDiscount> _productDiscountRepository;
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
         private readonly IGenericRepository<ProductComment> _productCommentRepository;
+        private readonly IGenericRepository<Shipping> _shippingRepository;
+        private readonly IShippingService _shippingService;
 
         public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository,
             IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository,
             IGenericRepository<ProductGallery> productGalleryRepository, IGenericRepository<ProductFeature> productFeatureRepository,
             IGenericRepository<ProductDiscount> productDiscountRepository, IGenericRepository<ProductDiscountUse> productDiscountUseRepository,
-            IGenericRepository<ProductComment> productCommentRepository)
+            IGenericRepository<ProductComment> productCommentRepository, IGenericRepository<Shipping> shippingRepository, IShippingService shippingService)
         {
             _productRepository = productRepository;
             _productColorRepository = productColorRepository;
@@ -46,6 +49,8 @@ namespace MarketPlace.Application.Services.Implementations
             _productDiscountRepository = productDiscountRepository;
             _productDiscountUseRepository = productDiscountUseRepository;
             _productCommentRepository = productCommentRepository;
+            _shippingRepository = shippingRepository;
+            _shippingService = shippingService;
             _productCategoryRepository = productCategoryRepository;
             _productSelectedRepository = productSelectedRepository;
         }
@@ -360,8 +365,9 @@ namespace MarketPlace.Application.Services.Implementations
                     IsActive = product.IsActive,
                     Description = product.Description,
                     ShortDescription = product.ShortDescription,
+                    Weight = product.ProductWeight,
                     ProductAcceptanceState = ProductAcceptanceState.UnderProgress,
-                    SiteProfit = 3
+                    SiteProfit = 3,
 
                 };
 
@@ -369,7 +375,18 @@ namespace MarketPlace.Application.Services.Implementations
                 await _productRepository.SaveChanges();
 
 
+                //create Product Shipping
 
+                var newShipping = new Shipping
+                {
+                    ProductId = newProduct.Id,
+                    BaseShippingPrice = 25000,
+                    ShippingName = "پست پیشتاز",
+                    TotalShippingPrice = 25000,
+                };
+
+                await _shippingRepository.AddEntity(newShipping);
+                await _shippingRepository.SaveChanges();
 
 
                 //create Product Category
@@ -397,12 +414,23 @@ namespace MarketPlace.Application.Services.Implementations
         {
             var product = await _productRepository.GetEntityById(productId);
 
+            var productShipping = await _shippingRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.ProductId == productId);
+
             if (product != null)
             {
                 product.ProductAcceptanceState = ProductAcceptanceState.Accepted;
                 product.ProductAcceptOrRejectDescription = $"محصول مورد نظر در تاریخ {DateTime.Now.ToStringShamsiDate()}  مورد تایید سایت قرار گرفت";
+
+                productShipping.TotalShippingPrice = await _shippingService.CalculateProductShipping(productId);
+
                 _productRepository.EditEntity(product);
+                _shippingRepository.EditEntity(productShipping);
+
                 await _productRepository.SaveChanges();
+                await _shippingRepository.SaveChanges();
 
                 return true;
             }
@@ -476,6 +504,7 @@ namespace MarketPlace.Application.Services.Implementations
                 IsActive = product.IsActive,
                 ProductColors = productColor,
                 ProductImage = product.Image,
+                ProductWeight = product.Weight,
                 ProductFeatures = productFeature,
                 Description = product.Description,
                 SelectedCategories = selectedCategories,
@@ -509,6 +538,7 @@ namespace MarketPlace.Application.Services.Implementations
             mainProduct.Title = product.Title;
             mainProduct.Price = product.Price;
             mainProduct.IsActive = product.IsActive;
+            mainProduct.Weight = product.ProductWeight;
             mainProduct.Description = product.Description;
             mainProduct.ShortDescription = product.ShortDescription;
             mainProduct.ProductAcceptanceState = ProductAcceptanceState.UnderProgress;
@@ -524,6 +554,20 @@ namespace MarketPlace.Application.Services.Implementations
 
                 mainProduct.Image = imageName;
             }
+
+            var productShipping = await _shippingRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.ProductId == product.Id);
+
+            productShipping.ProductId = product.Id;
+            productShipping.BaseShippingPrice = 25000;
+            productShipping.ShippingName = "پست پیشتاز";
+            productShipping.TotalShippingPrice = await _shippingService.CalculateProductShipping(product.Id);
+
+
+            _shippingRepository.EditEntity(productShipping);
+            await _shippingRepository.SaveChanges();
 
             //Remove All Product Categories
             await RemoveAllProductSelectedCategories(product.Id);
@@ -558,6 +602,7 @@ namespace MarketPlace.Application.Services.Implementations
                 .Include(x => x.ProductFeatures)
                 .Include(x => x.ProductDiscounts)
                 .Include(x=>x.ProductComments)
+                .Include(x=>x.Shippings)
                 .SingleOrDefaultAsync(x => x.Id == productId);
 
             if (product == null)
@@ -580,15 +625,23 @@ namespace MarketPlace.Application.Services.Implementations
             var productDiscount = await _productDiscountRepository.GetQuery()
                 .Include(x => x.ProductDiscountUse)
                 .OrderByDescending(x => x.CreateDate)
-                .FirstOrDefaultAsync(x => x.ProductId == productId && x.DiscountNumber - x.ProductDiscountUse.Count > 0 || x.ExpireDate > DateTime.Now);
+                .FirstOrDefaultAsync(x => x.ProductId == productId && x.ExpireDate > DateTime.Now);
+
+            var shipping = await _shippingRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.ProductId == productId);
 
 
             product.View += 1;
             await _productRepository.SaveChanges();
 
+            
+
             var productDetail = new ProductDetailsDTO
             {
                 ProductId = productId,
+                ProductShippingId = shipping.Id,
                 Title = product.Title,
                 Price = product.Price,
                 Image = product.Image,
@@ -597,16 +650,19 @@ namespace MarketPlace.Application.Services.Implementations
                 Description = product.Description,
                 ShortDescription = product.ShortDescription,
                 Seller = product.Seller,
+                ShippingTotalPrice = shipping.TotalShippingPrice,
                 ProductColors = product.ProductColors.ToList(),
                 ProductFeatures = product.ProductFeatures.ToList(),
                 ProductGalleries = product.ProductGalleries.ToList(),
+                Shippings = product.Shippings.ToList(),
                 ProductDiscount = productDiscount,
                 ProductCategories = product.ProductSelectedCategories.Select(x => x.ProductCategory).ToList(),
                 RelatedProducts = relatedProducts,
                 ProductComments = product.ProductComments
                     .Where(x=>x.CommentAcceptanceState == CommentAcceptanceState.Accepted && !x.IsDelete)
                     .OrderByDescending(x=>x.Id)
-                    .ToList()
+                    .ToList(),
+                
             };
 
             return productDetail;

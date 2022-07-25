@@ -13,6 +13,9 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Display(Name = "تصویر محصول")]
         public string ProductImage { get; set; }
 
+        [Display(Name = "وزن محصول")]
+        public int ProductWeight { get; set; }
+
         public ProductAcceptanceState ProductState { get; set; }
     }
 

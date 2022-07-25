@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Products;
+using MarketPlace.DataLayer.Entities.Shipping;
 
 namespace MarketPlace.DataLayer.DTOs.Products
 {
@@ -10,6 +11,8 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public long ProductId { get; set; }
 
         public long SellerId { get; set; }
+
+        public long ProductShippingId { get; set; }
 
         [Display(Name = "نام محصول")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -36,12 +39,16 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Display(Name = "تعداد بازدید")]
         public int View { get; set; }
 
+        [Display(Name = "هزینه پستی")]
+        public int ShippingTotalPrice { get; set; }
+
         public Entities.Store.Seller Seller { get; set; }
         public List<ProductGallery> ProductGalleries { get; set; }
         public List<ProductColor> ProductColors { get; set; }
         public List<ProductCategory> ProductCategories { get; set; }
         public List<ProductFeature> ProductFeatures { get; set; }
         public List<Product> RelatedProducts { get; set; }
+        public List<Shipping> Shippings { get; set; }
         public List<Entities.ProductComment.ProductComment> ProductComments { get; set; }
         public Entities.ProductDiscount.ProductDiscount ProductDiscount { get; set; }
     }

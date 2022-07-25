@@ -1,11 +1,9 @@
-﻿using System.Drawing.Printing;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ServiceHost.Http;
 using ServiceHost.PresentationExtensions;
 
 namespace ServiceHost.Controllers

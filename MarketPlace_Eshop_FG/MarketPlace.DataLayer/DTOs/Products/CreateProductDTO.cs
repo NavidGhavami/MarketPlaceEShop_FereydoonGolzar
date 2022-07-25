@@ -11,6 +11,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public string Title { get; set; }
 
         [Display(Name = "قیمت محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int Price { get; set; }
 
         [Display(Name = "توضیحات کوتاه")]
@@ -27,6 +28,10 @@ namespace MarketPlace.DataLayer.DTOs.Products
 
         [Display(Name = "درصد سایت")]
         public int SiteProfit { get; set; }
+
+        [Display(Name = "وزن محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int ProductWeight { get; set; }
 
         public List<CreateProductColorDTO> ProductColors { get; set; }
         public List<CreateProductFeatureDTO> ProductFeatures { get; set; }

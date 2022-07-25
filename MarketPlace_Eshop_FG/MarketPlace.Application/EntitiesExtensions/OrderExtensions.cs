@@ -10,13 +10,13 @@ namespace MarketPlace.Application.EntitiesExtensions
         {
             if (detail.DiscountPercentage != null)
             {
-                return Convert.ToInt32((detail.Count * (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice))) -
+                return Convert.ToInt32((detail.Count * (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice) + detail.ProductShippingPrice)) -
                                        (Convert.ToInt32(detail.Count * detail.DiscountPercentage *
                                            (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice)) / 100)))
                     .ToString("#,0");
             }
 
-            return (detail.Count * (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice))).ToString("#,0");
+            return (detail.Count * (detail.ProductPrice + Convert.ToInt32(detail.ProductColorPrice) + detail.ProductShippingPrice)).ToString("#,0");
 
 
         }

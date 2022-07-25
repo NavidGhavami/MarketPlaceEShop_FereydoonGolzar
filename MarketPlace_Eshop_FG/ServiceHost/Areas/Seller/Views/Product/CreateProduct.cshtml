@@ -40,17 +40,26 @@
 
                         <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
                             <form method="post" asp-area="Seller" asp-controller="Product" asp-action="CreateProduct" enctype="multipart/form-data" id="create_product_form">
-
+                                
+                            <div class="row col-md-12">
+                                <div class="form-group col-md-12">
+                                    <label>نام محصول</label>
+                                    <input type="text" asp-for="Title" class="form-control" placeholder="مثال : آیفون 13 پرو مکس 256 گیگابایت">
+                                    <span class="text-danger float-right" asp-validation-for="Title"></span>
+                                </div>
+                                <br />
+                            </div>
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-6">
-                                        <label>نام محصول</label>
-                                        <input type="text" asp-for="Title" class="form-control">
-                                        <span class="text-danger float-right" asp-validation-for="Title"></span>
+                                        <label>قیمت محصول</label>
+                                        <input type="text" asp-for="Price" class="form-control" placeholder="قیمت محصول را به تومان وارد نمایید">
+                                        <span class="text-danger float-right" asp-validation-for="Price"></span>
                                     </div>
                                     <br />
                                     <div class="form-group col-md-6">
-                                        <label>قیمت محصول</label>
-                                        <input type="text" asp-for="Price" class="form-control">
+                                        <label>وزن محصول</label>
+                                        <input type="text" asp-for="ProductWeight" class="form-control" placeholder="وزن محصول را به گرم وارد نمایید. مثال: 350 گرم">
+                                        <span class="text-danger float-right" asp-validation-for="ProductWeight"></span>
                                     </div>
                                     <br />
                                 </div>

@@ -48,6 +48,10 @@ namespace MarketPlace.DataLayer.Entities.Products
         [Display(Name = "درصد سایت")]
         public int SiteProfit { get; set; }
 
+        [Display(Name = "وزن محصول")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int Weight { get; set; }
+
 
         #endregion
 
@@ -61,6 +65,7 @@ namespace MarketPlace.DataLayer.Entities.Products
         public ICollection<OrderDetail> OrderDetails { get; set; }
         public ICollection<ProductDiscount.ProductDiscount> ProductDiscounts { get; set; }
         public ICollection<ProductComment.ProductComment> ProductComments { get; set; }
+        public ICollection<Shipping.Shipping> Shippings { get; set; }
 
         #endregion
     }

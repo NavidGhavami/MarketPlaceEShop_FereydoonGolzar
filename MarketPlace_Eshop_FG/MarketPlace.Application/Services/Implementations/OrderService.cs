@@ -8,6 +8,7 @@ using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
+using MarketPlace.DataLayer.Entities.Shipping;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -25,10 +26,12 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<ProductDiscount> _productDiscountRepository;
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
         private readonly IGenericRepository<UserAddress> _userAddressRepository;
+        private readonly IGenericRepository<Shipping> _shippingRepository;
 
         public OrderService(IGenericRepository<Order> orderRepository, IGenericRepository<OrderDetail> orderDetailRepository,
             ISellerWalletService sellerWalletService, IGenericRepository<ProductDiscount> productDiscountRepository,
-            IGenericRepository<ProductDiscountUse> productDiscountUseRepository, ISellerService sellerService, IGenericRepository<UserAddress> userAddressRepository)
+            IGenericRepository<ProductDiscountUse> productDiscountUseRepository, ISellerService sellerService, IGenericRepository<UserAddress> userAddressRepository,
+            IGenericRepository<Shipping> shippingRepository)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
@@ -37,6 +40,7 @@ namespace MarketPlace.Application.Services.Implementations
             _productDiscountUseRepository = productDiscountUseRepository;
             _sellerService = sellerService;
             _userAddressRepository = userAddressRepository;
+            _shippingRepository = shippingRepository;
         }
 
         #endregion
@@ -66,6 +70,8 @@ namespace MarketPlace.Application.Services.Implementations
                 .ThenInclude(x => x.ProductColor)
                 .ThenInclude(x => x.Product)
                 .ThenInclude(x => x.ProductDiscounts)
+                .Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Shipping)
                 .SingleOrDefaultAsync(x => x.UserId == userId && !x.IsPaid);
 
 
@@ -81,18 +87,18 @@ namespace MarketPlace.Application.Services.Implementations
             foreach (var detail in userOpenOrder.OrderDetails.Where(x => !x.IsDelete))
             {
                 var oneProductPrice = detail.ProductColor != null
-                    ? detail.Product.Price + Convert.ToInt32(detail.ProductColor.Price)
+                    ? detail.Product.Price + Convert.ToInt32(detail.ProductColor.Price) + detail.Shipping.TotalShippingPrice
                     : detail.Product.Price;
 
                 var productDiscount = await _productDiscountRepository.GetQuery()
                     .Include(x => x.ProductDiscountUse)
                     .OrderByDescending(x => x.CreateDate)
                     .FirstOrDefaultAsync(x =>
-                        x.ProductId == detail.ProductId && x.DiscountNumber - x.ProductDiscountUse.Count > 0);
+                        x.ProductId == detail.ProductId || x.DiscountNumber - x.ProductDiscountUse.Count > 0);
 
                 if (productDiscount != null)
                 {
-                    discount = (int)Math.Ceiling((oneProductPrice * productDiscount.Percentage) / (decimal)100);
+                    discount = (int)Math.Ceiling(((oneProductPrice - detail.Shipping.TotalShippingPrice) * productDiscount.Percentage) / (decimal)100);
                 }
 
 
@@ -111,18 +117,19 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 var productPrice = detail.Product.Price;
                 var productColorPrice = detail.ProductColor != null ? Convert.ToInt32(detail.ProductColor.Price) : 0;
+                var productShippingPrice = detail.Shipping.TotalShippingPrice;
                 var discount = 0;
-                var totalPrice = (detail.Count * (productPrice + productColorPrice));
+                var totalPrice = detail.Count * (productPrice + productColorPrice);
 
                 var productDiscount = await _productDiscountRepository.GetQuery()
                     .Include(x => x.ProductDiscountUse)
                     .OrderByDescending(x => x.CreateDate)
                     .FirstOrDefaultAsync(x =>
-                        x.ProductId == detail.ProductId && x.DiscountNumber - x.ProductDiscountUse.Count > 0);
+                        x.ProductId == detail.ProductId || x.DiscountNumber - x.ProductDiscountUse.Count > 0);
 
                 if (productDiscount != null)
                 {
-                    discount = (int)Math.Ceiling((totalPrice * productDiscount.Percentage) / (decimal)100);
+                    discount = (int)Math.Ceiling(totalPrice * productDiscount.Percentage / (decimal)100);
 
                     var newDiscountUse = new ProductDiscountUse
                     {
@@ -133,16 +140,17 @@ namespace MarketPlace.Application.Services.Implementations
                     await _productDiscountUseRepository.AddEntity(newDiscountUse);
                 }
 
-                var totalPriceWithDiscount = totalPrice - discount;
+                var totalPriceWithDiscount = (totalPrice + detail.Count * productShippingPrice) - discount;
 
                 var sellerWallet = new SellerWallet
                 {
                     SellerId = detail.Product.SellerId,
-                    Price = (int)Math.Ceiling(totalPriceWithDiscount - (totalPriceWithDiscount * detail.Product.SiteProfit / (double)100)),
+                    Price = (int)Math.Ceiling(totalPriceWithDiscount - totalPriceWithDiscount * detail.Product.SiteProfit / (double)100),
                     TransactionType = TransactionType.Deposit,
                     Description = $"پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}،" +
-                                  $" با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف" +
-                                  $" {discount:#,0 تومان}، به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
+                                  $" با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف" + $" {discount:#,0 تومان}، " +
+                                  $" با هزینه پستی {productShippingPrice * detail.Count:#,0 تومان}،" +
+                                  $"به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
                                   $"درصد برای فروشنده و {detail.Product.SiteProfit} درصد برای فروشگاه"
                 };
 
@@ -150,6 +158,7 @@ namespace MarketPlace.Application.Services.Implementations
 
                 detail.ProductPrice = totalPriceWithDiscount;
                 detail.ProductColorPrice = productColorPrice;
+                detail.ShippingPrice = productShippingPrice * detail.Count;
 
                 _orderDetailRepository.EditEntity(detail);
             }
@@ -344,11 +353,11 @@ namespace MarketPlace.Application.Services.Implementations
 
         public async Task<List<UserAddress>> GetAddressToUser(long userId)
         {
-            return  await _userAddressRepository
+            return await _userAddressRepository
                 .GetQuery()
                 .AsQueryable()
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x=>x.Id)
+                .OrderByDescending(x => x.Id)
                 .Take(5)
                 .ToListAsync();
         }
@@ -377,7 +386,7 @@ namespace MarketPlace.Application.Services.Implementations
                     Description = x.Description,
                     Order = x.Order
                 })
-                .SingleOrDefaultAsync(x=>x.OrderId == orderId && x.UserId == userId);
+                .SingleOrDefaultAsync(x => x.OrderId == orderId && x.UserId == userId);
 
             return userAddress;
         }
@@ -407,7 +416,7 @@ namespace MarketPlace.Application.Services.Implementations
                 PlaqueNo = userAddress.PlaqueNo,
                 Mobile = userAddress.Mobile,
                 Email = userAddress.Email,
-                
+
             };
         }
 
@@ -420,7 +429,7 @@ namespace MarketPlace.Application.Services.Implementations
             var openOrder = await GetUserLatestOpenOrder(userId);
 
             var similarOrder = openOrder.OrderDetails.SingleOrDefault(x =>
-                x.ProductId == order.ProductId && x.ProductColorId == order.ProductColorId && !x.IsDelete);
+                x.ProductId == order.ProductId && x.ProductColorId == order.ProductColorId && x.ShippingId == order.ProductShippingId && !x.IsDelete);
 
             if (similarOrder == null)
             {
@@ -429,6 +438,7 @@ namespace MarketPlace.Application.Services.Implementations
                     OrderId = openOrder.Id,
                     ProductId = order.ProductId,
                     ProductColorId = order.ProductColorId,
+                    ShippingId = order.ProductShippingId,
                     Count = order.Count
                 };
 
@@ -465,6 +475,8 @@ namespace MarketPlace.Application.Services.Implementations
                         ProductPrice = x.Product.Price,
                         ProductTitle = x.Product.Title,
                         ProductImage = x.Product.Image,
+                        ProductShippingId = x.ShippingId,
+                        ProductShippingPrice = x.Shipping.TotalShippingPrice,
                         DiscountPercentage = x.Product.ProductDiscounts
                         .OrderByDescending(p => p.CreateDate)
                         .FirstOrDefault(p => p.ExpireDate > DateTime.Now)?.Percentage
@@ -530,9 +542,14 @@ namespace MarketPlace.Application.Services.Implementations
             var discount = await _productDiscountRepository
                 .GetQuery()
                 .AsQueryable()
-                .Select(x => new { x.ProductId, x.Percentage}).ToListAsync();
+                .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
 
-            var items = order.OrderDetails.Where(x=>!x.IsDelete).Select(x => new UserOrderDetailItemDTO
+            var shipping = await _shippingRepository
+                .GetQuery()
+                .AsQueryable()
+                .Select(x => new { x.ProductId, x.TotalShippingPrice }).ToListAsync();
+
+            var items = order.OrderDetails.Where(x => !x.IsDelete).Select(x => new UserOrderDetailItemDTO
             {
                 OrderId = x.Id,
                 ProductId = x.ProductId,
@@ -542,7 +559,9 @@ namespace MarketPlace.Application.Services.Implementations
                 Count = x.Count,
                 ProductColorPrice = Convert.ToInt32(x.ProductColor.Price),
                 ProductPrice = x.ProductPrice,
-                MainProductPrice = x.Product.Price + x.ProductColorPrice,
+                OriginalProductPrice = x.Product.Price,
+                MainProductPrice = (x.Product.Price + x.ProductColorPrice) * x.Count + x.ShippingPrice,
+                ProductShippingPrice = x.ShippingPrice,
                 ProductColorId = x.ProductColorId,
                 ProductImage = x.Product.Image,
 
@@ -555,6 +574,9 @@ namespace MarketPlace.Application.Services.Implementations
                         .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
 
                 item.DiscountPrice = item.MainProductPrice - item.ProductPrice;
+
+                item.ProductShippingPrice = Convert.ToInt32(shipping
+                    .FirstOrDefault(x => x.ProductId == item.ProductId)?.TotalShippingPrice * item.Count);
             }
 
             return items;
@@ -579,6 +601,11 @@ namespace MarketPlace.Application.Services.Implementations
                 .AsQueryable()
                 .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
 
+            var shipping = await _shippingRepository
+                .GetQuery()
+                .AsQueryable()
+                .Select(x => new { x.ProductId, x.TotalShippingPrice }).ToListAsync();
+
             var items = orderDetail.Select(x => new SellerOrderDetailItemDTO
             {
                 OrderId = x.Id,
@@ -589,9 +616,12 @@ namespace MarketPlace.Application.Services.Implementations
                 Count = x.Count,
                 ProductColorPrice = Convert.ToInt32(x.ProductColor.Price),
                 ProductPrice = x.ProductPrice,
-                MainProductPrice = x.Product.Price + x.ProductColorPrice,
+                OriginalProductPrice = x.Product.Price,
+                MainProductPrice = (x.Product.Price + x.ProductColorPrice) * x.Count + x.ShippingPrice,
+                ProductShippingPrice = x.ShippingPrice,
                 ProductColorId = x.ProductColorId,
                 ProductImage = x.Product.Image,
+
 
             }).ToList();
 
@@ -599,9 +629,13 @@ namespace MarketPlace.Application.Services.Implementations
             foreach (var item in items)
             {
                 item.DiscountPercentage = discount
-                    .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
+                        .FirstOrDefault(x => x.ProductId == item.ProductId)?.Percentage;
 
                 item.DiscountPrice = item.MainProductPrice - item.ProductPrice;
+
+                item.ProductShippingPrice = Convert.ToInt32(shipping
+                    .FirstOrDefault(x => x.ProductId == item.ProductId)?.TotalShippingPrice * item.Count);
+
             }
 
             return items;
