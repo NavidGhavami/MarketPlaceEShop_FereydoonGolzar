@@ -48,7 +48,7 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public List<ProductCategory> ProductCategories { get; set; }
         public List<ProductFeature> ProductFeatures { get; set; }
         public List<Product> RelatedProducts { get; set; }
-        public List<Shipping> Shippings { get; set; }
+        public List<Entities.Shipping.Shipping> Shippings { get; set; }
         public List<Entities.ProductComment.ProductComment> ProductComments { get; set; }
         public Entities.ProductDiscount.ProductDiscount ProductDiscount { get; set; }
     }

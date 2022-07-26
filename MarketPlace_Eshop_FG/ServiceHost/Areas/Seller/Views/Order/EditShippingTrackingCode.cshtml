@@ -1,0 +1,72 @@
+﻿@model MarketPlace.DataLayer.DTOs.Shipping.EditShippingTrackingCodeDTO
+@{
+    ViewData["Title"] = "ویرایش کد رهگیری پستی";
+}
+
+@section Scripts
+{
+    <partial name="_JqueryValidators" />
+
+}
+
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد پنل کاربری</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد پنل فروشندگی</a></li>
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+                            <form method="post" asp-area="Seller" asp-controller="Order" asp-action="EditShippingTrackingCode" enctype="multipart/form-data" id="create_product_form">
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="OrderId" />
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>کد رهگیری پستی</label>
+                                        <input type="text" asp-for="TrackingCode" class="form-control">
+                                        <span class="text-danger float-right" asp-validation-for="TrackingCode"></span>
+                                    </div>
+                                </div>
+
+                                <button type="submit" onclick="wait_me()" class="btn btn-round btn-primary btn-block float-right">
+                                    <span>ویرایش کد رهگیری</span>
+                                    <i class="fa fa-edit fa fa-2x"></i>
+                                </button>
+                                <button onclick="window.history.go(-1);" class="btn btn-round btn-info btn-block float-right">
+                                    <span>بازگشت به صفحه قبل</span>
+                                    <i class="fa fa-arrow-circle-left fa fa-2x"></i>
+                                </button>
+                            </form>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+

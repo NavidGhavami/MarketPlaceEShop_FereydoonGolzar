@@ -1077,6 +1077,38 @@ namespace MarketPlace.DataLayer.Migrations
                     b.ToTable("Shippings");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Shipping.ShippingTrackingCode", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDelete")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("OrderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TrackingCode")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("ShippingTrackingCodes");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Site.FrequentlyQuestion", b =>
                 {
                     b.Property<long>("Id")
@@ -1691,6 +1723,17 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("MarketPlace.DataLayer.Entities.Shipping.ShippingTrackingCode", b =>
+                {
+                    b.HasOne("MarketPlace.DataLayer.Entities.ProductOrder.Order", "Order")
+                        .WithOne("ShippingTrackingCode")
+                        .HasForeignKey("MarketPlace.DataLayer.Entities.Shipping.ShippingTrackingCode", "OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.Store.Seller", b =>
                 {
                     b.HasOne("MarketPlace.DataLayer.Entities.Account.User", "User")
@@ -1752,6 +1795,8 @@ namespace MarketPlace.DataLayer.Migrations
             modelBuilder.Entity("MarketPlace.DataLayer.Entities.ProductOrder.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("ShippingTrackingCode");
 
                     b.Navigation("UserAddress");
                 });

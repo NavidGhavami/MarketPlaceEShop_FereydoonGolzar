@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MarketPlace.DataLayer.Entities.Common;
+using MarketPlace.DataLayer.Entities.Shipping;
 
 namespace MarketPlace.DataLayer.Entities.ProductOrder
 {
@@ -26,6 +27,7 @@ namespace MarketPlace.DataLayer.Entities.ProductOrder
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
         public UserAddress UserAddress { get; set; }
+        public ShippingTrackingCode ShippingTrackingCode { get; set; }
 
         #endregion
 

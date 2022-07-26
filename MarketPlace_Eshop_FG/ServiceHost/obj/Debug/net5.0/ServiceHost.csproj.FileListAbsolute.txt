@@ -891,3 +891,6 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Seller\Views\Home\ChatWithUser.cshtml.g.cs
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Administration\Views\Ticket\ConversationList.cshtml.g.cs
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Administration\Views\Ticket\ConversationDetail.cshtml.g.cs
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Seller\Views\Order\GetShippingTrackingCode.cshtml.g.cs
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Seller\Views\Order\CreateShippingTrackingCode.cshtml.g.cs
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Debug\net5.0\Razor\Areas\Seller\Views\Order\EditShippingTrackingCode.cshtml.g.cs

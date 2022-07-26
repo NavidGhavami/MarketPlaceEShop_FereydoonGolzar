@@ -1,7 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
-using MarketPlace.DataLayer.Entities.Products;
+using MarketPlace.DataLayer.DTOs.Shipping;
 using MarketPlace.DataLayer.Entities.Shipping;
 using MarketPlace.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,12 @@ namespace MarketPlace.Application.Services.Implementations
         #region Constructor
 
         private readonly IGenericRepository<Shipping> _shippingRepository;
+        private readonly IGenericRepository<ShippingTrackingCode> _shippingTrackingCodeRepository;
 
-        public ShippingService(IGenericRepository<Shipping> shippingRepository)
+        public ShippingService(IGenericRepository<Shipping> shippingRepository, IGenericRepository<ShippingTrackingCode> shippingTrackingCodeRepository)
         {
             _shippingRepository = shippingRepository;
+            _shippingTrackingCodeRepository = shippingTrackingCodeRepository;
         }
 
         #endregion
@@ -60,6 +63,76 @@ namespace MarketPlace.Application.Services.Implementations
             };
 
             return shipping.TotalShippingPrice;
+        }
+
+        public async Task<List<ShippingTrackingCode>> GetShippingTrackingCode(long orderId)
+        {
+            return await _shippingTrackingCodeRepository
+                .GetQuery()
+                .AsQueryable()
+                .Where(x => x.OrderId == orderId)
+                .ToListAsync();
+        }
+
+        public async Task<SendTrackingCodeResult> AddShippingTrackingCode(CreateShippingTrackingCodeDTO trackingCode, long orderId)
+        {
+            
+            if (orderId > 0)
+            {
+                var newTrackingCode = new ShippingTrackingCode
+                {
+                    OrderId = trackingCode.OrderId,
+                    TrackingCode = trackingCode.TrackingCode
+                };
+
+                await _shippingTrackingCodeRepository.AddEntity(newTrackingCode);
+                await _shippingTrackingCodeRepository.SaveChanges();
+
+                return SendTrackingCodeResult.Success;
+            }
+
+            return SendTrackingCodeResult.Error;
+
+        }
+
+        public async Task<EditShippingTrackingCodeDTO> GetShippingTrackingCodeForEdit(long trackingCodeId)
+        {
+            var trackingCode = await _shippingTrackingCodeRepository.GetEntityById(trackingCodeId);
+
+            if (trackingCode == null)
+            {
+                return null;
+            }
+
+            return new EditShippingTrackingCodeDTO
+            {
+                Id = trackingCodeId,
+                OrderId = trackingCode.OrderId,
+                TrackingCode = trackingCode.TrackingCode
+            };
+
+        }
+
+        public async Task<EditShippingTrackingCodeResult> EditShippingTrackingCode(EditShippingTrackingCodeDTO tracking)
+        {
+            var mainShippingTracking = await _shippingTrackingCodeRepository
+                .GetQuery()
+                .AsQueryable()
+                .FirstOrDefaultAsync(x => x.Id == tracking.Id);
+
+            if (mainShippingTracking == null)
+            {
+                return EditShippingTrackingCodeResult.NotFound;
+            }
+
+            mainShippingTracking.Id = tracking.Id;
+            mainShippingTracking.OrderId = tracking.OrderId;
+            mainShippingTracking.TrackingCode = tracking.TrackingCode;
+
+            await _shippingTrackingCodeRepository.SaveChanges();
+
+
+            return EditShippingTrackingCodeResult.Success;
         }
 
 

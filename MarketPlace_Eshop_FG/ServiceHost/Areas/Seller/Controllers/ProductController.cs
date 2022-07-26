@@ -188,7 +188,7 @@ namespace ServiceHost.Areas.Seller.Controllers
             return View();
         }
 
-        [HttpPost("create-product-gallery/{productId}")]
+        [HttpPost("create-product-gallery/{productId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProductGallery(CreateOrEditProductGalleryDTO gallery, long productId)
         {
             if (ModelState.IsValid)
@@ -197,7 +197,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
                 if (product == null)
                 {
-                    return NotFound();
+                    return RedirectToAction("PageNotFound", "Home");
                 }
 
                 ViewBag.Product = product;

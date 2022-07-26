@@ -13,6 +13,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<long> AddOrderForUser(long userId);
         Task<Order> GetUserLatestOpenOrder(long userId);
         Task<int> GetTotalOrderPriceForPayment(long userId);
+        Task<string> GetOrderBy(long orderId);
         Task PayOrderProductPriceToSeller(long userId, long refId, string trackingCode);
         Task<FilterUserOrderDTO> GetUserOrder(FilterUserOrderDTO filter);
         Task<CancelOrderResult> CancelOrder(CancelOrderDTO cancel, long userId);

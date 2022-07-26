@@ -109,6 +109,24 @@ namespace MarketPlace.Application.Services.Implementations
             return totalPrice;
         }
 
+        public async Task<string> GetOrderBy(long orderId)
+        {
+            var order = await _orderRepository
+                .GetQuery()
+                .AsQueryable()
+                .SingleOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            return order.TrackingCode;
+
+
+
+        }
+
         public async Task PayOrderProductPriceToSeller(long userId, long refId, string trackingCode)
         {
             var openOrder = await GetUserLatestOpenOrder(userId);

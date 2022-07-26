@@ -91,6 +91,7 @@ namespace MarketPlace.DataLayer.Context
         #region Product Shipping
 
         public DbSet<Shipping> Shippings { get; set; }
+        public DbSet<ShippingTrackingCode> ShippingTrackingCodes { get; set; }
 
         #endregion
 

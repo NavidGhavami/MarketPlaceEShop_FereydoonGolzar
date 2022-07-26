@@ -95,6 +95,8 @@
 
                                                         <a asp-area="Seller" asp-controller="Order" asp-action="UserOrderAddress" asp-route-OrderId="@item.Id"
                                                            class="btn btn-warning btn-sm">آدرس پستی سفارش</a>
+                                                        <a asp-area="Seller" asp-controller="Order" asp-action="GetShippingTrackingCode" asp-route-OrderId="@item.Id"
+                                                           class="btn btn-success btn-sm">ارسال کد رهگیری پستی</a>
                                                     </div>
                                                 </td>
                                             </tr>

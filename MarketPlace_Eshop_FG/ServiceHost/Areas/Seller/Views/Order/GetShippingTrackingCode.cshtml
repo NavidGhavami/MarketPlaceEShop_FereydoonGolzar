@@ -1,0 +1,100 @@
+﻿@model List<MarketPlace.DataLayer.Entities.Shipping.ShippingTrackingCode>
+@{
+    ViewData["Title"] = "لیست کد رهگیری پستی";
+}
+
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل فروشندگی ، @User.Identity.Name</h5>
+        </div>
+
+        <!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد پنل کاربری</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Home" asp-action="Index">داشبورد پنل فروشندگی</a></li>
+            <li class="breadcrumb-item"><a asp-area="Seller" asp-controller="Product" asp-action="Index">مدیریت سفارشات</a></li>
+            <li class="breadcrumb-item" aria-current="page">@ViewData["Title"]</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("SellerSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+
+                            <div>
+                                <h3 class="title mb-3">لیست کد رهگیری پستی</h3>
+                                <a asp-area="Seller" asp-controller="Order" asp-action="CreateShippingTrackingCode" asp-route-orderId="@ViewBag.OrderId"
+                                   class="btn btn-round btn-outline-success btn-sm" style="margin-bottom: 10px;">ارسال کد رهگیری پستی</a>
+                            </div>
+                            <br />
+                            @if (Model != null && Model.Any())
+                            {
+                                <div class="col-md-12">
+
+                                    <table class="table table-striped  text-center">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th scope="col">شناسه سفارش</th>
+                                                <th scope="col">کد رهگیری پستی</th>
+                                                <th scope="col">عملیات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td scope="row">@item.OrderId</td>
+                                                    <td scope="row">@item.TrackingCode</td>
+
+                                                    <td style="padding-right: 70px;">
+                                                        <a asp-area="Seller" asp-controller="Order" asp-action="EditShippingTrackingCode"
+                                                   asp-route-trackingId="@item.Id"
+                                                   class="btn btn-round btn-outline-warning btn-sm" style="margin-right: 100px;">ویرایش کد رهگیری</a>
+
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <partial name="_NoItemFound" />
+                            }
+                        </div><!-- .End .tab-pane -->
+                        @*<partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />*@
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+
