@@ -24,6 +24,11 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
             return Details.Sum(x => x.ProductShippingPrice * x.Count);
         }
 
+        public int GetTotalPriceWithFreeShipping()
+        {
+            return GetTotalPriceWithDiscount() - GetTotalShippingPrice();
+        }
+
         public int GetTotalPriceWithDiscount()
         {
             return GetTotalPriceWithoutDiscount() - GetTotalDiscountPrice();

@@ -96,6 +96,8 @@ namespace MarketPlace.Application.Services.Implementations
                     .FirstOrDefaultAsync(x =>
                         x.ProductId == detail.ProductId || x.DiscountNumber - x.ProductDiscountUse.Count > 0);
 
+                var totalShippingPrice = detail.Count * detail.Shipping.TotalShippingPrice;
+
                 if (productDiscount != null)
                 {
                     discount = (int)Math.Ceiling(((oneProductPrice - detail.Shipping.TotalShippingPrice) * productDiscount.Percentage) / (decimal)100);
@@ -103,6 +105,11 @@ namespace MarketPlace.Application.Services.Implementations
 
 
                 totalPrice += detail.Count * (oneProductPrice - discount);
+
+                if (totalPrice >= 400000)
+                {
+                    totalPrice -= totalShippingPrice;
+                }
                 discount = 0;
             }
 

@@ -9,6 +9,8 @@
     var totalPriceWithDiscount = Model.GetTotalPriceWithDiscount();
     var totalShippingPrice = Model.GetTotalShippingPrice();
     var totalDiscountPrice = Model.GetTotalDiscountPrice();
+    var totalPriceWithFreeShipping = Model.GetTotalPriceWithFreeShipping();
+    var freeShippingPrice = 400000;
 }
 
 <div class="page-header text-center">
@@ -71,7 +73,7 @@
 
                                                 <h3 class="product-title text-justify">
                                                     <a class="product-title-lineHeight text-justify" asp-controller="Product" asp-action="ProductDetails"
-                                                       asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">
+                                               asp-route-productId="@detail.ProductId" asp-route-title="@detail.ProductTitle">
                                                         @detail.ProductTitle
                                                     </a>
                                                 </h3><!-- End .product-title -->
@@ -92,7 +94,7 @@
                                         <td class="quantity-col">
                                             <div class="cart-product-quantity">
                                                 <input order-detail-count="@detail.Id" type="number" class="form-control" value="@detail.Count"
-                                                    min="1" max="100" step="1" data-decimals="0" required="">
+                                               min="1" max="100" step="1" data-decimals="0" required="">
                                             </div>
                                         </td>
                                         <td class="price-col">@(detail.GetDiscountForProduct())</td>
@@ -108,7 +110,9 @@
                                     </tr>
                                 }
                             </tbody>
-                        </table><!-- End .table table-wishlist -->
+                        </table>
+
+                        <!-- End .table table-wishlist -->
                     }
                     else
                     {
@@ -152,18 +156,38 @@
 
                                     <tr class="summary-subtotal">
                                         <td>جمع کل تخفیف : </td>
-                                        <td class="text-left">@totalDiscountPrice.ToString("#,0 تومان") </td>
+                                        <td class="text-left">@totalDiscountPrice.ToString("#,0 تومان")</td>
                                     </tr><!-- End .summary-subtotal -->
-                                
-                                <tr class="summary-subtotal">
-                                    <td>جمع کل هزینه پستی : </td>
-                                    <td class="text-left">@totalShippingPrice.ToString("#,0 تومان") </td>
-                                </tr><!-- End .summary-subtotal -->
+                                    @if (totalPriceWithoutDiscount >= freeShippingPrice)
+                                    {
+                                        <tr class="summary-subtotal">
+                                            <td>جمع کل هزینه پستی : </td>
+                                            <td class="text-left">رایگان (برای سفارشات بالای 400 هزار تومان)</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="summary-subtotal">
+                                            <td>جمع کل هزینه پستی : </td>
+                                            <td class="text-left">@totalShippingPrice.ToString("#,0 تومان") </td>
+                                        </tr>
 
-                                <tr class="summary-total">
-                                        <td>مبلغ قابل پرداخت :</td>
-                                        <td class="text-left">@totalPriceWithDiscount.ToString("#,0 تومان")</td>
-                                    </tr><!-- End .summary-total -->
+                                    }
+
+                                    @if (totalPriceWithoutDiscount >= freeShippingPrice)
+                                    {
+                                        <tr class="summary-total">
+                                            <td>مبلغ قابل پرداخت :</td>
+                                            <td class="text-left">@totalPriceWithFreeShipping.ToString("#,0 تومان")</td>
+                                        </tr><!-- End .summary-total -->
+                                    }
+                                    else
+                                    {
+                                        <tr class="summary-total">
+                                            <td>مبلغ قابل پرداخت :</td>
+                                            <td class="text-left">@totalPriceWithDiscount.ToString("#,0 تومان")</td>
+                                        </tr><!-- End .summary-total -->
+                                    }
                                 </tbody>
                             </table><!-- End .table table-summary -->
 
@@ -172,7 +196,9 @@
                             </a>
                         </div><!-- End .summary -->
 
-                    </div><!-- End .col-lg-3 -->
+                    </div>
+
+                    <!-- End .col-lg-3 -->
                 }
             </div><!-- End .row -->
         </div><!-- End .container -->

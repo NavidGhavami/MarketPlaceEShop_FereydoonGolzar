@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.Application.Utilities;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
-using MarketPlace.DataLayer.DTOs.Products;
 using MarketPlace.DataLayer.DTOs.Shipping;
 using Microsoft.AspNetCore.Mvc;
 using ServiceHost.PresentationExtensions;
@@ -119,7 +118,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
                 case SendTrackingCodeResult.Success:
                     TempData[SuccessMessage] = "عملیات ارسال کد رهگیری برای سفارش مورد نظر با موفقیت انجام گردید";
-                    TempData[InfoMessage] = "کد رهگیری از طریق پیام کوتاه برای شما ارسال خواهد شد";
+                    TempData[InfoMessage] = $"کد رهگیری از طریق پیام کوتاه برای {user.Result.FirstName + " " + user.Result.LastName} ارسال خواهد شد";
 
                     await _smsService.SendShippingTrackingCode(userMobile, user.Result.FirstName, tracking.TrackingCode, orderTrackingCode, DateTime.Now.ToShamsi());
 
@@ -165,7 +164,7 @@ namespace ServiceHost.Areas.Seller.Controllers
 
                     case EditShippingTrackingCodeResult.Success:
                         TempData[SuccessMessage] = "ویرایش کد رهگیری مورد نظر با موفقیت انجام گردید";
-                        TempData[InfoMessage] = "کد رهگیری از طریق پیام کوتاه برای شما مجددا ارسال خواهد شد";
+                        TempData[InfoMessage] = "کد رهگیری از طریق پیام کوتاه مجددا ارسال خواهد شد";
 
                         await _smsService.SendShippingTrackingCode(userMobile, user.Result.FirstName, tracking.TrackingCode, orderTrackingCode, DateTime.Now.ToShamsi());
 
