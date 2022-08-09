@@ -49,7 +49,7 @@ namespace MarketPlace.Application.Services.Implementations
                         FirstName = register.FirstName,
                         LastName = register.LastName,
                         Mobile = register.Mobile,
-                        Email = register.Email,
+                        Email = register.Email != null ? register.Email : "info@jibicenter.com",
                         Password = _passwordHasher.EncodePasswordMd5(register.Password),
                         MobileActiveCode = new Random().Next(100000, 999999).ToString(),
                         EmailActiveCode = Guid.NewGuid().ToString("N"),
@@ -74,12 +74,6 @@ namespace MarketPlace.Application.Services.Implementations
                 Console.WriteLine(e);
                 throw;
             }
-            return RegisterUserResult.Error;
-
-
-
-
-
         }
 
         public async Task<bool> IsUserExistsByMobileNumber(string mobile)
@@ -353,6 +347,7 @@ namespace MarketPlace.Application.Services.Implementations
                 })
                 .SingleOrDefaultAsync(x => x.Id == userId);
         }
+        
         public async Task<string> GetUserMobileById(long userId)
         {
             var user =  await _userRepository.GetQuery().AsQueryable().SingleOrDefaultAsync(x => x.Id == userId);

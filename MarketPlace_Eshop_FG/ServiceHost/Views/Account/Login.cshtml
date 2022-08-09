@@ -1,84 +1,84 @@
 ﻿@using MarketPlace.DataLayer.DTOs.Site
 @model MarketPlace.DataLayer.DTOs.Account.LoginUserDTO
 @{
-    ViewData["Title"] = "ورود به حساب کاربری";
+    ViewData["Title"] = "ورود و ثبت نام کاربر";
 }
 
 @section Scripts
-{
+    {
     <partial name="_JqueryValidators" />
-    <partial name="_CaptchaScripts"/>
+    <partial name="_CaptchaScripts" />
 }
 
-<br />
-
-<div class="form-box">
-    <div class="form-tab">
-        <div class="text-center nav-link nav nav-pills nav-fill nav-border-anim">
-            <span class="nav-link nav  nav-fill nav-border-anim">
-                ورود به حساب کاربری
-            </span>
-        </div>
-        <br />
-        <div class="tab-content" id="tab-content-5">
-            <div class="tab-pane fade show active" id="signin" role="tabpanel"
-                 aria-labelledby="signin-tab">
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-6 login-form-1">
+                <h3>** ورود کاربر **</></h3>
                 <form method="post" asp-controller="Account" asp-action="Login">
-                    <partial name="_CaptchaInput" model="@(new CaptchaViewModel())"/>
+                    <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
                     <div class="form-group">
-                        <label>تلفن همراه *</label>
-                        <input asp-for="Mobile" type="text" class="form-control" id="singin-mobile" name="mobile">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/737/799/small_2x/online-registration-illustration-concept-free-vector.jpg" alt="ورود کاربر" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" asp-for="Mobile" maxlength="11" class="form-control" id="mobile-cats-link" placeholder="شماره موبایل *" />
                         <span asp-validation-for="Mobile" class="text-danger"></span>
-                    </div><!-- End .form-group -->
-
+                    </div>
                     <div class="form-group">
-                        <label>رمز عبور *</label>
-                        <input asp-for="Password" type="password" class="form-control" id="singin-password" name="password">
+                        <input type="password" asp-for="Password" class="form-control" placeholder="رمز عبور *" />
                         <span asp-validation-for="Password" class="text-danger"></span>
-                    </div><!-- End .form-group -->
+
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="hidden" name="returnUrl" class="form-control"/>
+                    </div>
 
                     <div class="form-footer">
-                        <button type="submit" onclick="wait_me()" class="btn btn-round btn-primary">
-                            <i class="bi bi-box-arrow-in-left"></i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-box-arrow-in-left" style="padding-left: 3px;" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M10 3.5a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 1 1 0v2A1.5 1.5 0 0 1 9.5 14h-8A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2h8A1.5 1.5 0 0 1 11 3.5v2a.5.5 0 0 1-1 0v-2z" />
-                                <path fill-rule="evenodd" d="M4.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H14.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-                            </svg>
-                            <span class="wishlist-txt">ورود</span>
-                        </button>
-
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input"
-                                   id="signin-remember">
-                            <label class="custom-control-label" for="signin-remember">
-                                مرا به خاطر
-                                بسپار !
-                            </label>
-                        </div><!-- End .custom-checkbox -->
+                            <input type="checkbox" asp-for="RememberMe" class="custom-register-checkbox">
+                            <label style="font-size: 15px;" class="" for="register-policy">
+                                مرا
+                                <a asp-controller="Home" asp-action="FrequentlyQuestions">
+                                    <span class="text-primary">
 
-                        <a asp-controller="Account" asp-action="ForgotPassword" class="forgot-link">رمز عبور خود را فراموش کرده ام!</a>
-                    </div><!-- End .form-footer -->
+                                        به خاطر
+
+                                    </span>
+                                </a>بسپار *
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" class="btnSubmit btn btn-round btn-block" value="ورود" />
+                    </div>
+                    <div class="form-group">
+                        <a asp-controller="Account" asp-action="ForgotPassword" class="ForgetPwd">رمز عبور خود را فراموش کرده ام !</a>
+                    </div>
                 </form>
-                <div class="form-choice">
-                    <p class="text-center">یا ورود با</p>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a href="#" class="btn btn-login btn-g">
-                                <i class="icon-google"></i>
-                                حساب گوگل
-                            </a>
-                        </div><!-- End .col-6 -->
-                        <div class="col-sm-6">
-                            <a href="#" class="btn btn-login btn-f">
-                                <i class="icon-facebook-f"></i>
-                                حساب فیسبوک
-                            </a>
-                        </div><!-- End .col-6 -->
-                    </div><!-- End .row -->
-                </div><!-- End .form-choice -->
-            </div><!-- .End .tab-pane -->
-        </div><!-- End .tab-content -->
-    </div><!-- End .form-tab -->
-</div>
+            </div>
+            <div class="col-md-6 login-form-2">
+
+                <h4>
+                    به فروشگاه آنلاین جیبی سنتر خوش آمدید.
+                    <br/>
+                    جهت عضویت در سایت و ایجاد حساب کاربری بر روی دکمه زیر کلیک نمایید
+                </h4>
+
+                <div class="form-group">
+                    <a class="btnSubmit btn btn-round btn-block" asp-controller="Account" asp-action="Register">
+                        ثبت نام و عضویت در سایت
+                    </a>
+                </div>
+
+
+                <div class="form-group">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/login-denied-4560629-3784195.png" alt="ثبت نام کاربر"/>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 
 

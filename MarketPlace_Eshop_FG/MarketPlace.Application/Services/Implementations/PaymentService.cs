@@ -1,7 +1,9 @@
-﻿using MarketPlace.Application.Services.Interfaces;
+﻿using System.Threading.Tasks;
+using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using ZarinpalSandbox;
 
 namespace MarketPlace.Application.Services.Implementations
 {
@@ -12,11 +14,10 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IConfiguration _configuration;
 
         public string Prefix { get; set; }
-
         public PaymentService(IConfiguration configuration)
         {
             _configuration = configuration;
-            
+
         }
 
         #endregion
@@ -24,31 +25,61 @@ namespace MarketPlace.Application.Services.Implementations
         #region Payment
 
         public PaymentStatus CreatePaymentRequest(string merchantId, int amount, string description, string callbackUrl,
-           ref string redirectUrl, string userEmail = null, string userMobile = null)
+            ref string redirectUrl, string userEmail = null, string userMobile = null)
         {
             var prefix = _configuration.GetSection("Payment")["method"];
 
-            var payment = new ZarinpalSandbox.Payment(amount);
-            var result = payment.PaymentRequest(description, callbackUrl, userEmail, userMobile);
-            
+            var sandboxPayment = new ZarinpalSandbox.Payment(amount);
+            var realPayment = new Zarinpal.Payment(merchantId, amount);
 
-            if (result.Result.Status == (int)PaymentStatus.St100)
+            var sandBoxResult = sandboxPayment.PaymentRequest(description, callbackUrl, userEmail, userMobile);
+            var realResult = realPayment.PaymentRequest(description, callbackUrl, userEmail, userMobile);
+
+
+
+            if (prefix == "sandbox")
             {
-                redirectUrl = $"https://{prefix}.zarinpal.com/pg/StartPay/" + result.Result.Authority;
-                return (PaymentStatus)result.Result.Status;
-            }
+                if (sandBoxResult.Result.Status == (int)PaymentStatus.St100)
+                {
+                    redirectUrl = $"https://{prefix}.zarinpal.com/pg/StartPay/" + sandBoxResult.Result.Authority;
+                    return (PaymentStatus)sandBoxResult.Result.Status;
+                }
 
-            return (PaymentStatus)result.Status;
+                return (PaymentStatus)sandBoxResult.Status;
+            }
+            else
+            {
+                if (realResult.Result.Status == (int)PaymentStatus.St100)
+                {
+                    redirectUrl = $"https://{prefix}.zarinpal.com/pg/StartPay/" + realResult.Result.Authority;
+                    return (PaymentStatus)realResult.Result.Status;
+                }
+
+                return (PaymentStatus)realResult.Status;
+            }
 
         }
 
         public PaymentStatus PaymentVerification(string merchantId, string authority, int amount, ref long refId)
         {
-            var payment = new ZarinpalSandbox.Payment(amount);
-            var result = payment.Verification(authority).Result;
-            refId = result.RefId;
+            var prefix = _configuration.GetSection("Payment")["method"];
 
-            return (PaymentStatus)result.Status;
+            if (prefix == "sandbox")
+            {
+                var sandboxPayment = new Payment(amount);
+                var result = sandboxPayment.Verification(authority).Result;
+                refId = result.RefId;
+
+                return (PaymentStatus)result.Status;
+            }
+            else
+            {
+                var realPayment = new Zarinpal.Payment(merchantId, amount);
+                var result = realPayment.Verification(authority).Result;
+                refId = result.RefId;
+
+                return (PaymentStatus)result.Status;
+            }
         }
 
         public string GetAuthorityCodeFromCallback(HttpContext context)

@@ -3155,17 +3155,17 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "ZarinPal/3.0.1": {
+      "Zarinpal/2.0.4": {
         "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.0.5",
+          "Newtonsoft.Json": "10.0.3"
+        },
         "compile": {
-          "lib/netcoreapp2.2/Dto.dll": {},
-          "lib/netcoreapp2.2/Service.dll": {},
-          "lib/netcoreapp2.2/ZarinPal.dll": {}
+          "lib/netcoreapp1.0/Zarinpal.dll": {}
         },
         "runtime": {
-          "lib/netcoreapp2.2/Dto.dll": {},
-          "lib/netcoreapp2.2/Service.dll": {},
-          "lib/netcoreapp2.2/ZarinPal.dll": {}
+          "lib/netcoreapp1.0/Zarinpal.dll": {}
         }
       },
       "ZarinpalSandbox/2.0.4": {
@@ -9989,17 +9989,15 @@
         "system.xml.xpath.xdocument.nuspec"
       ]
     },
-    "ZarinPal/3.0.1": {
-      "sha512": "1XPTvVdTa+ywa61JOK7TXVNqzHfwg/8bnMqKh9ISvHWk8HEhhrFXhuC/F5c/xDz9smay7254gD6T4WicgS+FeQ==",
+    "Zarinpal/2.0.4": {
+      "sha512": "iGVX2YQUFe7veIKKYjxFY2bGhNlqzI0ooveUe/TYEIAtLh5jCYv1stgmp+EJyeWX9wRl81zs9N0IT5im3NZOkw==",
       "type": "package",
-      "path": "zarinpal/3.0.1",
+      "path": "zarinpal/2.0.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/netcoreapp2.2/Dto.dll",
-        "lib/netcoreapp2.2/Service.dll",
-        "lib/netcoreapp2.2/ZarinPal.dll",
-        "zarinpal.3.0.1.nupkg.sha512",
+        "lib/netcoreapp1.0/Zarinpal.dll",
+        "zarinpal.2.0.4.nupkg.sha512",
         "zarinpal.nuspec"
       ]
     },
@@ -10032,7 +10030,7 @@
       "Newtonsoft.Json >= 13.0.1",
       "RestSharp >= 106.15.0",
       "SixLabors.ImageSharp >= 1.0.0-beta0005",
-      "Zarinpal >= 3.0.1",
+      "Zarinpal >= 2.0.4",
       "ZarinpalSandbox >= 2.0.4"
     ]
   },
@@ -10113,7 +10111,7 @@
           },
           "Zarinpal": {
             "target": "Package",
-            "version": "[3.0.1, )"
+            "version": "[2.0.4, )"
           },
           "ZarinpalSandbox": {
             "target": "Package",

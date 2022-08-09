@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kS7egLYdwLJHuz6vjXUDCE6fM+ed21jdVZ5HQWNxMrZz+JvC1UimNKTQO7p9PedyKfc2rkFFdduH6zVyfK4l9g==",
+  "dgSpecHash": "wNChDvpbmSg2hZyRrpm4boR3bPaoqpKIemscZcdInQPajpktDfJIN78Fb+tQt8BabGOMhrE80+hbYmj949or/Q==",
   "success": true,
   "projectFilePath": "E:\\Codes and projects\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_Fereydoon Golzar\\MarketPlace_Eshop_FG\\ServiceHost\\ServiceHost.csproj",
   "expectedPackageFiles": [
@@ -219,7 +219,7 @@
     "C:\\Users\\navid\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\navid\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
     "C:\\Users\\navid\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\navid\\.nuget\\packages\\zarinpal\\3.0.1\\zarinpal.3.0.1.nupkg.sha512",
+    "C:\\Users\\navid\\.nuget\\packages\\zarinpal\\2.0.4\\zarinpal.2.0.4.nupkg.sha512",
     "C:\\Users\\navid\\.nuget\\packages\\zarinpalsandbox\\2.0.4\\zarinpalsandbox.2.0.4.nupkg.sha512"
   ],
   "logs": []

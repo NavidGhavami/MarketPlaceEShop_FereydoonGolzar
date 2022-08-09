@@ -23,6 +23,7 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<List<UserAddress>> GetAddressToUser(long userId);
         Task<UserAddressDTO> GetUserAddressForOrder(long orderId, long userId);
         Task<UserAddressDTO> GetExistUserAddress(long userId);
+        Task<bool> AddOrderToNoneAuthenticatedUser(long userId);
 
 
         #endregion

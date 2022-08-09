@@ -50,7 +50,14 @@
                                         <span class="text-danger float-right" asp-validation-for="TrackingCode"></span>
                                     </div>
                                 </div>
-
+                                <br/>
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>شماره موبایل</label>
+                                        <input asp-for="Mobile" class="form-control" maxlength="11" placeholder=" شماره موبایل حتما با صفر وارد شود.  مثال : 09121234567">
+                                        <span class="text-danger float-right" asp-validation-for="Mobile"></span>
+                                    </div>
+                                </div>
                                 <button type="submit" onclick="wait_me()" class="btn btn-round btn-primary btn-block float-right">
                                     <span>ویرایش کد رهگیری</span>
                                     <i class="fa fa-edit fa fa-2x"></i>

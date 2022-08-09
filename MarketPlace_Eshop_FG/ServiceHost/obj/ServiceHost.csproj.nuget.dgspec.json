@@ -78,7 +78,7 @@
             },
             "Zarinpal": {
               "target": "Package",
-              "version": "[3.0.1, )"
+              "version": "[2.0.4, )"
             },
             "ZarinpalSandbox": {
               "target": "Package",

@@ -285,6 +285,9 @@ namespace MarketPlace.DataLayer.Migrations
                     b.Property<long>("SellerId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SellerId");
@@ -638,6 +641,9 @@ namespace MarketPlace.DataLayer.Migrations
 
                     b.Property<DateTime?>("PaymentDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("RefId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TrackingCode")
                         .HasColumnType("nvarchar(max)");

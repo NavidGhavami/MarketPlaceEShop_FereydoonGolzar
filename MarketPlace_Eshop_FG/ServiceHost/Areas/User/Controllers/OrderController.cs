@@ -24,20 +24,21 @@ namespace ServiceHost.Areas.User.Controllers
 
         private string MerchantId { get; }
 
-        public OrderController(IOrderService orderService, IUserService userService, IPaymentService paymentService, ISmsService smsService ,IConfiguration configuration)
+        public OrderController(IOrderService orderService, IUserService userService, IPaymentService paymentService, ISmsService smsService, IConfiguration configuration)
         {
             _orderService = orderService;
             _userService = userService;
             _smsService = smsService;
-            _paymentService = paymentService;
             _configuration = configuration;
+            _paymentService = paymentService;
 
-            MerchantId = _configuration.GetSection("payment")["merchant"];
+            MerchantId = configuration.GetSection("payment")["merchant"];
         }
 
         #endregion
 
         #region Add Product to Open order
+
         [AllowAnonymous]
         [HttpPost("add-product-to-order"), ValidateAntiForgeryToken]
         public async Task<IActionResult> AddProductToOrder(AddProductToOrderDTO order)
@@ -83,6 +84,8 @@ namespace ServiceHost.Areas.User.Controllers
         public async Task<IActionResult> PayUserOrderPrice()
         {
             var openOrderAmount = await _orderService.GetTotalOrderPriceForPayment(User.GetUserId());
+            var userMobile = await _userService.GetUserMobileById(User.GetUserId());
+            var userEmail = await _userService.GetUserById(User.GetUserId());
 
             var siteUrl = _configuration.GetSection("payment")["siteUrl"];
             var callbackUrl = siteUrl + Url.RouteUrl("ZarinpalPaymentResult");
@@ -93,7 +96,9 @@ namespace ServiceHost.Areas.User.Controllers
                 openOrderAmount,
                 "خرید از فروشگاه اینترنتی جیبی سنتر",
                 callbackUrl,
-                ref redirectUrl
+                ref redirectUrl,
+                userEmail.Email,
+                userMobile
             );
 
             if (status == PaymentStatus.St100)
@@ -104,6 +109,8 @@ namespace ServiceHost.Areas.User.Controllers
 
 
             return RedirectToAction("UserOpenOrder", "Order");
+
+
         }
 
         #endregion
@@ -237,7 +244,7 @@ namespace ServiceHost.Areas.User.Controllers
             filter.TakeEntity = 5;
             filter.UserId = User.GetUserId();
             filter.FilterUserOrderState = FilterUserOrderState.All;
-            
+
 
             var userOrder = await _orderService.GetUserOrder(filter);
 

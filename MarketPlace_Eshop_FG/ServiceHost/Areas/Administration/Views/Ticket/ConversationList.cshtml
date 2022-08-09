@@ -54,6 +54,7 @@
                                             <tr role="row">
                                                 <th class="sorting_asc">شناسه گفتگو</th>
                                                 <th class="sorting">نام فروشگاه</th>
+                                                <th class="sorting">نام کاربر</th>
                                                 <th class="sorting">تاریخ ایجاد</th>
                                                 <th class="sorting">دستورات</th>
                                             </tr>
@@ -65,6 +66,7 @@
                                                 <tr id="ajax-url-item-@item.Id" role="row" class="odd">
                                                     <td>@item.Id</td>
                                                     <td>@item.Seller.StoreName</td>
+                                                    <td>@item.Username</td>
                                                     <td>@item.CreateDate.ToStringShamsiDate()</td>
                                                     <td>
 

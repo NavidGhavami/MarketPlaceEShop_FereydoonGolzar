@@ -27,6 +27,7 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         public DateTime? PaymentDate { get; set; }
         public bool IsPaid { get; set; }
         public string TrackingCode { get; set; }
+        public string RefId { get; set; }
         public string Description { get; set; }
         public string ProductTitle { get; set; }
         public int Count { get; set; }

@@ -56,6 +56,7 @@
                                             <tr>
                                                 <th scope="col">شناسه</th>
                                                 <th scope="col">شماره پیگیری</th>
+                                                <th scope="col">شماره پرداخت</th>
                                                 <th scope="col">وضعیت</th>
                                                 <th scope="col">تاریخ تراکنش</th>
                                                 <th scope="col">عملیات</th>
@@ -68,6 +69,7 @@
                                                 <tr>
                                                     <td>@item.Id</td>
                                                     <td>@item.TrackingCode</td>
+                                                    <td>@item.RefId</td>
 
                                                     @switch (item.OrderAcceptanceState.GetEnumName())
                                                     {

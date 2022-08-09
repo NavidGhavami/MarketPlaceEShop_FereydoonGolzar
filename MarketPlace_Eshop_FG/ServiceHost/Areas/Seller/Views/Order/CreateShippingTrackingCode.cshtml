@@ -49,11 +49,18 @@
                                 <div class="row col-md-12">
                                     <div class="form-group col-md-12">
                                         <label>کد رهگیری پستی</label>
-                                        <input asp-for="TrackingCode" class="form-control">
+                                        <input asp-for="TrackingCode" class="form-control" placeholder="کد رهگیری پستی که از اداره پست گرفته اید را وارد نمایید">
                                         <span class="text-danger float-right" asp-validation-for="TrackingCode"></span>
                                     </div>
                                 </div>
                                 <br />
+                                <div class="row col-md-12">
+                                    <div class="form-group col-md-12">
+                                        <label>شماره موبایل</label>
+                                        <input asp-for="Mobile" class="form-control" maxlength="11" placeholder=" شماره موبایل حتما با صفر وارد شود.  مثال : 09121234567">
+                                        <span class="text-danger float-right" asp-validation-for="Mobile"></span>
+                                    </div>
+                                </div>
                                 <button type="submit" onclick="wait_me()" class="btn btn-round btn-success btn-block float-right">
                                     <span>ارسال کد رهگیری</span>
                                     <i class="fa fa-save fa fa-2x"></i>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using GoogleReCaptcha.V3.Interface;
@@ -6,6 +7,7 @@ using MarketPlace.Application.Services.Interfaces;
 using MarketPlace.DataLayer.DTOs.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ServiceHost.Controllers
@@ -16,10 +18,15 @@ namespace ServiceHost.Controllers
 
         private readonly IUserService _userService;
         private readonly ICaptchaValidator _captchaValidator;
-        public AccountController(IUserService userService, ICaptchaValidator captchaValidator)
+        private readonly IOrderService _orderService;
+
+        public static string ReturnUrl { get; set; }
+
+        public AccountController(IUserService userService, ICaptchaValidator captchaValidator, IOrderService orderService)
         {
             _userService = userService;
             _captchaValidator = captchaValidator;
+            _orderService = orderService;
         }
 
         #endregion
@@ -93,6 +100,7 @@ namespace ServiceHost.Controllers
                 if (result)
                 {
                     TempData[SuccessMessage] = "حساب کاربری شما با موفقیت فعال شد";
+                    TempData[InfoMessage] = "جهت ورود به حساب خود شماره موبایل و رمز عبور خود را وارد نمایید";
                     return RedirectToAction("Login");
                 }
 
@@ -108,19 +116,21 @@ namespace ServiceHost.Controllers
 
 
         [HttpGet("login")]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 return Redirect("/");
             }
+
+            ReturnUrl = returnUrl;
+
             return View();
         }
 
         [HttpPost("login"), ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginUserDTO login)
         {
-
             if (!await _captchaValidator.IsCaptchaPassedAsync(login.Captcha))
             {
                 TempData[ErrorMessage] = "کد کپچای شما تایید نشد";
@@ -130,6 +140,7 @@ namespace ServiceHost.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _userService.GetUserForLogin(login);
+
 
                 switch (result)
                 {
@@ -148,7 +159,8 @@ namespace ServiceHost.Controllers
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                             new Claim(ClaimTypes.Email, user.Email),
                             new Claim(ClaimTypes.Name, user.FirstName +" "+ user.LastName),
-                            new Claim(ClaimTypes.Role, user.RoleId.ToString())
+                            new Claim(ClaimTypes.Role, user.RoleId.ToString()),
+
 
                         };
 
@@ -158,12 +170,21 @@ namespace ServiceHost.Controllers
                         var properties = new AuthenticationProperties
                         {
                             IsPersistent = login.RememberMe,
+                            RedirectUri = HttpContext.Request.Query["RedirectUri"]
                         };
 
                         await HttpContext.SignInAsync(principal, properties);
 
+
                         TempData[SuccessMessage] = "شما با موفقیت وارد سایت شدید";
-                        return Redirect("/");
+
+                        if (!string.IsNullOrEmpty(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))
+                            return Redirect(ReturnUrl);
+                        else
+                            return Redirect("/");
+
+
+
                 }
             }
 

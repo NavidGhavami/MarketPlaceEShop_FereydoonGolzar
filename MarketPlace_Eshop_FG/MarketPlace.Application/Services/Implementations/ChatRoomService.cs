@@ -31,7 +31,7 @@ namespace MarketPlace.Application.Services.Implementations
 
         #region Chat Room
 
-        public async Task<long> CreateChatRoom(string connectionId)
+        public async Task<long> CreateChatRoom(string connectionId, string username)
         {
             var existChatRoom = await _chatRoomRepository
                 .GetQuery()
@@ -48,12 +48,13 @@ namespace MarketPlace.Application.Services.Implementations
 
             var seller = await _sellerService.GetLastActiveSellerBySellerId(sellerId);
 
-            
+
 
             var newChatRoom = new ChatRoom
             {
                 ConnectionId = connectionId,
-                SellerId = seller.Id
+                SellerId = seller.Id,
+                Username = username
 
             };
 
@@ -86,6 +87,48 @@ namespace MarketPlace.Application.Services.Implementations
                 .ToListAsync();
 
             return await Task.FromResult(rooms);
+        }
+
+        public async Task<FilterChatRoomDTO> GetUserChatroom(FilterChatRoomDTO filter, string username)
+        {
+            var query = _chatRoomRepository
+                .GetQuery()
+                .Include(x => x.ChatMessages)
+                .Include(x => x.Seller)
+                .Where(x => x.ChatMessages.Any() && x.Username.Replace(" ","") == username)
+                .AsQueryable();
+
+
+            switch (filter.OrderBy)
+            {
+                case FilterChatRoomOrder.CreateDateAscending:
+                    query = query.OrderBy(x => x.CreateDate);
+                    break;
+            }
+
+
+
+            #region Filter
+
+            if (filter.ChatRoomId != null && filter.ChatRoomId != 0)
+            {
+                query = query.Where(x => x.Id == filter.ChatRoomId);
+            }
+
+            #endregion
+
+            #region Paging
+
+            var chatCount = await query.CountAsync();
+
+            var pager = Pager.Build(filter.PageId, chatCount, filter.TakeEntity,
+                filter.HowManyShowPageAfterAndBefore);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+
+            #endregion
+
+            return filter.SetPaging(pager).SetChatRoom(allEntities);
         }
 
         public async Task<FilterChatRoomDTO> FilterChatRoom(FilterChatRoomDTO filter)
@@ -126,9 +169,9 @@ namespace MarketPlace.Application.Services.Implementations
 
             #region Paging
 
-            var ticketCount = await query.CountAsync();
+            var chatCount = await query.CountAsync();
 
-            var pager = Pager.Build(filter.PageId, ticketCount, filter.TakeEntity,
+            var pager = Pager.Build(filter.PageId, chatCount, filter.TakeEntity,
                 filter.HowManyShowPageAfterAndBefore);
 
             var allEntities = await query.Paging(pager).ToListAsync();

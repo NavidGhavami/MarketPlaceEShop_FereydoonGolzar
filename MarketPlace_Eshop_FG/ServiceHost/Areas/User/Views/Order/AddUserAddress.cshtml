@@ -4,132 +4,140 @@
 }
 
 @section Scripts
-{
+    {
     <partial name="_JqueryValidators" />
 }
 
-<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-    <div class="container">
-        <h1 class="page-title">تکمیل آدرس و اطلاعات فردی</h1>
-    </div>
-</div>
 
-<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
-    <div class="container">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder">سبد خرید</a></li>
-            <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
 
-        </ol>
-    </div><!-- End .container -->
-</nav>
-
-<div class="page-content">
-    <div class="checkout">
+    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         <div class="container">
-            <form asp-area="User" asp-controller="Order" asp-action="AddUserAddress" method="post">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="checkout-title">تکمیل ادرس و مشخصات فردی</h2><!-- End .checkout-title -->
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>نام *</label>
-                                <input type="text" class="form-control" asp-for="Name">
-                                <span class="text-danger float-right" asp-validation-for="Name"></span>
-                            </div><!-- End .col-sm-6 -->
+            <h1 class="page-title">تکمیل آدرس و اطلاعات فردی</h1>
+        </div>
+    </div>
 
-                            <div class="col-sm-6">
-                                <label>نام خانوادگی *</label>
-                                <input type="text" class="form-control" asp-for="Family">
-                                <span class="text-danger float-right" asp-validation-for="Family"></span>
-                            </div><!-- End .col-sm-6 -->
-                        </div><!-- End .row -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-area="" asp-controller="Home" asp-action="Index">صفحه اصلی</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Order" asp-action="UserOpenOrder">سبد خرید</a></li>
+                <li class="breadcrumb-item active"><a href="#">@ViewData["Title"]</a></li>
 
-                        <label>نام شرکت (اختیاری)</label>
-                        <input type="text" class="form-control" asp-for="Company">
+            </ol>
+        </div><!-- End .container -->
+    </nav>
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>استان *</label>
-                                <input type="text" class="form-control" asp-for="State">
-                                <span class="text-danger float-right" asp-validation-for="State"></span>
-                            </div><!-- End .col-sm-6 -->
+    <div class="page-content">
+        <div class="checkout">
+            <div class="container">
+                <form asp-area="User" asp-controller="Order" asp-action="AddUserAddress" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="checkout-title">تکمیل ادرس و مشخصات فردی</h2><!-- End .checkout-title -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>نام *</label>
+                                    <input type="text" class="form-control" asp-for="Name">
+                                    <span class="text-danger float-right" asp-validation-for="Name"></span>
+                                </div><!-- End .col-sm-6 -->
 
-                            <div class="col-sm-6">
-                                <label>شهر / شهرستان *</label>
-                                <input type="text" class="form-control" asp-for="City">
-                                <span class="text-danger float-right" asp-validation-for="City"></span>
-                            </div><!-- End .col-sm-6 -->
-                        </div><!-- End .row -->
+                                <div class="col-sm-6">
+                                    <label>نام خانوادگی *</label>
+                                    <input type="text" class="form-control" asp-for="Family">
+                                    <span class="text-danger float-right" asp-validation-for="Family"></span>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
 
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label>خیابان *</label>
-                                <input type="text" class="form-control" placeholder="نام خیابان و کوچه و ..." asp-for="Street">
-                                <span class="text-danger float-right" asp-validation-for="Street"></span>
-                            </div><!-- End .col-sm-12 -->
-                        </div><!-- End .row -->
+                            <label>نام شرکت (اختیاری)</label>
+                            <input type="text" class="form-control" asp-for="Company">
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>کد پستی *</label>
-                                <input type="text" class="form-control" asp-for="PostalCode">
-                                <span class="text-danger float-right" asp-validation-for="PostalCode"></span>
-                            </div><!-- End .col-sm-6 -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>استان *</label>
+                                    <input type="text" class="form-control" asp-for="State">
+                                    <span class="text-danger float-right" asp-validation-for="State"></span>
+                                </div><!-- End .col-sm-6 -->
 
-                            <div class="col-sm-6">
-                                <label>شماره پلاک</label>
-                                <input type="text" class="form-control" asp-for="PlaqueNo">
-                            </div><!-- End .col-sm-6 -->
-                        </div><!-- End .row -->
+                                <div class="col-sm-6">
+                                    <label>شهر / شهرستان *</label>
+                                    <input type="text" class="form-control" asp-for="City">
+                                    <span class="text-danger float-right" asp-validation-for="City"></span>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
 
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>ایمیل *</label>
-                                <input type="email" class="form-control" asp-for="Email">
-                                <span class="text-danger float-right" asp-validation-for="Email"></span>
-                            </div><!-- End .col-sm-6 -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>خیابان *</label>
+                                    <input type="text" class="form-control" placeholder="نام خیابان و کوچه و ..." asp-for="Street">
+                                    <span class="text-danger float-right" asp-validation-for="Street"></span>
+                                </div><!-- End .col-sm-12 -->
+                            </div><!-- End .row -->
 
-                            <div class="col-sm-6">
-                                <label> تلفن / موبایل *</label>
-                                <input type="tel" class="form-control" asp-for="Mobile">
-                                <span class="text-danger float-right" asp-validation-for="Mobile"></span>
-                            </div><!-- End .col-sm-6 -->
-                        </div><!-- End .row -->
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>کد پستی *</label>
+                                    <input type="text" class="form-control" asp-for="PostalCode">
+                                    <span class="text-danger float-right" asp-validation-for="PostalCode"></span>
+                                </div><!-- End .col-sm-6 -->
 
-                        <label>توضیحات (اختیاری)</label>
-                        <textarea class="form-control" asp-for="Description" cols="30" rows="4" placeholder="شما میتوانید توضیحات اضافی خود را اینجا بنویسید(زمان ارسال، نحوه ارسال و ...)"></textarea>
+                                <div class="col-sm-6">
+                                    <label>شماره پلاک</label>
+                                    <input type="text" class="form-control" asp-for="PlaqueNo">
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
 
-                        <input type="hidden" asp-for="OrderId" />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>ایمیل *</label>
+                                    <input type="email" class="form-control" asp-for="Email">
+                                    <span class="text-danger float-right" asp-validation-for="Email"></span>
+                                </div><!-- End .col-sm-6 -->
 
-                        <div class="accordion-summary" id="accordion-payment">
-                            <div class="card">
+                                <div class="col-sm-6">
+                                    <label> تلفن / موبایل *</label>
+                                    <input type="tel" class="form-control" asp-for="Mobile">
+                                    <span class="text-danger float-right" asp-validation-for="Mobile"></span>
+                                </div><!-- End .col-sm-6 -->
+                            </div><!-- End .row -->
 
+                            <label>توضیحات (اختیاری)</label>
+                            <textarea class="form-control" asp-for="Description" cols="30" rows="4" placeholder="شما میتوانید توضیحات اضافی خود را اینجا بنویسید(زمان ارسال، نحوه ارسال و ...)"></textarea>
+
+                            <input type="hidden" asp-for="OrderId" />
+                            <br />
+                            <br />
+                            <div class="accordion-summary" id="accordion-payment">
                                 <div class="card">
-                                    <div class="card-header" id="heading-2">
-                                        <h2 class="card-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
-                                                پرداخت آنلاین (از طریق کارت های شتاب)
-                                            </a>
-                                        </h2>
-                                    </div>
-                                    <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment" style="">
-                                        <div class="card-body text-right">
-                                            پرداخت آنلاین، امن و سریع از طریق درگاه پرداخت زرین پال
+
+                                    <div class="card">
+                                        <div class="card-header" id="heading-2">
+                                            <h2 class="card-title">
+                                                <input type="checkbox" class="collapsed custom-payment-checkbox" payment_radio_button data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2" />
+                                                <span style="float: right;">
+                                                    <h5>
+                                                        تایید پرداخت سفارش
+                                                        <span class="text-danger">
+                                                            ( پرداخت آنلاین از طریق کلیه کارتهای شتاب بانکی )
+                                                        </span>
+                                                    </h5>
+                                                </span>
+                                            </h2>
+                                        </div>
+                                        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-payment" style="">
+                                            <h6 class="card-body text-right text-success">
+                                                پرداخت آنلاین، امن و سریع از طریق درگاه پرداخت زرین پال
+                                            </h6>
+                                            <br />
+                                            <button type="submit" id="payment-button" class="btn btn-primary btn-block">
+                                                پرداخت و ارسال به درگاه بانکی
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                            <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
-                                <span class="btn-text">ثبت و تایید اطلاعات</span>
-                                <span class="btn-hover-text">پرداخت و ارسال به درگاه بانکی</span>
-                            </button>
-                        </div><!-- End .summary -->
-                    </div><!-- End .col-lg-9 -->
-                </div><!-- End .row -->
-            </form>
-        </div><!-- End .container -->
-    </div><!-- End .checkout -->
-</div>
+                        </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                </form>
+            </div><!-- End .container -->
+        </div><!-- End .checkout -->
+    </div>

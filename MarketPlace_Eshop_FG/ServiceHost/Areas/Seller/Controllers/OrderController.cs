@@ -100,7 +100,7 @@ namespace ServiceHost.Areas.Seller.Controllers
         [HttpPost("create-shipping-trackingCode/{orderId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateShippingTrackingCode(CreateShippingTrackingCodeDTO tracking, long orderId)
         {
-            var userMobile = await _userService.GetUserMobileById(User.GetUserId());
+            var userMobile = tracking.Mobile;
             var user = _userService.GetUserById(User.GetUserId());
             var orderTrackingCode = await _orderService.GetOrderBy(orderId);
 
@@ -148,7 +148,7 @@ namespace ServiceHost.Areas.Seller.Controllers
         [HttpPost("edit-shipping-tracking-code/{trackingId}"), ValidateAntiForgeryToken]
         public async Task<IActionResult> EditShippingTrackingCode(EditShippingTrackingCodeDTO tracking, long trackingId)
         {
-            var userMobile = await _userService.GetUserMobileById(User.GetUserId());
+            var userMobile = tracking.Mobile;
             var user = _userService.GetUserById(User.GetUserId());
             var orderTrackingCode = await _orderService.GetOrderBy(tracking.OrderId);
 

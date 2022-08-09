@@ -17,6 +17,8 @@ namespace MarketPlace.DataLayer.DTOs.Account
 
         public bool RememberMe { get; set; }
 
+        public string ReturnUrl { get; set; }
+
         public enum LoginUserResult
         {
             Success,

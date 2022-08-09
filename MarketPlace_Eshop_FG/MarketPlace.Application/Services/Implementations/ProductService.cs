@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MarketPlace.Application.Extensions;
 using MarketPlace.Application.Services.Interfaces;
@@ -846,6 +847,9 @@ namespace MarketPlace.Application.Services.Implementations
                 .GetQuery()
                 .AsQueryable()
                 .Include(x => x.Product)
+                .ThenInclude(x=>x.Seller)
+                .Include(x=>x.Product)
+                .ThenInclude(x=>x.ProductColors)
                 .Where(x => x.ProductCategoryId == category.Id
                             && x.Product.IsActive
                             && !x.IsDelete
@@ -854,7 +858,6 @@ namespace MarketPlace.Application.Services.Implementations
                 .OrderByDescending(x => x.CreateDate)
                 .Skip(0)
                 .Take(take)
-                .Distinct()
                 .ToListAsync();
         }
 

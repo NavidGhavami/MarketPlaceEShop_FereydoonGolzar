@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MarketPlace.Application.Services.Interfaces;
+using MarketPlace.DataLayer.DTOs.ChatRoom;
 using MarketPlace.DataLayer.DTOs.Contact;
 using Microsoft.AspNetCore.Mvc;
 using ServiceHost.PresentationExtensions;
@@ -11,11 +12,18 @@ namespace ServiceHost.Areas.User.Controllers
 
         #region Constructor
 
+        private readonly IUserService _userService;
         private readonly IContactService _contactService;
+        private readonly IChatRoomService _chatRoomService;
+        private readonly IMessageService _messageService;
 
-        public TicketController(IContactService contactService)
+        public TicketController(IContactService contactService, IChatRoomService chatRoomService,
+            IUserService userService, IMessageService messageService)
         {
             _contactService = contactService;
+            _chatRoomService = chatRoomService;
+            _userService = userService;
+            _messageService = messageService;
         }
 
         #endregion
@@ -97,6 +105,7 @@ namespace ServiceHost.Areas.User.Controllers
             {
                 TempData[ErrorMessage] = "لطفا متن پیام خود را وارد نمایید";
             }
+
             if (ModelState.IsValid)
             {
                 var result = await _contactService.AnswerTicket(answer, User.GetUserId());
@@ -116,11 +125,45 @@ namespace ServiceHost.Areas.User.Controllers
                 }
             }
 
-            return RedirectToAction("TicketDetail", "Ticket", new {area = "User", ticketId = answer.Id});
+            return RedirectToAction("TicketDetail", "Ticket", new { area = "User", ticketId = answer.Id });
         }
 
         #endregion
 
+        #region User Conversation
 
+        [HttpGet("user-conversation")]
+        public async Task<IActionResult> GetUserConversation(FilterChatRoomDTO filter)
+        {
+            var user = await _userService.GetUserById(User.GetUserId());
+            var username = user.FirstName + user.LastName;
+
+            filter.OrderBy = FilterChatRoomOrder.CreateDateDescending;
+
+            var result = await _chatRoomService.GetUserChatroom(filter, username);
+
+            return View(result);
+        }
+
+        #endregion
+
+        #region ChatRoom Details
+
+        [HttpGet("conversation-detail/{conversationId}")]
+        public async Task<IActionResult> ConversationDetail(long conversationId)
+        {
+            var roomMessage = await _messageService.GetMessageDetail(conversationId);
+
+            if (roomMessage == null)
+            {
+                return RedirectToAction("PageNotFound", "Home");
+            }
+
+            return View(roomMessage);
+
+            #endregion
+
+
+        }
     }
 }

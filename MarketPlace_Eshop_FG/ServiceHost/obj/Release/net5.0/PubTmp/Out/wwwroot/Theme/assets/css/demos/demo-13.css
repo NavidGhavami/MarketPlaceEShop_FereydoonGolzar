@@ -36,26 +36,26 @@
 
 .header.header-10.header-intro-clearance .header-bottom .menu > li > a:hover,
 .header.header-10.header-intro-clearance .header-bottom .menu > li > a:focus {
-    color: #3399ff;
+    color: #F7941E;
 }
 
     .header.header-10.header-intro-clearance .header-bottom .menu > li > a:hover::before,
     .header.header-10.header-intro-clearance .header-bottom .menu > li > a:focus::before {
-        background-color: #3399ff;
+        background-color: #F7941E;
     }
 
 .header.header-10.header-intro-clearance .header-bottom .menu > li:hover > a,
 .header.header-10.header-intro-clearance .header-bottom .menu > li:focus > a,
 .header.header-10.header-intro-clearance .header-bottom .menu > li.active > a,
 .header.header-10.header-intro-clearance .header-bottom .menu > li.show > a {
-    color: #3399ff;
+    color: #F7941E;
 }
 
     .header.header-10.header-intro-clearance .header-bottom .menu > li:hover > a::before,
     .header.header-10.header-intro-clearance .header-bottom .menu > li:focus > a::before,
     .header.header-10.header-intro-clearance .header-bottom .menu > li.active > a::before,
     .header.header-10.header-intro-clearance .header-bottom .menu > li.show > a::before {
-        background-color: #3399ff;
+        background-color: #F7941E;
     }
 
 .header.header-10.header-intro-clearance .header-search-extended {
@@ -91,7 +91,7 @@
 
     .header.header-10.header-intro-clearance .wishlist-link:hover .wishlist-txt,
     .header.header-10.header-intro-clearance .wishlist-link:focus .wishlist-txt {
-        color: #3399ff;
+        color: #F7941E;
     }
 
 .header.header-10.header-intro-clearance .compare-dropdown {
@@ -104,7 +104,7 @@
 
     .header.header-10.header-intro-clearance .compare-dropdown:hover .compare-txt,
     .header.header-10.header-intro-clearance .compare-dropdown:focus .compare-txt {
-        color: #3399ff;
+        color: #F7941E;
     }
 
 .header.header-10.header-intro-clearance .cart-dropdown {
@@ -120,7 +120,7 @@
 
     .header.header-10.header-intro-clearance .cart-dropdown:hover .cart-txt,
     .header.header-10.header-intro-clearance .cart-dropdown:focus .cart-txt {
-        color: #3399ff;
+        color: #F7941E;
     }
 
     .header.header-10.header-intro-clearance .compare-dropdown [class*='count'],
@@ -231,7 +231,7 @@
 
     .intro-title span {
         color: #777;
-        font-size: 3.6rem;
+        font-size: 2.5rem;
     }
 
     .intro-title sup {
@@ -321,7 +321,7 @@
     }
 
         .cat-block:hover .cat-block-title {
-            color: #3399ff;
+            color: #F7941E;
         }
 
 .banner {
@@ -438,7 +438,7 @@
 .btn-product-icon {
     border-radius: 50%;
     background-color: #fff;
-    border: 0.1rem solid #3399ff;
+    border: 0.1rem solid #F7941E;
 }
 
     .btn-product-icon span {
@@ -448,12 +448,12 @@
 
     .btn-product-icon:hover,
     .btn-product-icon:focus {
-        background-color: #3399ff;
+        background-color: #F7941E;
     }
 
         .btn-product-icon:hover span,
         .btn-product-icon:focus span {
-            background-color: #3399ff;
+            background-color: #F7941E;
         }
 
 .product-action {
@@ -465,11 +465,11 @@
 .btn-product {
     padding-top: 1.05rem;
     padding-bottom: 1.05rem;
-    color: #3399ff;
+    color: #F7941E;
     background-color: transparent;
     text-transform: uppercase;
     border-radius: .2rem;
-    border: 0.1rem solid #3399ff;
+    border: 0.1rem solid #F7941E;
 }
 
     .btn-product:before {
@@ -477,7 +477,7 @@
     }
 
     .btn-product span {
-        color: #3399ff;
+        color: black;
     }
 
     .btn-product:before {
@@ -488,8 +488,8 @@
     .btn-product:hover,
     .btn-product:focus {
         color: #fff;
-        background-color: #3399ff;
-        border-color: #3399ff;
+        background-color: #F7941E;
+        border-color: #F7941E;
     }
 
         .btn-product:hover span,
@@ -526,7 +526,7 @@
 
 .product-countdown {
     border-radius: .2rem;
-    background-color: #3399ff;
+    background-color: #F7941E;
     left: 2rem;
     right: 2rem;
     bottom: 0;
@@ -709,7 +709,7 @@
 }
 
 .footer .widget-about-info a {
-    color: #3399ff;
+    color: #F7941E;
 }
 
 .footer .footer-middle {
@@ -831,7 +831,7 @@
         position: relative;
         display: block;
         padding: 0;
-        color: #3399ff;
+        color: #F7941E;
     }
 
         .widget-categories h5 a:before {
@@ -853,7 +853,7 @@
 
             .widget-categories h5 a.collapsed:hover,
             .widget-categories h5 a.collapsed:focus {
-                color: #3399ff;
+                color: #F7941E;
             }
 
             .widget-categories h5 a.collapsed:before {
@@ -885,7 +885,7 @@
 
         .widget-categories ul a:hover,
         .widget-categories ul a:focus {
-            color: #3399ff;
+            color: #F7941E;
         }
 
 .banner-poster .banner-content {
@@ -944,7 +944,7 @@
     }
 
         .intro-title span {
-            font-size: 4rem;
+            font-size: 40px;
         }
 
         .intro-title sup {
@@ -959,8 +959,8 @@
 
 @media screen and (min-width: 768px) {
     .intro-subtitle {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .intro-title > span {
@@ -1031,7 +1031,7 @@
     }
 
     .intro-col {
-        padding-right: 8rem;
+        padding-right: 6rem;
     }
 
     .intro-subtitle {
@@ -1039,7 +1039,7 @@
     }
 
     .intro-title {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 
         .intro-title > span {
@@ -1052,7 +1052,7 @@
             }
 
         .intro-title span {
-            font-size: 5rem;
+            font-size: 2.5rem;
         }
 
         .intro-title sup {

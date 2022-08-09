@@ -81,6 +81,7 @@ namespace MarketPlace.Application.Services.Implementations
         public async Task<int> GetTotalOrderPriceForPayment(long userId)
         {
             var userOpenOrder = await GetUserLatestOpenOrder(userId);
+            var totalShippingPrice = 0;
             var totalPrice = 0;
             var discount = 0;
 
@@ -94,9 +95,9 @@ namespace MarketPlace.Application.Services.Implementations
                     .Include(x => x.ProductDiscountUse)
                     .OrderByDescending(x => x.CreateDate)
                     .FirstOrDefaultAsync(x =>
-                        x.ProductId == detail.ProductId || x.DiscountNumber - x.ProductDiscountUse.Count > 0);
+                        x.ProductId == detail.ProductId && x.ExpireDate >= DateTime.Now);
 
-                var totalShippingPrice = detail.Count * detail.Shipping.TotalShippingPrice;
+                totalShippingPrice += detail.Count * detail.Shipping.TotalShippingPrice;
 
                 if (productDiscount != null)
                 {
@@ -106,11 +107,12 @@ namespace MarketPlace.Application.Services.Implementations
 
                 totalPrice += detail.Count * (oneProductPrice - discount);
 
-                if (totalPrice >= 400000)
-                {
-                    totalPrice -= totalShippingPrice;
-                }
                 discount = 0;
+            }
+
+            if (totalPrice >= 400000)
+            {
+                totalPrice -= totalShippingPrice;
             }
 
             return totalPrice;
@@ -150,7 +152,7 @@ namespace MarketPlace.Application.Services.Implementations
                     .Include(x => x.ProductDiscountUse)
                     .OrderByDescending(x => x.CreateDate)
                     .FirstOrDefaultAsync(x =>
-                        x.ProductId == detail.ProductId || x.DiscountNumber - x.ProductDiscountUse.Count > 0);
+                        x.ProductId == detail.ProductId && x.ExpireDate >= DateTime.Now);
 
                 if (productDiscount != null)
                 {
@@ -172,7 +174,8 @@ namespace MarketPlace.Application.Services.Implementations
                     SellerId = detail.Product.SellerId,
                     Price = (int)Math.Ceiling(totalPriceWithDiscount - totalPriceWithDiscount * detail.Product.SiteProfit / (double)100),
                     TransactionType = TransactionType.Deposit,
-                    Description = $"پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}،" +
+                    Description = $"سفارش با کد پیگیری {trackingCode}، با کد رهگیری پرداخت {refId}،" +
+                                  $" با پرداخت مبلغ {totalPriceWithDiscount:#,0 تومان}، جهت فروش محصول {detail.Product.Title}،" +
                                   $" با قیمت کل {totalPrice:#,0 تومان}، با مبلغ تخفیف" + $" {discount:#,0 تومان}، " +
                                   $" با هزینه پستی {productShippingPrice * detail.Count:#,0 تومان}،" +
                                   $"به تعداد {detail.Count} عدد، با سهم تعیین شده ی {100 - detail.Product.SiteProfit} " +
@@ -189,6 +192,7 @@ namespace MarketPlace.Application.Services.Implementations
             }
 
             openOrder.IsPaid = true;
+            openOrder.RefId = refId.ToString();
             openOrder.TrackingCode = trackingCode;
             openOrder.PaymentDate = DateTime.Now;
             openOrder.OrderAcceptanceState = OrderAcceptanceState.PaymentSuccessful;
@@ -445,6 +449,28 @@ namespace MarketPlace.Application.Services.Implementations
             };
         }
 
+        public async Task<bool> AddOrderToNoneAuthenticatedUser(long userId)
+        {
+            var order = await _orderRepository
+                .GetQuery()
+                .AsQueryable()
+                .FirstOrDefaultAsync(x => x.UserId == 0 /*&& x.CreateDate.AddDays(2) >= DateTime.Now*/);
+
+
+            if (order.UserId == 0)
+            {
+                order.UserId = userId;
+                _orderRepository.EditEntity(order);
+                await _orderRepository.SaveChanges();
+
+                return true;
+            }
+
+
+            return false;
+
+        }
+
         #endregion
 
         #region Order Details
@@ -567,7 +593,7 @@ namespace MarketPlace.Application.Services.Implementations
             var discount = await _productDiscountRepository
                 .GetQuery()
                 .AsQueryable()
-                .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
+                .Select(x => new { x.ProductId, x.Percentage, x.ExpireDate }).ToListAsync();
 
             var shipping = await _shippingRepository
                 .GetQuery()
@@ -624,7 +650,7 @@ namespace MarketPlace.Application.Services.Implementations
             var discount = await _productDiscountRepository
                 .GetQuery()
                 .AsQueryable()
-                .Select(x => new { x.ProductId, x.Percentage }).ToListAsync();
+                .Select(x => new { x.ProductId, x.Percentage, x.ExpireDate }).ToListAsync();
 
             var shipping = await _shippingRepository
                 .GetQuery()

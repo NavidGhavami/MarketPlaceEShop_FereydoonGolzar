@@ -13,12 +13,22 @@ namespace ServiceHost.Areas.User.Controllers
 
         #region User Dashboard
 
-        [HttpGet]
+        [HttpGet("dashboard")]
         public async Task<IActionResult> Dashboard()
         {
             return View();
         }
 
         #endregion
+
+
+        public IActionResult Index()
+        {
+
+            return View();
+        }
+
     }
+
 }
+

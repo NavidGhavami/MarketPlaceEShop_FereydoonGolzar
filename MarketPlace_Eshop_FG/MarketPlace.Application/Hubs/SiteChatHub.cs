@@ -78,10 +78,10 @@ namespace MarketPlace.Application.Hubs
         public override async Task OnConnectedAsync()
         {
            
-            var roomId = await _chatRoomService.CreateChatRoom(Context.ConnectionId);
+            var roomId = await _chatRoomService.CreateChatRoom(Context.ConnectionId, Context.User.Identity.Name);
 
             await Groups.AddToGroupAsync(Context.ConnectionId, roomId.ToString());
-            await Clients.Caller.SendAsync("getNewMessage", "فروشنده جیبی سنتر", "سلام و وقت بخیر. در خدمتتان هستم. چطور میتوانم کمکتان کنم؟");
+            await Clients.Caller.SendAsync("getNewMessage", "فروشنده جیبی سنتر", "سلام و وقت بخیر. در خدمتتان هستم. چطور میتوانم کمکتان کنم؟","لطفا تا پایان مکالمه این صفحه را ترک ننمایید");
             await base.OnConnectedAsync();
         }
 

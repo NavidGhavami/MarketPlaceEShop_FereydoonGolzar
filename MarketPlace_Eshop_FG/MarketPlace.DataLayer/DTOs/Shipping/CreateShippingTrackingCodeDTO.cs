@@ -13,6 +13,11 @@ namespace MarketPlace.DataLayer.DTOs.Shipping
         [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string TrackingCode { get; set; }
 
+        [Display(Name = "شماره موبایل")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string Mobile { get; set; }
+
         #endregion
 
     }

@@ -7,99 +7,92 @@
 @section Scripts
 {
     <partial name="_JqueryValidators" />
-    <partial name="_CaptchaScripts"/>
+    <partial name="_CaptchaScripts" />
 }
 
-
-<br />
-
-<div class="form-box">
-    <div class="form-tab">
-        
-        <div class="text-center nav-link nav nav-pills nav-fill nav-border-anim">
-            <span class="nav-link nav  nav-fill nav-border-anim" >
-                ثبت نام
-            </span>
-        </div>
-        <br />
-        <div @*class="tab-content" id="tab-content-5"*@>
-            <div @*class="tab-pane fade"*@ id="register" @*role="tabpanel" aria-labelledby="register-tab"*@>
+   <div class="container login-container">
+        <div class="row">
+            
+            <div class="col-md-6 login-form-2">
+                <h3>** ثبت نام کاربر جدید **</h3>
                 <form method="post" asp-controller="Account" asp-action="Register">
                     <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
-                    <div class="form-group">
-                        <label>نام *</label>
-                        <input type="text" asp-for="FirstName" class="form-control" id="firstname" name="firstname">
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                    </div><!-- End .form-group -->
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input type="text" asp-for="FirstName" class="form-control" placeholder="نام *" />
+                            <span asp-validation-for="FirstName" class="text-white"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="text" asp-for="LastName" class="form-control" placeholder="نام خانوادگی *" />
+                            <span asp-validation-for="LastName" class="text-white"></span>
+                        </div>
+                    </div>
 
                     <div class="form-group">
-                        <label>نام خانوادگی *</label>
-                        <input type="text" asp-for="LastName" class="form-control" id="lastname" name="lastname">
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                    </div><!-- End .form-group -->
+                        <input type="text" asp-for="Mobile" maxlength="11" class="form-control" placeholder="شماره موبایل *" />
+                        <span asp-validation-for="Mobile" class="text-white"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" asp-for="Email" class="form-control" placeholder="ایمیل (اختیاری)" />
+                        <span asp-validation-for="Email" class="text-white"></span>
+                    </div>
 
-                    <div class="form-group">
-                        <label>تلفن همراه *</label>
-                        <input type="text" asp-for="Mobile" class="form-control" id="mobile" name="mobile">
-                        <span asp-validation-for="Mobile" class="text-danger"></span>
-                    </div><!-- End .form-group -->
-
-                    <div class="form-group">
-                        <label>رمز عبور *</label>
-                        <input type="password" asp-for="Password" class="form-control" id="password" name="password">
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div><!-- End .form-group -->
-
-                    <div class="form-group">
-                        <label>تکرار رمز عبور *</label>
-                        <input type="password" asp-for="ConfirmPassword" class="form-control" id="confirmpassword" name="confirmpassword">
-                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                    </div><!-- End .form-group -->
-                    
-                    <div class="form-group">
-                        <label>ایمیل( اختیاری) </label>
-                        <input type="email" asp-for="Email" class="form-control" id="email" name="email">
-                    </div><!-- End .form-group -->
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input type="password" asp-for="Password" class="form-control" placeholder="کلمه عبور *" />
+                            <span asp-validation-for="Password" class="text-white"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="تکرار کلمه عبور *" />
+                            <span asp-validation-for="ConfirmPassword" class="text-white"></span>
+                        </div>
+                    </div>
 
 
                     <div class="form-footer">
-                        <button type="submit" onclick="wait_me()" class="btn btn-round btn-primary">
-                            <i class="bi bi-person-circle"></i>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" style="padding-left: 3px;" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                            </svg>
-                            <span class="wishlist-txt">ثبت نام</span>
-                        </button>
-
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="register-policy">
-                            <label class="custom-control-label" for="register-policy">
+                            <input type="checkbox" class="custom-register-checkbox" register_checkbox id="register-policy">
+                            <label style="font-size: 15px;" class="" for="register-policy">
                                 با
-                                <a href="#">قوانین و مقررات </a>موافقم *
+                                <a asp-controller="Home" asp-action="FrequentlyQuestions">
+                                    <span class="text-white">
+
+                                        قوانین و مقررات سایت
+
+                                    </span>
+                                </a>موافقم *
                             </label>
-                        </div><!-- End .custom-checkbox -->
-                    </div><!-- End .form-footer -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input id="btn-register" onclick="wait_me()" type="submit" class="btnSubmit btn btn-round btn-block" value="ثبت نام" />
+                    </div>
+                    <div class="form-group">
+                        <img src="https://cdni.iconscout.com/illustration/premium/thumb/login-denied-4560629-3784195.png" alt="ثبت نام کاربر" />
+                    </div>
                 </form>
-                <div class="form-choice">
-                    <p class="text-center">یا عضویت با</p>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <a href="#" class="btn btn-login btn-g">
-                                <i class="icon-google"></i>
-                                حساب گوگل
-                            </a>
-                        </div><!-- End .col-6 -->
-                        <div class="col-sm-6">
-                            <a href="#" class="btn btn-login  btn-f">
-                                <i class="icon-facebook-f"></i>
-                                حساب فیسبوک
-                            </a>
-                        </div><!-- End .col-6 -->
-                    </div><!-- End .row -->
-                </div><!-- End .form-choice -->
-            </div><!-- .End .tab-pane -->
-        </div><!-- End .tab-content -->
-    </div><!-- End .form-tab -->
-</div>
+            </div>
+            
+            <div class="col-md-6 login-form-1">
+
+                <h4>
+                    کاربر عزیز، 
+                    <br/>
+                    جهت ورود به سایت و حساب کاربری بر روی دکمه زیر کلیک نمایید
+                </h4>
+                
+                <div class="form-group">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/002/737/799/small_2x/online-registration-illustration-concept-free-vector.jpg" alt="ثبت نام کاربر"/>
+                </div>
+
+                <div class="form-group">
+                    <a class="btnSubmit btn btn-round btn-block" asp-controller="Account" asp-action="Login">
+                        ورود به حساب کاربری
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 

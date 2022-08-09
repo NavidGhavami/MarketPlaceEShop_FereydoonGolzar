@@ -37,9 +37,6 @@
                         <div id="default-datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
                             <br />
                             <div class="row">
-
-
-
                                 <hr />
                                 <div class="col-sm-12">
                                     @if (Model.Messages != null && Model.Messages.Any())
@@ -47,8 +44,7 @@
                                     <ul class="messages" id="messages">
                                         @foreach (var message in Model.Messages)
                                         {
-                                            <li class="message right appeared">
-
+                                            <li class="message @(message.Sender == Model.ChatRoom.Username ? "right" : "left") appeared">
                                                 <div class="text_wrapper text-right">
                                                     <div class="time text-dark">
                                                         @message.Sender --- @message.CreateDate.ToStringShamsiDate()

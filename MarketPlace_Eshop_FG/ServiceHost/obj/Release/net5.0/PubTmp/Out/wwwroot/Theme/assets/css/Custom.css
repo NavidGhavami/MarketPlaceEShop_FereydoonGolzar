@@ -11,7 +11,7 @@
 }
 
 .SlideHeight {
-    height: 412px;
+    height: 250px;
 }
 
 .ChangePasswordLeftPadding {
@@ -77,79 +77,7 @@
     margin-left: 5px;
 }
 
-/* CSS */
-.button-72 {
-    align-items: center;
-    background-color: initial;
-    background-image: linear-gradient(rgba(179, 132, 201, .84), rgba(57, 31, 91, .84) 50%);
-    border-radius: 42px;
-    border-width: 0;
-    box-shadow: rgba(57, 31, 91, 0.24) 0 2px 2px,rgba(179, 132, 201, 0.4) 0 8px 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
-    justify-content: center;
-    letter-spacing: .04em;
-    line-height: 16px;
-    margin: 0;
-    padding: 10px 18px;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: rgba(255, 255, 255, 0.4) 0 0 4px,rgba(255, 255, 255, 0.2) 0 0 12px,rgba(57, 31, 91, 0.6) 1px 1px 4px,rgba(57, 31, 91, 0.32) 4px 4px 16px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: baseline;
-}
 
-.button-72:hover {
-    background-image: linear-gradient(#B384C9, #391F5B 50%);
-}
-
-@media (min-width: 768px) {
-    .button-72 {
-        font-size: 15px;
-    }
-}
-
-/* CSS */
-.button-73 {
-    align-items: center;
-    background-color: initial;
-    background-image: linear-gradient(rgba(196, 0, 94, .9), rgba(255, 109, 177, .95) 50%);
-    border-radius: 42px;
-    border-width: 0;
-    box-shadow: rgba(196, 0, 94, 0.56) 0 2px 2px,rgba(196, 0, 94, 0.4) 0 8px 12px;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: flex;
-    font-size: 15px;
-    font-weight: 700;
-    justify-content: center;
-    letter-spacing: .04em;
-    line-height: 16px;
-    margin: 0;
-    padding: 10px 18px;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: rgba(255, 255, 255, 0.4) 0 0 4px,rgba(255, 255, 255, 0.2) 0 0 12px,rgba(196, 0, 94, 0.6) 1px 1px 4px,rgba(196, 0, 94, 0.32) 4px 4px 16px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: baseline;
-}
-
-    .button-73:hover {
-        background-image: linear-gradient(#B384C9, #8e0042 50%);
-    }
-
-@media (min-width: 768px) {
-    .button-73 {
-        font-size: 15px;
-    }
-}
 
 
 
@@ -158,3 +86,518 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.logoDimension {
+    width: 300px;
+    height: 75px;
+}
+
+.boxIconPadding {
+    padding-bottom: 5px;
+}
+
+.mobileMenuCategoryPadding {
+    padding-left: 3px;
+}
+
+.logoAndSelletTextRightPadding {
+    padding-right: 30px;
+}
+
+.cartButton {
+    width: 24px;
+    height: 26px;
+    background-color: orange;
+    color: black;
+    margin-right: 50px;
+    font-size: 25px;
+}
+
+.cartButtonIconPadding {
+    padding: 6px;
+}
+
+.filterProductCartButton {
+    background-color: orange;
+    color: black;
+}
+
+.filterProductCartButtonText {
+    color: black;
+}
+
+
+.SellerText {
+    text-decoration: none;
+    color: inherit;
+    font-size: 30px;
+}
+
+.SellerTextElement {
+    font-weight: 700;
+    text-align: center;
+    font-size: 30px;
+    direction: ltr;
+    background: linear-gradient(90deg, #a52a2a, #d2691e, #ffff00);
+    letter-spacing: 3px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    animation: shine 4s linear infinite;
+    position: relative;
+}
+
+
+/*//////////////////////////////Being Seller Button////////////////////////////////*/
+
+
+.animated-button1 {
+    background: linear-gradient(-30deg, #3d0b0b 50%, #2b0808 50%);
+    margin-top: 8px;
+    padding: 1px 20px 1px 20px;
+    display: inline-block;
+    border-radius: 20px;
+    -webkit-transform: translate(0%, 0%);
+    transform: translate(0%, 0%);
+    overflow: hidden;
+    color: #ff7f50;
+    font-size: 25px;
+    letter-spacing:2.5px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+    
+
+    .animated-button1 span {
+        position: absolute;
+    }
+
+        .animated-button1 span:nth-child(1) {
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 2px;
+            background: -webkit-gradient(linear, right top, left top, from(rgba(43, 8, 8, 0)), to(#ff7f50));
+            background: linear-gradient(to left, rgba(43, 8, 8, 0), #ff7f50);
+            -webkit-animation: 4s animateTop linear infinite;
+            animation: 2s animateTop linear infinite;
+        }
+
+@keyframes animateTop {
+    0% {
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+
+    100% {
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
+}
+
+.animated-button1 span:nth-child(2) {
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    width: 2px;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(43, 8, 8, 0)), to(#ff7f50));
+    background: linear-gradient(to top, rgba(43, 8, 8, 0), #ff7f50);
+    -webkit-animation: 2s animateRight linear -1s infinite;
+    animation: 1.5s animateRight linear -1s infinite;
+}
+
+@keyframes animateRight {
+    0% {
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+    }
+
+    100% {
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+}
+
+.animated-button1 span:nth-child(3) {
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 2px;
+    background: -webkit-gradient(linear, left top, right top, from(rgba(43, 8, 8, 0)), to(#ff7f50));
+    background: linear-gradient(to right, rgba(43, 8, 8, 0), #ff7f50);
+    -webkit-animation: 2s animateBottom linear infinite;
+    animation: 2s animateBottom linear infinite;
+}
+
+@keyframes animateBottom {
+    0% {
+        -webkit-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
+
+    100% {
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+    }
+}
+
+.animated-button1 span:nth-child(4) {
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 2px;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(43, 8, 8, 0)), to(#ff7f50));
+    background: linear-gradient(to bottom, rgba(43, 8, 8, 0), #ff7f50);
+    -webkit-animation: 2s animateLeft linear -1s infinite;
+    animation: 1.5s animateLeft linear -1s infinite;
+}
+
+@keyframes animateLeft {
+    0% {
+        -webkit-transform: translateY(-100%);
+        transform: translateY(-100%);
+    }
+
+    100% {
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+    }
+}
+
+
+/*/////////////////////Drag and Drop Image///////////////////////////////////////*/
+
+
+
+@keyframes shine {
+    0% {
+        background-position-x: -500%;
+    }
+
+    100% {
+        background-position-x: 500%;
+    }
+}
+
+
+.file-upload {
+    background-color: #ffffff;
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.file-upload-btn {
+    width: 100%;
+    margin: 0;
+    color: #fff;
+    background: #ff7f50;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #ff7f50;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .file-upload-btn:hover {
+        background: #ff7f50;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+    .file-upload-btn:active {
+        border: 0;
+        transition: all .2s ease;
+    }
+
+.file-upload-content {
+    display: none;
+    text-align: center;
+}
+
+    .file-upload-content img {
+        max-width: 80%;
+        max-height: 80%;
+    }
+
+.file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-upload-wrap {
+    margin-top: 20px;
+    border: 4px dashed #ff7f50;
+    position: relative;
+}
+
+    .image-dropping,
+    .image-upload-wrap:hover {
+        background-color: #ff7f50;
+        border: 4px dashed #ffffff;
+    }
+
+.image-title-wrap {
+    padding: 0 15px 15px 15px;
+    color: #222;
+}
+
+.drag-text {
+    text-align: center;
+}
+
+    .drag-text h3 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: #15824B;
+        padding: 60px 0;
+    }
+
+.file-upload-image {
+    max-height: 200px;
+    max-width: 200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.remove-image {
+    width: 200px;
+    margin: 0;
+    color: #fff;
+    background: #cd4535;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #b02818;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+    .remove-image:hover {
+        background: #c13b2a;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+    .remove-image:active {
+        border: 0;
+        transition: all .2s ease;
+    }
+
+
+
+
+/*/////////////////////Online Chat///////////////////////////////////////*/
+
+.msger {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 97%;
+    margin: 25px 10px;
+    height: calc(100% - 50px);
+    border: #8e0042;
+    border-radius: 5px;
+    background: black;
+    box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
+}
+
+.msger-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: red;
+    background: #eee;
+    color: #666;
+}
+
+.msger-chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+    .msger-chat::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .msger-chat::-webkit-scrollbar-track {
+        background: #ddd;
+    }
+
+    .msger-chat::-webkit-scrollbar-thumb {
+        background: #bdbdbd;
+    }
+
+.msg {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+
+    .msg:last-of-type {
+        margin: 0;
+    }
+
+.msg-img {
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    background: #ddd;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50px;
+}
+
+.msg-bubble {
+    max-width: 450px;
+    padding: 15px;
+    border-radius: 30px;
+    background: #ffcb49;
+    border: #15824b solid;
+}
+
+.msg-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.msg-info-name {
+    margin-right: 15px;
+    font-weight: bold;
+
+}
+
+.msg-info-time {
+    font-size: 0.85em;
+}
+
+.left-msg .msg-bubble {
+    border-bottom-right-radius: 0;
+}
+
+.right-msg {
+    flex-direction: row-reverse;
+}
+
+    .right-msg .msg-bubble {
+        background: darkorange;
+        color: #fff;
+        border-bottom-left-radius: 0;
+    }
+
+    .right-msg .msg-img {
+        margin: 0 10px 0 10px;
+    }
+
+.msger-inputarea {
+    display: flex;
+    padding: 15px;
+    border-top: red;
+    background: #eee;
+}
+
+    .msger-inputarea * {
+        padding: 15px;
+        border: none;
+        border-radius: 20px;
+        font-size: 1em;
+    }
+
+.msger-input {
+    flex: 1;
+    background: #f5deb3;
+}
+
+.msger-send-btn {
+    margin-left: 10px;
+    background: rgb(0, 196, 65);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.23s;
+}
+
+    .msger-send-btn:hover {
+        background: rgb(0, 180, 50);
+    }
+
+.msger-chat {
+    background-color: white;
+    background-image: url("https://psl.org.br/assets/layout/images/profile-bg.svg" );
+}
+
+
+
+/*////////////////////////////////Search Input/////////////////////////////////////////*/
+
+
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.searchTerm {
+    width: 85%;
+    border: 3px solid black;
+    padding: 19px;
+    height: 20px;
+    border-radius: 25px;
+    outline: none;
+    color: darkorange;
+}
+
+    .searchTerm:focus {
+        color: black;
+    }
+
+.searchButton {
+    width: 210px;
+    height: 43px;
+    border: 3px solid black;
+    background: #F7941E;
+    text-align: center;
+    color: #fff;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.wrap {
+    width: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.searchForm {
+    width: 100%;
+    margin-bottom: 35px;
+    margin-top: 55px;
+}
+
+

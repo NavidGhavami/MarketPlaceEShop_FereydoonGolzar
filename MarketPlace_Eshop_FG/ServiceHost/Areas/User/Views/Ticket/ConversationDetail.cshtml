@@ -1,0 +1,89 @@
+﻿@using MarketPlace.Application.Utilities
+@model MarketPlace.DataLayer.DTOs.ChatRoom.MessageDTO
+@{
+    ViewData["Title"] = "جزییات گفتگو با فروشنده";
+}
+
+@section styles
+{
+    <link href="/Theme/assets/css/ChatRoom.css" rel="stylesheet" />
+}
+
+
+
+<div class="page-header text-center">
+    <div class="container">
+        <h3 class="text-danger">@ViewData["Title"]</h3>
+    </div><!-- End .container -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container">
+            <h5 class="page-title">پنل کاربری ، @User.Identity.Name</h5>
+        </div><!-- End .container -->
+    }
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a asp-area="User" asp-controller="Home" asp-action="Dashboard">داشبورد</a></li>
+
+            <li class="breadcrumb-item active"><a href="#">@ViewData["Ticket"]</a></li>
+
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="dashboard">
+        <div class="container">
+            <div class="row">
+                <aside class="col-md-4 col-lg-3">
+                    @await Component.InvokeAsync("UserSidebarDashboard")
+                </aside><!-- End .col-lg-3 -->
+
+                <div class="col-md-8 col-lg-9">
+                    <div class="tab-content">
+
+                        <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
+
+                            <h4 class="title mb-3">@ViewData["Title"]</h4>
+
+                           @* <partial name="_AnswerTicketPartial" model="@(new AnswerTicketDTO{Id = Model.Ticket.Id})" />*@
+
+                            <hr />
+                            <div class="col-md-12">
+
+                                <ul class="messages" id="messages">
+                                    @if (Model.Messages != null && Model.Messages.Any())
+                                    {
+                                        foreach (var message in Model.Messages)
+                                        {
+                                            <li class="message @(message.Sender == Model.ChatRoom.Username ? "right" : "left") appeared">
+                                                <div class="avatar">
+                                                    <img src="@(PathExtension.DefaultAvatar)" alt="@message.Sender" title="@message.Sender">
+                                                </div>
+                                                <div class="text_wrapper">
+                                                    <div class="time">
+                                                        @message.CreateDate.ToStringShamsiDate() - ساعت: @message.CreateDate.ToString("HH:mm")
+                                                    </div>
+                                                    <div class="text-right MessageText">
+                                                        @Html.Raw(message.Message)
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div><!-- .End .tab-pane -->
+                    </div>
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .dashboard -->
+</div>
+
+
+

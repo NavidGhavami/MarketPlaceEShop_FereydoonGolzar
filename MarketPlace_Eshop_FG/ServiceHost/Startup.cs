@@ -84,7 +84,8 @@ namespace ServiceHost
             var connectionString = Configuration.GetConnectionString("MarketPlaceConnection");
 
             services.AddDbContext<DatabaseContext>(option =>
-                option.UseSqlServer(connectionString));
+                option.UseSqlServer(connectionString), ServiceLifetime.Transient);
+
 
             #endregion
 

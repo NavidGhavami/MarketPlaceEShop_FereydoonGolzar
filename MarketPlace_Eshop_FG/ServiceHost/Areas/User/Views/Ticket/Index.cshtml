@@ -38,7 +38,9 @@
 
                 <div class="col-md-8 col-lg-9">
                     <div class="tab-content">
-
+                        <form asp-area="User" asp-controller="Ticket" asp-action="Index" id="filter-form" method="get">
+                            <input type="hidden" asp-for="PageId" />
+                        </form>
                         <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="tab-account-link">
                             @if (Model.Tickets != null && Model.Tickets.Any())
                             {
@@ -90,6 +92,7 @@
                                 <partial name="_NoItemFound" />
                             }
                         </div><!-- .End .tab-pane -->
+                        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
                     </div>
                 </div><!-- End .col-lg-9 -->
             </div><!-- End .row -->

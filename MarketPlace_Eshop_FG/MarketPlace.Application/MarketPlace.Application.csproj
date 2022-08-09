@@ -15,7 +15,7 @@
 
     <PackageReference Include="RestSharp" Version="106.15.0" /> 
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0005" /> 
-    <PackageReference Include="Zarinpal" Version="3.0.1" /> 
+    <PackageReference Include="Zarinpal" Version="2.0.4" /> 
     <PackageReference Include="ZarinpalSandbox" Version="2.0.4" />
 
 

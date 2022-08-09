@@ -327,7 +327,10 @@ namespace MarketPlace.Application.Services.Implementations
                 .OrderByDescending(x => x.CreateDate)
                 .SingleOrDefaultAsync(x => x.Id == ticketId);
 
-            var ticketMessage = await _ticketMessageRepository.GetQuery().AsQueryable()
+            var ticketMessage = await _ticketMessageRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x=>x.Ticket)
                 .Where(x => x.TicketId == ticketId && !x.IsDelete)
                 .OrderByDescending(x => x.CreateDate)
                 .ToListAsync();

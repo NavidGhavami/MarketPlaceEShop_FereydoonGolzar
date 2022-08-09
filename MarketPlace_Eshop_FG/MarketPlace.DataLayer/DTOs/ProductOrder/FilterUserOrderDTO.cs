@@ -26,6 +26,9 @@ namespace MarketPlace.DataLayer.DTOs.ProductOrder
         [Display(Name = "کد پیگیری")]
         public string TrackingCode { get; set; }
 
+        [Display(Name = "کد پیگیری پرداخت")]
+        public string RefId { get; set; }
+
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
 

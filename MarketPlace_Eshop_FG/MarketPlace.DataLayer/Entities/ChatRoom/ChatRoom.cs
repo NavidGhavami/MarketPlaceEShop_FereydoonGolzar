@@ -10,6 +10,7 @@ namespace MarketPlace.DataLayer.Entities.ChatRoom
 
         public long SellerId { get; set; }
         public string ConnectionId { get; set; }
+        public string Username { get; set; }
         
 
         #endregion

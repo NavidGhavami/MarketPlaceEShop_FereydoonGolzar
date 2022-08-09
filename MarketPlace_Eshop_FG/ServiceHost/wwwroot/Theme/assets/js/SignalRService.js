@@ -39,9 +39,19 @@ function SendMessage(text) {
 
 connection.on('getNewMessage', getMessage);
 
-function getMessage(sender, message, time) {
+function getMessage(sender, message, warningMessage, time) {
     time = new Date().toLocaleDateString('fa-IR');
-    $("#ChatBoxMessage").append(`<div class='msg left-msg'><div class='msg-bubble'><div class='msg-info'><div class='msg-info-name'>${sender}</div></div><div class='msg-text'>${message}</div><div class='msg-info-time'>${time}</div></div></div>`);
+    $("#ChatBoxMessage").append(`<div class='msg left-msg'>
+                                <div class='msg-bubble'>
+                                <div class='msg-info'>
+                                <div class='msg-info-name'>${sender}</div>
+                                </div>
+                                <div class='msg-text'>${message}</div>
+                                <br/>
+                                <div class='msg-text text-right text-danger'><strong>${warningMessage}<strong/></div>
+                                <div class='msg-info-time'>${time}</div>
+                                </div>
+                                </div>`);
 }
 
 $(document).ready(function () {
