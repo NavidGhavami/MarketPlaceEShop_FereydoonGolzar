@@ -45,6 +45,7 @@ namespace ServiceHost
 
             services.AddHttpContextAccessor();
             services.AddSignalR();
+            services.AddProgressiveWebApp();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 

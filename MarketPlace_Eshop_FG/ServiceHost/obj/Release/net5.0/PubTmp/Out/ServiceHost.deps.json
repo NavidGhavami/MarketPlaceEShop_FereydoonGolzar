@@ -2866,25 +2866,19 @@
           "System.Xml.XmlDocument": "4.3.0"
         }
       },
-      "ZarinPal/3.0.1": {
+      "Zarinpal/2.0.4": {
+        "dependencies": {
+          "Microsoft.NETCore.App": "1.0.5",
+          "Newtonsoft.Json": "13.0.1"
+        },
         "runtime": {
-          "lib/netcoreapp2.2/Dto.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/netcoreapp2.2/Service.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          },
-          "lib/netcoreapp2.2/ZarinPal.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.0.0"
+          "lib/netcoreapp1.0/Zarinpal.dll": {
+            "assemblyVersion": "2.0.4.0",
+            "fileVersion": "2.0.4.0"
           }
         },
         "compile": {
-          "lib/netcoreapp2.2/Dto.dll": {},
-          "lib/netcoreapp2.2/Service.dll": {},
-          "lib/netcoreapp2.2/ZarinPal.dll": {}
+          "lib/netcoreapp1.0/Zarinpal.dll": {}
         }
       },
       "ZarinpalSandbox/2.0.4": {
@@ -2913,7 +2907,7 @@
           "Newtonsoft.Json": "13.0.1",
           "RestSharp": "106.15.0",
           "SixLabors.ImageSharp": "1.0.0-beta0005",
-          "ZarinPal": "3.0.1",
+          "Zarinpal": "2.0.4",
           "ZarinpalSandbox": "2.0.4"
         },
         "runtime": {
@@ -6117,12 +6111,12 @@
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
     },
-    "ZarinPal/3.0.1": {
+    "Zarinpal/2.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1XPTvVdTa+ywa61JOK7TXVNqzHfwg/8bnMqKh9ISvHWk8HEhhrFXhuC/F5c/xDz9smay7254gD6T4WicgS+FeQ==",
-      "path": "zarinpal/3.0.1",
-      "hashPath": "zarinpal.3.0.1.nupkg.sha512"
+      "sha512": "sha512-iGVX2YQUFe7veIKKYjxFY2bGhNlqzI0ooveUe/TYEIAtLh5jCYv1stgmp+EJyeWX9wRl81zs9N0IT5im3NZOkw==",
+      "path": "zarinpal/2.0.4",
+      "hashPath": "zarinpal.2.0.4.nupkg.sha512"
     },
     "ZarinpalSandbox/2.0.4": {
       "type": "package",

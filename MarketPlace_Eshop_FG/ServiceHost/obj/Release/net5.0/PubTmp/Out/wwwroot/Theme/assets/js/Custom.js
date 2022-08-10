@@ -435,4 +435,19 @@ $('.image-upload-wrap').bind('dragleave', function () {
 });
 
 
-/////////////////////////////////////////////////////////////////////////////////
+////////////////////////////Privacy and Policy Check////////////////////////////////////////
+
+$(document).ready(function () {
+    document.querySelector('#btn-register').disabled = true;
+    $('[register_checkbox]').on('change', function (e) {
+        
+        var isChecked = $(this).is(':checked');
+
+        if (isChecked) {
+            document.querySelector('#btn-register').disabled = false;
+        } else {
+            document.querySelector('#btn-register').disabled = true;
+        }
+    });
+});
+
