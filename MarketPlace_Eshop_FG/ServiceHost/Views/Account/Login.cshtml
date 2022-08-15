@@ -10,15 +10,26 @@
     <partial name="_CaptchaScripts" />
 }
 
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+                <li class="breadcrumb-item active" aria-current="page">ورود کاربران</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav>
+
     <div class="container login-container">
         <div class="row">
-            <div class="col-md-6 login-form-1">
-                <h3>** ورود کاربر **</></h3>
+            <div class="col-md-10 login-form-1">
+                <h3> ورود کاربر </></h3>
+
                 <form method="post" asp-controller="Account" asp-action="Login">
                     <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
-                    <div class="form-group">
-                        <img src="https://static.vecteezy.com/system/resources/thumbnails/002/737/799/small_2x/online-registration-illustration-concept-free-vector.jpg" alt="ورود کاربر" />
-                    </div>
+
+
+
                     <div class="form-group">
                         <input type="text" asp-for="Mobile" maxlength="11" class="form-control" id="mobile-cats-link" placeholder="شماره موبایل *" />
                         <span asp-validation-for="Mobile" class="text-danger"></span>
@@ -28,10 +39,8 @@
                         <span asp-validation-for="Password" class="text-danger"></span>
 
                     </div>
-                    
-                    <div class="form-group">
-                        <input type="hidden" name="returnUrl" class="form-control"/>
-                    </div>
+
+
 
                     <div class="form-footer">
                         <div class="custom-control custom-checkbox">
@@ -51,32 +60,20 @@
 
                     <div class="form-group">
                         <input type="submit" class="btnSubmit btn btn-round btn-block" value="ورود" />
+
+                        <a class="btnSubmit1 btn btn-round btn-block text-dark" asp-controller="Account" asp-action="Register">
+                            هنوز عضو نشده ام (ثبت نام)
+                        </a>
                     </div>
                     <div class="form-group">
-                        <a asp-controller="Account" asp-action="ForgotPassword" class="ForgetPwd">رمز عبور خود را فراموش کرده ام !</a>
+                        <a class="btn btn-outline-primary-2 btn-round text-dark" asp-controller="Account" asp-action="ForgotPassword" class="ForgetPwd">رمز عبور خود را فراموش کرده ام !</a>
                     </div>
                 </form>
-            </div>
-            <div class="col-md-6 login-form-2">
-
-                <h4>
-                    به فروشگاه آنلاین جیبی سنتر خوش آمدید.
-                    <br/>
-                    جهت عضویت در سایت و ایجاد حساب کاربری بر روی دکمه زیر کلیک نمایید
-                </h4>
-
-                <div class="form-group">
-                    <a class="btnSubmit btn btn-round btn-block" asp-controller="Account" asp-action="Register">
-                        ثبت نام و عضویت در سایت
-                    </a>
-                </div>
-
-
-                <div class="form-group">
-                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/login-denied-4560629-3784195.png" alt="ثبت نام کاربر"/>
-                </div>
 
             </div>
+
+            <div class="col-md-2 login-form-2"></div>
+
         </div>
     </div>
 

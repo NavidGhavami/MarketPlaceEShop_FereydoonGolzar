@@ -569,6 +569,7 @@ namespace MarketPlace.Application.Services.Implementations
                     _orderDetailRepository.DeleteEntity(detail);
                 }
 
+                _orderDetailRepository.EditEntity(detail);
                 await _orderDetailRepository.SaveChanges();
             }
         }

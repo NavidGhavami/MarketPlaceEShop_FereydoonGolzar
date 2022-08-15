@@ -3,155 +3,84 @@
 }
 
 <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-    @if (hasUserAnyActiveSellerPanel)
-    {
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-info btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Home" asp-action="Dashboard" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">
-                <i class="fa fa-user-circle text-dark"></i>
-                داشبورد
-            </a>
-        </li>
 
-        <li class="nav-item user-sidebar-padding">
-            <a class="nav-link btn btn-outline btn-round btn-round text-center dashboard-width" asp-area="User" asp-controller="Account" asp-action="EditProfile" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-edit text-dark"></i>
-                ویرایش اطلاعات من
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="UserAddress" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-address-book text-dark"></i>
-                آدرس های من
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Order" asp-action="GetUserOrder" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-coins text-dark"></i>
-                سفارشات من
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="ChangePassword" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-star text-dark"></i>
-                تغییر کلمه عبور
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Ticket" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-comment text-dark"></i>
-                تیکت های من
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Ticket" asp-action="AddTicket" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-plus-circle text-dark"></i>
-                ثبت تیکت جدید
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="text-center nav-link btn-outline btn-round" asp-area="Seller" asp-controller="Home" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-shopping-bag text-dark"></i>
-                مشاهده پنل فروشندگی
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Seller" asp-action="RequestSellerPanel" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-plus-square text-dark"></i>
-                درخواست پنل فروشندگی
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Seller" asp-action="SellerRequests" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-shopping-cart text-dark"></i>
-                لیست درخواست های فروشندگی
-            </a>
-        </li>
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Ticket" asp-action="GetUserConversation" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
-                <i class="fa fa-comments text-dark"></i>
-                گفتگو با فروشنده ها
-            </a>
-        </li>
-
-        <li class="nav-item user-sidebar-padding">
-            <a class="btn btn-info btn-round text-white dashboard-width nav-link" asp-controller="Account" asp-action="Logout">
-                <i class="fa fa-arrow-circle-left text-dark"></i>
-                خروج از حساب کاربری
-            </a>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item user-sidebar-padding">
-        <a class="btn btn-info btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Home" asp-action="Dashboard" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">
+    <li class="nav-item user-sidebar-padding">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Home" asp-action="Dashboard" as id="tab-dashboard-link" role="tab" aria-controls="tab-dashboard" aria-selected="true">
             <i class="fa fa-user-circle text-dark"></i>
             داشبورد
         </a>
     </li>
-    
+
     <li class="nav-item user-sidebar-padding">
-        <a class="nav-link btn btn-outline btn-round btn-round text-center dashboard-width" asp-area="User" asp-controller="Account" asp-action="EditProfile" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="EditProfile" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-edit text-dark"></i>
             ویرایش اطلاعات من
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="UserAddress" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="UserAddress" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-address-book text-dark"></i>
             آدرس های من
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Order" asp-action="GetUserOrder" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Order" asp-action="GetUserOrder" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-coins text-dark"></i>
             سفارشات من
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="ChangePassword" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Account" asp-action="ChangePassword" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-star text-dark"></i>
             تغییر کلمه عبور
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Ticket" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Ticket" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-comment text-dark"></i>
             تیکت های من
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Ticket" asp-action="AddTicket" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Ticket" asp-action="AddTicket" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-plus-circle text-dark"></i>
             ثبت تیکت جدید
         </a>
     </li>
-
-    
+    @if (hasUserAnyActiveSellerPanel)
+    {
+        <li class="nav-item user-sidebar-padding">
+            <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="Seller" asp-controller="Home" asp-action="Index" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+                <i class="fa fa-shopping-bag text-dark"></i>
+                <strong>مشاهده پنل فروشندگی</strong>
+            </a>
+        </li>
+    }
     <li class="nav-item user-sidebar-padding">
-        <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Seller" asp-action="RequestSellerPanel" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Seller" asp-action="RequestSellerPanel" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-plus-square text-dark"></i>
             درخواست پنل فروشندگی
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="btn btn-primary btn-round text-white dashboard-width nav-link" asp-area="User" asp-controller="Seller" asp-action="SellerRequests" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Seller" asp-action="SellerRequests" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-shopping-cart text-dark"></i>
             لیست درخواست های فروشندگی
         </a>
     </li>
     <li class="nav-item user-sidebar-padding">
-        <a class="text-center nav-link btn-outline btn-round" asp-area="User" asp-controller="Ticket" asp-action="GetUserConversation" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-area="User" asp-controller="Ticket" asp-action="GetUserConversation" id="tab-account-link" role="tab" aria-controls="tab-account" aria-selected="false">
             <i class="fa fa-comments text-dark"></i>
             گفتگو با فروشنده ها
         </a>
     </li>
 
     <li class="nav-item user-sidebar-padding">
-        <a class="btn btn-info btn-round text-white dashboard-width nav-link" asp-controller="Account" asp-action="Logout">
-        <i class="fa fa-arrow-circle-left text-dark"></i>
+        <a class="custom-btn btn-14 text-center dashboard-width nav-link" asp-controller="Account" asp-action="Logout">
+            <i class="fa fa-arrow-circle-left text-dark"></i>
             خروج از حساب کاربری
         </a>
     </li>
-    }
+
 </ul>
 

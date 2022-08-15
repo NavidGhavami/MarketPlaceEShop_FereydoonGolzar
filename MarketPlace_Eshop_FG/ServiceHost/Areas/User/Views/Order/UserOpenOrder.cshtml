@@ -161,7 +161,7 @@
                                     @if (totalPriceWithoutDiscount >= freeShippingPrice)
                                     {
                                         <tr class="summary-subtotal">
-                                            <td>جمع کل هزینه پستی : </td>
+                                            <td>جمع کل هزینه پستی : @totalShippingPrice.ToString("#,0 تومان")</td>
                                             <td class="text-left">رایگان (برای سفارشات بالای 400 هزار تومان)</td>
                                         </tr>
                                     }

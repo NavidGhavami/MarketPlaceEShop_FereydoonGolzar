@@ -197,6 +197,7 @@ namespace MarketPlace.Application.Services.Implementations
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Email = user.Email,
                 Avatar = user.Avatar
             };
         }
@@ -221,6 +222,7 @@ namespace MarketPlace.Application.Services.Implementations
 
             user.FirstName = profile.FirstName;
             user.LastName = profile.LastName;
+            user.Email = profile.Email;
 
             if (avatarImage != null && avatarImage.IsImage())
             {
@@ -301,6 +303,7 @@ namespace MarketPlace.Application.Services.Implementations
                 Email = user.Email,
                 Mobile = user.Mobile,
                 IsBlocked = user.IsBlocked,
+                IsMobileActivated = user.IsMobileActive,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
             };
@@ -326,6 +329,7 @@ namespace MarketPlace.Application.Services.Implementations
             mainUser.Mobile = edit.Mobile;
             mainUser.Email = edit.Email;
             mainUser.IsBlocked = edit.IsBlocked;
+            mainUser.IsMobileActive = edit.IsMobileActivated;
 
             _userRepository.EditEntity(mainUser);
             await _userRepository.SaveChanges();
@@ -343,6 +347,7 @@ namespace MarketPlace.Application.Services.Implementations
                     Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
+                    Email = x.Email,
                     Avatar = x.Avatar,
                 })
                 .SingleOrDefaultAsync(x => x.Id == userId);

@@ -87,6 +87,7 @@ namespace ServiceHost.Areas.User.Controllers
                         break;
                     case EditUserProfileResult.IsNotActive:
                         TempData[ErrorMessage] = "حساب کاربری شما فعال نشده است";
+                        TempData[InfoMessage] = "لطفا با پشتیبانی سایت تماس حاصل فرمایید تا حساب کاربری تان را فعال نمایند";
                         break;
                     case EditUserProfileResult.NotFound:
                         TempData[ErrorMessage] = "کاربری با مشخصات وارد شده یافت نشد";

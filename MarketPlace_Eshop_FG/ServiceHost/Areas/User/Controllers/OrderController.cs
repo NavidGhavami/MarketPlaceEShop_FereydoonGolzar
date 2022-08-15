@@ -166,9 +166,8 @@ namespace ServiceHost.Areas.User.Controllers
         [HttpGet("change-detail-count/{detailId}/{count}")]
         public async Task<IActionResult> ChangeDetailOrderCount(long detailId, int count)
         {
-
-            await _orderService.ChangeOrderDetailCount(detailId, User.GetUserId(), count);
             var openOrder = await _orderService.GetUserOpenOrderDetail(User.GetUserId());
+            await _orderService.ChangeOrderDetailCount(detailId, User.GetUserId(), count);
             return PartialView(openOrder);
         }
 

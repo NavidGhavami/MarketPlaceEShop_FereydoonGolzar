@@ -58,6 +58,7 @@ namespace MarketPlace.Application.Services.Implementations
 
             };
 
+
             await _chatRoomRepository.AddEntity(newChatRoom);
             await _chatRoomRepository.SaveChanges();
 

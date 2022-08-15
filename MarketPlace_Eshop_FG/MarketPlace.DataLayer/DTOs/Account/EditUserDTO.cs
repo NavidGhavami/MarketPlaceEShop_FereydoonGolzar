@@ -41,6 +41,9 @@ namespace MarketPlace.DataLayer.DTOs.Account
         [Display(Name = "بلاک شده / نشده")]
         public bool IsBlocked { get; set; }
 
+        [Display(Name = "موبایل فعال شده / نشده")]
+        public bool IsMobileActivated { get; set; }
+
         public string Image { get; set; }
 
         public List<Role> Roles { get; set; }

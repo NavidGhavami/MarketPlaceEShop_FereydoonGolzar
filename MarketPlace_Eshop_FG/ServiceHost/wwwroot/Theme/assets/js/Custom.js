@@ -88,6 +88,7 @@ $('[main_category_checkbox]').on('change', function (e) {
     var selectedCategoryId = $(this).attr('main_category_checkbox');
     console.log(selectedCategoryId);
     if (isChecked) {
+        F
         $('#sub_categories_' + selectedCategoryId).slideDown(300);
     } else {
         $('#sub_categories_' + selectedCategoryId).slideUp(300);
@@ -313,10 +314,11 @@ function checkDetailCount() {
         open_waiting();
         var detailId = $(this).attr('order-detail-count');
         $.get('/user/change-detail-count/' + detailId + '/' + event.target.value).then(result => {
-            $('#user-open-order-wrapper').html(result);
+            $("#user-open-order-wrapper").html(result);
             setTimeout(function () {
                 close_waiting();
-                location.reload();
+                checkDetailCount();
+                reloadPage();
             }, 500);
 
         });
@@ -440,7 +442,7 @@ $('.image-upload-wrap').bind('dragleave', function () {
 $(document).ready(function () {
     document.querySelector('#btn-register').disabled = true;
     $('[register_checkbox]').on('change', function (e) {
-        
+
         var isChecked = $(this).is(':checked');
 
         if (isChecked) {
@@ -451,3 +453,42 @@ $(document).ready(function () {
     });
 });
 
+
+///////////////////////////////CountDownt Timer////////////////////////////////////////////////////
+
+var timeLeft = 2;
+var elem = document.getElementById('some_div');
+var sendActiveCode = document.getElementById('send_active_code');
+
+
+var notification = document.createElement('p');
+notification.className = 'text-dark';
+notification.textContent = 'اگر کد فعالسازی حساب کاربری خود را دریافت نکرده اید، لطفا از طریق دکمه زیر به پشتیبانی سایت پیام دهید یا تماس حاصل فرمایید تا حساب کاربری تان را فعال نمایند.';
+notification.style.paddingBottom = '20px';
+
+var newTag = document.createElement('a');
+newTag.id = 'resend_btn';
+newTag.className = 'btnSubmit btn btn-round btn-block text-danger';
+newTag.textContent = 'تماس با پشتیبانی'
+newTag.href = 'https://jibicenter.com/Contact-Us';
+
+elem.style.fontSize = '20px';
+elem.style.color = 'black';
+
+var timerId = setInterval(countdown, 1000);
+
+function countdown() {
+    if (timeLeft == -1) {
+        clearTimeout(timerId);
+        sendActiveCode.remove();
+        elem.innerHTML = '';
+        elem.append(notification);
+        elem.append(newTag);
+        
+
+    } else {
+        elem.innerHTML = timeLeft + '  ثانیه ';
+        timeLeft--;
+        
+    }
+}

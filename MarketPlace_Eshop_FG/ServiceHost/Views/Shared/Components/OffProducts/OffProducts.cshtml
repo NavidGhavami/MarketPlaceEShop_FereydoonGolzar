@@ -65,7 +65,12 @@
                                     </a>
                                 </div>
                                 <!-- End .product-action-vertical -->
-
+                                <div class="">
+                                    <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@discount.Product.Id"
+                                       asp-route-title="@discount.Product.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
+                                        <span >مشاهده محصول</span>
+                                    </a>
+                                </div><!-- End .product-action -->
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
@@ -126,11 +131,6 @@
 
                                         </div><!-- End .product-nav -->
 
-                                        <a asp-area="" asp-controller="Product" asp-action="ProductDetails"
-                                           asp-route-productId="@discount.Product.Id" asp-route-title="@discount.Product.Title.FixTextForUrl()" class=""
-                                           title="افزودن به سبد خرید">
-                                            <i class="fa fa-cart-plus fa-2x cartButtonIconPadding"></i>
-                                        </a>
                                     }
                                     
                                   

@@ -5,42 +5,43 @@
 }
 
 @section Scripts
-{
+    {
     <partial name="_JqueryValidators" />
     <partial name="_CaptchaScripts" />
 }
 
 
 
-<div class="container login-container">
-    <div class="row">
-        <div class="col-md-6 login-form-2">
-            <h3>** فعالسازی حساب کاربری **</></h3>
-            <form method="post" asp-controller="Account" asp-action="ActivateMobile">
-                <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
-                
-                <input type="hidden" asp-for="Mobile">
+    <div class="container login-container">
+        <div class="row">
+            <div class="col-md-6 login-form-2">
+                <h3> فعالسازی حساب کاربری </></h3>
+                <form method="post" asp-controller="Account" asp-action="ActivateMobile">
+                    <partial name="_CaptchaInput" model="@(new CaptchaViewModel())" />
 
-                <div class="form-group">
-                    <label class="text-white">کد پیامکی ارسال شده به شماره موبایل خود را وارد نمایید *</label>
-                    <input type="text" asp-for="MobileActivationCode" maxlength="6" placeholder="کد فعالسازی" class="form-control"/>
-                    <span asp-validation-for="MobileActivationCode" class="text-white"></span>
-                </div>
+                    <input type="hidden" asp-for="Mobile">
+
+                    <div class="form-group">
+                        <label class="text-white">کد پیامکی ارسال شده به شماره موبایل خود را وارد نمایید *</label>
+                        <input type="text" asp-for="MobileActivationCode" maxlength="6" placeholder="کد فعالسازی" class="form-control" />
+                        <span asp-validation-for="MobileActivationCode" class="text-white"></span>
+                    </div>
 
 
-                <div class="form-group">
-                    <input type="submit" class="btnSubmit btn btn-round btn-block" value="فعالسازی حساب کاربری" />
-                </div>
+                    <div class="form-group">
+                        <input id="send_active_code" type="submit" class="btnSubmit btn btn-round btn-block" value="فعالسازی حساب کاربری" />
+                        <div id="some_div"></div>
+                    </div>
 
-            </form>
-        </div>
-        <div class="col-md-6 login-form-1">
-
-            <div class="form-group">
-                <img src="https://www.cloudi5.com/asset/images/mobile-app-development-services-cloudi5.png" alt="فعالسازی حساب کاربری" />
+                </form>
             </div>
+            <div class="col-md-6 login-form-1">
 
+                <div class="form-group">
+                    <img src="https://www.cloudi5.com/asset/images/mobile-app-development-services-cloudi5.png" alt="فعالسازی حساب کاربری" />
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 

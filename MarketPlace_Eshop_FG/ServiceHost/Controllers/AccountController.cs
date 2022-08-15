@@ -18,15 +18,13 @@ namespace ServiceHost.Controllers
 
         private readonly IUserService _userService;
         private readonly ICaptchaValidator _captchaValidator;
-        private readonly IOrderService _orderService;
 
         public static string ReturnUrl { get; set; }
 
-        public AccountController(IUserService userService, ICaptchaValidator captchaValidator, IOrderService orderService)
+        public AccountController(IUserService userService, ICaptchaValidator captchaValidator)
         {
             _userService = userService;
             _captchaValidator = captchaValidator;
-            _orderService = orderService;
         }
 
         #endregion
@@ -149,6 +147,7 @@ namespace ServiceHost.Controllers
                         break;
                     case LoginUserDTO.LoginUserResult.NotActivated:
                         TempData[WarningMessage] = "حساب کاربری شما فعال نشده است";
+                        TempData[InfoMessage] = "لطفا با پشتیبانی سایت تماس حاصل فرمایید تا حساب کاربری تان را فعال نمایند";
                         break;
                     case LoginUserDTO.LoginUserResult.Success:
 

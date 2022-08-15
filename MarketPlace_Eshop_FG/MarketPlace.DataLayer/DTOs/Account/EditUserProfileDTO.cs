@@ -16,6 +16,10 @@ namespace MarketPlace.DataLayer.DTOs.Account
         [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string LastName { get; set; }
 
+        [Display(Name = "ایمیل")]
+        [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        public string Email { get; set; }
+
         [Display(Name = "نصویر آواتار")]
         [MaxLength(250, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         public string Avatar { get; set; }

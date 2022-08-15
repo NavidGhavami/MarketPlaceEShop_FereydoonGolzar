@@ -1,0 +1,17 @@
+{
+  "name": "Jibi Center",
+  "short_name": "Jibi Center",
+  "description": "فروشگاه اینترنتی جیبی سنتر",
+  "icons": [
+    {
+      "src": "/Theme/assets/images/icons/pwa-icon-192x192.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/Theme/assets/images/icons/pwa-icon-512x512.png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/"
+}
