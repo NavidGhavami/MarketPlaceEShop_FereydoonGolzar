@@ -27,6 +27,8 @@ namespace MarketPlace.DataLayer.DTOs.Products
         public int FilterMaxPrice { get; set; }
         public int SelectedMinPrice { get; set; }
         public int SelectedMaxPrice { get; set; }
+        public int StockCount { get; set; }
+        public bool InStock { get; set; }
         public List<Product> Products { get; set; }
         public FilterProductState ProductState { get; set; }
         public FilterProductOrderBy OrderBy { get; set; }

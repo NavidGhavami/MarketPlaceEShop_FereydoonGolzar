@@ -5,6 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\Publish</_PublishTargetUrl>
-    <History>True|2022-08-10T04:47:55.2006213Z;True|2022-08-09T13:08:59.5110788+04:30;</History>
+    <History>True|2022-08-16T04:26:05.1689721Z;True|2022-08-10T09:17:55.2006213+04:30;True|2022-08-09T13:08:59.5110788+04:30;</History>
+    <LastFailureDetails />
   </PropertyGroup>
 </Project>

@@ -16,5 +16,6 @@
         public int? DiscountPercentage { get; set; }
         public int? DiscountNumber { get; set; }
         public int? DiscountUseNumber { get; set; }
+        public int StockCount { get; set; }
     }
 }

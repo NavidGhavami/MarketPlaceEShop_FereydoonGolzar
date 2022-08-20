@@ -136,6 +136,15 @@
                                   
 
                                 </div><!-- End .rating-container -->
+
+                                <div class="ratings-container">
+                                    @if (discount.Product.StockCount >= 1 && discount.Product.StockCount <= 3)
+                                    {
+                                        <span class="ratings-text stock-label text-white">فقط @discount.Product.StockCount  عدد در انبار باقیست</span>
+
+                                    }
+                                </div><!-- End .rating-container -->
+
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
                     }

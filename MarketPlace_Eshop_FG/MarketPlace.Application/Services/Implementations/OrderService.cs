@@ -8,6 +8,7 @@ using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductOrder;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.ProductOrder;
+using MarketPlace.DataLayer.Entities.Products;
 using MarketPlace.DataLayer.Entities.Shipping;
 using MarketPlace.DataLayer.Entities.Wallet;
 using MarketPlace.DataLayer.Repository;
@@ -27,11 +28,12 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<ProductDiscountUse> _productDiscountUseRepository;
         private readonly IGenericRepository<UserAddress> _userAddressRepository;
         private readonly IGenericRepository<Shipping> _shippingRepository;
+        private readonly IGenericRepository<Product> _productRepository;
 
         public OrderService(IGenericRepository<Order> orderRepository, IGenericRepository<OrderDetail> orderDetailRepository,
             ISellerWalletService sellerWalletService, IGenericRepository<ProductDiscount> productDiscountRepository,
             IGenericRepository<ProductDiscountUse> productDiscountUseRepository, ISellerService sellerService, IGenericRepository<UserAddress> userAddressRepository,
-            IGenericRepository<Shipping> shippingRepository)
+            IGenericRepository<Shipping> shippingRepository, IGenericRepository<Product> productRepository)
         {
             _orderRepository = orderRepository;
             _orderDetailRepository = orderDetailRepository;
@@ -41,6 +43,7 @@ namespace MarketPlace.Application.Services.Implementations
             _sellerService = sellerService;
             _userAddressRepository = userAddressRepository;
             _shippingRepository = shippingRepository;
+            _productRepository = productRepository;
         }
 
         #endregion
@@ -154,6 +157,11 @@ namespace MarketPlace.Application.Services.Implementations
                     .FirstOrDefaultAsync(x =>
                         x.ProductId == detail.ProductId && x.ExpireDate >= DateTime.Now);
 
+                var product = await _productRepository
+                    .GetQuery()
+                    .AsQueryable()
+                    .FirstOrDefaultAsync(x => x.Id == detail.ProductId);
+
                 if (productDiscount != null)
                 {
                     discount = (int)Math.Ceiling(totalPrice * productDiscount.Percentage / (decimal)100);
@@ -189,6 +197,12 @@ namespace MarketPlace.Application.Services.Implementations
                 detail.ShippingPrice = productShippingPrice * detail.Count;
 
                 _orderDetailRepository.EditEntity(detail);
+
+
+                product.StockCount -= detail.Count;
+
+                _productRepository.EditEntity(product);
+                await _productRepository.SaveChanges();
             }
 
             openOrder.IsPaid = true;
@@ -197,8 +211,10 @@ namespace MarketPlace.Application.Services.Implementations
             openOrder.PaymentDate = DateTime.Now;
             openOrder.OrderAcceptanceState = OrderAcceptanceState.PaymentSuccessful;
             openOrder.Description = $"سفارش شما در تاریخ {DateTime.Now.ToShamsi()} با موفقیت ثبت شد.";
+
             _orderRepository.EditEntity(openOrder);
 
+            
 
             await _orderRepository.SaveChanges();
         }
@@ -519,6 +535,7 @@ namespace MarketPlace.Application.Services.Implementations
                     {
                         Id = x.Id,
                         Count = x.Count,
+                        StockCount = x.Product.StockCount,
                         ColorName = x.ProductColor?.ColorName,
                         ProductColorId = x.ProductColorId,
                         ProductColorPrice = x.ProductColor != null ? Convert.ToInt32(x.ProductColor.Price) : 0,

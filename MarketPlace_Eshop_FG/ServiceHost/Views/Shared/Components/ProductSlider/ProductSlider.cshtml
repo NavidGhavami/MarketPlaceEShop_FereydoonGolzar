@@ -130,6 +130,14 @@
                                     }
                                 </div><!-- End .product-body -->
 
+                                <div class="ratings-container">
+                                    @if (product.StockCount >= 1 && product.StockCount <= 3)
+                                    {
+                                        <span class="ratings-text stock-label text-white">فقط @product.StockCount  عدد در انبار باقیست</span>
+
+                                    }
+                                </div><!-- End .rating-container -->
+
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
                     }

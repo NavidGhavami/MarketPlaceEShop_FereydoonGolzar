@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -36,6 +37,7 @@ namespace MarketPlace.Application.Services.Implementations
         private readonly IGenericRepository<ProductComment> _productCommentRepository;
         private readonly IGenericRepository<Shipping> _shippingRepository;
         private readonly IShippingService _shippingService;
+
 
         public ProductService(IGenericRepository<Product> productRepository, IGenericRepository<ProductCategory> productCategoryRepository,
             IGenericRepository<ProductSelectedCategory> productSelectedRepository, IGenericRepository<ProductColor> productColorRepository,
@@ -293,7 +295,7 @@ namespace MarketPlace.Application.Services.Implementations
             switch (filter.ProductState)
             {
                 case FilterProductState.All:
-                    query = query.Where(x => x.IsActive).OrderByDescending(x => x.CreateDate);
+                    query = query.Where(x => !x.IsDelete).OrderByDescending(x => x.CreateDate);
                     break;
                 case FilterProductState.Active:
                     query = query.Where(x => x.IsActive && x.ProductAcceptanceState == ProductAcceptanceState.Accepted).OrderByDescending(x => x.CreateDate);
@@ -363,14 +365,25 @@ namespace MarketPlace.Application.Services.Implementations
                     Title = product.Title,
                     Price = product.Price,
                     Image = imageName,
-                    IsActive = product.IsActive,
+                    IsActive = true,
+                    StockCount = product.StockCount,
                     Description = product.Description,
                     ShortDescription = product.ShortDescription,
                     Weight = product.ProductWeight,
                     ProductAcceptanceState = ProductAcceptanceState.UnderProgress,
                     SiteProfit = 3,
 
+
                 };
+
+                if (product.StockCount > 0)
+                {
+                    newProduct.InStock = true;
+                }
+                else
+                {
+                    newProduct.InStock = false;
+                }
 
                 await _productRepository.AddEntity(newProduct);
                 await _productRepository.SaveChanges();
@@ -503,6 +516,8 @@ namespace MarketPlace.Application.Services.Implementations
                 Title = product.Title,
                 Price = product.Price,
                 IsActive = product.IsActive,
+                InStock = product.InStock,
+                StockCount = product.StockCount,
                 ProductColors = productColor,
                 ProductImage = product.Image,
                 ProductWeight = product.Weight,
@@ -539,6 +554,17 @@ namespace MarketPlace.Application.Services.Implementations
             mainProduct.Title = product.Title;
             mainProduct.Price = product.Price;
             mainProduct.IsActive = product.IsActive;
+
+            if (product.StockCount > 0)
+            {
+                mainProduct.InStock = true;
+            }
+            else
+            {
+                mainProduct.InStock = false;
+            }
+
+            mainProduct.StockCount = product.StockCount;
             mainProduct.Weight = product.ProductWeight;
             mainProduct.Description = product.Description;
             mainProduct.ShortDescription = product.ShortDescription;
@@ -585,7 +611,7 @@ namespace MarketPlace.Application.Services.Implementations
             //AddProduct Features
             await AddProductFeatures(product.Id, product.ProductFeatures);
 
-
+            await _productRepository.SaveChanges();
             return EditProductResult.Success;
         }
 
@@ -634,6 +660,8 @@ namespace MarketPlace.Application.Services.Implementations
                 .SingleOrDefaultAsync(x => x.ProductId == productId);
 
 
+            
+
             product.View += 1;
             await _productRepository.SaveChanges();
 
@@ -647,6 +675,8 @@ namespace MarketPlace.Application.Services.Implementations
                 Price = product.Price,
                 Image = product.Image,
                 View = product.View,
+                InStock = product.InStock,
+                StockCount = product.StockCount,
                 SellerId = product.SellerId,
                 Description = product.Description,
                 ShortDescription = product.ShortDescription,

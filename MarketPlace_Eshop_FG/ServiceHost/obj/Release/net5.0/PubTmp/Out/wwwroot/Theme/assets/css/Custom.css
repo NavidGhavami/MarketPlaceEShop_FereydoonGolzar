@@ -628,22 +628,32 @@
 .login-form-1 {
     padding: 5%;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    background-image: url('https://static.vecteezy.com/system/resources/previews/002/326/334/original/gradient-light-color-background-graphic-free-vector.jpg');
+    background-repeat: no-repeat;
 }
 
-    .login-form-1 h3 {
+.login-form-1 input {
+    background-color: bisque;
+    border-color: #a52a2a;
+}
+
+.login-form-1 h3 {
         text-align: center;
         color: black;
-    }
+        font-weight: 800;
+}
 
-    .login-form-1 h4 {
+.login-form-1 h4 {
         text-align: center;
         color: black;
         line-height: 50px;
-    }
+}
+
+
 
 .login-form-2 {
     padding: 5%;
-    background: #ff7f50;
+    background: #F7941E;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -666,9 +676,19 @@
 .btnSubmit {
     width: 100%;
     border-radius: 1rem;
-    padding: 3.5%;
+    padding: 2.5%;
     border: none;
     cursor: pointer;
+    font-size: 17px;
+}
+
+.btnSubmit1 {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 2.5%;
+    border: none;
+    cursor: pointer;
+    font-size: 17px;
 }
 
 .login-form-1 .btnSubmit {
@@ -676,6 +696,13 @@
     color: #fff;
     background-color: #ff7f50;
 }
+
+.login-form-1 .btnSubmit1 {
+    font-weight: 600;
+    color: #fff;
+    background-color: #ffcb49;
+}
+
 
 .login-form-2 .btnSubmit {
     font-weight: 600;
@@ -691,8 +718,9 @@
 
 .login-form-1 .ForgetPwd {
     color: #ff7f50;
-    font-weight: 600;
+    font-weight: 800;
     text-decoration: none;
+    font-size: 16px;
 }
 
 .dashboard-width {
@@ -702,4 +730,61 @@
 .user-sidebar-padding {
     padding-bottom: 10px;
 }
+
+
+/*/////////////////////////User Dasboard Button///////////////////////////////*/
+
+.custom-btn {
+    color: #fff;
+    border-radius: 20px;
+    padding: 10px 25px;
+    font-weight: 600 !important;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5), 7px 7px 20px 0px rgba(0,0,0,.1), 4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+}
+
+.btn-14 {
+    background: rgb(255,151,0);
+    border: none;
+    z-index: 1;
+}
+
+    .btn-14:after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 0;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        border-radius: 20px;
+        background-color: #eaf818;
+        background-image: linear-gradient(315deg, #eaf818 0%, #f6fc9c 74%);
+        box-shadow: inset 2px 2px 2px 0px rgba(255,255,255,.5),7px 7px 20px 0px rgba(0,0,0,.1), 4px 4px 5px 0px rgba(0,0,0,.1);
+        transition: all 0.3s ease;
+    }
+
+.btn-14:hover {
+    color: #000;
+}
+
+.btn-14:hover:after {
+    top: auto;
+    bottom: 0;
+    height: 100%;
+}
+
+.btn-14:active {
+    top: 2px;
+}
+
+
+
+/*//////////////////////////CountDown Timer////////////////////////////////*/
+
 

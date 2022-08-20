@@ -13,6 +13,10 @@
     var freeShippingPrice = 400000;
 }
 
+
+
+
+
 <div class="page-header text-center">
     <div class="container">
         <h1 class="page-title">سبد خرید</h1>
@@ -94,8 +98,9 @@
                                         <td class="quantity-col">
                                             <div class="cart-product-quantity">
                                                 <input order-detail-count="@detail.Id" type="number" class="form-control" value="@detail.Count"
-                                               min="1" max="100" step="1" data-decimals="0" required="">
+                                                       min="1" max="@detail.StockCount" step="1" data-decimals="0">
                                             </div>
+                                            <p class="text-primary">موجودی انبار: @detail.StockCount عدد</p>
                                         </td>
                                         <td class="price-col">@(detail.GetDiscountForProduct())</td>
                                         <td class="total-col">@(detail.GetTotalPriceWithDiscountForProduct())</td>
@@ -179,19 +184,23 @@
                                         <tr class="summary-total">
                                             <td>مبلغ قابل پرداخت :</td>
                                             <td class="text-left">@totalPriceWithFreeShipping.ToString("#,0 تومان")</td>
-                                        </tr><!-- End .summary-total -->
+                                        </tr>
+
+                                        <!-- End .summary-total -->
                                     }
                                     else
                                     {
                                         <tr class="summary-total">
                                             <td>مبلغ قابل پرداخت :</td>
                                             <td class="text-left">@totalPriceWithDiscount.ToString("#,0 تومان")</td>
-                                        </tr><!-- End .summary-total -->
+                                        </tr>
+
+                                        <!-- End .summary-total -->
                                     }
                                 </tbody>
                             </table><!-- End .table table-summary -->
 
-                            <a asp-area="User" asp-controller="Order" asp-action="AddUserAddress" asp-route-userId="@Model.UserId" class="btn btn-primary btn-order btn-block">
+                            <a asp-area="User" asp-controller="Order" asp-action="AddUserAddress" asp-route-userId="@Model.UserId" class="btn btn-primary btn-round btn-block">
                                 تایید و تکمیل اطلاعات
                             </a>
                         </div><!-- End .summary -->

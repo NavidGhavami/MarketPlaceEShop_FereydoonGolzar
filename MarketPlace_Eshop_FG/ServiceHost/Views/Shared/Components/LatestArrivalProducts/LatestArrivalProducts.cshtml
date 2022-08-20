@@ -56,21 +56,22 @@
 
                                 <div class="product-action-vertical">
                                     <a href="#"
-                                       class="btn-product-icon btn-wishlist btn-expandable">
+                               class="btn-product-icon btn-wishlist btn-expandable">
                                         <span>
                                             افزودن به
                                             لیست علاقه مندی
                                         </span>
                                     </a>
                                 </div>
-                               
+
                                 <div class="">
                                     <a asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id"
-                                       asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
-                                        <span >مشاهده محصول</span>
+                               asp-route-title="@product.Title.FixTextForUrl()" class="btn-product btn-cart filterProductCartButton">
+                                        <span>مشاهده محصول</span>
                                     </a>
+
                                 </div><!-- End .product-action -->
-                            
+
                             </figure><!-- End .product-media -->
 
                             <div class="product-body">
@@ -82,7 +83,9 @@
                                             <a asp-area="" asp-controller="Product" asp-action="FilterProducts" asp-route-Category="@category.ProductCategory.UrlName">
                                                 @category.ProductCategory.Title
                                             </a>
-                                        </div><!-- End .product-cat -->
+                                        </div>
+
+                                        <!-- End .product-cat -->
                                     }
                                 }
                                 <h3 class="product-title text-justify product-title-lineHeight">
@@ -91,7 +94,7 @@
                                     </a>
                                 </h3>
                                 <!-- End .product-title -->
-                                @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x=>x.ExpireDate >= DateTime.Now))
+                                @if (product.ProductDiscounts != null && product.ProductDiscounts.Any(x => x.ExpireDate >= DateTime.Now))
                                 {
                                     foreach (var discount in product.ProductDiscounts)
                                     {
@@ -100,14 +103,18 @@
                                             <del>
                                                 <span class="old-price text-dark">@product.Price.ToString("#,0")</span>
                                             </del>
-                                        </div><!-- End .product-price -->
+                                        </div>
+
+                                        <!-- End .product-price -->
                                     }
                                 }
                                 else
                                 {
                                     <div class="product-price">
                                         <span class="new-price text-primary">@product.Price.ToString("#,0 تومان")</span>
-                                    </div><!-- End .product-price -->
+                                    </div>
+
+                                    <!-- End .product-price -->
                                 }
                                 <div class="ratings-container">
                                     @if (product.Seller != null)
@@ -127,19 +134,25 @@
                                                     <span class="sr-only">@color.ColorName</span>
                                                 </a>
                                             }
-                                            
-                                           
 
-                                        </div><!-- End .product-nav -->
+                                        </div>
 
-                                    
+                                        <!-- End .product-nav -->
                                     }
                                 </div><!-- End .product-body -->
-                                
-                               
+
+                                <div class="ratings-container">
+                                    @if (product.StockCount >= 1 && product.StockCount <= 3)
+                                    {
+                                        <span class="ratings-text stock-label text-white">فقط @product.StockCount  عدد در انبار باقیست</span>
+
+                                    }
+                                </div><!-- End .rating-container -->
 
                             </div><!-- End .product-body -->
-                        </div><!-- End .product -->
+                        </div>
+
+                        <!-- End .product -->
                     }
                 }
             </div><!-- End .owl-carousel -->

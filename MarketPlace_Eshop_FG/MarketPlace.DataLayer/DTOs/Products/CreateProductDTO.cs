@@ -33,6 +33,13 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int ProductWeight { get; set; }
 
+        [Display(Name = "تعداد در انبار")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int StockCount { get; set; }
+
+        [Display(Name = "موجود / ناموجود")]
+        public bool InStock { get; set; }
+
         public List<CreateProductColorDTO> ProductColors { get; set; }
         public List<CreateProductFeatureDTO> ProductFeatures { get; set; }
         public List<long> SelectedCategories { get; set; }

@@ -10,6 +10,9 @@
         <img src="~/Theme/assets/images/demos/demo-13/logo.svg" alt="فروشگاه اینترنتی جیبی سنتر" title="فروشگاه اینترنتی جیبی سنتر" class="logoAndSelletTextRightPadding">
     </a>
 
+    <a asp-controller="Home" asp-action="SellerGuidelines" class="custom-btn btn-12 text-dark btn-block" style="left: 165px;" title="فروشنده شوید">
+        <span>همین الان ثبت نام کنید!</span><span>فروشنده شوید !!!</span>
+    </a>
 
 
     <br />
@@ -97,7 +100,7 @@
                                             @foreach (var subcategory in categories.Where(x => x.ParentId == category.Id))
                                             {
                                                 <li class="active">
-                                                    <a class="text-danger">@subcategory.Title<span class="mmenu-btn"></span></a>
+                                                    <a class="text-primary">@subcategory.Title<span class="mmenu-btn"></span></a>
                                                     <ul style="display: none;">
                                                         @if (categories.Any(x => x.ParentId == subcategory.Id))
                                                         {
@@ -131,6 +134,7 @@
             <a href="#" class="social-icon" target="_blank" title="اینستاگرام"><i class="icon-instagram"></i></a>
             <a href="#" class="social-icon" target="_blank" title="یوتیوب"><i class="icon-youtube"></i></a>
 
-        </div><!-- End .social-icons -->
-    </div><!-- End .mobile-menu-wrapper -->
-</div><!-- End .mobile-menu-container -->
+        </div>
+        <!-- End .social-icons --
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->

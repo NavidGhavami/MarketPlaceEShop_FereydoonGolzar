@@ -25,7 +25,14 @@
 }
 
 
-    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+<style>
+    .disable-cart-btn {
+        pointer-events: none;
+    }
+</style>
+
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
@@ -83,9 +90,19 @@
                         <!-- End .product-title -->
 
                         <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
+                            @if (Model.StockCount > 0 && Model.InStock)
+                            {
+                                <a class="ratings-text text-success" href="#" id="review-link">
+                                    موجودی در انبار : @Model.StockCount عدد
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="ratings-text text-danger" href="#" id="review-link">
+                                    در انبار موجود نیست
+                                </a>
+                            }
+                            |
                             <a class="ratings-text text-info" href="#" id="review-link">
                                 بازدید محصول : @Model.View
                             </a>
@@ -109,7 +126,6 @@
                                 <span> @Model.Price.ToString("#,0 تومان") </span>
                             }
                         </div><!-- End .product-price -->
-
                         <div class="product-content">
                             <p>
                                 @Model.ShortDescription
@@ -142,25 +158,43 @@
                             <div class="details-filter-row details-row-size col-md-6">
                                 <label for="qty">تعداد : </label>
                                 <div class="product-details-quantity">
-                                    <input type="number" id="number_of_products_in_basket" class="form-control" value="1" min="1" max="100" step="1" data-decimals="0" required="" style="display: none;">
+                                    <input type="number" id="number_of_products_in_basket" class="form-control" value="1" min="1" max="@Model.StockCount" step="1" data-decimals="0" required="" style="display: none;">
                                 </div><!-- End .product-details-quantity -->
                             </div><!-- End .details-filter-row -->
                         </div>
                         <div class="product-details-action row col-md-12">
 
+                            @if (Model.StockCount > 0)
+                            {
+                                <div class="col-md-6">
+                                    <a id="submitOrderForm" class="btn btn-primary btn-round btn-block text-white">
+                                        <span class="cart-button-margin">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z" />
+                                            </svg>
+                                        </span>
+                                        افزودن به سبد خرید
+                                        <i class="bi bi-bag-plus-fill"></i>
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6">
+                                    <a id="submitOrderForm" class="btn btn-primary btn-round btn-block text-white disable-cart-btn">
+                                        <span class="cart-button-margin">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z" />
+                                            </svg>
+                                        </span>
+                                        افزودن به سبد خرید
+                                        <i class="bi bi-bag-plus-fill"></i>
+                                    </a>
+                                </div>
+
+                            }
                             <div class="col-md-6">
-                                <a id="submitOrderForm" class="btn btn-primary btn-round btn-block text-white">
-                                    <span class="cart-button-margin">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-plus-fill" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM8.5 8a.5.5 0 0 0-1 0v1.5H6a.5.5 0 0 0 0 1h1.5V12a.5.5 0 0 0 1 0v-1.5H10a.5.5 0 0 0 0-1H8.5V8z" />
-                                        </svg>
-                                    </span>
-                                    افزودن به سبد خرید
-                                    <i class="bi bi-bag-plus-fill"></i>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <a class="btn btn-info btn-round btn-block text-white ">
+                                <a class="btn btn-info btn-round btn-block text-white">
                                     <span class="cart-button-margin">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
                                             <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />

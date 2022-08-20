@@ -759,6 +759,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-00416f7d-6c0f-45a0-9323-fd1ac79cd7fe.xml
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-1187edea-5cef-4587-b318-4fd93860ba49.xml
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-175e20a2-30de-44cb-ae06-97bb824e73ba.xml
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-1a17df67-6f43-4c0f-a2a6-01accc87c923.xml
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-280e103b-be1c-4c71-8628-83ce5aba9fdc.xml
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-3c6ad62c-a3f6-453d-a992-cb3657cf6646.xml
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Auth\key-84c239ea-ac9d-4902-893d-15d456dc45c4.xml
@@ -1182,6 +1183,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\demos\demo-7.css
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\demos\demo-8.css
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\demos\demo-9.css
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\jquery.countdownTimer.css
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\notifications.css
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\plugins\jquery.countdown.css
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\css\plugins\magnific-popup\magnific-popup.css
@@ -2625,6 +2627,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\icons\pwa-icon-512x512.png
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\icons\safari-pinned-tab.html
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\icons\site.webmanifest
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\login-image.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\logo-footer.png
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\logo-icon.png
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\images\logo.png
@@ -2940,6 +2943,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\interactive-section-scroll.min.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\isotope.pkgd.min.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.countdown.min.js
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.countdownTimer.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.countTo.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.elevateZoom.min.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.hoverIntent.min.js

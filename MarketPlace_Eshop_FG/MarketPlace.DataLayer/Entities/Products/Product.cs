@@ -52,6 +52,15 @@ namespace MarketPlace.DataLayer.Entities.Products
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public int Weight { get; set; }
 
+        [Display(Name = "تعداد در انبار")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int StockCount { get; set; }
+
+        [Display(Name = "موجود / ناموجود")]
+        public bool InStock { get; set; }
+
+
+
 
         #endregion
 

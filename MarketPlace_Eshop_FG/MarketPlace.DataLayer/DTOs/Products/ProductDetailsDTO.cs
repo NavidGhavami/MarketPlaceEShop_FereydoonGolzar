@@ -42,6 +42,13 @@ namespace MarketPlace.DataLayer.DTOs.Products
         [Display(Name = "هزینه پستی")]
         public int ShippingTotalPrice { get; set; }
 
+        [Display(Name = "تعداد در انبار")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public int StockCount { get; set; }
+
+        [Display(Name = "موجود / ناموجود")]
+        public bool InStock { get; set; }
+
         public Entities.Store.Seller Seller { get; set; }
         public List<ProductGallery> ProductGalleries { get; set; }
         public List<ProductColor> ProductColors { get; set; }

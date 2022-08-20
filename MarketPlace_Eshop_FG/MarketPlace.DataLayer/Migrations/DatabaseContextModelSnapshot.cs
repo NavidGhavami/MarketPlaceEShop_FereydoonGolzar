@@ -815,6 +815,9 @@ namespace MarketPlace.DataLayer.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
+                    b.Property<bool>("InStock")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -842,6 +845,9 @@ namespace MarketPlace.DataLayer.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("SiteProfit")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockCount")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")

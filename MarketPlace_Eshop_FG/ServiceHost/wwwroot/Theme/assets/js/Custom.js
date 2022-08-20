@@ -88,7 +88,6 @@ $('[main_category_checkbox]').on('change', function (e) {
     var selectedCategoryId = $(this).attr('main_category_checkbox');
     console.log(selectedCategoryId);
     if (isChecked) {
-        F
         $('#sub_categories_' + selectedCategoryId).slideDown(300);
     } else {
         $('#sub_categories_' + selectedCategoryId).slideUp(300);
@@ -456,7 +455,7 @@ $(document).ready(function () {
 
 ///////////////////////////////CountDownt Timer////////////////////////////////////////////////////
 
-var timeLeft = 2;
+var timeLeft = 90;
 var elem = document.getElementById('some_div');
 var sendActiveCode = document.getElementById('send_active_code');
 
