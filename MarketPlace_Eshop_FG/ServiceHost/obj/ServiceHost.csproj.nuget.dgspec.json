@@ -261,6 +261,10 @@
               "target": "Package",
               "version": "[5.0.2, )"
             },
+            "Nancy": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "WebEssentials.AspNetCore.PWA": {
               "target": "Package",
               "version": "[1.0.65, )"

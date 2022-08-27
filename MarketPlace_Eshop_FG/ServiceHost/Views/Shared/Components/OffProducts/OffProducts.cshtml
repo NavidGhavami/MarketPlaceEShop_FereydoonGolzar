@@ -50,14 +50,14 @@
                             <figure class="product-media">
                                 <span class="product-label label-discount">@discount.Percentage %</span>
                                 <a asp-area="" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@discount.Product.Id" asp-route-title="@discount.Product.Title.FixTextForUrl()">
-                                    <img src="@(PathExtension.ProductOrigin + discount.Product.Image)" alt="@discount.Product.Title" title="@discount.Product.Title"
+                                    <img class="product-img-size" src="@(PathExtension.ProductOrigin + discount.Product.Image)" alt="@discount.Product.Title" title="@discount.Product.Title"
                                          class="product-image">
                                 </a>
 
                                 <!-- End .product-countdown -->
 
                                 <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable">
+                                    <a onclick="addToWishlist('@discount.Product.Id', '@discount.Product.Title', '@discount.Product.Price', '@discount.Product.Seller.StoreName', '@discount.Product.Image')" class="btn-product-icon btn-wishlist btn-expandable">
                                         <span>
                                             افزودن به
                                             لیست علاقه مندی

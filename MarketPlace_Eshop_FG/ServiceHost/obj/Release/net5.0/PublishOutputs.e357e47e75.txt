@@ -825,6 +825,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Origin\e946ad91072a45209c40ab4acb83f57c.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Origin\ea3b5b83761e45a1865f85442d060e80.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Origin\f01dad2ca84546a78abdb8b0a6801f1c.jpg
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Origin\f967ec7a8651452eb278f811e26e9a1a.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\01168835d068492e834d6fa892a10016.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\1c83dc2e4c0e420fa68c774465d9a070.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\1dea343955ee4aa3bbfdaa8eacb7ff2a.jpg
@@ -853,6 +854,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\e946ad91072a45209c40ab4acb83f57c.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\ea3b5b83761e45a1865f85442d060e80.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\f01dad2ca84546a78abdb8b0a6801f1c.jpg
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\ProductGallery\Thumb\f967ec7a8651452eb278f811e26e9a1a.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\Product\Origin\065efdb39fdd4d8e84c888543b4a51c3.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\Product\Origin\06ec701eb8e143f0866600ac3f51d4a0.jpg
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Content\Images\Product\Origin\0eac3b5c52734816a8c9b6d255e38089.jpg
@@ -2952,6 +2954,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.plugin.min.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.sticky-kit.min.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery.waypoints.min.js
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\jquery_cookie.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\main.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\notifications.js
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\wwwroot\Theme\assets\js\nouislider.min.js
@@ -3431,6 +3434,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.EntityFrameworkCore.SqlServer.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.Extensions.DependencyModel.dll
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.Extensions.PlatformAbstractions.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.Identity.Client.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -3447,6 +3451,7 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Nancy.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Newtonsoft.Json.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\Newtonsoft.Json.Bson.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\PubTmp\Out\NWebsec.AspNetCore.Core.dll

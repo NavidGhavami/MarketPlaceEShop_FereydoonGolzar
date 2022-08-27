@@ -1,4 +1,8 @@
-﻿function open_waiting(selector = 'body') {
+﻿const cookieWishlist = "wishlist-items";
+
+
+
+function open_waiting(selector = 'body') {
     $(selector).waitMe({
         effect: 'facebook',
         text: 'لطفا صبر کنید ...',
@@ -490,4 +494,90 @@ function countdown() {
         timeLeft--;
         
     }
+}
+
+
+
+/////////////////////////////////Add Product to WishList/////////////////////////////////////////
+
+
+function addToWishlist(id, productTitle, price, storeName, image) {
+/*    debugger;*/
+    let wishlists = $.cookie(cookieWishlist);
+    if (wishlists === undefined) {
+        wishlists = [];
+    } else {
+        wishlists = JSON.parse(wishlists);
+    }
+
+    var count = 1;
+    const currentWishlist = wishlists.find(x => x.id === id);
+
+    if (currentWishlist !== undefined) {
+        wishlists.find(x => x.id === id).count = parseInt(currentWishlist.count) + (count);
+    } else {
+        const wishlist = {
+            id,
+            productTitle,
+            price,
+            storeName,
+            image,
+            count
+        }
+        wishlists.push(wishlist);
+    }
+
+    swal({
+        title: "پیغام موفقیت",
+        text: "محصول مورد نظر به لیست علاقه مندی ها اضافه شد",
+        icon: "success",
+        button: "تایید",
+    });
+
+    $.cookie(cookieWishlist, JSON.stringify(wishlists), { expires: 60, path: "/" });
+    updateWishlist();
+
+    
+
+}
+
+
+function updateWishlist() {
+
+    let wishlists = $.cookie(cookieWishlist);
+    wishlists = JSON.parse(wishlists);
+    const count = $("#wishlist_count").text(wishlists.length);
+
+    const currentWishlist = wishlists.find(x => x.id === id);
+    if (currentWishlist !== undefined) {
+        wishlists.find(x => x.id === id).count = parseInt(currentWishlist.count) + parseInt(count);
+    } else {
+        const wishlist = {
+            id,
+            productTitle,
+            price,
+            storeName,
+            image,
+            count
+        }
+
+        wishlists.push(wishlist);
+        $.cookie(cookieWishlist, JSON.stringify(wishlists), { expires: 60, path: "/" });
+    }
+
+
+}
+
+
+function removeFromWishlist(id) {
+    let wishlists = $.cookie(cookieWishlist);
+    wishlists = JSON.parse(wishlists);
+    const itemToRemove = wishlists.findIndex(x => x.id === id);
+    wishlists.splice(itemToRemove, 1);
+    $.cookie(cookieWishlist, JSON.stringify(wishlists), { expires: 60, path: "/" });
+
+    location.reload();
+    updateWishlist();
+
+
 }

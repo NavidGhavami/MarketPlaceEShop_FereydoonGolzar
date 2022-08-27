@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
+using MarketPlace.DataLayer.DTOs.Wishlist;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.Products;
 using Microsoft.AspNetCore.Http;
@@ -68,6 +69,12 @@ namespace MarketPlace.Application.Services.Interfaces
         Task<AddProductCommentResult> AddComment(AddProductCommentDTO comment, long productId, long userId);
         Task<bool> AcceptProductComment(long commentId);
         Task<bool> RejectProductComment(long commentId);
+
+        #endregion
+
+        #region Product Wish List
+
+        Task<List<WishlistDTO>> GetProductWishlist();
 
         #endregion
     }

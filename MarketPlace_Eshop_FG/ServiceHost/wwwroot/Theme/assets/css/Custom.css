@@ -1,4 +1,16 @@
-﻿
+﻿.product-img-size {
+    height: 220px;
+}
+
+.related-product-img-size {
+    height: 300px;
+}
+
+.product-stock {
+    text-decoration: #8e0042;
+    float: right;
+    padding-top: 5px;
+}
 
 .SliderIMG {
     width: 2080px !important;

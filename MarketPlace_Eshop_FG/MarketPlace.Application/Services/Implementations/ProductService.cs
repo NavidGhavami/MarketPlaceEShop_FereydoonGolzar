@@ -12,6 +12,7 @@ using MarketPlace.DataLayer.DTOs.Common;
 using MarketPlace.DataLayer.DTOs.Paging;
 using MarketPlace.DataLayer.DTOs.ProductComment;
 using MarketPlace.DataLayer.DTOs.Products;
+using MarketPlace.DataLayer.DTOs.Wishlist;
 using MarketPlace.DataLayer.Entities.ProductComment;
 using MarketPlace.DataLayer.Entities.ProductDiscount;
 using MarketPlace.DataLayer.Entities.Products;
@@ -684,7 +685,7 @@ namespace MarketPlace.Application.Services.Implementations
                 ShippingTotalPrice = shipping.TotalShippingPrice,
                 ProductColors = product.ProductColors.ToList(),
                 ProductFeatures = product.ProductFeatures.ToList(),
-                ProductGalleries = product.ProductGalleries.ToList(),
+                ProductGalleries = product.ProductGalleries.Take(8).ToList(),
                 Shippings = product.Shippings.ToList(),
                 ProductDiscount = productDiscount,
                 ProductCategories = product.ProductSelectedCategories.Select(x => x.ProductCategory).ToList(),
@@ -1166,6 +1167,35 @@ namespace MarketPlace.Application.Services.Implementations
             }
 
             return false;
+        }
+
+
+
+        #endregion
+
+        #region Product WishList
+
+        public async Task<List<WishlistDTO>> GetProductWishlist()
+        {
+            var wishlists = await _productRepository
+                .GetQuery()
+                .AsQueryable()
+                .Include(x => x.Seller)
+                .Where(x => x.IsActive
+                            && !x.IsDelete
+                            && x.ProductAcceptanceState == ProductAcceptanceState.Accepted)
+                .Distinct()
+                .Select(x=> new WishlistDTO
+                {
+                    Id = x.Id,
+                    ProductTitle = x.Title,
+                    StoreName = x.Seller.StoreName,
+                    Price = x.Price,
+                    Image = x.Image
+                })
+                .ToListAsync();
+
+            return wishlists.ToList();
         }
 
         #endregion

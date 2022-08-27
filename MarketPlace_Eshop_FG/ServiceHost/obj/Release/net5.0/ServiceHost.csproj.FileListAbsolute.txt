@@ -602,3 +602,6 @@ E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Ferey
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Release\net5.0\NWebsec.AspNetCore.Mvc.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Release\net5.0\NWebsec.AspNetCore.Mvc.TagHelpers.dll
 E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Release\net5.0\WebEssentials.AspNetCore.Pwa.dll
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Release\net5.0\Microsoft.Extensions.PlatformAbstractions.dll
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\bin\Release\net5.0\Nancy.dll
+E:\Codes and projects\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_Fereydoon Golzar\MarketPlace_Eshop_FG\ServiceHost\obj\Release\net5.0\Razor\Areas\User\Views\Home\GetWishlist.cshtml.g.cs

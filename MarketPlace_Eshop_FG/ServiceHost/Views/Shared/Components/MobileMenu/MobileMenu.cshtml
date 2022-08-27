@@ -1,4 +1,6 @@
 ﻿@using MarketPlace.DataLayer.Entities.Products
+@using MarketPlace.Application.Utilities
+@inject IAuthHelper _authHelper
 @{
     var categories = ViewBag.ProductCategories as List<ProductCategory>;
 }
@@ -55,6 +57,12 @@
                             </a>
                         </li>
                         <li>
+                            <a class="text-dark" asp-area="User" asp-controller="Home" asp-action="GetWishlist">
+                                <i class="fa fa-heart text-dark mobileMenuCategoryPadding"></i>
+                                علاقه مندی ها
+                            </a>
+                        </li>
+                        <li>
                             <a class="text-dark" asp-area="" asp-controller="Blog" asp-action="ArticleList" class="sf-with-ul">
                                 <i class="fa fa-copy text-dark mobileMenuCategoryPadding"></i>
                                 بلاگ
@@ -78,6 +86,15 @@
                                 درباره ما
                             </a>
                         </li>
+                        @if (_authHelper.CurrentAccountRole() == Roles.Administrator || _authHelper.CurrentAccountRole() == Roles.AdminAssistant || _authHelper.CurrentAccountRole() == Roles.ContentUploader)
+                        {
+                            <li>
+                                <a class="text-dark" asp-area="Administration" asp-controller="Home" asp-action="Index">
+                                    <i class="fas fa-user text-dark mobileMenuCategoryPadding"></i>
+                                    مدیریت سایت
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </nav><!-- End .mobile-nav -->
             </div><!-- .End .tab-pane -->

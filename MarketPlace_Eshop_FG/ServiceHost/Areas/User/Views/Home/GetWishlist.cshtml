@@ -1,0 +1,118 @@
+﻿@using MarketPlace.Application.Utilities
+@model List<MarketPlace.DataLayer.DTOs.Wishlist.WishlistDTO>
+@{
+    ViewData["Title"] = "لیست علاقه مندی ها";
+}
+
+
+
+
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1 class="page-title text-primary">لیست علاقه مندی ها</h1>
+    </div><!-- End .container -->
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">صفحه اصلی</a></li>
+            <li class="breadcrumb-item active" aria-current="page">لیست علاقه مندی ها</li>
+        </ol>
+    </div><!-- End .container -->
+</nav>
+
+<div class="page-content">
+    <div class="cart" id="user-open-order-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @if (Model != null && Model.Any())
+                    {
+                        <table class="table table-cart table-responsive-sm table-bordered text-center">
+                            <thead class="thead-dark text-white">
+                                <tr>
+                                    <th>تصویر</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت (تومان)</th>
+                                    <th>نام فروشنده</th>
+                                    <th>مشاهده</th>
+                                    <th>حذف</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var detail in Model)
+                                {
+                                    <tr>
+                                        <td class="product-col" style="width: 70px;">
+                                            <div class="product">
+                                                <figure class="product-media">
+                                                    <a href="#">
+                                                        <img src="@(PathExtension.ProductThumb + detail.Image)" alt="@detail.ProductTitle" title="@detail.ProductTitle">
+                                                    </a>
+                                                </figure>
+
+                                            </div><!-- End .product -->
+                                        </td>
+
+                                        <td class="product-col" style="width: 500px;">
+                                            <div class="product">
+
+                                                <h3 class="product-title text-justify">
+                                                    <a class="product-title-lineHeight text-justify" asp-controller="Product" asp-action="ProductDetails"
+                                               asp-route-productId="@detail.Id" asp-route-title="@detail.ProductTitle">
+                                                        @detail.ProductTitle
+                                                    </a>
+                                                </h3><!-- End .product-title -->
+                                            </div><!-- End .product -->
+                                        </td>
+
+                                        <td class="price-col">@detail.Price.ToString("#,0")</td>
+                                        <td class="price-col">@detail.StoreName</td>
+                                        <td class="remove-col">
+                                            <a asp-controller="Product" asp-action="ProductDetails"
+                                               asp-route-productId="@detail.Id" asp-route-title="@detail.ProductTitle" class="btn-remove text-primary">
+                                                <i class="bi bi-eye-fill"></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                        <td class="remove-col">
+                                            <a onclick="removeFromWishlist(@detail.Id)" class="btn-remove text-danger">
+                                                <i class="bi bi-trash3-fill"></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z"/>
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <!-- End .table table-wishlist -->
+                    }
+                    else
+                    {
+                        <div class="col-md-12 text-center alert alert-warning no-product">
+                            <i class="bi bi-suit-heart-fill"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+                            </svg>
+                            <span>لیست علاقه مندی های شما خالی است</span>
+
+                        </div>
+                    }
+                    <br />
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .cart -->
+</div>
+
+

@@ -51,12 +51,11 @@
                             <figure class="product-media">
                                 <span class="product-label label-new">جدید</span>
                                 <a asp-area="" asp-controller="Product" asp-action="ProductDetails" asp-route-productId="@product.Id" asp-route-title="@product.Title.FixTextForUrl()">
-                                    <img src="@(PathExtension.ProductOrigin + product.Image)" alt="@product.Title" title="@product.Title">
+                                    <img class="product-img-size" src="@(PathExtension.ProductOrigin + product.Image)" alt="@product.Title" title="@product.Title">
                                 </a>
 
                                 <div class="product-action-vertical">
-                                    <a href="#"
-                               class="btn-product-icon btn-wishlist btn-expandable">
+                                    <a onclick="addToWishlist('@product.Id', '@product.Title', '@product.Price', '@product.Seller.StoreName', '@product.Image')" class="btn-product-icon btn-wishlist btn-expandable">
                                         <span>
                                             افزودن به
                                             لیست علاقه مندی
